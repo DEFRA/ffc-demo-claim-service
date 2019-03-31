@@ -1,5 +1,5 @@
 
-# Mine Support User Service
+# Mine Support Claim Service
 Digital service mock to claim public money in the event property subsides into mine shaft.
 
 # Environment variables
