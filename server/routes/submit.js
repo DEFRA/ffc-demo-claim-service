@@ -1,4 +1,5 @@
 const schema = require('../schema/claim')
+const claimService = require('../services/claim-service')
 
 module.exports = {
   method: 'POST',
@@ -12,8 +13,8 @@ module.exports = {
     },
     handler: async (request, h) => {
       console.log('new claim received')
-      
-      return h.response().code(200)
+      let claim = await claimService.create(request.payload)
+      return h.response(claim).code(200)
     }
   }
 }
