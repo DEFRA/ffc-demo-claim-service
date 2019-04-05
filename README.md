@@ -11,7 +11,7 @@ Digital service mock to claim public money in the event property subsides into m
 
 # Prerequisites
 
-Node v8+
+Node v10+
 
 # Running the application
 

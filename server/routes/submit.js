@@ -13,7 +13,7 @@ module.exports = {
     },
     handler: async (request, h) => {
       console.log('new claim received')
-      let claim = await claimService.create(request.payload)
+      const claim = await claimService.create(request.payload)
       return h.response(claim).code(200)
     }
   }

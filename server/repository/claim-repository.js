@@ -14,7 +14,7 @@ module.exports = {
   },
   create: async function (claim) {
     try {
-      let claimRecord = await db.claims.upsert({
+      const claimRecord = await db.claims.upsert({
         claimId: claim.claimId,
         propertyType: claim.propertyType,
         accessible: claim.accessible,
