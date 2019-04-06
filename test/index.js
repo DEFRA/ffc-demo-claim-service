@@ -11,25 +11,20 @@ lab.experiment('API test', () => {
     server = await createServer()
   })
 
-  lab.test('GET / route works', async () => {
+  lab.test('POST / route works', async () => {
     const options = {
-      method: 'GET',
-      url: '/'
+      method: 'POST',
+      url: '/submit',
+      payload: {
+        claimId: 'MINE123',
+        propertyType: 'business',
+        accessible: false,
+        dateOfSubsidence: new Date(),
+        mineType: ['gold', 'iron']
+      }
     }
-
+    // TODO mock database call
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
-    Code.expect(response.result).to.equal({ hello: 'world' })
-  })
-
-  lab.test('GET /about route works', async () => {
-    const options = {
-      method: 'GET',
-      url: '/about'
-    }
-
-    const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
-    Code.expect(response.result).to.equal({ ok: 200 })
   })
 })
