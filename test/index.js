@@ -2,6 +2,7 @@ const Lab = require('lab')
 const Code = require('code')
 const lab = exports.lab = Lab.script()
 const createServer = require('../server')
+const proxyquire = require('proxyquire').noCallThru()
 
 lab.experiment('API test', () => {
   let server
@@ -23,7 +24,9 @@ lab.experiment('API test', () => {
         mineType: ['gold', 'iron']
       }
     }
-    // TODO mock database call
+
+    // TODO mock repository layer
+
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
   })
