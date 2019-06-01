@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app.component: claim-service
+  name: claim-service
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app.component: claim-service
+    spec:
+      containers:   
+      - name: mine-support-claim-service
+        image: mine-support-claim-service
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3003               
+      restartPolicy: Always
+status: {}
