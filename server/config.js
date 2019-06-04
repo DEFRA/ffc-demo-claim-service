@@ -3,13 +3,15 @@ const joi = require('joi')
 // Define config schema
 const schema = {
   port: joi.number().default(3003),
-  env: joi.string().valid('development', 'test', 'production').default('development')
+  env: joi.string().valid('development', 'test', 'production').default('development'),
+  messageQueue: joi.string().uri().default('amqp://mine-support-message-service')
 }
 
 // Build config
 const config = {
   port: process.env.PORT,
-  env: process.env.NODE_ENV
+  env: process.env.NODE_ENV,
+  messageQueue: process.env.MINE_SUPPORT_MESSAGE_QUEUE
 }
 
 // Validate config

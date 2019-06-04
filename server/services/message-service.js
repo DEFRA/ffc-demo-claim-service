@@ -1,8 +1,10 @@
 const amqp = require('amqplib/callback_api')
+const config = require('../config')
 
 module.exports = {
   publishClaim: function (claim) {
-    amqp.connect('amqp://localhost', function (err, conn) {
+    const messageQueue = config.messageQueue
+    amqp.connect(messageQueue, function (err, conn) {
       if (err) {
         console.log(err)
       }
