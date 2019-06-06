@@ -4,7 +4,7 @@ const joi = require('joi')
 const schema = {
   port: joi.number().default(3003),
   env: joi.string().valid('development', 'test', 'production').default('development'),
-  messageQueue: joi.string().uri().default('amqp://mine-support-message-service')
+  messageQueue: joi.string().uri().default('amqp://localhost')
 }
 
 // Build config

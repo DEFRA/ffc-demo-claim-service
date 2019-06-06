@@ -56,6 +56,11 @@ spec:
       - name: mine-support-claim-service
         image: mine-support-claim-service
         imagePullPolicy: Never
+        env:                
+        - name: NODE_ENV
+          value: production
+        - name: MINE_SUPPORT_MESSAGE_QUEUE
+          value: amqp://mine-support-message-service
         ports:
         - containerPort: 3003               
       restartPolicy: Always
