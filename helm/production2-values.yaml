@@ -2,3 +2,4 @@ environment: production
 containers:
   service:
     registry: 'jwminesupport.azurecr.io'
+    imagePullPolicy: Always
