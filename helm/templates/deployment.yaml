@@ -24,13 +24,15 @@ spec:
           value: {{ .Values.containers.service.messageQueue }}
         ports:
         - containerPort: {{ .Values.containers.service.port }}
-      resources:
-        requests:
-          memory: {{ .Values.containers.service.requestMemory | quote }}
-          cpu: {{ .Values.containers.service.requestCpu | quote }}
-        limits:
-          memory: {{ .Values.containers.service.limitMemory | quote }}
-          cpu: {{ .Values.containers.service.limitCpu | quote }}   
+        command: ["/bin/sh","-c"]
+        args: ["sequelize db:migrate; node index"]
+        resources:
+          requests:
+            memory: {{ .Values.containers.service.requestMemory | quote }}
+            cpu: {{ .Values.containers.service.requestCpu | quote }}
+          limits:
+            memory: {{ .Values.containers.service.limitMemory | quote }}
+            cpu: {{ .Values.containers.service.limitCpu | quote }}   
         volumes:                      
       restartPolicy: {{ .Values.containers.service.restartPolicy }}
 status: {}
