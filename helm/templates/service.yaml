@@ -1,0 +1,37 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Values.database.name }}
+spec:
+  type: ExternalName
+  externalName: {{ .Values.database.externalName }}
+  ports:
+    - name: port
+      port: {{ .Values.database.port }}
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Values.messageQueue.name }}
+spec:
+  type: ExternalName
+  externalName: {{ .Values.messageQueue.externalName }}
+  ports:
+    - name: port
+      port: {{ .Values.messageQueue.port }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.component: {{ .Values.containers.service.name }}
+  name: {{ .Values.containers.service.name }}
+spec:
+  ports:
+  - name: http
+    port: {{ .Values.containers.service.port }}
+    targetPort: {{ .Values.containers.service.port }}
+  selector:
+    app.component: {{ .Values.containers.service.name }}
+status:
+  loadBalancer: {}
