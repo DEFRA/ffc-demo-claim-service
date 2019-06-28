@@ -1,3 +1,4 @@
+[![Build status](https://defradev.visualstudio.com/DEFRA_FutureFarming/_apis/build/status/defra-ff-mine-support-claim-service-spike)](https://defradev.visualstudio.com/DEFRA_FutureFarming/_build/latest?definitionId=0)
 
 # Mine Support Claim Service
 Digital service mock to claim public money in the event property subsides into mine shaft.
