@@ -1,4 +1,4 @@
-FROM node:10
+FROM node:10.15.3-alpine
 
 # Create app directory
 WORKDIR /mine-support-claim-service

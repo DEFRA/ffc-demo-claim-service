@@ -20,6 +20,10 @@ spec:
         env:                
         - name: NODE_ENV
           value: {{ .Values.environment }}
+        - name: POSTGRES_USERNAME
+          value: {{ .Values.postgresUsername }}
+        - name: POSTGRES_PASSWORD
+          value: {{ .Values.postgresPassword }}
         - name: MINE_SUPPORT_MESSAGE_QUEUE
           value: {{ .Values.containers.service.messageQueue }}
         ports:
@@ -32,7 +36,7 @@ spec:
             cpu: {{ .Values.containers.service.requestCpu | quote }}
           limits:
             memory: {{ .Values.containers.service.limitMemory | quote }}
-            cpu: {{ .Values.containers.service.limitCpu | quote }}   
+            cpu: {{ .Values.containers.service.limitCpu | quote }}
         volumes:                      
       restartPolicy: {{ .Values.containers.service.restartPolicy }}
 status: {}
