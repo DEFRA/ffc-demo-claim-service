@@ -10,9 +10,9 @@ containers:
     tag: latest
     imagePullPolicy: IfNotPresent
     requestMemory: 30Mi
-    requestCpu: 10m
+    requestCpu: 30m
     limitMemory: 60Mi
-    limitCpu: 40m
+    limitCpu: 60m
     runAsNonRoot: true
     runAsUser: 1000
     readOnlyRootFilesystem: true
