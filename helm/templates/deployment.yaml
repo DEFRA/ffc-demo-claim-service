@@ -17,7 +17,7 @@ spec:
       - name: {{ .Values.containers.service.name }}
         image: {{ if .Values.containers.service.registry }}{{ .Values.containers.service.registry }}/{{ end }}{{ .Values.containers.service.image }}:{{ .Values.containers.service.tag }}
         imagePullPolicy: {{ .Values.containers.service.imagePullPolicy }}
-        env:                
+        env:
         - name: NODE_ENV
           value: {{ .Values.environment }}
         - name: POSTGRES_USERNAME
