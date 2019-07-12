@@ -1,0 +1,18 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "mine_claims",
+    "host": "localhost",
+    "port": 5432,
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "mine_claims",
+    "host": "mine-support-postgres-claims",
+    "port": 5432,
+    "dialect": "postgres"
+  }
+}
