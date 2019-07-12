@@ -15,6 +15,7 @@ Digital service mock to claim public money in the event property subsides into m
 # Prerequisites
 Node v10+
 PostgreSQL
+Message queue - amqp protocol
 
 # Running the application
 The application is ready to run:
