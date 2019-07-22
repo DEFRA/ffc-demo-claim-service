@@ -7,7 +7,7 @@
     "lint": "standard",
     "unit-test": "lab -c -r console -o stdout -r lcov -o lcov.info",
     "test": "npm run lint && npm run unit-test",
-    "migrate": "npx sequelize-cli db:migrate"
+    "migrate": "sequelize db:migrate"
   },
   "author": "",
   "license": "ISC",
@@ -30,7 +30,6 @@
     "good-file": "6.0.1",
     "good-squeeze": "5.1.0",
     "lab": "17.3.0",
-    "sequelize-cli": "^5.5.0",
     "standard": "12.0.1"
   }
 }
