@@ -1,48 +1,45 @@
-const container = require('rhea')
+const rheapromise = require('rhea-promise')
 const config = require('../config')
+const calculationQueue = 'calculation'
+const scheduleQueue = 'schedule'
+const connectionOptions = {
+  transport: config.messageQueuePort === 5672 ? 'tcp' : 'ssl',
+  port: config.messageQueuePort,
+  reconnect_limit: 10,
+  host: config.messageQueue,
+  hostname: config.messageQueue,
+  username: config.messageQueueUser,
+  password: config.messageQueuePass
+}
 
 module.exports = {
-  publishClaim: function (claim) {
+  publishClaim: async function (claim) {
     try {
-      const calculationQueue = 'calculation'
-      const scheduleQueue = 'schedule'
       const data = JSON.stringify(claim)
-      let confirmed = 0
-      let sent = 0
-      let total = 2
-      container.on('sendable', (context) => {
-        sent++
-        console.log(`Sent ${sent}`)
-        context.sender.send({ body: data })
-      })
-      container.on('accepted', (context) => {
-        console.log(`Confirmed ${confirmed + 1}`)
-        console.log(context)
-        if (++confirmed === total) {
-          console.log('Closing connection')
-          context.connection.close()
-        }
-      })
-      container.on('disconnected', (context) => {
-        if (context.error) {
-          console.log('%s %j', context.error, context.error)
-        }
-        sent = confirmed
-      })
-      container.on('connection_open', (context) => {
-        context.connection.open_sender(calculationQueue)
-        context.connection.open_sender(scheduleQueue)
-      })
-      const activeMQOptions = {
-        transport: config.messageQueuePort === 5672 ? 'tcp' : 'ssl',
-        port: config.messageQueuePort,
-        reconnect_limit: 10,
-        host: config.messageQueue,
-        hostname: config.messageQueue,
-        username: config.messageQueueUser,
-        password: config.messageQueuePass
+      const connection = new rheapromise.Connection(connectionOptions)
+      const calculationQueueOptions = { target: { address: calculationQueue } }
+      const scheduleQueueOptions = { target: { address: scheduleQueue } }
+
+      try {
+        await connection.open()
+
+        const senders = []
+        senders.push(connection.createSender(calculationQueueOptions))
+        senders.push(connection.createSender(scheduleQueueOptions))
+
+        const results = await Promise.all(senders)
+        const delivery = await Promise.all(results.map(sender => { sender.send({ body: data }) }))
+
+        delivery.map(del => { console.log(del) })
+
+        await Promise.all(results.map(sender => {
+          console.log(sender)
+          sender.close()
+        }))
+        await connection.close()
+      } catch (error) {
+        console.log(error)
       }
-      container.connect(activeMQOptions)
     } catch (err) {
       console.log(err)
     }
