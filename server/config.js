@@ -4,20 +4,25 @@ const joi = require('joi')
 const schema = {
   port: joi.number().default(3003),
   env: joi.string().valid('development', 'test', 'production').default('development'),
-  messageQueue: joi.string().default('mine-support-artemis'),
-  messageQueueUser: joi.string(),
-  messageQueuePass: joi.string(),
-  messageQueuePort: joi.number().default(5672)
+  messageQueue: {
+    address: joi.string().default('mine-support-artemis'),
+    transport: joi.string().default('tcp'),
+    user: joi.string(),
+    pass: joi.string(),
+    port: joi.number().default(5672)
+  }
 }
 
 // Build config
 const config = {
   port: process.env.PORT,
   env: process.env.NODE_ENV,
-  messageQueue: process.env.MINE_SUPPORT_MESSAGE_QUEUE,
-  messageQueueUser: process.env.MINE_SUPPORT_MESSAGE_QUEUE_USER,
-  messageQueuePass: process.env.MINE_SUPPORT_MESSAGE_QUEUE_PASS,
-  messageQueuePort: process.env.MINE_SUPPORR_MESSAGE_QUEUE_PORT
+  messageQueue: {
+    address: process.env.MINE_SUPPORT_MESSAGE_QUEUE,
+    user: process.env.MINE_SUPPORT_MESSAGE_QUEUE_USER,
+    pass: process.env.MINE_SUPPORT_MESSAGE_QUEUE_PASS,
+    port: process.env.MINE_SUPPORR_MESSAGE_QUEUE_PORT
+  }
 }
 
 // Validate config

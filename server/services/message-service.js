@@ -2,44 +2,53 @@ const rheapromise = require('rhea-promise')
 const config = require('../config')
 const calculationQueue = 'calculation'
 const scheduleQueue = 'schedule'
-const connectionOptions = {
-  transport: config.messageQueuePort === 5672 ? 'tcp' : 'ssl',
-  port: config.messageQueuePort,
-  reconnect_limit: 10,
-  host: config.messageQueue,
-  hostname: config.messageQueue,
-  username: config.messageQueueUser,
-  password: config.messageQueuePass
-}
 
 module.exports = {
-  publishClaim: async function (claim) {
-    try {
-      const data = JSON.stringify(claim)
-      const connection = new rheapromise.Connection(connectionOptions)
-      const calculationQueueOptions = { target: { address: calculationQueue } }
-      const scheduleQueueOptions = { target: { address: scheduleQueue } }
 
+  publishClaim: async function (claim, messageQueueOptions) {
+    let configureMQ = function (options) {
+      return {
+        transport: options.transport,
+        port: options.port,
+        reconnect_limit: 10,
+        host: options.address,
+        hostname: options.address,
+        username: options.user,
+        password: options.pass
+      }
+    }
+    let sendClaim = async function (claim, connection, queueName) {
+      const data = JSON.stringify(claim)
+      const queueOptions = { target: { address: queueName } }
+      const sender = await connection.createSender(queueOptions)
+      let delivery
+      try {
+        console.log(`Sending claim to ${queueName}`)
+        delivery = await sender.send({ body: data })
+      } catch (error) {
+        throw error
+      }
+      await sender.close()
+      return delivery
+    }
+
+    try {
+      const connectionOptions = configureMQ(messageQueueOptions || config.messageQueue)
+      console.log(connectionOptions)
+
+      const connection = new rheapromise.Connection(connectionOptions)
+      console.log(`New claim to send to message queues : ${claim}`)
       try {
         await connection.open()
 
-        const senders = []
-        senders.push(connection.createSender(calculationQueueOptions))
-        senders.push(connection.createSender(scheduleQueueOptions))
+        const delivery = await Promise.all([sendClaim(claim, connection, calculationQueue),
+          sendClaim(claim, connection, scheduleQueue)])
+        delivery.map(del => { console.log(del.settled) })
 
-        const results = await Promise.all(senders)
-        const delivery = await Promise.all(results.map(sender => { sender.send({ body: data }) }))
-
-        delivery.map(del => { console.log(del) })
-
-        await Promise.all(results.map(sender => {
-          console.log(sender)
-          sender.close()
-        }))
-        await connection.close()
       } catch (error) {
         console.log(error)
       }
+      await connection.close()
     } catch (err) {
       console.log(err)
     }
