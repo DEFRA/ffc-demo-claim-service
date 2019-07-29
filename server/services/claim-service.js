@@ -4,10 +4,8 @@ const messageService = require('../services/message-service')
 
 module.exports = {
   create: async function (claim) {
-    console.log(claim)
     const existingClaim = await claimRepository.getById(claim.claimId)
     if (existingClaim != null) {
-      console.log('existing claim, no action required')
       return existingClaim
     }
 
@@ -19,7 +17,7 @@ module.exports = {
       })
     }
 
-    messageService.publishClaim(claim)
+    await messageService.publishClaim(claim)
 
     return claimRecord
   }
