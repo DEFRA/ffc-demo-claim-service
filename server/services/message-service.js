@@ -44,7 +44,6 @@ module.exports = {
         const delivery = await Promise.all([sendClaim(claim, connection, calculationQueue),
           sendClaim(claim, connection, scheduleQueue)])
         delivery.map(del => { console.log(del.settled) })
-
       } catch (error) {
         console.log(error)
       }
