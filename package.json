@@ -33,6 +33,7 @@
     "jest": "^24.8.0",
     "jest-junit": "^7.0.0",
     "sequelize-cli": "^5.5.0",
+    "sequelize-mock": "^0.10.2",
     "standard": "12.0.1"
   },
   "jest": {
@@ -47,12 +48,12 @@
       "cobertura"
     ],
     "coverageThreshold": {
-        "global": {
-          "branches": 90,
-          "functions": 90,
-          "lines": 90,
-          "statements": 90
-        }
+      "global": {
+        "branches": 90,
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
+      }
     },
     "modulePathIgnorePatterns": [
       "node_modules"
@@ -73,9 +74,15 @@
     "testEnvironment": "node"
   },
   "standard": {
-    "ignore": [
-      "/test/",
-      "**/__mocks__/*"
+    "globals": [
+      "describe",
+      "beforeEach",
+      "expect",
+      "test",
+      "afterEach",
+      "jest",
+      "beforeAll",
+      "afterAll"
     ]
   }
 }
