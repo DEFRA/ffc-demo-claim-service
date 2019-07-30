@@ -16,8 +16,10 @@ describe('Test message service', () => {
       dateOfSubsidence: new Date(),
       mineType: ['gold', 'iron']
     }
+    const jsonData = JSON.stringify(claimRecord)
     const claim = await messageService.publishClaim(claimRecord)
     await expect(rheaPromiseMock._SendFunction).toHaveBeenCalledTimes(2)
+    await expect(rheaPromiseMock._SendFunction).toHaveBeenCalledWith({ body: jsonData })
   })
 
   afterEach(async () => {
