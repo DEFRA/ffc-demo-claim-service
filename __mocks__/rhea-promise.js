@@ -19,7 +19,7 @@ const MockSender = jest.fn().mockImplementation(() => {
   }
 })
 
-const mockCreateSender = jest.fn(function () {
+const mockCreateSender = jest.fn(() => {
   return new MockSender()
 })
 
