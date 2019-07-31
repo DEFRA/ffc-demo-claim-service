@@ -4,18 +4,18 @@
 Digital service mock to claim public money in the event property subsides into mine shaft.  The claim service receives claim data and if doesn’t already exist saves it in a Postgresql database table.  It also publishes events to message queues that a new claim has been received.
 
 # Environment variables
-|Name|Description|Required|Default|Valid|Notes|
-|---|---|:---:|---|---|---|
-|NODE_ENV|Node environment|no|development|development,test,production||
-|PORT|Port number|no|3003|||
-|POSTGRES_USERNAME|Postgres username|yes||||
-|POSTGRES_PASSWORD|Postgres password|yes||||
-|MINE_SUPPORT_MESSAGE_QUEUE|Message queue url|no|amqp://localhost|||
+
+| name              | description       | required | default |            valid            | notes |
+|-------------------|-------------------|:--------:|---------|:---------------------------:|-------|
+| NODE_ENV          | Node environment  |    no    |         | development,test,production |       |
+| PORT              | Port number       |    no    | 3000    |                             |       |
+| POSTGRES_USERNAME | Postgres username |   yes    |         |                             |       |
+| POSTGRES_PASSWORD | Postgres password |   yes    |         |                             |       |
+|MINE_SUPPORT_MESSAGE_QUEUE|Message queue server name|no|mine-support-artemis|||
 
 # Prerequisites
-Node v10+
-PostgreSQL
-Message queue - amqp protocol
+
+Node v10+, access to a postgress database, access to an AMQP 1.0 compatible message queue service
 
 # Running the application
 The application is designed to run as a container via Docker Compose or Kubernetes (with Helm).
@@ -32,4 +32,20 @@ The service has been developed with the intention of running in Kubernetes.  A h
 # How to run tests
 Unit tests are written in Lab and can be run with the following command:
 
-`npm run test`
+`$ node index.js`
+
+# Development tools setup
+
+`$ npm install`
+
+This will install all the development packages and test tools required.
+
+# How to run in development
+
+This package is a microservice which is part of the overall "mine-service" POC application. It is a REST API that can be called by posting a json object to the /submit path
+
+# Test tools
+
+Run unit test by running `npm test`
+
+The tool can be run directly by running `npx jest`
