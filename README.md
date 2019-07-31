@@ -5,13 +5,16 @@ Digital service mock to claim public money in the event property subsides into m
 
 # Environment variables
 
-| name              | description       | required | default |            valid            | notes |
-|-------------------|-------------------|:--------:|---------|:---------------------------:|-------|
-| NODE_ENV          | Node environment  |    no    |         | development,test,production |       |
-| PORT              | Port number       |    no    | 3000    |                             |       |
-| POSTGRES_USERNAME | Postgres username |   yes    |         |                             |       |
-| POSTGRES_PASSWORD | Postgres password |   yes    |         |                             |       |
-|MINE_SUPPORT_MESSAGE_QUEUE|Message queue server name|no|mine-support-artemis|||
+| name                            | description        | required | default              | valid                       | notes |
+|---------------------------------|--------------------|:--------:|----------------------|:---------------------------:|-------|
+| NODE_ENV                        | Node environment   |    no    |                      | development,test,production |       |
+| PORT                            | Port number        |    no    | 3003                 |                             |       |
+| POSTGRES_USERNAME               | Postgres username  |   yes    |                      |                             |       |
+| POSTGRES_PASSWORD               | Postgres password  |   yes    |                      |                             |       |
+| MINE_SUPPORT_MESSAGE_QUEUE      | MQ Server hostname |    no    | mine-support-artemis |                             |       |
+| MINE_SUPPORT_MESSAGE_QUEUE_PORT | MQ Server port     |    no    | 5672                 |                             |       |
+| MINE_SUPPORT_MESSAGE_QUEUE_USER | MQ Server username |    no    |                      |                             |       |
+| MINE_SUPPORT_MESSAGE_QUEUE_PASS | MQ Server password |    no    |                      |                             |       |
 
 # Prerequisites
 
