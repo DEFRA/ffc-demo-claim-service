@@ -1,4 +1,4 @@
-[![Build status](https://defradev.visualstudio.com/DEFRA_FutureFarming/_apis/build/status/defra-ff-mine-support-claim-service-spike)](https://defradev.visualstudio.com/DEFRA_FutureFarming/_build/latest?definitionId=0)
+[![Build status](https://defradev.visualstudio.com/DEFRA_FutureFarming/_apis/build/status/defra-ff-mine-support-claim-service)](https://defradev.visualstudio.com/DEFRA_FutureFarming/_build/latest?definitionId=563)
 
 # Mine Support Claim Service
 Digital service mock to claim public money in the event property subsides into mine shaft.
@@ -25,6 +25,11 @@ Node v10+, access to a postgress database, access to an AMQP 1.0 compatible mess
 The application is ready to run:
 
 `$ node index.js`
+
+Alternatively the project can be run in a container through the docker-compose.yaml file.
+
+# Kubernetes
+The service has been developed with the intention of running in Kubernetes.  A helm chart is included in the `.\helm` folder.
 
 # Development tools setup
 
