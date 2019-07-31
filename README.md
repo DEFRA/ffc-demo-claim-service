@@ -37,6 +37,11 @@ Unit tests are written in Lab and can be run with the following command:
 
 `$ node index.js`
 
+Alternatively the project can be run in a container through the docker-compose.yaml file.
+
+# Kubernetes
+The service has been developed with the intention of running in Kubernetes.  A helm chart is included in the `.\helm` folder.
+
 # Development tools setup
 
 `$ npm install`
