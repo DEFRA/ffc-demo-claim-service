@@ -19,6 +19,8 @@ describe('Test claim repository', () => {
 
   test('Claim repository loads object from database', async () => {
     claimRepository = require('../server/repository/claim-repository')
+    // You have to push a query result into a queue, as the mock db doesn't keep track.
+    // Anything you push into the results queue is returned by the next query
     mockDb.$queueResult({
       claimId: 'MINE123',
       propertyType: 'business',

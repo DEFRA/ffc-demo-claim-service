@@ -18,6 +18,8 @@ describe('Test minetype repository', () => {
 
   test('minetype repository loads object from database', async () => {
     minetypeRepository = require('../server/repository/minetype-repository')
+    // You have to push a query result into a queue, as the mock db doesn't keep track.
+    // Anything you push into the results queue is returned by the next query
     mockDb.$queueResult({
       mineTypeId: 1,
       claimId: 'MINE123',
