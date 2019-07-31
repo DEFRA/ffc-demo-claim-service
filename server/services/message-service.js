@@ -41,15 +41,19 @@ module.exports = {
       try {
         await connection.open()
 
-        const delivery = await Promise.all([sendClaim(claim, connection, calculationQueue),
-          sendClaim(claim, connection, scheduleQueue)])
+        const delivery = await Promise.all([
+          sendClaim(claim, connection, calculationQueue),
+          sendClaim(claim, connection, scheduleQueue)
+        ])
         delivery.map(del => { console.log(del.settled) })
       } catch (error) {
         console.log(error)
+        throw error
       }
       await connection.close()
     } catch (err) {
       console.log(err)
+      throw err
     }
   }
 }

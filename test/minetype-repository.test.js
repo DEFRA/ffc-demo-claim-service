@@ -1,14 +1,13 @@
 let minetypeRepository
-let mockSequelize
+let MockSequelize
 let mockDb
 
 describe('Test minetype repository', () => {
-
   beforeEach(async () => {
     jest.mock('../server/models')
     jest.mock('../server/models/minetype', () => {
-      mockSequelize = require('sequelize-mock')
-      mockDb = new mockSequelize()
+      MockSequelize = require('sequelize-mock')
+      mockDb = new MockSequelize()
       return mockDb.define('mineTypes', {
         mineTypeId: 1,
         claimId: 'MINE123',
@@ -37,7 +36,7 @@ describe('Test minetype repository', () => {
   test('minetype repository handles database failure', async () => {
     minetypeRepository = require('../server/repository/minetype-repository')
 
-    mockDb.$queueFailure(new mockSequelize.ValidationError('Test error'))
+    mockDb.$queueFailure(new MockSequelize.ValidationError('Test error'))
 
     return expect(minetypeRepository.create({
       mineTypeId: 1,
@@ -55,8 +54,8 @@ describe('Test minetype repository', () => {
 describe('Test minetype model', () => {
   test('Minetype model is created', async () => {
     jest.mock('sequelize', () => {
-      const mockSequelize = require('sequelize-mock')
-      return mockSequelize
+      const MockSequelize = require('sequelize-mock')
+      return MockSequelize
     })
     const minetypeModel = require('../server/models/minetype')
     expect(minetypeModel.name).toEqual('')
