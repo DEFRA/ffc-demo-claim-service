@@ -4,5 +4,14 @@ services:
     build: .
     image: mine-support-claim-service
     container_name: mine-support-claim-service
+    hostname: mine-support-claim-service
+    networks:
+      - default
+      - mine-support
     ports:
-        - "3003:3003"
+      - "3003:3003"
+
+networks:
+  mine-support:
+    external: true
+

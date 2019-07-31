@@ -1,13 +1,9 @@
 describe('Web test', () => {
   let server
   let claimRepositoryMock
-  let minetypeRepositoryMock
-  let messageServiceMock
 
   beforeEach(async () => {
     claimRepositoryMock = require('../server/repository/claim-repository')
-    minetypeRepositoryMock = require('../server/repository/minetype-repository')
-    messageServiceMock = require('../server/services/message-service')
     jest.mock('../server/repository/claim-repository')
     jest.mock('../server/repository/minetype-repository')
     jest.mock('../server/services/message-service')

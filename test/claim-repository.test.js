@@ -1,14 +1,13 @@
 let claimRepository
-let mockSequelize
+let MockSequelize
 let mockDb
 
 describe('Test claim repository', () => {
-
   beforeEach(async () => {
     jest.mock('../server/models')
     jest.mock('../server/models/claim', () => {
-      mockSequelize = require('sequelize-mock')
-      mockDb = new mockSequelize()
+      MockSequelize = require('sequelize-mock')
+      mockDb = new MockSequelize()
       return mockDb.define('claims', {
         claimId: 'MINE123',
         propertyType: 'business',
@@ -56,7 +55,7 @@ describe('Test claim repository', () => {
   test('Claim repository handles database failure', async () => {
     claimRepository = require('../server/repository/claim-repository')
 
-    mockDb.$queueFailure(new mockSequelize.ValidationError('Test error'))
+    mockDb.$queueFailure(new MockSequelize.ValidationError('Test error'))
 
     return expect(claimRepository.getById('MINE123')).rejects.toThrow()
   })

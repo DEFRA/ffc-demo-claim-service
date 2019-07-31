@@ -24,7 +24,7 @@ describe('Test claim service', () => {
       dateOfSubsidence: new Date(),
       mineType: ['gold', 'iron']
     }
-    const claim = await claimService.create(claimRecord)
+    await claimService.create(claimRecord)
     return expect(claimRepositoryMock.create).toHaveBeenCalledTimes(1)
   })
 
@@ -37,7 +37,7 @@ describe('Test claim service', () => {
       dateOfSubsidence: new Date(),
       mineType: ['gold', 'iron']
     }
-    const claim = await claimService.create(claimRecord)
+    await claimService.create(claimRecord)
     return expect(claimRepositoryMock.create).toHaveBeenCalledTimes(0)
   })
 
@@ -49,7 +49,7 @@ describe('Test claim service', () => {
       dateOfSubsidence: new Date(),
       mineType: ['gold', 'iron']
     }
-    const claim = await claimService.create(claimRecord)
+    await claimService.create(claimRecord)
     return expect(minetypeRepositoryMock.create).toHaveBeenCalledTimes(2)
   })
 
@@ -61,7 +61,7 @@ describe('Test claim service', () => {
       dateOfSubsidence: new Date(),
       mineType: ['gold', 'iron']
     }
-    const claim = await claimService.create(claimRecord)
+    await claimService.create(claimRecord)
     return expect(messageServiceMock.publishClaim).toHaveBeenCalledTimes(1)
   })
 
