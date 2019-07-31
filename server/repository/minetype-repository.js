@@ -10,7 +10,6 @@ module.exports = {
 
       return mineTypeRecord
     } catch (err) {
-      console.log(err)
       throw err
     }
   }

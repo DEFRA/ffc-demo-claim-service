@@ -2,8 +2,8 @@ const db = {}
 
 const Sequelize = require('sequelize')
 jest.mock('sequelize', () => {
-  const __sqltemp = require('sequelize-mock')
-  return __sqltemp
+  const mockSequelize = require('sequelize-mock')
+  return mockSequelize
 })
 let sequelize = new Sequelize()
 const claim = require('../claim')

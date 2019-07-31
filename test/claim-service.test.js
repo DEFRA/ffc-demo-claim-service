@@ -25,7 +25,7 @@ describe('Test claim service', () => {
       mineType: ['gold', 'iron']
     }
     const claim = await claimService.create(claimRecord)
-    await expect(claimRepositoryMock.create).toHaveBeenCalledTimes(1)
+    return expect(claimRepositoryMock.create).toHaveBeenCalledTimes(1)
   })
 
   test('Claim service create works with existing claim', async () => {
@@ -38,7 +38,7 @@ describe('Test claim service', () => {
       mineType: ['gold', 'iron']
     }
     const claim = await claimService.create(claimRecord)
-    await expect(claimRepositoryMock.create).toHaveBeenCalledTimes(0)
+    return expect(claimRepositoryMock.create).toHaveBeenCalledTimes(0)
   })
 
   test('Claim service gets details of mine types from mine type repository', async () => {
@@ -50,7 +50,7 @@ describe('Test claim service', () => {
       mineType: ['gold', 'iron']
     }
     const claim = await claimService.create(claimRecord)
-    await expect(minetypeRepositoryMock.create).toHaveBeenCalledTimes(2)
+    return expect(minetypeRepositoryMock.create).toHaveBeenCalledTimes(2)
   })
 
   test('Claim service publishes the claim to the message broker', async () => {
@@ -62,7 +62,7 @@ describe('Test claim service', () => {
       mineType: ['gold', 'iron']
     }
     const claim = await claimService.create(claimRecord)
-    await expect(messageServiceMock.publishClaim).toHaveBeenCalledTimes(1)
+    return expect(messageServiceMock.publishClaim).toHaveBeenCalledTimes(1)
   })
 
   afterEach(async () => {

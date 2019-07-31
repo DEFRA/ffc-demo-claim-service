@@ -1,19 +1,15 @@
-let mockClaimRepository
+let claimRepository
+let mockSequelize
+let mockDb
 
 describe('Test claim repository', () => {
 
   beforeEach(async () => {
     jest.mock('../server/models')
     jest.mock('../server/models/claim', () => {
-      const SequelizeMock = require('sequelize-mock')
-      const dbMock = new SequelizeMock()
-      dbMock.$queueResult({
-        claimId: 'MINE123',
-        propertyType: 'business',
-        accessible: false,
-        dateOfSubsidence: new Date('2019-01-01 12:00:00')
-      })
-      return dbMock.define('claims', {
+      mockSequelize = require('sequelize-mock')
+      mockDb = new mockSequelize()
+      return mockDb.define('claims', {
         claimId: 'MINE123',
         propertyType: 'business',
         accessible: false,
@@ -23,9 +19,14 @@ describe('Test claim repository', () => {
   })
 
   test('Claim repository loads object from database', async () => {
-
-    mockClaimRepository = require('../server/repository/claim-repository')
-    const claim = await mockClaimRepository.getById('MINE123')
+    claimRepository = require('../server/repository/claim-repository')
+    mockDb.$queueResult({
+      claimId: 'MINE123',
+      propertyType: 'business',
+      accessible: false,
+      dateOfSubsidence: new Date('2019-01-01 12:00:00')
+    })
+    const claim = await claimRepository.getById('MINE123')
     await expect(claim.claimId).toEqual('MINE123')
     await expect(claim.propertyType).toEqual('business')
     await expect(claim.accessible).toEqual(false)
@@ -33,8 +34,14 @@ describe('Test claim repository', () => {
   })
 
   test('Claim repository creates object in database', async () => {
-    mockClaimRepository = require('../server/repository/claim-repository')
-    const claim = await mockClaimRepository.create({
+    claimRepository = require('../server/repository/claim-repository')
+    mockDb.$queueResult({
+      claimId: 'MINE123',
+      propertyType: 'business',
+      accessible: false,
+      dateOfSubsidence: new Date('2019-01-01 12:00:00')
+    })
+    const claim = await claimRepository.create({
       claimId: 'MINE123',
       propertyType: 'business',
       accessible: false,
@@ -43,11 +50,30 @@ describe('Test claim repository', () => {
     await expect(claim.claimId).toEqual('MINE123')
     await expect(claim.propertyType).toEqual('business')
     await expect(claim.accessible).toEqual(false)
-    await expect(claim.dateOfSubsidence).toEqual(new Date('2019-01-01 12:00:00'))
+    return expect(claim.dateOfSubsidence).toEqual(new Date('2019-01-01 12:00:00'))
+  })
+
+  test('Claim repository handles database failure', async () => {
+    claimRepository = require('../server/repository/claim-repository')
+
+    mockDb.$queueFailure(new mockSequelize.ValidationError('Test error'))
+
+    return expect(claimRepository.getById('MINE123')).rejects.toThrow()
   })
 
   afterEach(async () => {
     jest.unmock('../server/models/claim')
     jest.unmock('../server/models')
+  })
+})
+
+describe('Test Claim model', () => {
+  test('claim model is created', async () => {
+    jest.mock('sequelize', () => {
+      const mockSequelize = require('sequelize-mock')
+      return mockSequelize
+    })
+    const claimModel = require('../server/models/claim')
+    expect(claimModel.name).toEqual('')
   })
 })
