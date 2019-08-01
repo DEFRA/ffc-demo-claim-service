@@ -18,11 +18,13 @@ PostgreSQL
 Message queue - amqp protocol
 
 # Running the application
-The application is ready to run:
+The application is designed to run as a container via Docker Compose or Kubernetes (with Helm).
 
-`$ node index.js`
+A convenience script is provided to run via Docker Compose:
 
-Alternatively the project can be run in a container through the docker-compose.yaml file.
+`scripts/start`
+
+This will create the required `mine-support` network before starting the service so that it can communicate with other Mine Support services running alongside it through docker-compose. The script will then attach to the running service, tailing its logs and allowing the service to be brought down by pressing `Ctrl + C`.
 
 # Kubernetes
 The service has been developed with the intention of running in Kubernetes.  A helm chart is included in the `.\helm` folder.
@@ -31,4 +33,3 @@ The service has been developed with the intention of running in Kubernetes.  A h
 Unit tests are written in Lab and can be run with the following command:
 
 `npm run test`
-
