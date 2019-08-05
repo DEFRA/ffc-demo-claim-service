@@ -5,31 +5,48 @@
   "main": "index.js",
   "scripts": {
     "lint": "standard",
-    "unit-test": "lab -c -r console -o stdout -r lcov -o lcov.info",
-    "test": "npm run lint && npm run unit-test",
-    "migrate": "sequelize db:migrate"
+    "pretest": "npm run test:lint",
+    "test": "npm run test:unit",
+    "test:lint": "standard",
+    "test:unit": "jest",
+    "migrate": "npx sequelize-cli db:migrate",
+    "watch:build": "nodemon --exec npm run build --ext scss --legacy-watch",
+    "watch:unit": "jest --coverage=false --onlyChanged --watch"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "amqplib": "^0.5.3",
     "boom": "7.2.2",
     "hapi": "17.7.0",
     "joi": "14.0.4",
     "pg": "^7.9.0",
     "pg-hstore": "^2.3.2",
-    "proxyquire": "^2.1.0",
+    "rhea-promise": "^1.0.0",
     "sequelize": "^6.0.0"
   },
   "devDependencies": {
     "blipp": "3.1.1",
-    "code": "5.2.3",
     "codeclimate-test-reporter": "0.5.1",
     "good": "8.1.1",
     "good-console": "7.1.0",
     "good-file": "6.0.1",
     "good-squeeze": "5.1.0",
-    "lab": "17.3.0",
+    "jest": "^24.8.0",
+    "jest-junit": "^7.0.0",
+    "sequelize-cli": "^5.5.0",
+    "sequelize-mock": "^0.10.2",
     "standard": "12.0.1"
+  },
+  "standard": {
+    "globals": [
+      "describe",
+      "beforeEach",
+      "expect",
+      "test",
+      "afterEach",
+      "jest",
+      "beforeAll",
+      "afterAll"
+    ]
   }
 }

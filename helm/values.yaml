@@ -18,13 +18,13 @@ containers:
     readOnlyRootFilesystem: true
     allowPrivilegeEscalation: false
     restartPolicy: Always
-    messageQueue: amqp://mine-support-message-service
+    messageQueue: mine-support-artemis
 database:
   name: mine-support-postgres-claims
   externalName: host.docker.internal
   port: 5432
 messageQueue:
-  name: mine-support-message-service
+  name: mine-support-artemis
   externalName: host.docker.internal
   port: 5672
 replicas: 1
