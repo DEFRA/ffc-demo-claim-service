@@ -5,35 +5,36 @@ const scheduleQueue = 'schedule'
 
 module.exports = {
 
-  publishClaim: async function (claim, messageQueueOptions) {
-    let configureMQ = function (options) {
-      return {
-        transport: options.transport,
-        port: options.port,
-        reconnect_limit: 10,
-        host: options.address,
-        hostname: options.address,
-        username: options.user,
-        password: options.pass
-      }
+  configureMQ: function (options) {
+    return {
+      transport: options.transport,
+      port: options.port,
+      reconnect_limit: 10,
+      host: options.address,
+      hostname: options.address,
+      username: options.user,
+      password: options.pass
     }
-    let sendClaim = async function (claim, connection, queueName) {
-      const data = JSON.stringify(claim)
-      const queueOptions = { target: { address: queueName } }
-      const sender = await connection.createSender(queueOptions)
-      let delivery
-      try {
-        console.log(`Sending claim to ${queueName}`)
-        delivery = await sender.send({ body: data })
-      } catch (error) {
-        throw error
-      }
-      await sender.close()
-      return delivery
-    }
+  },
 
+  sendClaim: async function (claim, connection, queueName) {
+    const data = JSON.stringify(claim)
+    const queueOptions = { target: { address: queueName } }
+    const sender = await connection.createSender(queueOptions)
+    let delivery
     try {
-      const connectionOptions = configureMQ(messageQueueOptions || config.messageQueue)
+      console.log(`Sending claim to ${queueName}`)
+      delivery = await sender.send({ body: data })
+    } catch (error) {
+      throw error
+    }
+    await sender.close()
+    return delivery
+  },
+
+  publishClaim: async function (claim, messageQueueOptions) {
+    try {
+      const connectionOptions = this.configureMQ(messageQueueOptions || config.messageQueue)
       console.log(connectionOptions)
 
       const connection = new rheapromise.Connection(connectionOptions)
@@ -42,8 +43,8 @@ module.exports = {
         await connection.open()
 
         const delivery = await Promise.all([
-          sendClaim(claim, connection, calculationQueue),
-          sendClaim(claim, connection, scheduleQueue)
+          this.sendClaim(claim, connection, calculationQueue),
+          this.sendClaim(claim, connection, scheduleQueue)
         ])
         delivery.map(del => { console.log(del.settled) })
       } catch (error) {
