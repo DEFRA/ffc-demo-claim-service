@@ -3,5 +3,5 @@
 docker network inspect mine-support &>/dev/null || docker network create mine-support
 
 docker-compose down -v
-docker-compose build --no-cache mine-support-claim-service
-docker-compose up --force-recreate mine-support-claim-service
+docker-compose build --no-cache
+docker-compose up --force-recreate
