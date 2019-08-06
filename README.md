@@ -5,7 +5,7 @@ Digital service mock to claim public money in the event property subsides into m
 
 # Environment variables
 
-| name                            | description        | required | default              | valid                       | notes |
+| Name                            | Description        | Required | Default              | Valid                       | Notes |
 |---------------------------------|--------------------|:--------:|----------------------|:---------------------------:|-------|
 | NODE_ENV                        | Node environment   |    no    |                      | development,test,production |       |
 | PORT                            | Port number        |    no    | 3003                 |                             |       |
@@ -18,7 +18,9 @@ Digital service mock to claim public money in the event property subsides into m
 
 # Prerequisites
 
-Node v10+, access to a postgress database, access to an AMQP 1.0 compatible message queue service
+- Node v10+
+- access to a postgress database
+- access to an AMQP 1.0 compatible message queue service
 
 # Running the application
 The application is designed to run as a container via Docker Compose or Kubernetes (with Helm).
@@ -28,16 +30,6 @@ A convenience script is provided to run via Docker Compose:
 `scripts/start`
 
 This will create the required `mine-support` network before starting the service so that it can communicate with other Mine Support services running alongside it through docker-compose. The script will then attach to the running service, tailing its logs and allowing the service to be brought down by pressing `Ctrl + C`.
-
-# Kubernetes
-The service has been developed with the intention of running in Kubernetes.  A helm chart is included in the `.\helm` folder.
-
-# How to run tests
-Unit tests are written in Lab and can be run with the following command:
-
-`$ node index.js`
-
-Alternatively the project can be run in a container through the docker-compose.yaml file.
 
 # Kubernetes
 The service has been developed with the intention of running in Kubernetes.  A helm chart is included in the `.\helm` folder.
