@@ -6,14 +6,12 @@ module.exports = {
   create: async function (claim) {
     const existingClaim = await claimRepository.getById(claim.claimId)
     if (existingClaim != null) {
-      console.log('Found existing claim')
-      console.log(existingClaim)
+      console.log('Found existing claim', existingClaim)
       return existingClaim
     }
 
     const claimRecord = await claimRepository.create(claim)
-    console.log('Creating new claim')
-    console.log(claim)
+    console.log('Creating new claim', claim)
 
     if (claim.mineType != null) {
       claim.mineType.forEach(type => {

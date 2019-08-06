@@ -1,12 +1,20 @@
 describe('Web test', () => {
+  let createServer
   let server
-  let claimRepositoryMock
+  let mockClaimRepository
 
-  beforeEach(async () => {
-    claimRepositoryMock = require('../server/repository/claim-repository')
+  beforeAll(async () => {
     jest.mock('../server/repository/claim-repository')
     jest.mock('../server/repository/minetype-repository')
     jest.mock('../server/services/message-service')
+    createServer = require('../server')
+    mockClaimRepository = require('../server/repository/claim-repository')
+  })
+
+  beforeEach(async () => {
+    server = await createServer()
+    await server.initialize()
+    mockClaimRepository.create.mockClear()
   })
 
   test('GET / route returns 404', async () => {
@@ -14,9 +22,6 @@ describe('Web test', () => {
       method: 'GET',
       url: '/'
     }
-    let createServer = require('../server')
-    server = await createServer()
-    await server.initialize()
 
     const response = await server.inject(options)
     expect(response.statusCode).toBe(404)
@@ -34,30 +39,11 @@ describe('Web test', () => {
         port: 80
       }
     })
-    let createServer = require('../server')
-    server = await createServer()
-    await server.initialize()
 
     const response = await server.inject(options)
     expect(response.statusCode).toBe(404)
     expect((response.headers['content-type'])).toEqual(expect.stringContaining('application/json'))
     jest.unmock('../server/config')
-  })
-
-  test('POST /submit route fails with invalid content', async () => {
-    const options = {
-      method: 'POST',
-      url: '/submit',
-      payload: { }
-    }
-
-    let createServer = require('../server')
-
-    server = await createServer()
-    await server.initialize()
-    const response = await server.inject(options)
-    expect(claimRepositoryMock.create).toHaveBeenCalledTimes(0)
-    expect(response.statusCode).toBe(400)
   })
 
   test('POST /submit route works with valid content', async () => {
@@ -72,13 +58,21 @@ describe('Web test', () => {
       }
     }
 
-    let createServer = require('../server')
-
-    server = await createServer()
-    await server.initialize()
     const response = await server.inject(options)
-    expect(claimRepositoryMock.create).toHaveBeenCalledTimes(1)
+    expect(mockClaimRepository.create).toHaveBeenCalledTimes(1)
     expect(response.statusCode).toBe(200)
+  })
+
+  test('POST /submit route fails with invalid content', async () => {
+    const options = {
+      method: 'POST',
+      url: '/submit',
+      payload: { }
+    }
+
+    const response = await server.inject(options)
+    expect(mockClaimRepository.create).toHaveBeenCalledTimes(0)
+    expect(response.statusCode).toBe(400)
   })
 
   test('GET /error route returns 500', async () => {
@@ -86,18 +80,18 @@ describe('Web test', () => {
       method: 'GET',
       url: '/error'
     }
-    let createServer = require('../server')
-    server = await createServer()
-    await server.initialize()
 
     const response = await server.inject(options)
     expect(response.statusCode).toBe(500)
   })
 
-  afterEach(async () => {
+  afterAll(async () => {
     jest.unmock('../server/repository/claim-repository')
     jest.unmock('../server/repository/minetype-repository')
     jest.unmock('../server/services/message-service')
+  })
+
+  afterEach(async () => {
     await server.stop()
   })
 })

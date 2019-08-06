@@ -38,7 +38,7 @@ module.exports = {
       console.log(connectionOptions)
 
       const connection = new rheapromise.Connection(connectionOptions)
-      console.log(`New claim to send to message queues : ${claim}`)
+      console.log('New claim to send to message queues : ', claim)
       try {
         await connection.open()
 
