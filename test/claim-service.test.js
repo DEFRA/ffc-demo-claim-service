@@ -33,6 +33,7 @@ describe('Test claim service', () => {
     }
     await claimService.create(claimRecord)
     expect(mockClaimRepository.create).toHaveBeenCalledTimes(1)
+    expect(mockClaimRepository.create).lastCalledWith(claimRecord)
   })
 
   test('Claim service create works with existing claim', async () => {
