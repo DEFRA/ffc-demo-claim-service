@@ -1,19 +1,26 @@
 
 describe('Test claim service', () => {
   let claimService
-  let claimRepositoryMock
-  let minetypeRepositoryMock
-  let messageServiceMock
+  let mockClaimRepository
+  let mockMinetypeRepository
+  let mockMessageService
 
-  beforeEach(async () => {
-    claimRepositoryMock = require('../server/repository/claim-repository')
-    minetypeRepositoryMock = require('../server/repository/minetype-repository')
-    messageServiceMock = require('../server/services/message-service')
+  beforeAll(async () => {
     jest.mock('../server/repository/claim-repository')
     jest.mock('../server/repository/minetype-repository')
     jest.mock('../server/services/message-service')
+  })
 
+  beforeEach(async () => {
+    jest.resetModules()
+    mockClaimRepository = require('../server/repository/claim-repository')
+    mockMinetypeRepository = require('../server/repository/minetype-repository')
+    mockMessageService = require('../server/services/message-service')
     claimService = require('../server/services/claim-service')
+  })
+
+  afterEach(async () => {
+    jest.clearAllMocks()
   })
 
   test('Claim service create works with new claim', async () => {
@@ -25,11 +32,11 @@ describe('Test claim service', () => {
       mineType: ['gold', 'iron']
     }
     await claimService.create(claimRecord)
-    return expect(claimRepositoryMock.create).toHaveBeenCalledTimes(1)
+    expect(mockClaimRepository.create).toHaveBeenCalledTimes(1)
   })
 
   test('Claim service create works with existing claim', async () => {
-    claimRepositoryMock.getById.mockResolvedValue({})
+    mockClaimRepository.getById.mockResolvedValue({})
     const claimRecord = {
       claimId: 'MINE123',
       propertyType: 'business',
@@ -38,7 +45,7 @@ describe('Test claim service', () => {
       mineType: ['gold', 'iron']
     }
     await claimService.create(claimRecord)
-    return expect(claimRepositoryMock.create).toHaveBeenCalledTimes(0)
+    expect(mockClaimRepository.create).toHaveBeenCalledTimes(0)
   })
 
   test('Claim service gets details of mine types from mine type repository', async () => {
@@ -50,7 +57,7 @@ describe('Test claim service', () => {
       mineType: ['gold', 'iron']
     }
     await claimService.create(claimRecord)
-    return expect(minetypeRepositoryMock.create).toHaveBeenCalledTimes(2)
+    expect(mockMinetypeRepository.create).toHaveBeenCalledTimes(2)
   })
 
   test('Claim service publishes the claim to the message broker', async () => {
@@ -62,10 +69,10 @@ describe('Test claim service', () => {
       mineType: ['gold', 'iron']
     }
     await claimService.create(claimRecord)
-    return expect(messageServiceMock.publishClaim).toHaveBeenCalledTimes(1)
+    expect(mockMessageService.publishClaim).toHaveBeenCalledTimes(1)
   })
 
-  afterEach(async () => {
+  afterAll(async () => {
     jest.unmock('../server/repository/claim-repository')
     jest.unmock('../server/repository/minetype-repository')
     jest.unmock('../server/services/message-service')
