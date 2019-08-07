@@ -1,11 +1,11 @@
 describe('Test message service', () => {
   let messageService
   let rheaPromiseMock
+  jest.mock('rhea-promise')
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     messageService = require('../server/services/message-service')
     rheaPromiseMock = require('rhea-promise')
-    jest.mock('rhea-promise')
   })
 
   test('Message service sends the claim to two queues', async () => {
@@ -41,7 +41,7 @@ describe('Test message service', () => {
     return expect(messageService.publishClaim(claimRecord)).rejects.toThrow()
   })
 
-  afterEach(async () => {
+  afterAll(async () => {
     jest.unmock('rhea-promise')
   })
 })
