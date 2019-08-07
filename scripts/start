@@ -1,7 +1,15 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
-docker network inspect mine-support &>/dev/null || docker network create mine-support
+set -e
+projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; pwd)"
 
-docker-compose down -v
-docker-compose build --no-cache
-docker-compose up --force-recreate
+# Check whether mine-support network needs creating
+if [ -z "$(docker network ls --filter name=^mine-support$ --format={{.Name}})" ]; then
+  echo "Creating mine-support network"
+  docker network create mine-support
+fi
+
+(
+  cd "${projectRoot}"
+  docker-compose up --force-recreate $@
+)

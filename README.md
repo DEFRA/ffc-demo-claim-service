@@ -25,14 +25,31 @@ Digital service mock to claim public money in the event property subsides into m
 # Running the application
 The application is designed to run as a container via Docker Compose or Kubernetes (with Helm).
 
-A convenience script is provided to run via Docker Compose:
+## Docker Compose
+A set of convenience scripts are provided for local development and running via Docker Compose.
 
-`scripts/start`
+```
+# Build service containers
+scripts/setup
 
-This will create the required `mine-support` network before starting the service so that it can communicate with other Mine Support services running alongside it through docker-compose. The script will then attach to the running service, tailing its logs and allowing the service to be brought down by pressing `Ctrl + C`.
+# Start the service and attach to running containers (press `ctrl + c` to quit)
+scripts/start
 
-# Kubernetes
-The service has been developed with the intention of running in Kubernetes.  A helm chart is included in the `.\helm` folder.
+# Stop the service and remove Docker volumes and networks created by the start script
+scripts/stop
+```
+
+This service depends on an external Docker network named `mine-support` to communicate with other Mine Support services running alongside it. The start script will automatically create the network if it doesn't exist and the stop script will remove the network if no other containers are using it.
+
+Any arguments given to the start script are passed through to the `docker-compose up` command. For example, this allows the service to be started without attaching to containers:
+
+```
+# Start the service without attaching to containers
+scripts/start --detach
+```
+
+## Kubernetes
+The service has been developed with the intention of running on Kubernetes in production.  A helm chart is included in the `.\helm` folder.
 
 # Development tools setup
 

@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+set -e
+projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; pwd)"
+
+(
+  cd "${projectRoot}"
+  if [ ! -z "$(docker-compose ps -q)" ]; then
+    docker-compose down -v
+  fi
+)
+
+# Check whether mine-support network exists and is no longer in use
+if [ ! -z "$(docker network ls --filter name=^mine-support$ --format={{.Name}})" ] \
+  && [ "$(docker network inspect -f {{.Containers}} mine-support &>/dev/null)" = "map[]" ] \
+; then
+  echo "Removing mine-support network"
+  docker network rm mine-support
+fi
