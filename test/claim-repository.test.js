@@ -15,9 +15,6 @@ describe('Test claim repository', () => {
         dateOfSubsidence: new Date('2019-01-01 12:00:00')
       })
     })
-  })
-
-  beforeEach(async () => {
     claimRepository = require('../server/repository/claim-repository')
   })
 
@@ -60,6 +57,10 @@ describe('Test claim repository', () => {
     mockDb.$queueFailure(new MockSequelize.ValidationError('Test error'))
 
     await expect(claimRepository.getById('MINE123')).rejects.toThrow()
+  })
+
+  afterEach(async () => {
+    jest.clearAllMocks()
   })
 
   afterAll(async () => {
