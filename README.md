@@ -51,18 +51,15 @@ This service depends on an external Docker network named `mine-support` to commu
 ## Using Kubernetes
 The service has been developed with the intention of running on Kubernetes in production.  A helm chart is included in the `.\helm` folder.
 
-# Development tools setup
+# How to run tests
+A convenience script is provided to run automated tests in a containerised environment:
 
-`$ npm install`
+```
+scripts/test
+```
 
-This will install all the development packages and test tools required.
+Alternatively, the same tests may be run locally via npm:
 
-# How to run in development
-
-This package is a microservice which is part of the overall "mine-service" POC application. It is a REST API that can be called by posting a json object to the /submit path
-
-# Test tools
-
-Run unit test by running `npm test`
-
-The tool can be run directly by running `npx jest`
+```
+npm run test
+```

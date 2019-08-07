@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+set -e
+projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; pwd)"
+
+(
+  cd "${projectRoot}"
+  docker run -it -v "$(pwd)/test:/mine-support-claim-service/test" mine-support-claim-service npm run test
+)
