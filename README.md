@@ -51,6 +51,18 @@ This service depends on an external Docker network named `mine-support` to commu
 ## Using Kubernetes
 The service has been developed with the intention of running on Kubernetes in production.  A helm chart is included in the `.\helm` folder.
 
+Running via Helm requires a local Postgres database to be installed and setup with the username and password defined in the [values.yaml](./helm/values.yaml). It is much simpler to develop using Docker Compose locally than to set up a local Kubernetes environment. See above for instructions.
+
+To test Helm deployments locally, a [deploy](./deploy) script is provided.
+
+```
+# Build service containers
+scripts/setup
+
+# Deploy to the current Helm context
+scripts/deploy
+```
+
 # How to run tests
 A convenience script is provided to run automated tests in a containerised environment:
 
