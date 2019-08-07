@@ -39,18 +39,13 @@ module.exports = {
 
       const connection = new rheapromise.Connection(connectionOptions)
       console.log('New claim to send to message queues : ', claim)
-      try {
-        await connection.open()
+      await connection.open()
 
-        const delivery = await Promise.all([
-          this.sendClaim(claim, connection, calculationQueue),
-          this.sendClaim(claim, connection, scheduleQueue)
-        ])
-        delivery.map(del => { console.log(del.settled) })
-      } catch (error) {
-        console.log(error)
-        throw error
-      }
+      const delivery = await Promise.all([
+        this.sendClaim(claim, connection, calculationQueue),
+        this.sendClaim(claim, connection, scheduleQueue)
+      ])
+      delivery.map(del => { console.log(del.settled) })
       await connection.close()
     } catch (err) {
       console.log(err)
