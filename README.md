@@ -19,8 +19,8 @@ Digital service mock to claim public money in the event property subsides into m
 # Prerequisites
 
 - Node v10+
-- access to a postgress database
-- access to an AMQP 1.0 compatible message queue service
+- Access to a PostgreSQL database
+- Access to an AMQP 1.0 compatible message queue service
 
 # Running the application
 The application is designed to run as a container via Docker Compose or Kubernetes (with Helm).
