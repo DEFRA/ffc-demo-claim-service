@@ -1,6 +1,7 @@
 [![Build status](https://defradev.visualstudio.com/DEFRA_FutureFarming/_apis/build/status/defra-ff-mine-support-claim-service)](https://defradev.visualstudio.com/DEFRA_FutureFarming/_build/latest?definitionId=563)
 
 # Mine Support Claim Service
+
 Digital service mock to claim public money in the event property subsides into mine shaft.  The claim service receives claim data and if doesn’t already exist saves it in a Postgresql database table.  It also publishes events to message queues that a new claim has been received.
 
 # Environment variables
@@ -23,9 +24,11 @@ Digital service mock to claim public money in the event property subsides into m
 - Access to an AMQP 1.0 compatible message queue service
 
 # Running the application
+
 The application is designed to run as a container via Docker Compose or Kubernetes (with Helm).
 
 ## Using Docker Compose
+
 A set of convenience scripts are provided for local development and running via Docker Compose.
 
 ```
@@ -49,6 +52,7 @@ scripts/start --detach
 This service depends on an external Docker network named `mine-support` to communicate with other Mine Support services running alongside it. The start script will automatically create the network if it doesn't exist and the stop script will remove the network if no other containers are using it.
 
 ## Using Kubernetes
+
 The service has been developed with the intention of running on Kubernetes in production.  A helm chart is included in the `.\helm` folder.
 
 Running via Helm requires a local Postgres database to be installed and setup with the username and password defined in the [values.yaml](./helm/values.yaml). It is much simpler to develop using Docker Compose locally than to set up a local Kubernetes environment. See above for instructions.
@@ -64,6 +68,7 @@ scripts/deploy
 ```
 
 # How to run tests
+
 A convenience script is provided to run automated tests in a containerised environment:
 
 ```
