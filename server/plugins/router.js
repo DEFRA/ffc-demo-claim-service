@@ -1,5 +1,6 @@
 const routes = [].concat(
-  require('../routes/submit')
+  require('../routes/submit'),
+  require('../routes/error')
 )
 
 module.exports = {

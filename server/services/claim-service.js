@@ -4,14 +4,14 @@ const messageService = require('../services/message-service')
 
 module.exports = {
   create: async function (claim) {
-    console.log(claim)
     const existingClaim = await claimRepository.getById(claim.claimId)
     if (existingClaim != null) {
-      console.log('existing claim, no action required')
+      console.log('Found existing claim', existingClaim)
       return existingClaim
     }
 
     const claimRecord = await claimRepository.create(claim)
+    console.log('Creating new claim', claim)
 
     if (claim.mineType != null) {
       claim.mineType.forEach(type => {
@@ -19,7 +19,7 @@ module.exports = {
       })
     }
 
-    messageService.publishClaim(claim)
+    await messageService.publishClaim(claim)
 
     return claimRecord
   }
