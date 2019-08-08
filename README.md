@@ -42,9 +42,12 @@ scripts/start
 scripts/stop
 ```
 
-Any arguments given to the start script are passed through to the `docker-compose up` command. For example, this allows the service to be started without attaching to containers:
+Any arguments provided to the build and start scripts are passed to the Docker Compose `build` and `up` commands, respectively. For example:
 
 ```
+# Build without using the Docker cache
+scripts/build --no-cache
+
 # Start the service without attaching to containers
 scripts/start --detach
 ```

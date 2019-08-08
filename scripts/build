@@ -5,5 +5,5 @@ projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; p
 
 (
   cd "${projectRoot}"
-  docker-compose build --no-cache
+  docker-compose build $@
 )
