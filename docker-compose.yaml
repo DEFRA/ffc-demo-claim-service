@@ -4,6 +4,7 @@ services:
     build: .
     image: mine-support-claim-service
     container_name: mine-support-claim-service
+    command: npm run watch:server
     ports:
       - "3003:3003"
     volumes:

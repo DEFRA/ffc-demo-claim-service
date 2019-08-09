@@ -9,6 +9,7 @@
     "test": "npm run test:unit",
     "test:lint": "standard",
     "test:unit": "jest",
+    "watch:server": "nodemon --inspect=0.0.0.0 --ext js --legacy-watch index.js",
     "watch:unit": "jest --coverage=false --onlyChanged --watch"
   },
   "author": "",
@@ -31,6 +32,7 @@
     "good-squeeze": "5.1.0",
     "jest": "^24.8.0",
     "jest-junit": "^7.0.0",
+    "nodemon": "^1.19.1",
     "sequelize-cli": "^5.5.0",
     "sequelize-mock": "^0.10.2",
     "standard": "12.0.1"
