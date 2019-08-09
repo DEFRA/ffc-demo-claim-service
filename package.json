@@ -9,7 +9,6 @@
     "test": "npm run test:unit",
     "test:lint": "standard",
     "test:unit": "jest",
-    "watch:build": "nodemon --exec npm run build --ext scss --legacy-watch",
     "watch:unit": "jest --coverage=false --onlyChanged --watch"
   },
   "author": "",
