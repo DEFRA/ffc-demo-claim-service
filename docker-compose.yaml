@@ -4,11 +4,11 @@ services:
     build: .
     image: mine-support-claim-service
     container_name: mine-support-claim-service
-    networks:
-      - mine-support
     ports:
       - "3003:3003"
+    volumes:
+      - node_modules:/mine-support-claim-service/node_modules
+      - .:/mine-support-claim-service
 
-networks:
-  mine-support:
-    external: true
+volumes:
+  node_modules:

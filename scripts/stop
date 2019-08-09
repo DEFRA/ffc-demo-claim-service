@@ -6,7 +6,7 @@ projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; p
 (
   cd "${projectRoot}"
   if [ ! -z "$(docker-compose ps -q)" ]; then
-    docker-compose down -v
+    docker-compose -f docker-compose.yaml -f docker-compose.local.yaml down -v
   fi
 )
 

@@ -1,0 +1,9 @@
+version: '3'
+services:
+  mine-support-claim-service:
+    networks:
+      - mine-support
+
+networks:
+  mine-support:
+    external: true

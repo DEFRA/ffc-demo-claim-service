@@ -11,5 +11,5 @@ fi
 
 (
   cd "${projectRoot}"
-  docker-compose up --force-recreate $@
+  docker-compose -f docker-compose.yaml -f docker-compose.local.yaml up --force-recreate $@
 )

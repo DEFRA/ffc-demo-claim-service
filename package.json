@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "lint": "standard",
     "pretest": "npm run test:lint",
     "test": "npm run test:unit",
     "test:lint": "standard",

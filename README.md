@@ -54,11 +54,13 @@ scripts/start --detach
 
 This service depends on an external Docker network named `mine-support` to communicate with other Mine Support services running alongside it. The start script will automatically create the network if it doesn't exist and the stop script will remove the network if no other containers are using it.
 
+The external network is declared in a secondary Docker Compose configuration (referenced by the above scripts) so that this service can be run in isolation without creating an external Docker network.
+
 ## Using Kubernetes
 
-The service has been developed with the intention of running on Kubernetes in production.  A helm chart is included in the `.\helm` folder.
+The service has been developed with the intention of running on Kubernetes in production.  A helm chart is included in the `.\helm` folder. For development, it is simpler to develop using Docker Compose than to set up a local Kubernetes environment. See above for instructions.
 
-Running via Helm requires a local Postgres database to be installed and setup with the username and password defined in the [values.yaml](./helm/values.yaml). It is much simpler to develop using Docker Compose locally than to set up a local Kubernetes environment. See above for instructions.
+Running via Helm requires a local Postgres database to be installed and setup with the username and password defined in the [values.yaml](./helm/values.yaml).
 
 To test Helm deployments locally, a [deploy](./deploy) script is provided.
 

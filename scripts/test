@@ -5,5 +5,6 @@ projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; p
 
 (
   cd "${projectRoot}"
-  docker run -it -v "$(pwd)/test:/mine-support-claim-service/test" mine-support-claim-service npm run test
+  docker-compose run mine-support-claim-service npm run test
+  docker-compose down -v
 )
