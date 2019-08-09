@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "migrate": "npx sequelize-cli db:migrate",
     "pretest": "npm run test:lint",
     "test": "npm run test:unit",
     "test:lint": "standard",
     "test:unit": "jest",
-    "migrate": "npx sequelize-cli db:migrate",
     "watch:build": "nodemon --exec npm run build --ext scss --legacy-watch",
     "watch:unit": "jest --coverage=false --onlyChanged --watch"
   },
