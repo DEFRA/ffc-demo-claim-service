@@ -14,7 +14,7 @@ services:
       POSTGRES_HOST: mine-support-claim-postgres
       POSTGRES_PORT: 5432
     networks:
-      - mine-support-claims
+      - claim-postgres
     ports:
       - "3003:3003"
     volumes:
@@ -29,13 +29,13 @@ services:
       POSTGRES_PASSWORD: ppp
       POSTGRES_USERNAME: postgres
     networks:
-      - mine-support-claims
+      - claim-postgres
     volumes:
-      - redis_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
 
 networks:
-  mine-support-claims: {}
+  claim-postgres: {}
 
 volumes:
   node_modules:
-  redis_data:
+  postgres_data:
