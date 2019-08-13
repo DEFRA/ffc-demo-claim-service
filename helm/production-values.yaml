@@ -1,5 +1,4 @@
 environment: production
-containers:
-  service:
-    registry: 'minesupport.azurecr.io'
-    imagePullPolicy: Always
+image: minesupport.azurecr.io/mine-support-claim-service
+container:
+  imagePullPolicy: Always

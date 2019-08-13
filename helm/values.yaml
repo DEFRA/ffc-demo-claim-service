@@ -1,14 +1,22 @@
 environment: development
 postgresUsername: postgres@mine-support2
 postgresPassword: changeme
+postgresDatabase: mine_claims
+postgresHost:  mine-support-postgres-claims
+postgresExternalName: host.docker.internal
+postgresPort: 5432
+service:
+  type: ClusterIP
+  port: 80
 containers:
   service:
     name: mine-support-claim-service
+    image: mine-support-claim-service
     port: 3003
     registry:
-    image: mine-support-claim-service
     tag: latest
     imagePullPolicy: IfNotPresent
+    redeployOnChange: update this field to force a change
     requestMemory: 30Mi
     requestCpu: 30m
     limitMemory: 60Mi
@@ -19,15 +27,11 @@ containers:
     allowPrivilegeEscalation: false
     restartPolicy: Always
     messageQueue: mine-support-artemis
-database:
-  name: mine-support-postgres-claims
-  externalName: host.docker.internal
-  port: 5432
 messageQueue:
   name: mine-support-artemis
   externalName: host.docker.internal
   port: 5672
-replicas: 1
+replicaCount: 1
 minReadySeconds: 10
 maxSurge: 1
 maxUnavailable: 1

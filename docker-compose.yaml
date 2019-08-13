@@ -6,8 +6,22 @@ services:
     container_name: mine-support-claim-service
     networks:
       - mine-support
+    environment:
+      POSTGRES_DB: mine_claims
+      POSTGRES_PASSWORD: ppp
+      POSTGRES_USERNAME: postgres
+      POSTGRES_HOST: mine-support-postgres-claims
+      POSTGRES_PORT: 5432
     ports:
-      - "3003:3003"
+      - "80:3003"
+
+  mine-support-postgres-claims:
+    container_name: mine-support-postgres-claims
+    image: postgres:11.4-alpine
+    environment:
+      POSTGRES_DB: mine_claims
+      POSTGRES_PASSWORD: ppp
+      POSTGRES_USERNAME: postgres
 
 networks:
   mine-support:

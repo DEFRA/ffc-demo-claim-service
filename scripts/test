@@ -1,0 +1,4 @@
+#!/bin/sh
+docker-compose -f docker-compose.yaml -f docker-compose.test.yaml build --no-cache mine-support-claim-service
+docker-compose -f docker-compose.yaml -f docker-compose.test.yaml up --force-recreate mine-support-claim-service
+

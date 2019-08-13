@@ -9,6 +9,7 @@ Digital service mock to claim public money in the event property subsides into m
 |---------------------------------|--------------------|:--------:|----------------------|:---------------------------:|-------|
 | NODE_ENV                        | Node environment   |    no    |                      | development,test,production |       |
 | PORT                            | Port number        |    no    | 3003                 |                             |       |
+| POSTGRES_DB                     | Postgres database  |   yes    |                      |                             |       |
 | POSTGRES_USERNAME               | Postgres username  |   yes    |                      |                             |       |
 | POSTGRES_PASSWORD               | Postgres password  |   yes    |                      |                             |       |
 | MINE_SUPPORT_MESSAGE_QUEUE      | MQ Server hostname |    no    | mine-support-artemis |                             |       |

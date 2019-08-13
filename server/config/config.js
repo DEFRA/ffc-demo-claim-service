@@ -2,7 +2,7 @@ const config = {
   production: {
     username: process.env.POSTGRES_USERNAME,
     password: process.env.POSTGRES_PASSWORD,
-    database: 'mine_claims',
+    database: process.env.POSTGRES_DB,
     host: 'mine-support-postgres-claims',
     port: 5432,
     dialect: 'postgres'
@@ -10,7 +10,7 @@ const config = {
   development: {
     username: process.env.POSTGRES_USERNAME,
     password: process.env.POSTGRES_PASSWORD,
-    database: 'mine_claims',
+    database: process.env.POSTGRES_DB,
     host: 'localhost',
     port: 5432,
     dialect: 'postgres'
@@ -18,7 +18,7 @@ const config = {
   test: {
     username: process.env.POSTGRES_USERNAME,
     password: process.env.POSTGRES_PASSWORD,
-    database: 'mine_claims',
+    database: process.env.POSTGRES_DB,
     host: 'localhost',
     port: 5432,
     dialect: 'postgres'

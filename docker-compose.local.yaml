@@ -1,0 +1,23 @@
+version: '3'
+services:
+  mine-support-claim-service:
+    command: npm run start-watch
+    networks:
+      - mine-support
+      - mine-support-claims
+    ports:
+      - "3003:3003"
+    volumes:
+      - node_modules:/usr/src/app/node_modules
+      - .:/usr/src/app
+
+  mine-support-postgres-claims:
+    networks:
+      - mine-support-claims
+
+networks:
+  mine-support:
+    external: true
+  mine-support-claims: {}
+volumes:
+  node_modules:

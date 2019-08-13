@@ -1,0 +1,6 @@
+version: '3.4'
+services:
+  mine-support-claim-service:
+    volumes:
+      - ./test-output:/usr/src/app/test-output
+    command: ./wait-for mine-support-postgres-claims:5432 -- ./migrate-test
