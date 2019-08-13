@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3'
 services:
   mine-support-claim-service:
     command: ./wait-for mine-support-postgres-claims:5432 -- npm run migrate
