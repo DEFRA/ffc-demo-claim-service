@@ -4,8 +4,6 @@ services:
     build: .
     image: mine-support-claim-service
     container_name: mine-support-claim-service
-    networks:
-      - mine-support
     environment:
       POSTGRES_DB: mine_claims
       POSTGRES_PASSWORD: ppp
@@ -22,7 +20,3 @@ services:
       POSTGRES_DB: mine_claims
       POSTGRES_PASSWORD: ppp
       POSTGRES_USERNAME: postgres
-
-networks:
-  mine-support:
-    external: true
