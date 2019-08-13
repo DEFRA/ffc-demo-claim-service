@@ -5,21 +5,39 @@ metadata:
     app.component: {{ .Values.containers.service.name }}
   name: {{ .Values.containers.service.name }}
 spec:
-  replicas: {{ .Values.replicas }}
+  replicas: {{ .Values.replicaCount }}
   minReadySeconds: {{ .Values.minReadySeconds }}
-  strategy: {}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: {{ .Values.maxSurge }}
+      maxUnavailable: {{ .Values.maxUnavailable }}
   template:
     metadata:
       labels:
         app.component: {{ .Values.containers.service.name }}
+      annotations:
+        redeployOnChange: "{{ .Values.containers.service.redeployOnChange }}"
     spec:
-      containers:   
+      containers:
       - name: {{ .Values.containers.service.name }}
         image: {{ if .Values.containers.service.registry }}{{ .Values.containers.service.registry }}/{{ end }}{{ .Values.containers.service.image }}:{{ .Values.containers.service.tag }}
+        {{- if .Values.containers.command }}
+        {{- with .Values.containers.command }}
+          command:
+            {{- toYaml . | nindent 12 }}
+        {{- end }}
+        {{- with .Values.containers.args }}
+          args:
+            {{- toYaml . | nindent 12 }}
+        {{- end }}
+        {{- end }}
         imagePullPolicy: {{ .Values.containers.service.imagePullPolicy }}
         env:
         - name: NODE_ENV
           value: {{ .Values.environment }}
+        - name: POSTGRES_DB
+          value: {{ .Values.postgresDatabase }}
         - name: POSTGRES_USERNAME
           value: {{ .Values.postgresUsername }}
         - name: POSTGRES_PASSWORD
@@ -27,7 +45,9 @@ spec:
         - name: MINE_SUPPORT_MESSAGE_QUEUE
           value: {{ .Values.containers.service.messageQueue }}
         ports:
-        - containerPort: {{ .Values.containers.service.port }}
+          - name: http
+            containerPort: {{ .Values.containers.service.port }}
+            protocol: TCP
         command: ["/bin/sh","-c"]
         args: ["sequelize db:migrate; node index"]
         resources:
@@ -37,6 +57,6 @@ spec:
           limits:
             memory: {{ .Values.containers.service.limitMemory | quote }}
             cpu: {{ .Values.containers.service.limitCpu | quote }}
-        volumes:                      
+        volumes:
       restartPolicy: {{ .Values.containers.service.restartPolicy }}
 status: {}

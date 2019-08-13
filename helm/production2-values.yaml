@@ -1,5 +1,5 @@
 environment: production
-containers:
-  service:
-    registry: 'jwminesupport.azurecr.io'
-    imagePullPolicy: Always
+image: jwminesupport.azurecr.io/mine-support-claim-service
+container:
+  imagePullPolicy: Always
+

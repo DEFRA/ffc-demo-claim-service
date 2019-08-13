@@ -1,0 +1,2 @@
+#!/bin/sh
+helm upgrade mine-support-claim-service --install --namespace mine-support-claim-service ./helm
