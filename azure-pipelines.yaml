@@ -110,7 +110,7 @@ steps:
     chartType: filepath
     chartPath: helm
     releaseName: $(imageName)-$(containerTag)
-    arguments: --set image=$(azureContainerRegistryFull)/$(imageName):$(containerTag) --set container.redeployOnChange=$(Build.BuildId) --set container.imagePullPolicy=Always
+    arguments: --set image=$(azureContainerRegistryFull)/$(imageName):$(containerTag) --set container.redeployOnChange=$(Build.BuildId) --set container.imagePullPolicy=Always --atomic --force
     install: true
     waitForExecution: true
   displayName: Helm deploy
