@@ -1,4 +1,4 @@
-version: '3'
+version: '3.4'
 services:
   mine-support-claim-service:
     command: npm run start-watch

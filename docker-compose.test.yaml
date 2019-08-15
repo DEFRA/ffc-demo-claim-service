@@ -1,6 +1,11 @@
-version: '3'
+version: '3.4'
 services:
   mine-support-claim-service:
     volumes:
+      - node_modules:/usr/src/app/node_modules
+      - .:/usr/src/app
       - ./test-output:/usr/src/app/test-output
     command: ./wait-for mine-support-postgres-claims:5432 -- ./migrate-test
+
+volumes:
+  node_modules:

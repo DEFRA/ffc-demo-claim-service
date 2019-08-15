@@ -1,9 +1,11 @@
-version: '3'
+version: '3.4'
 services:
   mine-support-claim-service:
     build: .
     image: mine-support-claim-service
     container_name: mine-support-claim-service
+    depends_on:
+      - mine-support-postgres-claims
     environment:
       POSTGRES_DB: mine_claims
       POSTGRES_PASSWORD: ppp
