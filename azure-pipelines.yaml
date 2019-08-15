@@ -57,28 +57,6 @@ steps:
     mkdir test-output
     chmod 777 test-output
   displayName: create test output directory
-  # build test image
-- task: DockerCompose@0
-  inputs:
-    containerregistrytype: Azure Container Registry
-    azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
-    azureContainerRegistry: $(azureContainerRegistryFull)
-    dockerComposeFile: docker-compose.yaml
-    projectName: $(Build.Repository.Name)
-    qualifyImageNames: true
-    dockerComposeCommand: -f docker-compose.test.yaml build --no-cache $(imageName)
-  displayName: build tests image
-  # run tests
-- task: DockerCompose@0
-  inputs:
-    containerregistrytype: Azure Container Registry
-    azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
-    azureContainerRegistry: $(azureContainerRegistryFull)
-    dockerComposeFile: docker-compose.yaml
-    projectName: $(Build.Repository.Name)
-    qualifyImageNames: true
-    dockerComposeCommand: -f docker-compose.test.yaml up --force-recreate $(imageName)
-  displayName: run tests
   # build base image
 - task: DockerCompose@0
   inputs:
@@ -91,6 +69,18 @@ steps:
     qualifyImageNames: true
     additionalImageTags: $(containerTag)
   displayName: build base image
+  # run tests
+- task: DockerCompose@0
+  inputs:
+    containerregistrytype: Azure Container Registry
+    azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
+    azureContainerRegistry: $(azureContainerRegistryFull)
+    dockerComposeFile: docker-compose.yaml
+    additionalDockerComposeFiles: docker-compose.test.yaml
+    projectName: $(Build.Repository.Name)
+    qualifyImageNames: true
+    dockerComposeCommand: run $(imageName) npm run test
+  displayName: run tests
   # push container to registry
 - task: DockerCompose@0
   inputs:
