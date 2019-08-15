@@ -16,7 +16,7 @@ containers:
     registry:
     tag: latest
     imagePullPolicy: IfNotPresent
-    redeployOnChange: update this field to force a change
+    redeployOnChange: update this field to force change to take place
     requestMemory: 30Mi
     requestCpu: 30m
     limitMemory: 60Mi
