@@ -15,11 +15,6 @@ services:
       POSTGRES_PORT: 5432
     networks:
       - claim-postgres
-    ports:
-      - "3003:3003"
-    volumes:
-      - node_modules:/home/node/node_modules
-      - .:/home/node
 
   mine-support-claim-postgres:
     container_name: mine-support-claim-postgres
@@ -37,5 +32,4 @@ networks:
   claim-postgres: {}
 
 volumes:
-  node_modules:
   postgres_data:

@@ -5,6 +5,12 @@ projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; p
 
 (
   cd "${projectRoot}"
-  docker-compose run mine-support-claim-service npm run test
+
+  docker-compose \
+    -f docker-compose.yaml \
+    -f docker-compose.test.yaml \
+    run mine-support-claim-service \
+    npm run test
+
   docker-compose down -v
 )

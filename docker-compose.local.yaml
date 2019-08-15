@@ -1,4 +1,8 @@
 version: '3'
+
+# This override file should be used in development environments to
+# connect this service to sibling services from other repositories
+
 services:
   mine-support-claim-service:
     networks:
