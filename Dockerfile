@@ -1,7 +1,6 @@
 FROM node:10.15.3-alpine
 
-USER node
-WORKDIR /home/node
+WORKDIR /usr/src/app
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
@@ -13,6 +12,8 @@ RUN npm install
 
 # Bundle app source
 COPY --chown=node:node . .
+
+USER node
 
 ARG PORT=3003
 ENV PORT ${PORT}
