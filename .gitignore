@@ -42,6 +42,7 @@ typings/
 # Optional npm cache
 .config/
 .npm/
+.standard-v12-cache/
 
 # Optional eslint cache
 .eslintcache
