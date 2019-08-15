@@ -1,7 +1,20 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
-docker network inspect mine-support &>/dev/null || docker network create mine-support
+set -e
+projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; pwd)"
 
-docker-compose down -v
-docker-compose build --no-cache mine-support-claim-service
-docker-compose up --force-recreate mine-support-claim-service
+# Check whether mine-support network needs creating
+if [ -z "$(docker network ls --filter name=^mine-support$ --format={{.Name}})" ]; then
+  echo "Creating mine-support network"
+  docker network create mine-support
+fi
+
+(
+  cd "${projectRoot}"
+
+  docker-compose \
+    -f docker-compose.yaml \
+    -f docker-compose.override.yaml \
+    -f docker-compose.local.yaml \
+    up --force-recreate $@
+)

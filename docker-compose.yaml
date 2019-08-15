@@ -4,11 +4,32 @@ services:
     build: .
     image: mine-support-claim-service
     container_name: mine-support-claim-service
+    command: sh -c "npx wait-on -v tcp:mine-support-claim-postgres:5432 && npm run migrate && npm run watch:server"
+    depends_on:
+      - mine-support-claim-postgres
+    environment:
+      POSTGRES_DB: mine_claims
+      POSTGRES_PASSWORD: ppp
+      POSTGRES_USERNAME: postgres
+      POSTGRES_HOST: mine-support-claim-postgres
+      POSTGRES_PORT: 5432
     networks:
-      - mine-support
-    ports:
-      - "3003:3003"
+      - claim-postgres
+
+  mine-support-claim-postgres:
+    container_name: mine-support-claim-postgres
+    image: postgres:11.4-alpine
+    environment:
+      POSTGRES_DB: mine_claims
+      POSTGRES_PASSWORD: ppp
+      POSTGRES_USERNAME: postgres
+    networks:
+      - claim-postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
 networks:
-  mine-support:
-    external: true
+  claim-postgres: {}
+
+volumes:
+  postgres_data:

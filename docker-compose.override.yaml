@@ -1,0 +1,15 @@
+version: '3'
+
+# This override file should be used in development environments to
+# bind-mount the app from the host into the container
+
+services:
+  mine-support-claim-service:
+    ports:
+      - "3003:3003"
+    volumes:
+      - node_modules:/home/node/node_modules
+      - .:/home/node
+
+volumes:
+  node_modules:

@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; pwd)"
+
+(
+  cd "${projectRoot}"
+
+  helm upgrade mine-support-claim-service --install --namespace mine-support-claim-service ./helm
+)
