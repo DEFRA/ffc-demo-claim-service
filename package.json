@@ -11,8 +11,10 @@
     "test:lint": "standard",
     "test:unit": "jest",
     "migrate": "npx sequelize-cli db:migrate",
-    "watch:build": "nodemon --exec npm run build --ext scss --legacy-watch",
-    "watch:unit": "jest --coverage=false --onlyChanged --watch"
+    "watch:build": "npx nodemon --exec npm run build --ext scss --legacy-watch",
+    "watch:unit": "jest --coverage=false --onlyChanged --watch",
+    "start": "node index.js",
+    "start-watch": "npx nodemon --inspect=0.0.0.0 --ext js --legacy-watch index.js"
   },
   "author": "Defra DDTS",
   "contributors": [
@@ -40,6 +42,7 @@
     "good-squeeze": "5.1.0",
     "jest": "^24.8.0",
     "jest-junit": "^7.0.0",
+    "nodemon": "^1.19.1",
     "sequelize-cli": "^5.5.0",
     "sequelize-mock": "^0.10.2",
     "standard": "12.0.1"
