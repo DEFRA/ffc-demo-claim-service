@@ -5,7 +5,7 @@
   "homepage": "https://github.com/DEFRA/mine-support-claim-service",
   "main": "index.js",
   "scripts": {
-    "migrate": "npx sequelize-cli db:migrate",
+    "migrate": "sequelize db:migrate",
     "pretest": "npm run test:lint",
     "test": "npm run test:unit",
     "test:lint": "standard",
