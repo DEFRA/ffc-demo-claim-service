@@ -2,5 +2,5 @@ version: '3'
 services:
   mine-support-claim-service:
     volumes:
-      - ./test-output:/home/node/test-output
+      - ./test-output:/usr/src/app/test-output
     command: npm run test
