@@ -57,6 +57,28 @@ steps:
     mkdir test-output
     chmod 777 test-output
   displayName: create test output directory
+  # build test image
+- task: DockerCompose@0
+  inputs:
+    containerregistrytype: Azure Container Registry
+    azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
+    azureContainerRegistry: $(azureContainerRegistryFull)
+    dockerComposeFile: docker-compose.yaml
+    projectName: $(Build.Repository.Name)
+    qualifyImageNames: true
+    dockerComposeCommand: -f docker-compose.test.yaml build --no-cache $(imageName)
+  displayName: build tests image
+  # run tests
+- task: DockerCompose@0
+  inputs:
+    containerregistrytype: Azure Container Registry
+    azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
+    azureContainerRegistry: $(azureContainerRegistryFull)
+    dockerComposeFile: docker-compose.yaml
+    projectName: $(Build.Repository.Name)
+    qualifyImageNames: true
+    dockerComposeCommand: -f docker-compose.test.yaml up --force-recreate  $(imageName)
+  displayName: run tests
   # build base image
 - task: DockerCompose@0
   inputs:
@@ -69,17 +91,6 @@ steps:
     qualifyImageNames: true
     additionalImageTags: $(containerTag)
   displayName: build base image
-  # run tests
-- task: DockerCompose@0
-  inputs:
-    containerregistrytype: Azure Container Registry
-    azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
-    azureContainerRegistry: $(azureContainerRegistryFull)
-    dockerComposeFile: docker-compose.yaml
-    additionalDockerComposeFiles: docker-compose.test.yaml
-    projectName: $(Build.Repository.Name)
-    qualifyImageNames: true
-  displayName: run tests
   # push container to registry
 - task: DockerCompose@0
   inputs:
@@ -109,8 +120,10 @@ steps:
     chartType: filepath
     chartPath: helm
     releaseName: $(imageName)-$(containerTag)
+    # overrideValues: 'container.messageQueueHost=$(messageQueueHost),container.messageQueuePort=$(messageQueuePort),container.messageQueueTransport=$(messageQueueTransport),container.messageQueueUser=$(messageQueueUser),container.messageQueuePassword=$(messageQueuePassword),postgresExternalName=$(postgresExternalName),postgresPassword=$(postgresPassword)'
     arguments: --set image=$(azureContainerRegistryFull)/$(imageName):$(containerTag) --set container.redeployOnChange=$(Build.BuildId) --set container.imagePullPolicy=Always --atomic
     install: true
+    recreate: true
     waitForExecution: true
   displayName: Helm deploy
   # delete helm chart of closed PR
@@ -164,3 +177,25 @@ steps:
 - script: |
     echo "Build available for review in namespace $(imageName)-$(containerTag)"
   displayName: display namespace of deployed build
+  # install helm on build agent
+- task: HelmInstaller@0
+  displayName: 'Install Helm 2.9.1'
+  inputs:
+    helmVersion: 2.9.1
+  # package helm chart for release
+- task: HelmDeploy@0
+  displayName: 'helm package'
+  inputs:
+    command: package
+    chartPath: ./helm
+    save: false
+  # copy yaml values for release
+- task: CopyFiles@2
+  displayName: 'Copy values files'
+  inputs:
+    SourceFolder: helm
+    Contents: '*-values.yaml'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+  # publish artifact for release
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifacts: drop'

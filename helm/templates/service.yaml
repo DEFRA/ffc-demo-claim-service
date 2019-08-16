@@ -9,30 +9,18 @@ spec:
     - name: port
       port: {{ .Values.postgresPort }}
 ---
-kind: Service
-apiVersion: v1
-metadata:
-  name: {{ .Values.messageQueue.name }}
-spec:
-  type: ExternalName
-  externalName: {{ .Values.messageQueue.externalName }}
-  ports:
-    - name: port
-      port: {{ .Values.messageQueue.port }}
----
 apiVersion: v1
 kind: Service
 metadata:
+  name: {{ .Values.name }}
   labels:
-    app.component: {{ .Values.containers.service.name }}
-  name: {{ .Values.containers.service.name }}
+    app: {{ .Values.name }}
 spec:
   ports:
-  - name: http
-    port: {{ .Values.containers.service.port }}
+  - port: {{ .Values.service.port }}
     targetPort: http
     protocol: TCP
+    name: http
   selector:
-    app.component: {{ .Values.containers.service.name }}
-status:
-  loadBalancer: {}
+    app: {{ .Values.name }}
+  type: {{ .Values.service.type }}

@@ -5,32 +5,31 @@ postgresDatabase: mine_claims
 postgresHost:  mine-support-postgres-claims
 postgresExternalName: host.docker.internal
 postgresPort: 5432
+name: mine-support-claim-service
+image: mine-support-claim-service
 service:
   type: ClusterIP
   port: 80
-containers:
-  service:
-    name: mine-support-claim-service
-    image: mine-support-claim-service
-    port: 3003
-    registry:
-    tag: latest
-    imagePullPolicy: IfNotPresent
-    redeployOnChange: update this field to force change to take place
-    requestMemory: 30Mi
-    requestCpu: 30m
-    limitMemory: 60Mi
-    limitCpu: 60m
-    runAsNonRoot: true
-    runAsUser: 1000
-    readOnlyRootFilesystem: true
-    allowPrivilegeEscalation: false
-    restartPolicy: Always
-    messageQueue: mine-support-artemis
-messageQueue:
-  name: mine-support-artemis
-  externalName: host.docker.internal
-  port: 5672
+container:
+  port: 3003
+  registry:
+  tag: latest
+  imagePullPolicy: IfNotPresent
+  redeployOnChange: update this field to force change to take place
+  requestMemory: 30Mi
+  requestCpu: 30m
+  limitMemory: 60Mi
+  limitCpu: 60m
+  runAsNonRoot: true
+  runAsUser: 1000
+  readOnlyRootFilesystem: true
+  allowPrivilegeEscalation: false
+  restartPolicy: Always
+  messageQueueHost: mine-support-artemis
+  messageQueuePort: 5672
+  messageQueueTransport: TCP
+  messageQueueUser: artemis
+  messageQueuePassword: artemis
 replicaCount: 1
 minReadySeconds: 10
 maxSurge: 1

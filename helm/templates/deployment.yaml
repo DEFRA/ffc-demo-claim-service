@@ -2,8 +2,8 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   labels:
-    app.component: {{ .Values.containers.service.name }}
-  name: {{ .Values.containers.service.name }}
+    app.component: {{ .Values.name }}
+  name: {{ .Values.name }}
 spec:
   replicas: {{ .Values.replicaCount }}
   minReadySeconds: {{ .Values.minReadySeconds }}
@@ -15,48 +15,59 @@ spec:
   template:
     metadata:
       labels:
-        app.component: {{ .Values.containers.service.name }}
+        app.component: {{ .Values.name }}
       annotations:
-        redeployOnChange: "{{ .Values.containers.service.redeployOnChange }}"
+        redeployOnChange: "{{ .Values.container.redeployOnChange }}"
     spec:
       containers:
-      - name: {{ .Values.containers.service.name }}
-        image: {{ if .Values.containers.service.registry }}{{ .Values.containers.service.registry }}/{{ end }}{{ .Values.containers.service.image }}:{{ .Values.containers.service.tag }}
-        {{- if .Values.containers.command }}
-        {{- with .Values.containers.command }}
+      - name: {{ .Values.name }}
+        image: {{ .Values.image }}
+        {{- if .Values.container.command }}
+        {{- with .Values.container.command }}
           command:
             {{- toYaml . | nindent 12 }}
         {{- end }}
-        {{- with .Values.containers.args }}
+        {{- with .Values.container.args }}
           args:
             {{- toYaml . | nindent 12 }}
         {{- end }}
         {{- end }}
-        imagePullPolicy: {{ .Values.containers.service.imagePullPolicy }}
         env:
         - name: NODE_ENV
           value: {{ .Values.environment }}
-        - name: POSTGRES_DB
-          value: {{ .Values.postgresDatabase }}
         - name: POSTGRES_USERNAME
           value: {{ .Values.postgresUsername }}
         - name: POSTGRES_PASSWORD
           value: {{ .Values.postgresPassword }}
+        - name: POSTGRES_DB
+          value: {{ .Values.postgresDatabase }}
+        - name: POSTGRES_HOST
+          value: {{ .Values.postgresHost }}
+        - name: POSTGRES_PORT
+          value: {{ .Values.postgresPort | quote }}
         - name: MINE_SUPPORT_MESSAGE_QUEUE
-          value: {{ .Values.containers.service.messageQueue }}
+          value: {{ .Values.container.messageQueueHost }}
+        - name: MINE_SUPPORT_MESSAGE_QUEUE_TRANSPORT
+          value: {{ .Values.container.messageQueueTransport }}
+        - name: MINE_SUPPORR_MESSAGE_QUEUE_PORT
+          value: {{ .Values.container.messageQueuePort | quote}}
+        - name: MINE_SUPPORT_MESSAGE_QUEUE_USER
+          value: {{ .Values.container.messageQueueUser }}
+        - name: MINE_SUPPORT_MESSAGE_QUEUE_PASS
+          value: {{ .Values.container.messageQueuePassword }}
+        - name: PORT
+          value: {{ .Values.container.port | quote}}
         ports:
-          - name: http
-            containerPort: {{ .Values.containers.service.port }}
-            protocol: TCP
+        - containerPort: {{ .Values.container.port }}
         command: ["/bin/sh","-c"]
         args: ["sequelize db:migrate; node index"]
         resources:
           requests:
-            memory: {{ .Values.containers.service.requestMemory | quote }}
-            cpu: {{ .Values.containers.service.requestCpu | quote }}
+            memory: {{ .Values.container.requestMemory | quote }}
+            cpu: {{ .Values.container.requestCpu | quote }}
           limits:
-            memory: {{ .Values.containers.service.limitMemory | quote }}
-            cpu: {{ .Values.containers.service.limitCpu | quote }}
+            memory: {{ .Values.container.limitMemory | quote }}
+            cpu: {{ .Values.container.limitCpu | quote }}
         volumes:
-      restartPolicy: {{ .Values.containers.service.restartPolicy }}
+      restartPolicy: {{ .Values.container.restartPolicy }}
 status: {}
