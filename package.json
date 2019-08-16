@@ -10,8 +10,8 @@
     "test": "npm run test:unit",
     "test:lint": "standard",
     "test:unit": "jest",
-    "watch:server": "nodemon --inspect=0.0.0.0 --ext js --legacy-watch index.js",
-    "watch:unit": "jest --coverage=false --onlyChanged --watch"
+    "test:watch": "jest --coverage=false --onlyChanged --watch",
+    "start:watch": "nodemon --inspect=0.0.0.0 --ext js --legacy-watch index.js"
   },
   "author": "Defra DDTS",
   "contributors": [

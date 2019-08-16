@@ -3,3 +3,4 @@ services:
   mine-support-claim-service:
     volumes:
       - ./test-output:/home/node/test-output
+    command: npm run test
