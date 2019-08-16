@@ -6,11 +6,11 @@
   "scripts": {
     "migrate": "npx sequelize-cli db:migrate",
     "pretest": "npm run test:lint",
+    "start:watch": "nodemon --inspect=0.0.0.0 --ext js --legacy-watch index.js",
     "test": "npm run test:unit",
     "test:lint": "standard",
     "test:unit": "jest",
-    "watch:server": "nodemon --inspect=0.0.0.0 --ext js --legacy-watch index.js",
-    "watch:unit": "jest --coverage=false --onlyChanged --watch"
+    "test:unit-watch": "jest --coverage=false --onlyChanged --watch"
   },
   "author": "",
   "license": "ISC",
