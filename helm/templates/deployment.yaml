@@ -18,7 +18,6 @@ spec:
       annotations:
         redeployOnChange: "{{ .Values.container.redeployOnChange }}"
     spec:
-
       restartPolicy: {{ .Values.container.restartPolicy }}
       containers:
         - name: {{ .Values.name }}
@@ -50,30 +49,29 @@ spec:
             limits:
                 memory: {{ .Values.container.limitMemory | quote }}
                 cpu: {{ .Values.container.limitCpu | quote }}
-
-        env:
-        - name: NODE_ENV
-          value: {{ .Values.environment }}
-        - name: POSTGRES_USERNAME
-          value: {{ .Values.postgresUsername }}
-        - name: POSTGRES_PASSWORD
-          value: {{ .Values.postgresPassword }}
-        - name: POSTGRES_DB
-          value: {{ .Values.postgresDatabase }}
-        - name: POSTGRES_HOST
-          value: {{ .Values.postgresHost }}
-        - name: POSTGRES_PORT
-          value: {{ .Values.postgresPort | quote }}
-        - name: MINE_SUPPORT_MESSAGE_QUEUE
-          value: {{ .Values.container.messageQueueHost }}
-        - name: MINE_SUPPORT_MESSAGE_QUEUE_TRANSPORT
-          value: {{ .Values.container.messageQueueTransport }}
-        - name: MINE_SUPPORT_MESSAGE_QUEUE_PORT
-          value: {{ .Values.container.messageQueuePort | quote}}
-        - name: MINE_SUPPORT_MESSAGE_QUEUE_USER
-          value: {{ .Values.container.messageQueueUser }}
-        - name: MINE_SUPPORT_MESSAGE_QUEUE_PASS
-          value: {{ .Values.container.messageQueuePassword }}
-        - name: PORT
-          value: "3003"
+          env:
+            - name: NODE_ENV
+              value: {{ .Values.environment }}
+            - name: POSTGRES_USERNAME
+              value: {{ .Values.postgresUsername }}
+            - name: POSTGRES_PASSWORD
+              value: {{ .Values.postgresPassword }}
+            - name: POSTGRES_DB
+              value: {{ .Values.postgresDatabase }}
+            - name: POSTGRES_HOST
+              value: {{ .Values.postgresHost }}
+            - name: POSTGRES_PORT
+              value: {{ .Values.postgresPort | quote }}
+            - name: MINE_SUPPORT_MESSAGE_QUEUE
+              value: {{ .Values.container.messageQueueHost }}
+            - name: MINE_SUPPORT_MESSAGE_QUEUE_TRANSPORT
+              value: {{ .Values.container.messageQueueTransport }}
+            - name: MINE_SUPPORT_MESSAGE_QUEUE_PORT
+              value: {{ .Values.container.messageQueuePort | quote}}
+            - name: MINE_SUPPORT_MESSAGE_QUEUE_USER
+              value: {{ .Values.container.messageQueueUser }}
+            - name: MINE_SUPPORT_MESSAGE_QUEUE_PASS
+              value: {{ .Values.container.messageQueuePassword }}
+            - name: PORT
+              value: "3003"
 status: {}
