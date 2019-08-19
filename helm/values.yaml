@@ -25,6 +25,8 @@ container:
   readOnlyRootFilesystem: true
   allowPrivilegeEscalation: false
   restartPolicy: Always
+  command: ["/bin/sh","-c"]
+  args: ["npm run migrate; node index"]
   messageQueueHost: mine-support-artemis
   messageQueuePort: 5672
   messageQueueTransport: TCP

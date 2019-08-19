@@ -1,8 +1,6 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  labels:
-    app.component: {{ .Values.name }}
   name: {{ .Values.name }}
 spec:
   replicas: {{ .Values.replicaCount }}
@@ -15,10 +13,13 @@ spec:
   template:
     metadata:
       labels:
-        app.component: {{ .Values.name }}
+        app: {{ .Values.name }}
+        environment: {{ .Values.environment }}  
       annotations:
         redeployOnChange: "{{ .Values.container.redeployOnChange }}"
     spec:
+
+      restartPolicy: {{ .Values.container.restartPolicy }}
       containers:
       - name: {{ .Values.name }}
         image: {{ .Values.image }}
@@ -59,8 +60,6 @@ spec:
           value: {{ .Values.container.port | quote}}
         ports:
         - containerPort: {{ .Values.container.port }}
-        command: ["/bin/sh","-c"]
-        args: ["sequelize db:migrate; node index"]
         resources:
           requests:
             memory: {{ .Values.container.requestMemory | quote }}
@@ -68,6 +67,4 @@ spec:
           limits:
             memory: {{ .Values.container.limitMemory | quote }}
             cpu: {{ .Values.container.limitCpu | quote }}
-        volumes:
-      restartPolicy: {{ .Values.container.restartPolicy }}
 status: {}
