@@ -11,9 +11,6 @@ service:
   type: ClusterIP
   port: 80
 container:
-  port: 3003
-  registry:
-  tag: latest
   imagePullPolicy: IfNotPresent
   redeployOnChange: update this field to force a change
   requestMemory: 30Mi

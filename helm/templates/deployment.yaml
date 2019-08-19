@@ -21,8 +21,8 @@ spec:
 
       restartPolicy: {{ .Values.container.restartPolicy }}
       containers:
-      - name: {{ .Values.name }}
-        image: {{ .Values.image }}
+        - name: {{ .Values.name }}
+          image: {{ .Values.image }}
         {{- if .Values.container.command }}
         {{- with .Values.container.command }}
           command:
@@ -33,6 +33,24 @@ spec:
             {{- toYaml . | nindent 12 }}
         {{- end }}
         {{- end }}
+          imagePullPolicy: {{ .Values.container.imagePullPolicy }}
+          securityContext:
+            runAsUser: {{ .Values.container.runAsUser }}
+            runAsNonRoot: {{ .Values.container.runAsNonRoot }}
+            readOnlyRootFilesystem: {{ .Values.container.readOnlyRootFilesystem }}
+            allowPrivilegeEscalation: {{ .Values.container.allowPrivilegeEscalation }}
+          ports:
+            - name: http
+              containerPort: 3003
+              protocol: TCP
+          resources:
+            requests:
+                memory: {{ .Values.container.requestMemory | quote }}
+                cpu: {{ .Values.container.requestCpu | quote }}
+            limits:
+                memory: {{ .Values.container.limitMemory | quote }}
+                cpu: {{ .Values.container.limitCpu | quote }}
+
         env:
         - name: NODE_ENV
           value: {{ .Values.environment }}
@@ -57,14 +75,5 @@ spec:
         - name: MINE_SUPPORT_MESSAGE_QUEUE_PASS
           value: {{ .Values.container.messageQueuePassword }}
         - name: PORT
-          value: {{ .Values.container.port | quote}}
-        ports:
-        - containerPort: {{ .Values.container.port }}
-        resources:
-          requests:
-            memory: {{ .Values.container.requestMemory | quote }}
-            cpu: {{ .Values.container.requestCpu | quote }}
-          limits:
-            memory: {{ .Values.container.limitMemory | quote }}
-            cpu: {{ .Values.container.limitCpu | quote }}
+          value: "3003"
 status: {}
