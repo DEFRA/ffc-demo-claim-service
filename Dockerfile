@@ -1,7 +1,5 @@
 FROM node:10.15.3-alpine
 
-RUN npm install -g sequelize-cli
-
 WORKDIR /usr/src/app
 RUN chown node:node /usr/src/app
 
