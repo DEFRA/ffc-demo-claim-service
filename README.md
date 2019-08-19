@@ -88,3 +88,49 @@ scripts/build
 # Deploy to the current Helm context
 scripts/deploy
 ```
+### Accessing the pod
+
+The mine-support-claim-service is not exposed via an endpoint within Kubernetes.
+
+The deployment may be accessed by forwarding a port from a pod.
+First find the name of the pod by querying the namespace, i.e.
+
+`kubectl get pods --namespace mine-support-claim-service-pr5`
+
+This will list the full name of all the pods in the namespace. Forward the pods exposed port 3003
+to a local port using the name returned from the previous command, i.e.
+
+`kubectl port-forward --namespace mine-support-claim-service-pr5 mine-support-claim-service-8b666f545-g477t  3003:3003`
+
+Once the port is forwarded a tool such as [Postman](https://www.getpostman.com/) can be used to access the API at http://localhost:3003/submit.
+Sample valid JSON that can be posted is:
+```
+{
+  "claimId": "MINE123",
+  "propertyType": "business",
+  "accessible": false,
+  "dateOfSubsidence": "2019-07-26T09:54:19.622Z",
+  "mineType": ["gold"]
+}
+```
+ Alternatively curl can be used locally to send a request to the end point, i.e.
+
+```
+curl  -i --header "Content-Type: application/json" \
+  --request POST \
+  --data '{ "claimId": "MINE123", "propertyType": "business",  "accessible": false,   "dateOfSubsidence": "2019-07-26T09:54:19.622Z",  "mineType": ["gold"],  "email": "test@email.com" }' \
+  http://localhost:3003/submit
+```
+
+# Build Pipeline
+
+The [azure-pipelines.yaml](azure-pipelines.yaml) performs the following tasks:
+- Runs unit tests
+- Publishes test result
+- Pushes containers to the registry tagged with the PR number or release version
+- Deletes PR deployments, containers, and namepace upon merge
+
+Builds will be deployed into a namespace with the format `mine-support-claim-service-{identifier}` where `{identifier}` is either the release version, the PR number, or the branch name.
+
+A detailed description on the build pipeline and PR work flow is available in the [Defra Confluence page](https://eaflood.atlassian.net/wiki/spaces/FFCPD/pages/1281359920/Build+Pipeline+and+PR+Workflow)
+
