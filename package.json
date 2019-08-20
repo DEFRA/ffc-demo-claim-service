@@ -1,7 +1,8 @@
 {
-  "name": "glupe-base",
+  "name": "mine-support-claim-service",
+  "description": "Digital service mock to claim public money in the event property subsides into mine shaft.",
   "version": "0.0.1",
-  "description": "",
+  "homepage": "https://github.com/DEFRA/mine-support-claim-service",
   "main": "index.js",
   "scripts": {
     "migrate": "npx sequelize db:migrate",
@@ -12,8 +13,14 @@
     "test:unit": "jest",
     "test:unit-watch": "jest --coverage=false --onlyChanged --watch"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Defra DDTS",
+  "contributors": [
+    "John Watson <john.watson2@rpa.gov.uk>",
+    "Mark Harrop <mark.harrop@defra.gov.uk>",
+    "Matthew Collins <matthew.collins@defra.gov.uk>",
+    "David Bingham <david.bingham@defra.gov.uk>"
+  ],
+  "license": "OGL-UK-3.0",
   "dependencies": {
     "boom": "7.2.2",
     "hapi": "17.7.0",
@@ -33,9 +40,9 @@
     "jest": "^24.8.0",
     "jest-junit": "^7.0.0",
     "nodemon": "^1.19.1",
-    "sequelize-cli": "^5.5.0",
     "sequelize-mock": "^0.10.2",
-    "standard": "12.0.1"
+    "standard": "12.0.1",
+    "wait-on": "^3.3.0"
   },
   "standard": {
     "globals": [
