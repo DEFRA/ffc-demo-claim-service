@@ -8,6 +8,7 @@ projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; p
 
   docker-compose \
     -f docker-compose.yaml \
+    -f docker-compose.override.yaml \
     -f docker-compose.test.yaml \
     run mine-support-claim-service
 

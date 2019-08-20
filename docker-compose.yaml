@@ -15,6 +15,8 @@ services:
       POSTGRES_PORT: 5432
     networks:
       - claim-postgres
+    ports:
+      - "3003:3003"
 
   mine-support-claim-postgres:
     container_name: mine-support-claim-postgres
