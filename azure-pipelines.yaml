@@ -60,13 +60,14 @@ steps:
   # build test image
 - task: DockerCompose@0
   inputs:
+    action: Build services
     containerregistrytype: Azure Container Registry
     azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
     azureContainerRegistry: $(azureContainerRegistryFull)
     dockerComposeFile: docker-compose.yaml
+    additionalDockerComposeFiles: docker-compose.test.yaml
     projectName: $(Build.Repository.Name)
     qualifyImageNames: true
-    dockerComposeCommand: -f docker-compose.test.yaml build --no-cache $(imageName)
   displayName: build tests image
   # run tests
 - task: DockerCompose@0
@@ -75,9 +76,10 @@ steps:
     azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
     azureContainerRegistry: $(azureContainerRegistryFull)
     dockerComposeFile: docker-compose.yaml
+    additionalDockerComposeFiles: docker-compose.test.yaml
     projectName: $(Build.Repository.Name)
     qualifyImageNames: true
-    dockerComposeCommand: -f docker-compose.test.yaml up --force-recreate  $(imageName)
+    dockerComposeCommand: run $(imageName)
   displayName: run tests
   # build base image
 - task: DockerCompose@0
