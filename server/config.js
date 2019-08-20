@@ -19,9 +19,10 @@ const config = {
   env: process.env.NODE_ENV,
   messageQueue: {
     address: process.env.MINE_SUPPORT_MESSAGE_QUEUE,
+    transport: process.env.MINE_SUPPORT_MESSAGE_QUEUE_TRANSPORT,
     user: process.env.MINE_SUPPORT_MESSAGE_QUEUE_USER,
     pass: process.env.MINE_SUPPORT_MESSAGE_QUEUE_PASS,
-    port: process.env.MINE_SUPPORR_MESSAGE_QUEUE_PORT
+    port: process.env.MINE_SUPPORT_MESSAGE_QUEUE_PORT
   }
 }
 

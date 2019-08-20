@@ -9,8 +9,7 @@ projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; p
   docker-compose \
     -f docker-compose.yaml \
     -f docker-compose.test.yaml \
-    run mine-support-claim-service \
-    npm run test
+    run mine-support-claim-service
 
   docker-compose down -v
 )
