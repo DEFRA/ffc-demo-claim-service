@@ -5,6 +5,11 @@ version: '3'
 
 services:
   mine-support-claim-service:
+    command: >
+      sh -c "
+        scripts/wait-for/wait-for mine-support-claim-postgres:5432 --
+        npm run migrate &&
+        npm run start:watch"
     volumes:
       - node_modules:/usr/src/app/node_modules
       - .:/usr/src/app
