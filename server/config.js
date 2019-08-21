@@ -1,4 +1,5 @@
 const joi = require('joi')
+const mqConfig = require('./mq-config')
 
 // Define config schema
 const schema = {
@@ -16,14 +17,7 @@ const schema = {
 // Build config
 const config = {
   port: process.env.PORT,
-  env: process.env.NODE_ENV,
-  messageQueue: {
-    address: process.env.MINE_SUPPORT_MESSAGE_QUEUE,
-    transport: process.env.MINE_SUPPORT_MESSAGE_QUEUE_TRANSPORT,
-    user: process.env.MINE_SUPPORT_MESSAGE_QUEUE_USER,
-    pass: process.env.MINE_SUPPORT_MESSAGE_QUEUE_PASS,
-    port: process.env.MINE_SUPPORT_MESSAGE_QUEUE_PORT
-  }
+  env: process.env.NODE_ENV
 }
 
 // Validate config
@@ -42,5 +36,8 @@ const value = result.value
 // Add some helper props
 value.isDev = value.env === 'development'
 value.isProd = value.env === 'production'
+
+value.scheduleQueueConfig = mqConfig.scheduleQueueConfig
+value.calculationQueueConfig = mqConfig.calculationQueueConfig
 
 module.exports = value

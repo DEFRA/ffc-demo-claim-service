@@ -11,5 +11,8 @@ projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; p
     -f docker-compose.test.yaml \
     run mine-support-claim-service
 
-  docker-compose down -v
+  docker-compose \
+    -f docker-compose.yaml \
+    -f docker-compose.test.yaml \
+    down -v
 )

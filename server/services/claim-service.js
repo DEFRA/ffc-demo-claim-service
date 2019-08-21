@@ -1,6 +1,6 @@
 const claimRepository = require('../repository/claim-repository')
 const mineTypeRepository = require('../repository/minetype-repository')
-const messageService = require('../services/message-service')
+const messageService = require('./message-service')
 
 module.exports = {
   create: async function (claim) {
@@ -14,9 +14,9 @@ module.exports = {
     console.log('Creating new claim', claim)
 
     if (claim.mineType != null) {
-      claim.mineType.forEach(type => {
-        mineTypeRepository.create(claim.claimId, type)
-      })
+      for (let mineType in claim.mineType) {
+        await mineTypeRepository.create(claim.claimId, mineType)
+      }
     }
 
     await messageService.publishClaim(claim)

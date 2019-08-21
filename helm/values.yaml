@@ -26,9 +26,13 @@ container:
   args: ["npm run migrate; node index"]
   messageQueueHost: mine-support-artemis
   messageQueuePort: 5672
-  messageQueueTransport: TCP
-  messageQueueUser: artemis
-  messageQueuePassword: artemis
+  messageQueueTransport: tcp
+  calculationQueueAddress: calculation
+  calculationQueueUser: artemis
+  calculationQueuePassword: artemis
+  scheduleQueueAddress: schedule
+  scheduleQueueUser: artemis
+  scheduleQueuePassword: artemis
 replicaCount: 1
 minReadySeconds: 10
 maxSurge: 1

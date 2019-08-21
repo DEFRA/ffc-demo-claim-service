@@ -8,8 +8,8 @@ services:
     ports:
       - "3003:3003"
     volumes:
-      - node_modules:/home/node/node_modules
-      - .:/home/node
+      - node_modules:/usr/src/app/node_modules
+      - .:/usr/src/app
 
 volumes:
   node_modules:
