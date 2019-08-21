@@ -1,7 +1,7 @@
 version: '3'
 
-# This override file should be used in development environments to
-# bind-mount the app from the host into the container
+# This override file should be used when running this service in isolation
+# to provide required sibling services for local testing
 
 services:
   mine-support-claim-service:
