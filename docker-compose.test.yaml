@@ -7,4 +7,5 @@ services:
   mine-support-claim-service:
     command: npm run test
     volumes:
+      - ./.git:/usr/src/app/.git
       - ./test-output:/usr/src/app/test-output
