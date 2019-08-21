@@ -80,6 +80,6 @@ spec:
               value: {{ .Values.container.scheduleQueueUser }}
             - name: SCHEDULE_QUEUE_PASSWORD
               value: {{ .Values.container.scheduleQueuePassword }}
-                - name: PORT
-                  value: "3003"
+            - name: PORT
+              value: "3003"
 status: {}
