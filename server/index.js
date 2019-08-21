@@ -38,8 +38,6 @@ async function createServer () {
     await server.register(require('./plugins/logging'))
   }
 
-  await messageService.registerQueues()
-
   process.on('SIGTERM', async function () {
     await messageService.closeConnections()
     process.exit(0)
