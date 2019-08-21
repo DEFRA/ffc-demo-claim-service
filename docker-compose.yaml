@@ -7,6 +7,14 @@ services:
     depends_on:
       - mine-support-claim-postgres
     environment:
+      MESSAGE_QUEUE_HOST : host.docker.internal
+      MESSAGE_QUEUE_PORT : 5672
+      CALCULATION_QUEUE_ADDRESS : calculation
+      CALCULATION_QUEUE_USER : artemis
+      CALCULATION_QUEUE_PASSWORD : artemis
+      SCHEDULE_QUEUE_ADDRESS : schedule
+      SCHEDULE_QUEUE_USER : artemis
+      SCHEDULE_QUEUE_PASSWORD : artemis
       POSTGRES_DB: mine_claims
       POSTGRES_PASSWORD: ppp
       POSTGRES_USERNAME: postgres
@@ -33,4 +41,4 @@ networks:
   claim-postgres: {}
 
 volumes:
-  postgres_data:
+  postgres_data: {}

@@ -1,29 +1,15 @@
 const joi = require('joi')
+const mqConfig = require('./config/mq-config')
 
 // Define config schema
 const schema = {
-  port: joi.number().default(3003),
   env: joi.string().valid('development', 'test', 'production').default('development'),
-  messageQueue: {
-    address: joi.string().default('mine-support-artemis'),
-    transport: joi.string().default('tcp'),
-    user: joi.string(),
-    pass: joi.string(),
-    port: joi.number().default(5672)
-  }
+  port: joi.number().default(3003)
 }
 
-// Build config
 const config = {
-  port: process.env.PORT,
   env: process.env.NODE_ENV,
-  messageQueue: {
-    address: process.env.MINE_SUPPORT_MESSAGE_QUEUE,
-    transport: process.env.MINE_SUPPORT_MESSAGE_QUEUE_TRANSPORT,
-    user: process.env.MINE_SUPPORT_MESSAGE_QUEUE_USER,
-    pass: process.env.MINE_SUPPORT_MESSAGE_QUEUE_PASS,
-    port: process.env.MINE_SUPPORT_MESSAGE_QUEUE_PORT
-  }
+  port: process.env.PORT
 }
 
 // Validate config
@@ -37,7 +23,10 @@ if (result.error) {
 }
 
 // Use the joi validated value
-const value = result.value
+const value = {
+  ...result.value,
+  ...mqConfig
+}
 
 // Add some helper props
 value.isDev = value.env === 'development'

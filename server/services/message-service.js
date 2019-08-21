@@ -1,29 +1,35 @@
-const rheapromise = require('rhea-promise')
+const rheaPromise = require('rhea-promise')
 const config = require('../config')
-const calculationQueue = 'calculation'
-const scheduleQueue = 'schedule'
+
+function onSenderError (context, name) {
+  const senderError = context.sender && context.sender.error
+  if (senderError) {
+    console.error(`sender error for ${name}`, senderError)
+  }
+}
+
+function onSessionError (context, name) {
+  const sessionError = context.session && context.session.error
+  if (sessionError) {
+    console.error(`session error for ${name}`, sessionError)
+  }
+}
 
 module.exports = {
-
-  configureMQ: function (options) {
-    return {
-      transport: options.transport,
-      port: options.port,
-      reconnect_limit: 10,
-      host: options.address,
-      hostname: options.address,
-      username: options.user,
-      password: options.pass
-    }
-  },
-
-  sendClaim: async function (claim, connection, queueName) {
+  sendClaim: async function (claim, connection, queueConfig) {
     const data = JSON.stringify(claim)
-    const queueOptions = { target: { address: queueName } }
-    const sender = await connection.createSender(queueOptions)
+    const senderName = 'claim-service-sender'
+    const queueOptions = {
+      name: senderName,
+      onError: (context) => onSenderError(context, senderName),
+      onSessionError: (context) => onSessionError(context, senderName),
+      sendTimeoutInSeconds: queueConfig.sendTimeoutInSeconds,
+      target: { address: queueConfig.address }
+    }
+    const sender = await connection.createAwaitableSender(queueOptions)
     let delivery
     try {
-      console.log(`Sending claim to ${queueName}`)
+      console.log(`Sending claim to ${queueConfig.address}`)
       delivery = await sender.send({ body: data })
     } catch (error) {
       throw error
@@ -32,21 +38,23 @@ module.exports = {
     return delivery
   },
 
-  publishClaim: async function (claim, messageQueueOptions) {
+  publishClaim: async function (claim) {
     try {
-      const connectionOptions = this.configureMQ(messageQueueOptions || config.messageQueue)
-      console.log(connectionOptions)
-
-      const connection = new rheapromise.Connection(connectionOptions)
       console.log('New claim to send to message queues : ', claim)
-      await connection.open()
+
+      const calculationQueueConnection = new rheaPromise.Connection(config.calculationQueue)
+      const scheduleQueueConnection = new rheaPromise.Connection(config.calculationQueue)
+
+      await calculationQueueConnection.open()
+      await scheduleQueueConnection.open()
 
       const delivery = await Promise.all([
-        this.sendClaim(claim, connection, calculationQueue),
-        this.sendClaim(claim, connection, scheduleQueue)
+        this.sendClaim(claim, calculationQueueConnection, config.calculationQueue),
+        this.sendClaim(claim, scheduleQueueConnection, config.scheduleQueue)
       ])
       delivery.map(del => { console.log(del.settled) })
-      await connection.close()
+      await calculationQueueConnection.close()
+      await scheduleQueueConnection.close()
     } catch (err) {
       console.log(err)
       throw err
