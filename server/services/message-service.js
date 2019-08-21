@@ -26,7 +26,7 @@ module.exports = {
       sendTimeoutInSeconds: queueConfig.sendTimeoutInSeconds,
       target: { address: queueConfig.address }
     }
-    const sender = await connection.createAwaitableSender(queueOptions)
+    const sender = await connection.createSender(queueOptions)
     let delivery
     try {
       console.log(`Sending claim to ${queueConfig.address}`)
