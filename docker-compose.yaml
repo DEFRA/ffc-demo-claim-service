@@ -13,8 +13,17 @@ services:
       POSTGRES_USERNAME: postgres
       POSTGRES_HOST: mine-support-claim-postgres
       POSTGRES_PORT: 5432
+      MESSAGE_QUEUE_HOST : "amq"
+      MESSAGE_QUEUE_PORT : "5672"
+      CALCULATION_QUEUE_ADDRESS : "calculation"
+      CALCULATION_QUEUE_USER : "artemis"
+      CALCULATION_QUEUE_PASSWORD : "artemis"
+      SCHEDULE_QUEUE_ADDRESS : "payment"
+      SCHEDULE_QUEUE_USER : "artemis"
+      SCHEDULE_QUEUE_PASSWORD : "artemis"
     networks:
       - claim-postgres
+      - amq
 
   mine-support-claim-postgres:
     container_name: mine-support-claim-postgres
@@ -27,9 +36,19 @@ services:
       - claim-postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
+  amq:
+    image: vromero/activemq-artemis:latest-alpine
+    ports:
+    - "8161:8161"
+    - "5672:5672"
+    environment:
+      ARTEMIS_USERNAME: artemis
+      ARTEMIS_PASSWORD: artemis
+    networks:
+      - amq
 networks:
   claim-postgres: {}
+  amq: {}
 
 volumes:
   postgres_data:

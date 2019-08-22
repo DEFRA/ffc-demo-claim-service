@@ -2,7 +2,7 @@ environment: development
 postgresUsername: postgres@mine-support2
 postgresPassword: changeme
 postgresDatabase: mine_claims
-postgresHost:  mine-support-postgres-claims
+postgresHost:  mine-support-claims-postgres
 postgresExternalName: host.docker.internal
 postgresPort: 5432
 name: mine-support-claim-service
@@ -13,10 +13,10 @@ service:
 container:
   imagePullPolicy: IfNotPresent
   redeployOnChange: update this field to force a change
-  requestMemory: 30Mi
-  requestCpu: 30m
-  limitMemory: 60Mi
-  limitCpu: 60m
+  requestMemory: 60Mi
+  requestCpu: 60m
+  limitMemory: 120Mi
+  limitCpu: 120m
   runAsNonRoot: true
   runAsUser: 1000
   readOnlyRootFilesystem: true
@@ -26,9 +26,13 @@ container:
   args: ["npm run migrate; node index"]
   messageQueueHost: mine-support-artemis
   messageQueuePort: 5672
-  messageQueueTransport: TCP
-  messageQueueUser: artemis
-  messageQueuePassword: artemis
+  messageQueueTransport: tcp
+  calculationQueueAddress: calculation
+  calculationQueueUser: artemis
+  calculationQueuePassword: artemis
+  scheduleQueueAddress: schedule
+  scheduleQueueUser: artemis
+  scheduleQueuePassword: artemis
 replicaCount: 1
 minReadySeconds: 10
 maxSurge: 1
