@@ -62,16 +62,24 @@ spec:
               value: {{ .Values.postgresHost }}
             - name: POSTGRES_PORT
               value: {{ .Values.postgresPort | quote }}
-            - name: MINE_SUPPORT_MESSAGE_QUEUE
+            - name: MESSAGE_QUEUE_HOST
               value: {{ .Values.container.messageQueueHost }}
-            - name: MINE_SUPPORT_MESSAGE_QUEUE_TRANSPORT
-              value: {{ .Values.container.messageQueueTransport }}
-            - name: MINE_SUPPORT_MESSAGE_QUEUE_PORT
+            - name: MESSAGE_QUEUE_PORT
               value: {{ .Values.container.messageQueuePort | quote}}
-            - name: MINE_SUPPORT_MESSAGE_QUEUE_USER
-              value: {{ .Values.container.messageQueueUser }}
-            - name: MINE_SUPPORT_MESSAGE_QUEUE_PASS
-              value: {{ .Values.container.messageQueuePassword }}
+            - name: MESSAGE_QUEUE_TRANSPORT
+              value: {{ .Values.container.messageQueueTransport }}
+            - name: CALCULATION_QUEUE_ADDRESS
+              value: {{ .Values.container.calculationQueueAddress }}
+            - name: CALCULATION_QUEUE_USER
+              value: {{ .Values.container.calculationQueueUser }}
+            - name: CALCULATION_QUEUE_PASSWORD
+              value: {{ .Values.container.calculationQueuePassword }}
+            - name: SCHEDULE_QUEUE_ADDRESS
+              value: {{ .Values.container.scheduleQueueAddress }}
+            - name: SCHEDULE_QUEUE_USER
+              value: {{ .Values.container.scheduleQueueUser }}
+            - name: SCHEDULE_QUEUE_PASSWORD
+              value: {{ .Values.container.scheduleQueuePassword }}
             - name: PORT
               value: "3003"
 status: {}
