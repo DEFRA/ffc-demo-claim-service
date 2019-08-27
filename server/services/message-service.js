@@ -1,8 +1,9 @@
 const MessageSender = require('./messaging/message-sender')
+console.debug('getting config')
 const config = require('../config')
 
-const calculationSender = new MessageSender('claim-service-calculation-sender', config.calculationQueueConfig)
-const scheduleSender = new MessageSender('claim-service-schedule-sender', config.scheduleQueueConfig)
+const calculationSender = new MessageSender('claim-service-calculation-sender', config.messageQueues.calculationQueue)
+const scheduleSender = new MessageSender('claim-service-schedule-sender', config.messageQueues.scheduleQueue)
 
 async function registerQueues () {
   await openConnections()

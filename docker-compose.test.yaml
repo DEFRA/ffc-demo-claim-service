@@ -1,6 +1,11 @@
 version: '3'
+
+# This override file should be used when running automated tests so
+# that test output is saved to the host
+
 services:
   mine-support-claim-service:
-    volumes:
-      - ./test-output:/usr/src/app/test-output
     command: npm run test
+    volumes:
+      - ./.git:/usr/src/app/.git
+      - ./test-output:/usr/src/app/test-output

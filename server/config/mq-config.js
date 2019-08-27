@@ -1,4 +1,4 @@
-const joi = require('@hapi/joi')
+const joi = require('joi')
 
 const mqSchema = {
   messageQueue: {
@@ -51,7 +51,10 @@ if (mqResult.error) {
   throw new Error(`The message queue config is invalid. ${mqResult.error.message}`)
 }
 
-const scheduleQueueConfig = { ...mqResult.value.messageQueue, ...mqResult.value.scheduleQueue }
 const calculationQueueConfig = { ...mqResult.value.messageQueue, ...mqResult.value.calculationQueue }
+const scheduleQueueConfig = { ...mqResult.value.messageQueue, ...mqResult.value.scheduleQueue }
 
-module.exports = { scheduleQueueConfig, calculationQueueConfig }
+module.exports = {
+  calculationQueue: calculationQueueConfig,
+  scheduleQueue: scheduleQueueConfig
+}

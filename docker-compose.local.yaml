@@ -5,9 +5,21 @@ version: '3'
 
 services:
   mine-support-claim-service:
+    command: >
+      sh -c "
+        scripts/wait-for/wait-for mine-support-claim-postgres:5432 --
+        scripts/wait-for/wait-for mine-support-message-queue:8161 --
+        npm run migrate &&
+        npm run start:watch"
     networks:
       - mine-support
+    volumes:
+      - node_modules:/usr/src/app/node_modules
+      - .:/usr/src/app
 
 networks:
   mine-support:
     external: true
+
+volumes:
+  node_modules: {}

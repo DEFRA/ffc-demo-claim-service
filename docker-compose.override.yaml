@@ -1,15 +1,48 @@
 version: '3'
 
-# This override file should be used in development environments to
-# bind-mount the app from the host into the container
+# This override file should be used when running this service in isolation
+# to provide required sibling services for local testing
 
 services:
   mine-support-claim-service:
-    ports:
-      - "3003:3003"
+    command: >
+      sh -c "
+        scripts/wait-for/wait-for mine-support-claim-postgres:5432 --
+        npm run migrate &&
+        npm run start:watch"
+    depends_on:
+      - mine-support-claim-message-queue
+    networks:
+      - mine-support-claim
     volumes:
       - node_modules:/usr/src/app/node_modules
       - .:/usr/src/app
 
+  mine-support-claim-message-queue:
+    container_name: mine-support-claim-message-queue
+    image: vromero/activemq-artemis:2.9.0-alpine
+    environment:
+      ARTEMIS_USERNAME: artemis
+      ARTEMIS_PASSWORD: artemis
+    networks:
+      - mine-support-claim
+    ports:
+      - "8161:8161"
+      - "5672:5672"
+    volumes:
+      - message-queue-data:/var/lib/artemis/data
+      - message-queue-tmp:/var/lib/artemis/tmp
+      - message-queue-etc:/var/lib/artemis/etc
+      - message-queue-etc-override:/var/lib/artemis/etc-override
+      - message-queue-lock:/var/lib/artemis/lock
+
+networks:
+  mine-support-claim: {}
+
 volumes:
-  node_modules:
+  message-queue-data: {}
+  message-queue-tmp: {}
+  message-queue-etc: {}
+  message-queue-etc-override: {}
+  message-queue-lock: {}
+  node_modules: {}

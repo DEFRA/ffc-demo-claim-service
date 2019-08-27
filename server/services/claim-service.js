@@ -10,8 +10,8 @@ module.exports = {
       return existingClaim
     }
 
-    const claimRecord = await claimRepository.create(claim)
     console.log('Creating new claim', claim)
+    const claimRecord = await claimRepository.create(claim)
 
     if (claim.mineType != null) {
       for (let mineType in claim.mineType) {
