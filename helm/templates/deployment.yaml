@@ -14,11 +14,15 @@ spec:
     metadata:
       labels:
         app: {{ .Values.name }}
-        environment: {{ .Values.environment }}  
+        environment: {{ .Values.environment }}
       annotations:
         redeployOnChange: "{{ .Values.container.redeployOnChange }}"
     spec:
       restartPolicy: {{ .Values.container.restartPolicy }}
+      {{- if .Values.imagePullSecret }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecret }}
+      {{- end }}
       containers:
         - name: {{ .Values.name }}
           image: {{ .Values.image }}
