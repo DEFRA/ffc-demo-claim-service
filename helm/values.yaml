@@ -7,6 +7,7 @@ postgresExternalName: host.docker.internal
 postgresPort: 5432
 name: mine-support-claim-service
 image: mine-support-claim-service
+imagePullSecret:
 service:
   type: ClusterIP
   port: 80
