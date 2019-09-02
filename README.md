@@ -122,6 +122,13 @@ curl  -i --header "Content-Type: application/json" \
   http://localhost:3003/submit
 ```
 
+### Probes
+
+The service has both an Http readiness probe and an Http liveness probe configured to receive at the below end points.
+
+Readiness: `/healthy`
+Liveness: `/healthz`
+
 # Build Pipeline
 
 The [azure-pipelines.yaml](azure-pipelines.yaml) performs the following tasks:
@@ -133,4 +140,3 @@ The [azure-pipelines.yaml](azure-pipelines.yaml) performs the following tasks:
 Builds will be deployed into a namespace with the format `mine-support-claim-service-{identifier}` where `{identifier}` is either the release version, the PR number, or the branch name.
 
 A detailed description on the build pipeline and PR work flow is available in the [Defra Confluence page](https://eaflood.atlassian.net/wiki/spaces/FFCPD/pages/1281359920/Build+Pipeline+and+PR+Workflow)
-
