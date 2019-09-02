@@ -71,7 +71,15 @@ scripts/start --detach
 
 This service depends on an external Docker network named `mine-support` to communicate with other Mine Support services running alongside it. The start script will automatically create the network if it doesn't exist and the stop script will remove the network if no other containers are using it.
 
-The external network is declared in a secondary Docker Compose configuration (referenced by the above scripts) so that this service can be run in isolation without creating an external Docker network.
+The external network is declared in a secondary Docker Compose configuration (referenced by the above scripts) so that this service can be run in isolation without creating an external Docker network by using standard Docker Compose commands:
+
+```
+# Build containers
+docker-compose build
+
+# Start the service is isolation
+docker-compose up
+```
 
 ## Using Kubernetes
 
@@ -133,4 +141,3 @@ The [azure-pipelines.yaml](azure-pipelines.yaml) performs the following tasks:
 Builds will be deployed into a namespace with the format `mine-support-claim-service-{identifier}` where `{identifier}` is either the release version, the PR number, or the branch name.
 
 A detailed description on the build pipeline and PR work flow is available in the [Defra Confluence page](https://eaflood.atlassian.net/wiki/spaces/FFCPD/pages/1281359920/Build+Pipeline+and+PR+Workflow)
-
