@@ -1,0 +1,47 @@
+#!/bin/sh
+
+set -e
+projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/../.." || return; pwd)"
+
+(
+  cd "${projectRoot}"
+
+  echo "Deploying claim message queue"
+  helm repo add activemq-artemis https://mailrucloudsolutions.github.io/activemq-artemis-helm/
+  helm upgrade \
+    --atomic \
+    --install \
+    --namespace mine-support-claim-service \
+    --set artemisUser=artemis \
+    --set artemisPassword=artemis \
+    --set replicas=1 \
+    --set persistence.enabled=false \
+    mine-support-claim-artemis \
+    activemq-artemis/activemq-artemis
+
+  echo "Deploying claim PostgreSQL"
+  helm upgrade \
+    --atomic \
+    --install \
+    --namespace mine-support-claim-service \
+    --set persistence.enabled=false \
+    --set postgresqlDatabase=mine_claims \
+    --set postgresqlPassword=changeme \
+    --set postgresqlUsername=postgres@mine-support2 \
+    --set service.port=5432 \
+    --wait \
+    mine-support-claim-postgres \
+    stable/postgresql
+
+  echo "Deploying claim service"
+  helm upgrade \
+    --atomic \
+    --install \
+    --namespace mine-support-claim-service \
+    --set postgresHost=mine-support-claim-postgres-postgresql \
+    --set container.messageQueueHost=mine-support-claim-artemis-activemq-artemis \
+    --set postgresServiceName=mine-support-claim-postgres \
+    --wait \
+    mine-support-claim-service \
+    ./helm
+)
