@@ -20,6 +20,10 @@ class MessageBase {
     await this.connection.close()
     console.log(`${this.name} connection closed`)
   }
+
+  isOpen () {
+    return this.connection.isOpen()
+  }
 }
 
 module.exports = MessageBase

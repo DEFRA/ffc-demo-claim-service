@@ -1,5 +1,4 @@
 const MessageSender = require('./messaging/message-sender')
-console.debug('getting config')
 const config = require('../config')
 
 const calculationSender = new MessageSender('claim-service-calculation-sender', config.messageQueues.calculationQueue)
@@ -31,9 +30,15 @@ async function publishClaim (claim) {
     throw err
   }
 }
+
+function isConnected () {
+  return calculationSender.isOpen() && scheduleSender.isOpen()
+}
+
 module.exports = {
   registerQueues,
   publishClaim,
   openConnections,
-  closeConnections
+  closeConnections,
+  isConnected
 }

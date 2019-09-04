@@ -40,13 +40,13 @@ minReadySeconds: 10
 maxSurge: 1
 maxUnavailable: 1
 livenessProbe:
-  path: /healthy
+  path: /healthz
   port: 3003
   initialDelaySeconds: 10
   periodSeconds: 10
   failureThreshold: 3
 readinessProbe:
-  path: /healthz
+  path: /healthy
   port: 3003
   initialDelaySeconds: 10
   periodSeconds: 10
