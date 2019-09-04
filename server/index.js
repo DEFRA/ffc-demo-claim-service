@@ -14,6 +14,14 @@ async function registerQueues () {
     await messageService.closeConnections()
     process.exit(0)
   })
+
+  process.on('warning', async (warning) => {
+    console.log('warning received', warning)
+    if (warning && warning.name === 'AMQPWarning') {
+      await messageService.closeConnections()
+      process.exit(0)
+    }
+  })
 }
 
 async function createServer () {

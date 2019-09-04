@@ -1,3 +1,5 @@
+let warned = false
+
 function onSenderError (context, name) {
   const senderError = context.sender && context.sender.error
   if (senderError) {
@@ -9,6 +11,13 @@ function onSessionError (context, name) {
   const sessionError = context.session && context.session.error
   if (sessionError) {
     console.error(`session error for ${name}`, sessionError)
+    if (!warned) {
+      const sesionErrorWarning = new Error('AMQP session error')
+      sesionErrorWarning.name = 'AMQPWarning'
+      sesionErrorWarning.code = 'AMQP001'
+      process.emitWarning(sesionErrorWarning)
+      warned = true
+    }
   }
 }
 

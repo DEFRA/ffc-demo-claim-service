@@ -66,3 +66,4 @@ typings/
 lcov.info
 TEST-*.xml
 test-output/
+.vscode

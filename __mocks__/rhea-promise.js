@@ -27,7 +27,8 @@ const mockConnection = jest.fn().mockImplementation(() => {
   return {
     close: mockClose,
     createAwaitableSender: mockCreateSender,
-    open: mockOpen
+    open: mockOpen,
+    isOpen: () => true
   }
 })
 
