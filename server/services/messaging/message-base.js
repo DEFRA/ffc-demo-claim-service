@@ -21,7 +21,7 @@ class MessageBase {
     console.log(`${this.name} connection closed`)
   }
 
-  isOpen () {
+  isConnected () {
     return this.connection.isOpen()
   }
 }

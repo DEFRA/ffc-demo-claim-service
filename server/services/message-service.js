@@ -31,14 +31,19 @@ async function publishClaim (claim) {
   }
 }
 
-function isConnected () {
-  return calculationSender.isOpen() && scheduleSender.isOpen()
+function getCalculationSender () {
+  return calculationSender
+}
+
+function getScheduleSender () {
+  return scheduleSender
 }
 
 module.exports = {
-  registerQueues,
-  publishClaim,
-  openConnections,
   closeConnections,
-  isConnected
+  getCalculationSender,
+  getScheduleSender,
+  openConnections,
+  publishClaim,
+  registerQueues
 }
