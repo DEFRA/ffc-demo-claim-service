@@ -55,7 +55,7 @@ describe('Healthy test', () => {
     const response = await server.inject(options)
 
     expect(response.statusCode).toBe(500)
-    expect(response.payload).toBe('Downstream services unavailable: database')
+    expect(response.payload).toBe('Dependencies unavailable: database')
   })
 
   test('GET /healthy returns 500 if calculation queue not connected', async () => {
@@ -71,7 +71,7 @@ describe('Healthy test', () => {
     const response = await server.inject(options)
 
     expect(response.statusCode).toBe(500)
-    expect(response.payload).toBe('Downstream services unavailable: calculation queue')
+    expect(response.payload).toBe('Dependencies unavailable: calculationQueue')
   })
 
   test('GET /healthy returns 500 if schedule queue not connected', async () => {
@@ -87,7 +87,7 @@ describe('Healthy test', () => {
     const response = await server.inject(options)
 
     expect(response.statusCode).toBe(500)
-    expect(response.payload).toBe('Downstream services unavailable: schedule queue')
+    expect(response.payload).toBe('Dependencies unavailable: scheduleQueue')
   })
 
   test('GET /healthy returns 500 with appropriate message if all downstream services are disconnected', async () => {
@@ -103,7 +103,7 @@ describe('Healthy test', () => {
     const response = await server.inject(options)
 
     expect(response.statusCode).toBe(500)
-    expect(response.payload).toBe('Downstream services unavailable: database, calculation queue, schedule queue')
+    expect(response.payload).toBe('Dependencies unavailable: calculationQueue, database, scheduleQueue')
   })
 
   afterEach(async () => {

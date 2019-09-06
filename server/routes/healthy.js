@@ -9,27 +9,20 @@ module.exports = {
       const calculationSender = messageService.getCalculationSender()
       const scheduleSender = messageService.getScheduleSender()
 
-      const unavailableServices = []
-
-      if (!await databaseService.isConnected()) {
-        unavailableServices.push('database')
+      const connections = {
+        calculationQueue: calculationSender.isConnected(),
+        database: await databaseService.isConnected(),
+        scheduleQueue: scheduleSender.isConnected()
       }
 
-      if (!calculationSender.isConnected()) {
-        unavailableServices.push('calculation queue')
-      }
+      const disconnected = Object.keys(connections)
+        .filter(service => !connections[service])
+        .join(', ')
 
-      if (!scheduleSender.isConnected()) {
-        unavailableServices.push('schedule queue')
-      }
+      const allConnected = disconnected.length === 0
 
-      let message = 'ok'
-      let statusCode = 200
-
-      if (unavailableServices.length > 0) {
-        message = 'Downstream services unavailable: ' + unavailableServices.join(', ')
-        statusCode = 500
-      }
+      const message = allConnected ? 'ok' : `Dependencies unavailable: ${disconnected}`
+      const statusCode = allConnected ? 200 : 500
 
       return h.response(message).code(statusCode)
     }
