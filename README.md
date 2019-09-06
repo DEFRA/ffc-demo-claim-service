@@ -77,17 +77,21 @@ The external network is declared in a secondary Docker Compose configuration (re
 
 The service has been developed with the intention of running on Kubernetes in production.  A helm chart is included in the `.\helm` folder. For development, it is simpler to develop using Docker Compose than to set up a local Kubernetes environment. See above for instructions.
 
-Running via Helm requires a local Postgres database to be installed and setup with the username and password defined in the [values.yaml](./helm/values.yaml).
+Running via Helm requires a local AMQP message broker and Postgres database to be installed and setup with the credentials defined in the [values.yaml](./helm/values.yaml).
 
-To test Helm deployments locally, a [deploy](./deploy) script is provided.
+Convenience scripts are provided which deploy all dependencies and the service into the current Helm/Kubernetes context. These should be used to test local changes to Helm charts:
 
 ```
 # Build service containers
 scripts/build
 
-# Deploy to the current Helm context
-scripts/deploy
+# Deploy to current Kubernetes context
+scripts/helm/install
+
+# Remove from current Kubernetes context
+scripts/helm/delete
 ```
+
 ### Accessing the pod
 
 The mine-support-claim-service is not exposed via an endpoint within Kubernetes.
