@@ -1,0 +1,7 @@
+persistence:
+  enabled: false
+postgresqlDatabase: mine_claims
+postgresqlPassword: changeme
+postgresqlUsername: postgres@mine-support2
+service:
+  port: 5432

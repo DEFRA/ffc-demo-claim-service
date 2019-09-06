@@ -12,10 +12,7 @@ projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/../.." || return
     --atomic \
     --install \
     --namespace mine-support-claim-service \
-    --set artemisUser=artemis \
-    --set artemisPassword=artemis \
-    --set replicas=1 \
-    --set persistence.enabled=false \
+    --values helm/artemis-values.yaml \
     mine-support-claim-artemis \
     activemq-artemis/activemq-artemis
 
@@ -24,11 +21,7 @@ projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/../.." || return
     --atomic \
     --install \
     --namespace mine-support-claim-service \
-    --set persistence.enabled=false \
-    --set postgresqlDatabase=mine_claims \
-    --set postgresqlPassword=changeme \
-    --set postgresqlUsername=postgres@mine-support2 \
-    --set service.port=5432 \
+    --values helm/postgres-values.yaml \
     --wait \
     mine-support-claim-postgres \
     stable/postgresql
