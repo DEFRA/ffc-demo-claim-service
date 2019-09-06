@@ -38,9 +38,7 @@ projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/../.." || return
     --atomic \
     --install \
     --namespace mine-support-claim-service \
-    --set postgresHost=mine-support-claim-postgres-postgresql \
-    --set container.messageQueueHost=mine-support-claim-artemis-activemq-artemis \
-    --set postgresServiceName=mine-support-claim-postgres \
+    --values helm/development-values.yaml \
     --wait \
     mine-support-claim-service \
     ./helm
