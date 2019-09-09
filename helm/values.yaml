@@ -3,6 +3,7 @@ postgresUsername: postgres@mine-support2
 postgresPassword: changeme
 postgresDatabase: mine_claims
 postgresHost:  mine-support-claims-postgres
+postgresServiceName:  mine-support-claims-postgres
 postgresExternalName: host.docker.internal
 postgresPort: 5432
 name: mine-support-claim-service
@@ -24,7 +25,7 @@ container:
   allowPrivilegeEscalation: false
   restartPolicy: Always
   command: ["/bin/sh","-c"]
-  args: ["npm run migrate; node index"]
+  args: ["npm --no-update-notifier run migrate && node index"]
   messageQueueHost: mine-support-artemis
   messageQueuePort: 5672
   messageQueueTransport: tcp
@@ -38,3 +39,15 @@ replicaCount: 1
 minReadySeconds: 10
 maxSurge: 1
 maxUnavailable: 1
+livenessProbe:
+  path: /healthz
+  port: 3003
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  failureThreshold: 3
+readinessProbe:
+  path: /healthy
+  port: 3003
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  failureThreshold: 3

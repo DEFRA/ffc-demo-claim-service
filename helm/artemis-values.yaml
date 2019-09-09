@@ -1,0 +1,5 @@
+artemisUser: artemis
+artemisPassword: artemis
+replicas: 1
+persistence:
+  enabled: false
