@@ -20,7 +20,7 @@ module.exports = {
   ],
   'coverageThreshold': {
     'global': {
-      'statements': 74
+      'statements': 80
     }
   },
   'modulePathIgnorePatterns': [

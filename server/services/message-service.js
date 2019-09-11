@@ -20,10 +20,6 @@ async function openConnections () {
 
 async function publishClaim (claim) {
   try {
-    // if (!isConnected()) {
-    //   await closeConnections()
-    //   process.exit()
-    // }
     console.log('calculationSender connected', calculationSender.isConnected())
     console.log('scheduleSender connected', scheduleSender.isConnected())
     const delivery = await Promise.all([
