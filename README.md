@@ -22,7 +22,7 @@ Digital service mock to claim public money in the event property subsides into m
 
 - Node v10+
 - Access to a PostgreSQL database
-- Access to an AMQP 1.0 compatible message queue service
+- Access to an AMQP 1.0 compatible message broker
 
 # How to run tests
 
@@ -95,7 +95,7 @@ script/connected-stop
 
 ## Deploy to Kubernetes
 
-For production deployments, a helm chart is included in the `.\helm` folder. This service connects to an AMQP message broker and PostgreSQL database, using credentials defined in [values.yaml](./helm/values.yaml), which must be made available prior to deployment.
+For production deployments, a helm chart is included in the `.\helm` folder. This service connects to an AMQP 1.0 message broker and PostgreSQL database, using credentials defined in [values.yaml](./helm/values.yaml), which must be made available prior to deployment.
 
 Scripts are provided to test the Helm chart by deploying the service, along with an appropriate message broker and database, into the current Helm/Kubernetes context.
 
