@@ -42,57 +42,64 @@ npm run test
 
 # Running the application
 
-The application is designed to run as a container via Docker Compose or Kubernetes (with Helm).
+The application is designed to run as a container via Docker Compose or Kubernetes. Docker Compose is recommended or development environments while Kubernetes should be used in production. A Helm chart is provided for deployment to Kubernetes clusters.
 
-## Using Docker Compose
+Convenience scripts are provided for local development and testing of the application and deployment process.
 
-A set of convenience scripts are provided for local development and running via Docker Compose.
+## Build container image
+
+Container images are built using Docker Compose and the same image may be run in either Docker Compose or Kubernetes.
+
+The [`build`](./scripts/build) script is essentially a shortcut and will pass any arguments through to the `docker-compose build` command.
 
 ```
-# Build service containers
+# Build images using default Docker behaviour
 scripts/build
 
+# Build images without using the Docker cache
+scripts/build --no-cache
+```
+
+## Run as an isolated service
+
+To test this service in isolation, use the provided scripts to start and stop a local instance. This relies on Docker Compose and will run direct dependencies, such as message queues and databases, as additional containers. Arguments given to the [`start`](./scripts/start) script will be passed through to the `docker-compose up` command.
+
+```
 # Start the service and attach to running containers (press `ctrl + c` to quit)
 scripts/start
+
+# Start the service without attaching to containers
+scripts/start --detach
+
+# Send a sample request to the /submit endpoint
+curl  -i --header "Content-Type: application/json" \
+  --request POST \
+  --data '{ "claimId": "MINE123", "propertyType": "business",  "accessible": false,   "dateOfSubsidence": "2019-07-26T09:54:19.622Z",  "mineType": ["gold"] }' \
+  http://localhost:3003/submit
 
 # Stop the service and remove Docker volumes and networks created by the start script
 scripts/stop
 ```
 
-Any arguments provided to the build and start scripts are passed to the Docker Compose `build` and `up` commands, respectively. For example:
+## Connect to sibling services
+
+To test this service in combination with other parts of the Mine Support application, it is necessary to connect each service to an external Docker network and shared dependencies, such as message queues. Start the shared dependencies from the [`mine-support-development`](https://github.com/DEFRA/mine-support-development) repository and then use the `connected-` [`scripts`](./scripts/) to start this service. Follow instructions in other repositories to connect each service to the shared dependencies and network.
 
 ```
-# Build without using the Docker cache
-scripts/build --no-cache
+# Start the service
+script/connected-start
 
-# Start the service without attaching to containers
-scripts/start --detach
+# Stop the service
+script/connected-stop
 ```
 
-This service depends on an external Docker network named `mine-support` to communicate with other Mine Support services running alongside it. The start script will automatically create the network if it doesn't exist and the stop script will remove the network if no other containers are using it.
+## Deploy to Kubernetes
 
-The external network is declared in a secondary Docker Compose configuration (referenced by the above scripts) so that this service can be run in isolation without creating an external Docker network by using standard Docker Compose commands:
+For production deployments, a helm chart is included in the `.\helm` folder. This service connects to an AMQP message broker and PostgreSQL database, using credentials defined in [values.yaml](./helm/values.yaml), which must be made available prior to deployment.
 
-```
-# Build containers
-docker-compose build
-
-# Start the service is isolation
-docker-compose up
-```
-
-## Using Kubernetes
-
-The service has been developed with the intention of running on Kubernetes in production.  A helm chart is included in the `.\helm` folder. For development, it is simpler to develop using Docker Compose than to set up a local Kubernetes environment. See above for instructions.
-
-Running via Helm requires a local AMQP message broker and Postgres database to be installed and setup with the credentials defined in the [values.yaml](./helm/values.yaml).
-
-Convenience scripts are provided which deploy all dependencies and the service into the current Helm/Kubernetes context. These should be used to test local changes to Helm charts:
+Scripts are provided to test the Helm chart by deploying the service, along with an appropriate message broker and database, into the current Helm/Kubernetes context.
 
 ```
-# Build service containers
-scripts/build
-
 # Deploy to current Kubernetes context
 scripts/helm/install
 
@@ -116,6 +123,7 @@ to a local port using the name returned from the previous command, i.e.
 
 Once the port is forwarded a tool such as [Postman](https://www.getpostman.com/) can be used to access the API at http://localhost:3003/submit.
 Sample valid JSON that can be posted is:
+
 ```
 {
   "claimId": "MINE123",
@@ -125,6 +133,7 @@ Sample valid JSON that can be posted is:
   "mineType": ["gold"]
 }
 ```
+
  Alternatively curl can be used locally to send a request to the end point, i.e.
 
 ```
