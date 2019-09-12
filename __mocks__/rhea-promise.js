@@ -23,7 +23,7 @@ const mockCreateSender = jest.fn(() => {
   return new MockSender()
 })
 
-const mockConnection = jest.fn().mockImplementation(() => {
+const MockConnection = jest.fn().mockImplementation(() => {
   return {
     close: mockClose,
     createAwaitableSender: mockCreateSender,
@@ -32,9 +32,15 @@ const mockConnection = jest.fn().mockImplementation(() => {
   }
 })
 
+const MockContainer = jest.fn().mockImplementation(() => {
+  return {
+    createConnection: () => new MockConnection()
+  }
+})
+
 rhea.Sender = MockSender
-rhea.Connection = mockConnection
 rhea.Delivery = MockDelivery
 rhea._SendFunction = mockSend
+rhea.Container = MockContainer
 
 module.exports = rhea
