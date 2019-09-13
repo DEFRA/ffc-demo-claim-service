@@ -6,19 +6,10 @@ projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; p
 (
   cd "${projectRoot}"
 
-  if [ ! -z "$(docker-compose ps -q)" ]; then
-    docker-compose \
-      -f docker-compose.yaml \
-      -f docker-compose.override.yaml \
-      -f docker-compose.local.yaml \
-      down -v
+  existingServices="$( docker-compose ps -q )"
+  existingVolumes="$( docker volume ls --filter name=^mine-support-claim-service --format={{.Name}} )"
+
+  if [ -n "${existingServices}${existingVolumes}" ]; then
+    docker-compose down -v
   fi
 )
-
-# Check whether ffc-demo network exists and is no longer in use
-if [ ! -z "$(docker network ls --filter name=^ffc-demo$ --format={{.Name}})" ] \
-  && [ "$(docker network inspect -f {{.Containers}} ffc-demo &>/dev/null)" = "map[]" ] \
-; then
-  echo "Removing ffc-demo network"
-  docker network rm ffc-demo
-fi
