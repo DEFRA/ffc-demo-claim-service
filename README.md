@@ -134,7 +134,7 @@ Sample valid JSON that can be posted is:
 }
 ```
 
- Alternatively curl can be used locally to send a request to the end point, i.e.
+ Alternatively, curl can be used to send a request to the end point:
 
 ```
 curl  -i --header "Content-Type: application/json" \
