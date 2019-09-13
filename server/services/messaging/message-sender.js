@@ -1,13 +1,10 @@
-const rheaPromise = require('rhea-promise')
 const { getSenderConfig } = require('./config-helper')
 const MessageBase = require('./message-base')
 
 class MessageSender extends MessageBase {
   constructor (name, config) {
-    super(config)
-    this.name = name
+    super(name, config)
     this.senderConfig = getSenderConfig(this.name, config)
-    this.connection = new rheaPromise.Connection(config)
   }
 
   decodeMessage (message) {

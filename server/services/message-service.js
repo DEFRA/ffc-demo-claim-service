@@ -20,6 +20,8 @@ async function openConnections () {
 
 async function publishClaim (claim) {
   try {
+    console.log('calculationSender connected', calculationSender.isConnected())
+    console.log('scheduleSender connected', scheduleSender.isConnected())
     const delivery = await Promise.all([
       calculationSender.sendMessage(claim),
       scheduleSender.sendMessage(claim)

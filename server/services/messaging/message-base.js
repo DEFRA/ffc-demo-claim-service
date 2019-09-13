@@ -3,7 +3,8 @@ const rheaPromise = require('rhea-promise')
 class MessageBase {
   constructor (name, config) {
     this.name = name
-    this.connection = new rheaPromise.Connection(config)
+    const container = new rheaPromise.Container()
+    this.connection = container.createConnection(config)
   }
 
   async openConnection () {
