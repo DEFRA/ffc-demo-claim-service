@@ -4,7 +4,24 @@
 
 Digital service mock to claim public money in the event property subsides into mine shaft.  The claim service receives claim data and if doesn’t already exist saves it in a Postgresql database table.  It also publishes events to message queues that a new claim has been received.
 
+# Prerequisites
+
+Either:
+- Docker
+- Docker Compose
+
+Or:
+- Kubernetes
+- Helm
+
+Or:
+- Node 10
+- PostgreSQL database
+- AMQP 1.0 message queue
+
 # Environment variables
+
+The following environment variables are required by the application container. Values for development are set in the Docker Compose configuration. Default values for production-like deployments are set in the Helm chart and may be overridden by build and release pipelines.
 
 | Name                            | Description        | Required | Default              | Valid                       | Notes |
 |---------------------------------|--------------------|:--------:|----------------------|:---------------------------:|-------|
@@ -17,12 +34,6 @@ Digital service mock to claim public money in the event property subsides into m
 | MINE_SUPPORT_MESSAGE_QUEUE_PORT | MQ Server port     |    no    | 5672                 |                             |       |
 | MINE_SUPPORT_MESSAGE_QUEUE_USER | MQ Server username |    no    |                      |                             |       |
 | MINE_SUPPORT_MESSAGE_QUEUE_PASS | MQ Server password |    no    |                      |                             |       |
-
-# Prerequisites
-
-- Node v10+
-- Access to a PostgreSQL database
-- Access to an AMQP 1.0 compatible message broker
 
 # How to run tests
 
