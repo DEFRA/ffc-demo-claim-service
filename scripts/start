@@ -3,10 +3,10 @@
 set -e
 projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; pwd)"
 
-# Check whether mine-support network needs creating
-if [ -z "$(docker network ls --filter name=^mine-support$ --format={{.Name}})" ]; then
-  echo "Creating mine-support network"
-  docker network create mine-support
+# Check whether ffc-demo network needs creating
+if [ -z "$(docker network ls --filter name=^ffc-demo$ --format={{.Name}})" ]; then
+  echo "Creating ffc-demo network"
+  docker network create ffc-demo
 fi
 
 (

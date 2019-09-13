@@ -2,12 +2,12 @@ environment: development
 postgresUsername: postgres@mine-support2
 postgresPassword: changeme
 postgresDatabase: mine_claims
-postgresHost:  mine-support-claims-postgres
-postgresServiceName:  mine-support-claims-postgres
+postgresHost: ffc-demo-claims-postgres
+postgresServiceName: ffc-demo-claims-postgres
 postgresExternalName: host.docker.internal
 postgresPort: 5432
-name: mine-support-claim-service
-image: mine-support-claim-service
+name: ffc-demo-claim-service
+image: ffc-demo-claim-service
 imagePullSecret:
 service:
   type: ClusterIP

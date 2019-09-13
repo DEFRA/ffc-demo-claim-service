@@ -7,7 +7,7 @@ projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/../.." || return
   cd "${projectRoot}"
 
   helm delete --purge \
-    mine-support-claim-artemis \
-    mine-support-claim-postgres \
-    mine-support-claim-service
+    ffc-demo-claim-artemis \
+    ffc-demo-claim-postgres \
+    ffc-demo-claim-service
 )

@@ -4,28 +4,28 @@ version: '3'
 # to provide required sibling services for local testing
 
 services:
-  mine-support-claim-service:
+  ffc-demo-claim-service:
     command: >
       sh -c "
-        scripts/wait-for/wait-for mine-support-claim-postgres:5432 --
+        scripts/wait-for/wait-for ffc-demo-claim-postgres:5432 --
         npm run migrate &&
         npm run start:watch"
     depends_on:
-      - mine-support-claim-message-queue
+      - ffc-demo-claim-message-queue
     networks:
-      - mine-support-claim
+      - ffc-demo-claim
     volumes:
       - node_modules:/usr/src/app/node_modules
       - .:/usr/src/app
 
-  mine-support-claim-message-queue:
-    container_name: mine-support-claim-message-queue
+  ffc-demo-claim-message-queue:
+    container_name: ffc-demo-claim-message-queue
     image: vromero/activemq-artemis:2.9.0-alpine
     environment:
       ARTEMIS_USERNAME: artemis
       ARTEMIS_PASSWORD: artemis
     networks:
-      - mine-support-claim
+      - ffc-demo-claim
     ports:
       - "8161:8161"
       - "5672:5672"
@@ -37,7 +37,7 @@ services:
       - message-queue-lock:/var/lib/artemis/lock
 
 networks:
-  mine-support-claim: {}
+  ffc-demo-claim: {}
 
 volumes:
   message-queue-data: {}

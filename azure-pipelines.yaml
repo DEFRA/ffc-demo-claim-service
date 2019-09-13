@@ -16,7 +16,7 @@ variables:
     azureSubscriptionEndpoint: MineSupport
     azureResourceGroup: MineSupport
     kubernetesCluster: MineSupport
-    imageName:  mine-support-claim-service
+    imageName: ffc-demo-claim-service
     containerTag: $(Build.SourceBranchName)
     safeContainerTag: $(Build.SourceBranchName)
     mergedPrNo:
@@ -35,7 +35,7 @@ steps:
   displayName: set container tag if release
   # update helm charts tag and version if files ready for publishing chart
 - script: |
-    sed -i -e 's/image: mine-support/image: mine-support:$(containerTag)/' ./helm/values.yaml
+    sed -i -e 's/image: ffc-demo-claim-service/image: ffc-demo-claim-service:$(containerTag)/' ./helm/values.yaml
     versionTag=`echo $(containerTag) | sed 's/v//'`
     sed -i -e 's/version: 1.0.0/version: '"$versionTag"'/' ./helm/Chart.yaml
   condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags'))

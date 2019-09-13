@@ -15,10 +15,10 @@ projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; p
   fi
 )
 
-# Check whether mine-support network exists and is no longer in use
-if [ ! -z "$(docker network ls --filter name=^mine-support$ --format={{.Name}})" ] \
-  && [ "$(docker network inspect -f {{.Containers}} mine-support &>/dev/null)" = "map[]" ] \
+# Check whether ffc-demo network exists and is no longer in use
+if [ ! -z "$(docker network ls --filter name=^ffc-demo$ --format={{.Name}})" ] \
+  && [ "$(docker network inspect -f {{.Containers}} ffc-demo &>/dev/null)" = "map[]" ] \
 ; then
-  echo "Removing mine-support network"
-  docker network rm mine-support
+  echo "Removing ffc-demo network"
+  docker network rm ffc-demo
 fi
