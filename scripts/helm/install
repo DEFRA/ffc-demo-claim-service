@@ -11,28 +11,28 @@ projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/../.." || return
   helm upgrade \
     --atomic \
     --install \
-    --namespace mine-support-claim-service \
+    --namespace ffc-demo-claim-service \
     --values helm/artemis-values.yaml \
-    mine-support-claim-artemis \
+    ffc-demo-claim-artemis \
     activemq-artemis/activemq-artemis
 
   echo "Deploying claim PostgreSQL"
   helm upgrade \
     --atomic \
     --install \
-    --namespace mine-support-claim-service \
+    --namespace ffc-demo-claim-service \
     --values helm/postgres-values.yaml \
     --wait \
-    mine-support-claim-postgres \
+    ffc-demo-claim-postgres \
     stable/postgresql
 
   echo "Deploying claim service"
   helm upgrade \
     --atomic \
     --install \
-    --namespace mine-support-claim-service \
+    --namespace ffc-demo-claim-service \
     --values helm/development-values.yaml \
     --wait \
-    mine-support-claim-service \
+    ffc-demo-claim-service \
     ./helm
 )

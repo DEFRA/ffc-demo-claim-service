@@ -4,21 +4,21 @@ version: '3'
 # connect this service to sibling services from other repositories
 
 services:
-  mine-support-claim-service:
+  ffc-demo-claim-service:
     command: >
       sh -c "
-        scripts/wait-for/wait-for mine-support-claim-postgres:5432 --
-        scripts/wait-for/wait-for mine-support-message-queue:8161 --
+        scripts/wait-for/wait-for ffc-demo-claim-postgres:5432 --
+        scripts/wait-for/wait-for ffc-demo-message-queue:8161 --
         npm run migrate &&
         npm run start:watch"
     networks:
-      - mine-support
+      - ffc-demo
     volumes:
       - node_modules:/usr/src/app/node_modules
       - .:/usr/src/app
 
 networks:
-  mine-support:
+  ffc-demo:
     external: true
 
 volumes:
