@@ -30,10 +30,10 @@ The following environment variables are required by the application container. V
 | POSTGRES_DB                     | Postgres database  |   yes    |                      |                             |       |
 | POSTGRES_USERNAME               | Postgres username  |   yes    |                      |                             |       |
 | POSTGRES_PASSWORD               | Postgres password  |   yes    |                      |                             |       |
-| MINE_SUPPORT_MESSAGE_QUEUE      | MQ Server hostname |    no    | mine-support-artemis |                             |       |
-| MINE_SUPPORT_MESSAGE_QUEUE_PORT | MQ Server port     |    no    | 5672                 |                             |       |
-| MINE_SUPPORT_MESSAGE_QUEUE_USER | MQ Server username |    no    |                      |                             |       |
-| MINE_SUPPORT_MESSAGE_QUEUE_PASS | MQ Server password |    no    |                      |                             |       |
+| MESSAGE_QUEUE                   | MQ Server hostname |    no    | mine-support-artemis |                             |       |
+| MESSAGE_QUEUE_PORT              | MQ Server port     |    no    | 5672                 |                             |       |
+| MESSAGE_QUEUE_USER              | MQ Server username |    no    |                      |                             |       |
+| MESSAGE_QUEUE_PASS              | MQ Server password |    no    |                      |                             |       |
 
 # How to run tests
 
