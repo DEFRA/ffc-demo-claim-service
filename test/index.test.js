@@ -50,7 +50,8 @@ describe('Web test', () => {
     const options = {
       method: 'POST',
       url: '/submit',
-      payload: { claimId: 'MINE123',
+      payload: {
+        claimId: 'MINE123',
         propertyType: 'business',
         accessible: false,
         dateOfSubsidence: new Date(),
