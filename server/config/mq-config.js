@@ -1,6 +1,6 @@
-const joi = require('joi')
+const joi = require('@hapi/joi')
 
-const mqSchema = {
+const mqSchema = joi.object({
   messageQueue: {
     host: joi.string().default('localhost'),
     hostname: joi.string().default('localhost'),
@@ -19,7 +19,7 @@ const mqSchema = {
     password: joi.string(),
     sendTimeoutInSeconds: joi.number().default(10)
   }
-}
+})
 
 const mqConfig = {
   messageQueue: {
@@ -42,7 +42,7 @@ const mqConfig = {
   }
 }
 
-const mqResult = joi.validate(mqConfig, mqSchema, {
+const mqResult = mqSchema.validate(mqConfig, {
   abortEarly: false
 })
 

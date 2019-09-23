@@ -22,17 +22,17 @@
   ],
   "license": "OGL-UK-3.0",
   "dependencies": {
-    "hapi": "17.7.0",
-    "joi": "14.0.4",
+    "@hapi/hapi": "^18.4.0",
+    "@hapi/joi": "^16.1.2",
     "pg": "^7.9.0",
     "rhea-promise": "^1.0.0",
     "sequelize": "^6.0.0"
   },
   "devDependencies": {
+    "@hapi/good": "^8.2.2",
+    "@hapi/good-console": "^8.1.2",
+    "@hapi/good-squeeze": "^5.2.1",
     "blipp": "^3.1.1",
-    "good": "^8.1.1",
-    "good-console": "^7.1.0",
-    "good-squeeze": "^5.1.0",
     "jest": "^24.8.0",
     "jest-junit": "^7.0.0",
     "nodemon": "^1.19.1",

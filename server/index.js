@@ -1,4 +1,4 @@
-const hapi = require('hapi')
+const hapi = require('@hapi/hapi')
 const config = require('./config')
 const messageService = require('./services/message-service')
 
