@@ -76,7 +76,7 @@ scripts/build --no-cache
 
 ## Run as an isolated service
 
-To test this service in isolation, use the provided scripts to start and stop a local instance. This relies on Docker Compose and will run direct dependencies, such as message queues and databases, as additional containers. Arguments given to the [`start`](./scripts/start) script will be passed through to the `docker-compose up` command.
+To test this service in isolation, use the provided scripts to start and stop a local instance. This relies on Docker Compose and will run direct dependencies, such as message queues and databases, as additional containers. Arguments given to the [`start`](./scripts/start) and [`stop`](./scripts/stop) scripts will be passed through to the `docker-compose up` and `down` commands, respectively.
 
 ```
 # Start the service and attach to running containers (press `ctrl + c` to quit)
@@ -92,7 +92,7 @@ curl  -i --header "Content-Type: application/json" \
   http://localhost:3003/submit
 
 # Stop the service and remove Docker volumes and networks created by the start script
-scripts/stop
+scripts/stop --volumes
 ```
 
 ## Connect to sibling services
@@ -163,6 +163,29 @@ The service has both an Http readiness probe and an Http liveness probe configur
 
 Readiness: `/healthy`
 Liveness: `/healthz`
+
+# Dependency management
+
+Dependencies should be managed within a container using the development image for the app. This will ensure that any packages with environment-specific variants are installed with the correct variant for the contained environment, rather than the host system which may differ between development and production.
+
+The [`cmd`](./scripts/cmd) script is provided to run arbitrary commands in a container using the development image.
+
+Since dependencies are installed into the container image, a full build should always be run immediately after any dependency change.
+
+In development, the `node_modules` folder is mounted to a named volume. This volume must be removed in order for changes to `node_modules` to propagate from the rebuilt image into future instances of the app container. The [`reset`](./scripts/reset) script will stop the service (if running), rebuild images and remove existing containers and volumes created by this project.
+
+The following example will update all dependencies.
+
+```
+# Run the NPM update
+scripts/cmd npm update
+
+# Remove existing containers, images and volumes
+scripts/reset
+
+# Restart the service
+scripts/start
+```
 
 # Build Pipeline
 

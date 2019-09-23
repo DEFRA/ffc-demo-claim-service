@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+set -e
+projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; pwd)"
+
+(
+  cd "${projectRoot}"
+
+  docker run --rm -it -v "$(pwd):/usr/src/app" ffc-demo-claim-service $@
+)

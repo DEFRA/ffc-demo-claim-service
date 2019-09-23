@@ -10,6 +10,6 @@ projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; p
   existingVolumes="$( docker volume ls --filter name=^ffc-demo-claim-service --format={{.Name}} )"
 
   if [ -n "${existingServices}${existingVolumes}" ]; then
-    docker-compose down -v
+    docker-compose down $@
   fi
 )
