@@ -13,13 +13,7 @@ services:
         npm run start:watch"
     networks:
       - ffc-demo
-    volumes:
-      - node_modules:/usr/src/app/node_modules
-      - .:/usr/src/app
 
 networks:
   ffc-demo:
     external: true
-
-volumes:
-  node_modules: {}
