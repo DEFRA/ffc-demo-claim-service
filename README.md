@@ -56,87 +56,56 @@ npm run test
 
 # Running the application
 
-The application is designed to run in containerised environments: Docker Compose for development; Kubernetes for production.
+The application is designed to run in containerised environments, using Docker Compose in development and Kubernetes in production.
 
-A Helm chart is provided for deployment to Kubernetes and scripts are provided for local development and testing.
+- Scripts are provided to aid local development and testing using Docker Compose.
+- A Helm chart is provided for production deployments to Kubernetes.
 
 ## Build container image
 
-Container images are built using Docker Compose and the same image may be run in either Docker Compose or Kubernetes.
+Container images are built using Docker Compose, with the same images used to run the service with either Docker Compose or Kubernetes.
 
-The [`build`](./scripts/build) script is essentially a shortcut and will pass any arguments through to the `docker-compose build` command.
-
-```
-# Build images using default Docker behaviour
-scripts/build
-
-# Build images without using the Docker cache
-scripts/build --no-cache
-```
-
-## Run as an isolated service
-
-To test this service in isolation, use the provided scripts to start and stop a local instance. This relies on Docker Compose and will run direct dependencies, such as message queues and databases, as additional containers. Arguments given to the [`start`](./scripts/start) and [`stop`](./scripts/stop) scripts will be passed through to the `docker-compose up` and `down` commands, respectively.
+By default, the start script will build (or rebuild) images so there will rarely be a need to build images manually. However, this can be achieved through the Docker Compose [build](https://docs.docker.com/compose/reference/build/) command:
 
 ```
-# Start the service and attach to running containers (press `ctrl + c` to quit)
-scripts/start
+# Build container images
+docker-compose build
+```
 
-# Start the service without attaching to containers
-scripts/start --detach
+## Start and stop the service
 
+Use the provided [`start`](./scripts/start) and [`stop`](./scripts/stop) scripts to run the service locally via Docker Compose. Both scripts accept a number of flags to customise their behaviour. For full instructions on the flags available to each script, use the `--help` or `-h` flag:
+
+```
+# View instructions for the start script
+scripts/start --help
+
+# View instructions for the stop script
+scripts/stop --help
+```
+
+By default, the start script will build new container images before starting the service on an isolated Docker network along with any direct dependencies, such as message queues and databases. It will not automatically replace existing containers or volumes, but will warn if there is a conflict and abort the request. Use the `--clean` or `--quick` flags to instruct the script to replace or keep existing resources, respectively.
+
+The underlying `docker-compose up/down` commands can be customised by appending `-- [DOCKER_COMPOSE_ARGS]` after any other arguments to the `start/stop` scripts. For example:
+
+```
+# Start the service without attaching to logs
+scripts/start -- --detach
+```
+
+## Test the service
+
+The service binds to a port on the host machine so it can be tested manually by sending HTTP requests to the bound port using a tool such as [Postman](https://www.getpostman.com) or `curl`.
+
+```
 # Send a sample request to the /submit endpoint
 curl  -i --header "Content-Type: application/json" \
   --request POST \
   --data '{ "claimId": "MINE123", "propertyType": "business",  "accessible": false,   "dateOfSubsidence": "2019-07-26T09:54:19.622Z",  "mineType": ["gold"] }' \
   http://localhost:3003/submit
-
-# Stop the service and remove Docker volumes and networks created by the start script
-scripts/stop --volumes
 ```
 
-## Connect to sibling services
-
-To test this service in combination with other parts of the demo service, it is necessary to connect each service to an external Docker network and shared dependencies, such as message queues. Start the shared dependencies from the [`ffc-demo-development`](https://github.com/DEFRA/ffc-demo-development) repository and then use the `connected-` [`scripts`](./scripts/) to start this service. Follow instructions in other repositories to connect each service to the shared dependencies and network.
-
-```
-# Start the service
-script/connected-start
-
-# Stop the service
-script/connected-stop
-```
-
-## Deploy to Kubernetes
-
-For production deployments, a helm chart is included in the `.\helm` folder. This service connects to an AMQP 1.0 message broker and PostgreSQL database, using credentials defined in [values.yaml](./helm/values.yaml), which must be made available prior to deployment.
-
-Scripts are provided to test the Helm chart by deploying the service, along with an appropriate message broker and database, into the current Helm/Kubernetes context.
-
-```
-# Deploy to current Kubernetes context
-scripts/helm/install
-
-# Remove from current Kubernetes context
-scripts/helm/delete
-```
-
-### Accessing the pod
-
-The ffc-demo-claim-service is not exposed via an endpoint within Kubernetes.
-
-The deployment may be accessed by forwarding a port from a pod.
-First find the name of the pod by querying the namespace, i.e.
-
-`kubectl get pods --namespace ffc-demo-claim-service-pr5`
-
-This will list the full name of all the pods in the namespace. Forward the pods exposed port 3003
-to a local port using the name returned from the previous command, i.e.
-
-`kubectl port-forward --namespace ffc-demo-claim-service-pr5 ffc-demo-claim-service-8b666f545-g477t  3003:3003`
-
-Once the port is forwarded a tool such as [Postman](https://www.getpostman.com/) can be used to access the API at http://localhost:3003/submit.
-Sample valid JSON that can be posted is:
+Sample valid JSON for the `/submit` endpoint is:
 
 ```
 {
@@ -148,14 +117,41 @@ Sample valid JSON that can be posted is:
 }
 ```
 
- Alternatively, curl can be used to send a request to the end point:
+## Link to sibling services
+
+To test interactions with sibling services in the FFC demo application, it is necessary to connect each service to an external Docker network, along with shared dependencies such as message queues. The most convenient approach for this is to start the entire application stack from the [`mine-support-development`](https://github.com/DEFRA/mine-support-development) repository.
+
+It is also possible to run a limited subset of the application stack, using the [`start`](./scripts/start) script's `--link` flag to join each service to the shared Docker network. See the [`mine-support-development`](https://github.com/DEFRA/mine-support-development) Readme for instructions.
+
+## Deploy to Kubernetes
+
+For production deployments, a helm chart is included in the `.\helm` folder. This service connects to an AMQP 1.0 message broker, using credentials defined in [values.yaml](./helm/values.yaml), which must be made available prior to deployment.
+
+Scripts are provided to test the Helm chart by deploying the service, along with an appropriate message broker, into the current Helm/Kubernetes context.
 
 ```
-curl  -i --header "Content-Type: application/json" \
-  --request POST \
-  --data '{ "claimId": "MINE123", "propertyType": "business",  "accessible": false,   "dateOfSubsidence": "2019-07-26T09:54:19.622Z",  "mineType": ["gold"] }' \
-  http://localhost:3003/submit
+# Deploy to current Kubernetes context
+scripts/helm/install
+
+# Remove from current Kubernetes context
+scripts/helm/delete
 ```
+
+### Accessing the pod
+
+By default, the service is not exposed via an endpoint within Kubernetes.
+
+The deployment may be accessed by forwarding a port from a pod.
+First find the name of the pod by querying the namespace, i.e.
+
+`kubectl get pods --namespace ffc-demo-claim-service-pr2`
+
+This will list the full name of all the pods in the namespace. Forward the pods exposed port 3002
+to a local port using the name returned from the previous command, i.e.
+
+`kubectl port-forward --namespace ffc-demo-claim-service-pr2 ffc-demo-claim-service-8b666f545-g477t 3002:3002`
+
+Once the port is forwarded, the service can be accessed and tested in the same way as described in the "Test the service" section above.
 
 ### Probes
 
@@ -168,23 +164,20 @@ Liveness: `/healthz`
 
 Dependencies should be managed within a container using the development image for the app. This will ensure that any packages with environment-specific variants are installed with the correct variant for the contained environment, rather than the host system which may differ between development and production.
 
-The [`cmd`](./scripts/cmd) script is provided to run arbitrary commands in a container using the development image.
+The [`exec`](./scripts/exec) script is provided to run arbitrary commands, such as npm, in a running service container. If the service is not running when this script is called, it will be started for the duration of the command and then removed.
 
 Since dependencies are installed into the container image, a full build should always be run immediately after any dependency change.
 
-In development, the `node_modules` folder is mounted to a named volume. This volume must be removed in order for changes to `node_modules` to propagate from the rebuilt image into future instances of the app container. The [`reset`](./scripts/reset) script will stop the service (if running), rebuild images and remove existing containers and volumes created by this project.
+In development, the `node_modules` folder is mounted to a named volume. This volume must be removed in order for dependency changes to propagate from the rebuilt image into future instances of the app container. The [`start`](./scripts/start) script has a `--clean` (or `-c`) option  which will achieve this.
 
-The following example will update all dependencies.
+The following example will update all npm dependencies, rebuild the container image and replace running containers and volumes:
 
 ```
 # Run the NPM update
-scripts/cmd npm update
+scripts/exec npm update
 
-# Remove existing containers, images and volumes
-scripts/reset
-
-# Restart the service
-scripts/start
+# Rebuild and restart the service
+scripts/start --clean
 ```
 
 # Build Pipeline

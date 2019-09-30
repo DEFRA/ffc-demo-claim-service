@@ -3,8 +3,125 @@
 set -e
 projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; pwd)"
 
+# Set expected prefix for Docker resource names managed by this script
+dockerPrefix="ffc-demo-claim"
+
+# show_help: function to show help text
+show_help() {
+  echo "
+Build and start service containers.
+
+Usage: scripts/start [OPTION...] [-- [DOCKER_OPTION...]]
+
+Options:
+  -c, --clean  rebuild images and replace existing containers and volumes
+  -h, --help   display this help text
+  -l, --link   connect services to an external 'ffc-demo' Docker network
+               (uses the docker-compose.link.yaml override configuration)
+  -q, --quick  retain existing containers, images and volumes
+
+Docker options:
+  Any arguments after '--' are passed through to 'docker-compose up'.
+"
+}
+
+# Parse arguments/flags
+while :; do
+  case $1 in
+    -c|--clean)
+      clean="true"
+      ;;
+
+    -h|--help)
+      show_help
+      exit 0
+      ;;
+
+    -l|--link)
+      link="true"
+      ;;
+
+    -q|--quick)
+      quick="true"
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    -?*)
+      echo "Unrecognised argument: $1"
+      show_help
+      exit 1
+      ;;
+
+    *)
+      break
+  esac
+
+  shift
+done
+
+# Validate arguments/flags
+if [ "${clean}" = "true" ] && [ "${quick}" = "true" ]; then
+  echo "Invalid arguments provided. The '--clean' and '--quick' flags cannot be used together."
+  show_help
+  exit 1
+fi
+
+# compose: function to run docker-compose commands with appropriate config files
+compose() {
+  if [ "${link}" = "true" ]; then
+    docker-compose -f docker-compose.yaml -f docker-compose.link.yaml $@
+  else
+    docker-compose $@
+  fi
+}
+
+# show_conflict_warning: function to warn about existing containers/volumes
+show_conflict_warning() {
+  containers="$1"
+  volumes="$2"
+
+  printf "\nDetected conflicting containers/volumes. These are probably from previously running this service.\n"
+  if [ -n "${containers}" ]; then
+    printf "\nContainers:\n${containers}\n"
+  fi
+  if [ -n "${volumes}" ]; then
+    printf "\nVolumes:\n${volumes}\n"
+  fi
+  printf "\nTo destroy existing volumes, pass the '--clean' or '-c' flag."
+  printf "\nTo retain existing volumes, pass the '--quick' or '-q' flag.\n\n"
+}
+
 (
+  # Run script body from project root folder
   cd "${projectRoot}"
 
-  docker-compose up --force-recreate $@
+  # Warn about any conflicting containers/volumes, unless clean or quick flag received
+  existingContainers="$( docker ps --filter name=^${dockerPrefix} --format={{.Names}} )"
+  existingVolumes="$( docker volume ls --filter name=^${dockerPrefix} --format={{.Name}} )"
+  if [ -n "${existingContainers}${existingVolumes}" ] && [ "${quick}" != "true" ] && [ "${clean}" != "true" ]; then
+    show_conflict_warning "${existingContainers}" "${existingVolumes}"
+    exit 1
+  fi
+
+  # Build images and clean up old resources, unless quick flag received
+  if [ "${quick}" != "true" ]; then
+    compose build
+
+    if [ "${clean}" = "true" ]; then
+      scripts/stop --clean
+    fi
+  fi
+
+  # Ensure ffc-demo network exists
+  if [ "${link}" = "true" ] && [ -z "$(docker network ls --filter name=^ffc-demo$ --format={{.Name}})" ]; then
+    echo "Creating ffc-demo network."
+    docker network create ffc-demo
+  fi
+
+  # Start the service, replacing existing containers unless quick flag received
+  compose up --force-recreate $@
 )

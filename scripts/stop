@@ -3,13 +3,93 @@
 set -e
 projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; pwd)"
 
+# Set expected prefix for Docker resource names managed by this script
+dockerPrefix="ffc-demo-claim"
+
+show_help() {
+  echo "
+Stop service containers.
+
+Usage: scripts/stop [OPTION...] [-- [DOCKER_OPTION...]]
+
+Options:
+  -c, --clean  remove images and volumes as well as containers
+  -h, --help   display this help text
+  -l, --link   use this option when services were started with the '--link' flag
+               (uses the docker-compose.link.yaml override configuration)
+
+Docker options:
+  Any arguments after '--' are passed through to 'docker-compose down'.
+"
+}
+
+while :; do
+  case $1 in
+    -c|--clean)
+      clean="true"
+      ;;
+
+    -h|--help)
+      show_help
+      exit 0
+      ;;
+
+    -l|--link)
+      link="true"
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    -?*)
+      echo "Unrecognised argument: $1"
+      show_help
+      exit 1
+      ;;
+
+    *)
+      break
+  esac
+
+  shift
+done
+
+compose() {
+  if [ "${link}" = "true" ]; then
+    docker-compose -f docker-compose.yaml -f docker-compose.link.yaml $@
+  else
+    docker-compose $@
+  fi
+}
+
 (
   cd "${projectRoot}"
 
-  existingServices="$( docker-compose ps -q )"
-  existingVolumes="$( docker volume ls --filter name=^ffc-demo-claim-service --format={{.Name}} )"
+  existingContainers="$( docker-compose ps -q )"
+  existingVolumes="$( docker volume ls --filter name=^${dockerPrefix}-service --format={{.Name}} )"
 
-  if [ -n "${existingServices}${existingVolumes}" ]; then
-    docker-compose down $@
+  # Only bring down services if there are existing containers/volumes
+  if [ -n "${existingContainers}${existingVolumes}" ]; then
+    if [ "${clean}" = "true" ]; then
+      compose down --remove-orphans --rmi=local --volumes $@
+    else
+      compose down $@
+    fi
+  else
+    echo "Services already stopped."
+  fi
+
+  if [ "${clean}" = "true" ]; then
+    docker image prune -f
   fi
 )
+
+# Remove ffc-demo network if it is no longer in use
+if [ -n "$(docker network ls --filter name=^ffc-demo$ --format={{.Name}})" ] \
+  && [ "$(docker network inspect -f {{.Containers}} ffc-demo &>/dev/null)" = "map[]" ] \
+; then
+  echo "Removing ffc-demo network."
+  docker network rm ffc-demo
+fi

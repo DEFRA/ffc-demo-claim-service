@@ -3,21 +3,29 @@
 set -e
 projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; pwd)"
 
+# Set expected prefix for Docker resource names managed by this script
+dockerPrefix="ffc-demo-claim"
+
+compose() {
+  (
+    cd "${projectRoot}"
+    docker-compose \
+    -f docker-compose.yaml \
+    -f docker-compose.override.yaml \
+    -f docker-compose.test.yaml \
+    $@
+  )
+}
+
 (
   cd "${projectRoot}"
 
-  docker-compose \
-    -f docker-compose.yaml \
-    -f docker-compose.test.yaml \
-     down -v
+  # Guarantee clean environment
+  compose down --volumes
 
-  docker-compose \
-    -f docker-compose.yaml \
-    -f docker-compose.test.yaml \
-    run ffc-demo-claim-service $@
+  # Run tests
+  compose run ${dockerPrefix}-service
 
-  docker-compose \
-    -f docker-compose.yaml \
-    -f docker-compose.test.yaml \
-     down -v
+  # Clean up
+  compose down --volumes
 )

@@ -1,19 +1,13 @@
 #!/usr/bin/env sh
 
+## DEPRECATED connected-start
+## This script should be removed once the development repo has been
+## updated to use `scripts/start --link`.
+
 set -e
 projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; pwd)"
 
-# Check whether ffc-demo network needs creating
-if [ -z "$(docker network ls --filter name=^ffc-demo$ --format={{.Name}})" ]; then
-  echo "Creating ffc-demo network"
-  docker network create ffc-demo
-fi
-
 (
   cd "${projectRoot}"
-
-  docker-compose \
-    -f docker-compose.yaml \
-    -f docker-compose.local.yaml \
-    up --force-recreate $@
+  scripts/start --link $@
 )
