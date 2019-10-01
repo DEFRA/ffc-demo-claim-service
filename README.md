@@ -119,9 +119,9 @@ Sample valid JSON for the `/submit` endpoint is:
 
 ## Link to sibling services
 
-To test interactions with sibling services in the FFC demo application, it is necessary to connect each service to an external Docker network, along with shared dependencies such as message queues. The most convenient approach for this is to start the entire application stack from the [`mine-support-development`](https://github.com/DEFRA/mine-support-development) repository.
+To test interactions with sibling services in the FFC demo application, it is necessary to connect each service to an external Docker network, along with shared dependencies such as message queues. The most convenient approach for this is to start the entire application stack from the [`ffc-demo-development`](https://github.com/DEFRA/ffc-demo-development) repository.
 
-It is also possible to run a limited subset of the application stack, using the [`start`](./scripts/start) script's `--link` flag to join each service to the shared Docker network. See the [`mine-support-development`](https://github.com/DEFRA/mine-support-development) Readme for instructions.
+It is also possible to run a limited subset of the application stack, using the [`start`](./scripts/start) script's `--link` flag to join each service to the shared Docker network. See the [`ffc-demo-development`](https://github.com/DEFRA/ffc-demo-development) Readme for instructions.
 
 ## Deploy to Kubernetes
 
@@ -146,10 +146,10 @@ First find the name of the pod by querying the namespace, i.e.
 
 `kubectl get pods --namespace ffc-demo-claim-service-pr2`
 
-This will list the full name of all the pods in the namespace. Forward the pods exposed port 3002
+This will list the full name of all the pods in the namespace. Forward the pods exposed port 3003
 to a local port using the name returned from the previous command, i.e.
 
-`kubectl port-forward --namespace ffc-demo-claim-service-pr2 ffc-demo-claim-service-8b666f545-g477t 3002:3002`
+`kubectl port-forward --namespace ffc-demo-claim-service-pr2 ffc-demo-claim-service-8b666f545-g477t 3003:3003`
 
 Once the port is forwarded, the service can be accessed and tested in the same way as described in the "Test the service" section above.
 
