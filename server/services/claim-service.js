@@ -14,8 +14,10 @@ module.exports = {
     const claimRecord = await claimRepository.create(claim)
 
     if (claim.mineType != null) {
-      let mineType
-      for (mineType in claim.mineType) {
+      for (const mineType of claim.mineType) {
+
+        console.debug(`Saving mine type for claim${claim.claimId}: ${mineType}`)
+
         await mineTypeRepository.create(claim.claimId, mineType)
       }
     }
