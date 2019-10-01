@@ -40,10 +40,14 @@ The following environment variables are required by the application container. V
 
 # How to run tests
 
-A convenience script is provided to run automated tests in a containerised environment:
+A convenience script is provided to run automated tests in a containerised environment. The first time this is run, container images required for testing will be automatically built. An optional `--build` (or `-b`) flag may be used to rebuild these images in future (for example, to apply dependency updates).
 
 ```
+# Run tests
 scripts/test
+
+# Rebuild images and run tests
+scripts/test --build
 ```
 
 This runs tests via a `docker-compose run` command. If tests complete successfully, all containers, networks and volumes are cleaned up before the script exits. If there is an error or any tests fail, the associated Docker resources will be left available for inspection.
@@ -51,6 +55,7 @@ This runs tests via a `docker-compose run` command. If tests complete successful
 Alternatively, the same tests may be run locally via npm:
 
 ```
+# Run tests without Docker
 npm run test
 ```
 
