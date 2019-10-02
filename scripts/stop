@@ -82,6 +82,7 @@ compose() {
   fi
 
   if [ "${clean}" = "true" ]; then
+    printf "\nPruning Docker images (this may take a while).\n"
     docker image prune -f
   fi
 )
