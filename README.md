@@ -146,15 +146,12 @@ scripts/helm/delete
 
 By default, the service is not exposed via an endpoint within Kubernetes.
 
-The deployment may be accessed by forwarding a port from a pod.
-First find the name of the pod by querying the namespace, i.e.
+Access may be granted by forwarding a local port to the deployed pod:
 
-`kubectl get pods --namespace ffc-demo-claim-service-pr2`
-
-This will list the full name of all the pods in the namespace. Forward the pods exposed port 3003
-to a local port using the name returned from the previous command, i.e.
-
-`kubectl port-forward --namespace ffc-demo-claim-service-pr2 ffc-demo-claim-service-8b666f545-g477t 3003:3003`
+```
+# Forward local port to the Kubernetes deployment
+kubectl port-forward deployment/ffc-demo-claim-service 3003:3003
+```
 
 Once the port is forwarded, the service can be accessed and tested in the same way as described in the "Test the service" section above.
 
