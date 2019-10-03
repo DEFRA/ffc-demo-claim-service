@@ -11,7 +11,7 @@ describe('Message queue config', () => {
     }
 
     expect(caughtError.message).toBe(
-      'The message queue config is invalid. child "messageQueue" fails because [child "port" fails because ["port" must be a number]]'
+      'The message queue config is invalid. "messageQueue.port" must be a number'
     )
   })
 })

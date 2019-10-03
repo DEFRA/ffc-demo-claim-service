@@ -1,18 +1,18 @@
-const joi = require('joi')
+const joi = require('@hapi/joi')
 const mqConfig = require('./mq-config')
 const databaseConfig = require('./database-config')
 
-const schema = {
+const schema = joi.object({
   env: joi.string().valid('development', 'test', 'production').default('development'),
   port: joi.number().default(3003)
-}
+})
 
 const config = {
   env: process.env.NODE_ENV,
   port: process.env.PORT
 }
 
-const result = joi.validate(config, schema, {
+const result = schema.validate(config, {
   abortEarly: false
 })
 

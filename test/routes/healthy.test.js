@@ -1,9 +1,9 @@
 describe('Healthy test', () => {
-  let calculationSender = {}
+  const calculationSender = {}
   let createServer
   let databaseService
   let messageService
-  let scheduleSender = {}
+  const scheduleSender = {}
   let server
 
   beforeAll(async () => {

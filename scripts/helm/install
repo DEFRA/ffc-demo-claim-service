@@ -3,36 +3,39 @@
 set -e
 projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/../.." || return; pwd)"
 
+# Set expected prefix for Docker resource names managed by this script
+dockerPrefix="ffc-demo-claim"
+
 (
   cd "${projectRoot}"
 
-  echo "Deploying claim message queue"
+  echo "Deploying claim message broker"
   helm repo add activemq-artemis https://mailrucloudsolutions.github.io/activemq-artemis-helm/
   helm upgrade \
     --atomic \
     --install \
-    --namespace ffc-demo-claim-service \
+    --namespace ${dockerPrefix}-service \
     --values helm/artemis-values.yaml \
-    ffc-demo-claim-artemis \
+    ${dockerPrefix}-artemis \
     activemq-artemis/activemq-artemis
 
   echo "Deploying claim PostgreSQL"
   helm upgrade \
     --atomic \
     --install \
-    --namespace ffc-demo-claim-service \
+    --namespace ${dockerPrefix}-service \
     --values helm/postgres-values.yaml \
     --wait \
-    ffc-demo-claim-postgres \
+    ${dockerPrefix}-postgres \
     stable/postgresql
 
   echo "Deploying claim service"
   helm upgrade \
     --atomic \
     --install \
-    --namespace ffc-demo-claim-service \
+    --namespace ${dockerPrefix}-service \
     --values helm/development-values.yaml \
     --wait \
-    ffc-demo-claim-service \
+    ${dockerPrefix}-service \
     ./helm
 )

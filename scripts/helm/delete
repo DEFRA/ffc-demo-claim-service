@@ -3,11 +3,14 @@
 set -e
 projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/../.." || return; pwd)"
 
+# Set expected prefix for Docker resource names managed by this script
+dockerPrefix="ffc-demo-claim"
+
 (
   cd "${projectRoot}"
 
   helm delete --purge \
-    ffc-demo-claim-artemis \
-    ffc-demo-claim-postgres \
-    ffc-demo-claim-service
+    ${dockerPrefix}-artemis \
+    ${dockerPrefix}-postgres \
+    ${dockerPrefix}-service
 )

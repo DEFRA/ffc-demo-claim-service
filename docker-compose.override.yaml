@@ -8,15 +8,13 @@ services:
     command: >
       sh -c "
         scripts/wait-for/wait-for ffc-demo-claim-postgres:5432 --
+        scripts/wait-for/wait-for ffc-demo-claim-message-queue:8161 --
         npm run migrate &&
         npm run start:watch"
     depends_on:
       - ffc-demo-claim-message-queue
     networks:
       - ffc-demo-claim
-    volumes:
-      - node_modules:/usr/src/app/node_modules
-      - .:/usr/src/app
 
   ffc-demo-claim-message-queue:
     container_name: ffc-demo-claim-message-queue
@@ -45,4 +43,3 @@ volumes:
   message-queue-etc: {}
   message-queue-etc-override: {}
   message-queue-lock: {}
-  node_modules: {}

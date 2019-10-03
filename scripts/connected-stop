@@ -1,23 +1,13 @@
 #!/usr/bin/env sh
 
+## DEPRECATED connected-start
+## This script should be removed once the development repo has been
+## updated to use `scripts/start --link`.
+
 set -e
 projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; pwd)"
 
 (
   cd "${projectRoot}"
-
-  if [ ! -z "$(docker-compose ps -q)" ]; then
-    docker-compose \
-      -f docker-compose.yaml \
-      -f docker-compose.local.yaml \
-      down -v
-  fi
+  scripts/stop --link $@
 )
-
-# Check whether ffc-demo network exists and is no longer in use
-if [ ! -z "$(docker network ls --filter name=^ffc-demo$ --format={{.Name}})" ] \
-  && [ "$(docker network inspect -f {{.Containers}} ffc-demo &>/dev/null)" = "map[]" ] \
-; then
-  echo "Removing ffc-demo network"
-  docker network rm ffc-demo
-fi

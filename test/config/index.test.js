@@ -13,7 +13,7 @@ describe('Core config', () => {
     }
 
     expect(caughtError.message).toBe(
-      'The server config is invalid. child "port" fails because ["port" must be a number]'
+      'The server config is invalid. "port" must be a number'
     )
   })
 })

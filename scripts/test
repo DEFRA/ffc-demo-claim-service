@@ -3,18 +3,78 @@
 set -e
 projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; pwd)"
 
+# Set expected prefix for Docker resource names managed by this script
+dockerPrefix="ffc-demo-claim"
+
+show_help() {
+  echo "
+Run automated tests.
+
+Usage: scripts/test [OPTION...] [-- [DOCKER_OPTION...]]
+
+Options:
+  -b, --build  build container images before running tests
+  -h, --help   display this help text
+
+Docker options:
+  Any arguments after '--' are passed through to 'docker-compose down'.
+"
+}
+
+while :; do
+  case $1 in
+    -b|--build)
+      build="true"
+      ;;
+
+    -h|--help)
+      show_help
+      exit 0
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    -?*)
+      echo "Unrecognised argument: $1"
+      show_help
+      exit 1
+      ;;
+
+    *)
+      break
+  esac
+
+  shift
+done
+
+compose() {
+  (
+    cd "${projectRoot}"
+    docker-compose \
+    -f docker-compose.yaml \
+    -f docker-compose.override.yaml \
+    -f docker-compose.test.yaml \
+    $@
+  )
+}
+
 (
   cd "${projectRoot}"
 
-  docker-compose \
-    -f docker-compose.yaml \
-    -f docker-compose.override.yaml \
-    -f docker-compose.test.yaml \
-    run ffc-demo-claim-service $@
+  # Guarantee clean environment
+  compose down --volumes
 
-  docker-compose \
-    -f docker-compose.yaml \
-    -f docker-compose.override.yaml \
-    -f docker-compose.test.yaml \
-     down -v
+  # Build test images
+  if [ "${build}" = "true" ]; then
+    compose build
+  fi
+
+  # Run tests
+  compose run ${dockerPrefix}-service
+
+  # Clean up
+  compose down --volumes
 )
