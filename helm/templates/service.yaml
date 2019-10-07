@@ -1,13 +1,15 @@
+{{- if .Values.postgresExternalName }}
 kind: Service
 apiVersion: v1
 metadata:
-  name: {{ .Values.postgresServiceName }}
+  name: {{ .Values.postgresHost }}
 spec:
   type: ExternalName
   externalName: {{ .Values.postgresExternalName }}
   ports:
     - name: port
       port: {{ .Values.postgresPort }}
+{{- end }}
 ---
 apiVersion: v1
 kind: Service
