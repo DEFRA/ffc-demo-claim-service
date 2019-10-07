@@ -8,24 +8,25 @@
 set -e
 projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; pwd)"
 
-# Set expected prefix for Docker resource names managed by this script
+# Set Docker/Kubernetes resource names managed by this script
+containerName="ffc-demo-claim-service"
 dockerPrefix="ffc-demo-claim"
 
 (
   cd "${projectRoot}"
 
-  existingService="$( docker ps -q --filter name=^${dockerPrefix}-service$ )"
-  existingVolumes="$( docker volume ls --filter name=^${dockerPrefix}-service --format={{.Name}} )"
+  existingService="$( docker ps -q --filter name=^${dockerPrefix}$ )"
+  existingVolumes="$( docker volume ls --filter name=^${dockerPrefix} --format={{.Name}} )"
 
   if [ -z "${existingService}" ]; then
     printf "\nCreating service to execute command in.\n"
     docker-compose up --detach
   fi
 
-  printf "\nExecuting command in ${dockerPrefix}-service:\n"
+  printf "\nExecuting command in ${containerName}:\n"
   echo "$@"
 
-  docker-compose exec ${dockerPrefix}-service $@
+  docker-compose exec ${containerName} $@
 
   printf "\nCommand completed.\n"
 
