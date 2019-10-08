@@ -3,7 +3,7 @@
 set -e
 projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; pwd)"
 
-# Set expected prefix for Docker resource names managed by this script
+# Set Docker/Kubernetes resource names managed by this script
 dockerPrefix="ffc-demo-claim"
 
 show_help() {
@@ -68,13 +68,18 @@ compose() {
   cd "${projectRoot}"
 
   existingContainers="$( docker-compose ps -q )"
-  existingVolumes="$( docker volume ls --filter name=^${dockerPrefix}-service --format={{.Name}} )"
+  existingVolumes="$( docker volume ls --filter name=^${dockerPrefix} --format={{.Name}} )"
 
   # Only bring down services if there are existing containers/volumes
   if [ -n "${existingContainers}${existingVolumes}" ]; then
     if [ "${clean}" = "true" ]; then
-      compose down --remove-orphans --rmi=local --volumes $@
+      # Ensure services exist so docker-compose knows which images to remove
+      compose up --no-recreate --no-start
+
+      # Remove services, images and volumes
+      compose down --remove-orphans --rmi=all --volumes $@
     else
+      # Remove services, leaving images and volumes intact
       compose down $@
     fi
   else
