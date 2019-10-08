@@ -3,7 +3,7 @@
 set -e
 projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; pwd)"
 
-# Set expected prefix for Docker resource names managed by this script
+# Set Docker/Kubernetes resource names managed by this script
 dockerPrefix="ffc-demo-claim"
 
 # show_help: function to show help text
@@ -107,13 +107,14 @@ show_conflict_warning() {
     exit 1
   fi
 
-  # Build images and clean up old resources, unless quick flag received
+  # Clean up old resources, if clean flag received
+  if [ "${clean}" = "true" ]; then
+    scripts/stop --clean
+  fi
+
+  # Rebuild images, unless quick flag received
   if [ "${quick}" != "true" ]; then
     compose build
-
-    if [ "${clean}" = "true" ]; then
-      scripts/stop --clean
-    fi
   fi
 
   # Ensure ffc-demo network exists
