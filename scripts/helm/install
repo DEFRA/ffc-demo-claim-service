@@ -17,6 +17,7 @@ kubernetesNamespace="ffc-demo"
     --install \
     --namespace ${kubernetesNamespace} \
     --values helm/artemis-values.yaml \
+    --wait \
     ${dockerPrefix}-artemis \
     activemq-artemis/activemq-artemis
 
