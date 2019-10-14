@@ -5,6 +5,7 @@ projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/../.." || return
 
 # Set expected prefix for Docker resource names managed by this script
 dockerPrefix="ffc-demo-claim"
+kubernetesNamespace="ffc-demo"
 
 (
   cd "${projectRoot}"
@@ -14,8 +15,9 @@ dockerPrefix="ffc-demo-claim"
   helm upgrade \
     --atomic \
     --install \
-    --namespace ${dockerPrefix}-service \
+    --namespace ${kubernetesNamespace} \
     --values helm/artemis-values.yaml \
+    --wait \
     ${dockerPrefix}-artemis \
     activemq-artemis/activemq-artemis
 
@@ -23,7 +25,7 @@ dockerPrefix="ffc-demo-claim"
   helm upgrade \
     --atomic \
     --install \
-    --namespace ${dockerPrefix}-service \
+    --namespace ${kubernetesNamespace} \
     --values helm/postgres-values.yaml \
     --wait \
     ${dockerPrefix}-postgres \
@@ -33,7 +35,7 @@ dockerPrefix="ffc-demo-claim"
   helm upgrade \
     --atomic \
     --install \
-    --namespace ${dockerPrefix}-service \
+    --namespace ${kubernetesNamespace} \
     --values helm/development-values.yaml \
     --wait \
     ${dockerPrefix}-service \
