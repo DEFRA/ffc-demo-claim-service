@@ -8,8 +8,8 @@ services:
     command: >
       sh -c "
         scripts/wait-for/wait-for ffc-demo-claim-postgres:5432 --
-        scripts/wait-for/wait-for ffc-demo-claim-message-queue:8161 --
         npm run migrate &&
+        scripts/wait-for/wait-for ffc-demo-claim-message-queue:8161 --
         npm run start:watch"
     depends_on:
       - ffc-demo-claim-message-queue

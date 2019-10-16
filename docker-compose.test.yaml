@@ -4,8 +4,73 @@ version: '3'
 # that test output is saved to the host
 
 services:
-  ffc-demo-claim-service:
-    command: npm run test
+  ffc-demo-claim-test:
+    build: .
+    image: ffc-demo-claim-test
+    command:
+      sh -c "
+        scripts/wait-for/wait-for ffc-demo-claim-test-postgres:5432 --
+        npm run migrate &&
+        scripts/wait-for/wait-for ffc-demo-claim-test-message-queue:8161 --
+        npm run test"
+    depends_on:
+      - ffc-demo-claim-test-message-queue
+      - ffc-demo-claim-test-postgres
+    environment:
+      POSTGRES_DB: ffc_demo_claims_test
+      POSTGRES_PASSWORD: ppp
+      POSTGRES_USERNAME: postgres
+      POSTGRES_HOST: ffc-demo-claim-test-postgres
+      POSTGRES_PORT: 5432
+      MESSAGE_QUEUE_HOST : ffc-demo-claim-test-message-queue
+      MESSAGE_QUEUE_PORT : 5672
+      CALCULATION_QUEUE_ADDRESS : calculation
+      CALCULATION_QUEUE_USER : artemis
+      CALCULATION_QUEUE_PASSWORD : artemis
+      SCHEDULE_QUEUE_ADDRESS : schedule
+      SCHEDULE_QUEUE_USER : artemis
+      SCHEDULE_QUEUE_PASSWORD : artemis
+    networks:
+      - ffc-demo-claim-test
     volumes:
-      - ./.git:/usr/src/app/.git
-      - ./test-output:/usr/src/app/test-output
+      - test-node_modules:/usr/src/app/node_modules
+      - .:/usr/src/app
+
+  ffc-demo-claim-test-message-queue:
+    container_name: ffc-demo-claim-test-message-queue
+    image: vromero/activemq-artemis:2.9.0-alpine
+    environment:
+      ARTEMIS_USERNAME: artemis
+      ARTEMIS_PASSWORD: artemis
+    networks:
+      - ffc-demo-claim-test
+    volumes:
+      - test-message-queue-data:/var/lib/artemis/data
+      - test-message-queue-tmp:/var/lib/artemis/tmp
+      - test-message-queue-etc:/var/lib/artemis/etc
+      - test-message-queue-etc-override:/var/lib/artemis/etc-override
+      - test-message-queue-lock:/var/lib/artemis/lock
+
+  ffc-demo-claim-test-postgres:
+    container_name: ffc-demo-claim-test-postgres
+    image: postgres:11.4-alpine
+    environment:
+      POSTGRES_DB: ffc_demo_claims_test
+      POSTGRES_PASSWORD: ppp
+      POSTGRES_USERNAME: postgres
+    networks:
+      - ffc-demo-claim-test
+    volumes:
+      - test-postgres_data:/var/lib/postgresql/data
+
+networks:
+  ffc-demo-claim-test: {}
+
+volumes:
+  test-message-queue-data: {}
+  test-message-queue-tmp: {}
+  test-message-queue-etc: {}
+  test-message-queue-etc-override: {}
+  test-message-queue-lock: {}
+  test-node_modules: {}
+  test-postgres_data: {}
