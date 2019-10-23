@@ -1,4 +1,4 @@
-name: aws-ffc-demo-claim-service
+name: ffc-demo-claim-service
 imagePullSecret: myregistrykey
 container:
   allowPrivilegeEscalation: true

@@ -141,7 +141,7 @@ node {
             string(credentialsId: 'postgresExternalNameClaimsPR', variable: 'postgresExternalName'),
             usernamePassword(credentialsId: 'postgresClaimsPR', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
           ]) {
-          def extraCommands = "--values ./helm/ffc-demo-calculation-service/jenkins-aws.yaml --set name=ffc-demo-calculation-service-$containerTag,container.messageQueueHost=\"$messageQueueHost\",container.scheduleQueueUser=\"$scheduleQueueUsername\",container.scheduleQueuePassword=\"$scheduleQueuePassword\",container.calculationQueueUser=\"$calculationQueueUsername\",container.calculationQueuePassword=\"$calculationQueuePassword\",postgresExternalName=\"$postgresExternalName\",postgresUsername=\"$postgresUsername\",postgresPassword=\"$postgresPassword\""
+          def extraCommands = "--values ./helm/ffc-demo-claim-service/jenkins-aws.yaml --set container.messageQueueHost=\"$messageQueueHost\",container.scheduleQueueUser=\"$scheduleQueueUsername\",container.scheduleQueuePassword=\"$scheduleQueuePassword\",container.calculationQueueUser=\"$calculationQueueUsername\",container.calculationQueuePassword=\"$calculationQueuePassword\",postgresExternalName=\"$postgresExternalName\",postgresUsername=\"$postgresUsername\",postgresPassword=\"$postgresPassword\""
           deployPR(kubeCredsId, registry, imageName, containerTag, extraCommands)
         }
       }
