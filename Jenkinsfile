@@ -95,6 +95,7 @@ def publishChart(imageName) {
     sh "git clone git@gitlab.ffc.aws-int.defra.cloud:helm/helm-charts.git"
     dir('helm-charts') {
       sh 'helm init -c'
+      sh "sed -i -e 's/image: $imageName/image: $registry\\/$imageName:$containerTag/' ../helm/$imageName/values.yaml"
       sh "helm package ../helm/$imageName"
       sh 'helm repo index .'
       sh 'git config --global user.email "buildserver@defra.gov.uk"'
