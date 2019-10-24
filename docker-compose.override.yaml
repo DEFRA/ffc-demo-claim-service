@@ -11,10 +11,18 @@ services:
         scripts/wait-for/wait-for ffc-demo-claim-message-queue:8161 --
         npm run migrate &&
         npm run start:watch"
+    ports:
+      - "3003:3003"
     depends_on:
       - ffc-demo-claim-message-queue
     networks:
       - ffc-demo-claim
+
+  ffc-demo-claim-postgres:
+    networks:
+      - ffc-demo-claim
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
   ffc-demo-claim-message-queue:
     container_name: ffc-demo-claim-message-queue
@@ -43,3 +51,4 @@ volumes:
   message-queue-etc: {}
   message-queue-etc-override: {}
   message-queue-lock: {}
+  postgres_data: {}
