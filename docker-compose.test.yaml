@@ -6,7 +6,6 @@ version: '3'
 services:
   ffc-demo-claim-service:
     command: npm run test
-    image: ffc-demo-claim-service-test
     container_name: ffc-demo-claim-service-test${BUILD_NUMBER:-local}
     volumes:
       - ./.git:/usr/src/app/.git
