@@ -3,7 +3,7 @@ services:
   ffc-demo-claim-service:
     build: .
     image: ffc-demo-claim-service
-    container_name: ffc-demo-claim-service
+    container_name: ffc-demo-claim-service${BUILD_NUMBER:-local}
     depends_on:
       - ffc-demo-claim-postgres
     environment:
@@ -25,7 +25,7 @@ services:
       - .:/usr/src/app
 
   ffc-demo-claim-postgres:
-    container_name: ffc-demo-claim-postgres
+    container_name: ffc-demo-claim-postgres${BUILD_NUMBER:-local}
     image: postgres:11.4-alpine
     environment:
       POSTGRES_DB: ffc_demo_claims
