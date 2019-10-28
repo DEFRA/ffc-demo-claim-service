@@ -6,20 +6,13 @@ services:
     container_name: ffc-demo-claim-service
     depends_on:
       - ffc-demo-claim-postgres
+    env_file:
+      - variables/message-queues.env
+      - variables/postgres.env
     environment:
-      POSTGRES_DB: ffc_demo_claims
-      POSTGRES_PASSWORD: ppp
-      POSTGRES_USERNAME: postgres
       POSTGRES_HOST: ffc-demo-claim-postgres
-      POSTGRES_PORT: 5432
       MESSAGE_QUEUE_HOST : host.docker.internal
       MESSAGE_QUEUE_PORT : 5672
-      CALCULATION_QUEUE_ADDRESS : calculation
-      CALCULATION_QUEUE_USER : artemis
-      CALCULATION_QUEUE_PASSWORD : artemis
-      SCHEDULE_QUEUE_ADDRESS : schedule
-      SCHEDULE_QUEUE_USER : artemis
-      SCHEDULE_QUEUE_PASSWORD : artemis
     networks:
       - claim-postgres
     ports:
@@ -32,10 +25,8 @@ services:
   ffc-demo-claim-postgres:
     container_name: ffc-demo-claim-postgres
     image: postgres:11.4-alpine
-    environment:
-      POSTGRES_DB: ffc_demo_claims
-      POSTGRES_PASSWORD: ppp
-      POSTGRES_USERNAME: postgres
+    env_file:
+      - variables/postgres.env
     networks:
       - claim-postgres
     volumes:
