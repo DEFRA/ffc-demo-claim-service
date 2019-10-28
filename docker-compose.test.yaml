@@ -4,8 +4,40 @@ version: '3'
 # that test output is saved to the host
 
 services:
-  ffc-demo-claim-service:
+  ffc-demo-claim-test:
+    build: .
+    image: ffc-demo-claim-test
+    container_name: ffc-demo-claim-test
     command: npm run test
+    depends_on:
+      - ffc-demo-claim-test-postgres
+    environment:
+      POSTGRES_DB: ffc_demo_claims
+      POSTGRES_PASSWORD: ppp
+      POSTGRES_USERNAME: postgres
+      POSTGRES_HOST: ffc-demo-claim-test-postgres
+      POSTGRES_PORT: 5432
+    networks:
+      - ffc-demo-claim-test
     volumes:
-      - ./.git:/usr/src/app/.git
-      - ./test-output:/usr/src/app/test-output
+      - .:/usr/src/app
+      - test-node_modules:/usr/src/app/node_modules
+
+  ffc-demo-claim-test-postgres:
+    container_name: ffc-demo-claim-test-postgres
+    image: postgres:11.4-alpine
+    environment:
+      POSTGRES_DB: ffc_demo_claims
+      POSTGRES_PASSWORD: ppp
+      POSTGRES_USERNAME: postgres
+    networks:
+      - ffc-demo-claim-test
+    volumes:
+      - test-postgres-data:/var/lib/postgresql/data
+
+networks:
+  ffc-demo-claim-test: {}
+
+volumes:
+  test-node_modules: {}
+  test-postgres-data: {}

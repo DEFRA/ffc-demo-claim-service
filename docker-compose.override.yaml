@@ -39,7 +39,7 @@ networks:
 
 volumes:
   message-queue-data: {}
-  message-queue-tmp: {}
   message-queue-etc: {}
   message-queue-etc-override: {}
   message-queue-lock: {}
+  message-queue-tmp: {}

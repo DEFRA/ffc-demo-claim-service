@@ -26,6 +26,7 @@ services:
       - "3003:3003"
     volumes:
       - node_modules:/usr/src/app/node_modules
+      - test-output:/usr/src/app/test-output
       - .:/usr/src/app
 
   ffc-demo-claim-postgres:
@@ -46,3 +47,4 @@ networks:
 volumes:
   node_modules: {}
   postgres_data: {}
+  test-output: {}
