@@ -17,6 +17,7 @@ variables:
     azureResourceGroup: MineSupport
     kubernetesCluster: MineSupport
     imageName: ffc-demo-claim-service
+    testImageName: ffc-demo-claim-test
     containerTag: $(Build.SourceBranchName)
     safeContainerTag: $(Build.SourceBranchName)
     mergedPrNo:
@@ -64,8 +65,7 @@ steps:
     containerregistrytype: Azure Container Registry
     azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
     azureContainerRegistry: $(azureContainerRegistryFull)
-    dockerComposeFile: docker-compose.yaml
-    additionalDockerComposeFiles: docker-compose.test.yaml
+    dockerComposeFile: docker-compose.test.yaml
     projectName: $(Build.Repository.Name)
     qualifyImageNames: true
   displayName: build tests image
@@ -75,11 +75,10 @@ steps:
     containerregistrytype: Azure Container Registry
     azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
     azureContainerRegistry: $(azureContainerRegistryFull)
-    dockerComposeFile: docker-compose.yaml
-    additionalDockerComposeFiles: docker-compose.test.yaml
+    dockerComposeFile: docker-compose.test.yaml
     projectName: $(Build.Repository.Name)
     qualifyImageNames: true
-    dockerComposeCommand: run $(imageName)
+    dockerComposeCommand: run $(testImageName)
   displayName: run tests
   # build base image
 - task: DockerCompose@0

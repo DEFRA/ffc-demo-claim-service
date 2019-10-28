@@ -4,6 +4,7 @@ def kubeCredsId = 'awskubeconfig002'
 def ingressServer = "ffc.aws-int.defra.cloud"
 def imageName = 'ffc-demo-claim-service'
 def repoName = 'ffc-demo-claim-service'
+def testImageName = 'ffc-demo-claim-test'
 def repoUrl = ''
 def commitSha = ''
 def branch = ''
@@ -122,10 +123,10 @@ node {
       updateGithubCommitStatus('Build started', 'PENDING', repoUrl, commitSha)
     }
     stage('Build test image') {
-      buildTestImage(imageName, BUILD_NUMBER)
+      buildTestImage(testImageName, BUILD_NUMBER)
     }
     stage('Run tests') {
-      runTests(imageName, BUILD_NUMBER)
+      runTests(testImageName, BUILD_NUMBER)
     }
     // note: there should be a `build production image` step here,
     // but the docker file is currently not set up to create a production only image
@@ -163,4 +164,3 @@ node {
     throw e
   }
 }
-
