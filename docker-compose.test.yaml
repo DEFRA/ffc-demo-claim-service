@@ -6,10 +6,7 @@ version: '3'
 services:
   ffc-demo-claim-service:
     command: npm run test
-    container_name: ffc-demo-claim-service-test${BUILD_NUMBER:-local}
-    volumes:
-      - ./.git:/usr/src/app/.git
-      - ./test-output:/usr/src/app/test-output
+    container_name: ffc-demo-claim-service-test-${BUILD_NUMBER:-local}
 
   ffc-demo-claim-postgres:
-    container_name: ffc-demo-claim-postgres-test${BUILD_NUMBER:-local}
+    container_name: ffc-demo-claim-postgres-test-${BUILD_NUMBER:-local}
