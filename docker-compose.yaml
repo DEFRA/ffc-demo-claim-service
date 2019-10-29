@@ -14,7 +14,7 @@ services:
       MESSAGE_QUEUE_HOST : host.docker.internal
       MESSAGE_QUEUE_PORT : 5672
     networks:
-      - claim-postgres
+      - ffc-demo-claim
     ports:
       - "3003:3003"
     volumes:
@@ -28,12 +28,12 @@ services:
     env_file:
       - variables/postgres.env
     networks:
-      - claim-postgres
+      - ffc-demo-claim
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
 networks:
-  claim-postgres: {}
+  ffc-demo-claim: {}
 
 volumes:
   node_modules: {}

@@ -13,8 +13,6 @@ services:
         npm run start:watch"
     depends_on:
       - ffc-demo-claim-message-queue
-    networks:
-      - ffc-demo-claim
 
   ffc-demo-claim-message-queue:
     container_name: ffc-demo-claim-message-queue
@@ -33,9 +31,6 @@ services:
       - message-queue-etc:/var/lib/artemis/etc
       - message-queue-etc-override:/var/lib/artemis/etc-override
       - message-queue-lock:/var/lib/artemis/lock
-
-networks:
-  ffc-demo-claim: {}
 
 volumes:
   message-queue-data: {}
