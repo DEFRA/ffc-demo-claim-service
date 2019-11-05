@@ -25,7 +25,7 @@ node {
       defraUtils.runTests(imageName, BUILD_NUMBER)
     }
     stage('Push container image') {
-      defraUtils.pushContainerImage(regCredsId, registry, imageName, containerTag)
+      defraUtils.buildAndPushContainerImage(regCredsId, registry, imageName, containerTag)
     }
     if (pr != '') {
       stage('Helm install') {
