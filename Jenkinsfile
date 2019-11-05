@@ -1,4 +1,4 @@
-@Library('defra-library@master')
+@Library('defra-library@0.0.2')
 import uk.gov.defra.ffc.DefraUtils
 def defraUtils = new DefraUtils()
 
@@ -16,7 +16,7 @@ node {
   try {
     stage('Set branch, PR, and containerTag variables') {
       (pr, containerTag, mergedPrNo) = defraUtils.getVariables(repoName)
-      defraUtils.updateGithubCommitStatus('Build started', 'PENDING')
+      defraUtils.setGithubStatusPending()
     }
     stage('Build test image') {
       defraUtils.buildTestImage(imageName, BUILD_NUMBER)
@@ -59,9 +59,9 @@ node {
         defraUtils.undeployChart(kubeCredsId, imageName, mergedPrNo)
       }
     }
-    defraUtils.updateGithubCommitStatus('Build successful', 'SUCCESS')
+    defraUtils.setGithubStatusSuccess()
   } catch(e) {
-    defraUtils.updateGithubCommitStatus(e.message, 'FAILURE')
+    defraUtils.setGithubStatusFailure(e.message)
     throw e
   }
 }
