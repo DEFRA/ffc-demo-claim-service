@@ -21,7 +21,6 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   ffc-demo-claim-message-queue:
-    container_name: ffc-demo-claim-message-queue-${BUILD_NUMBER:-local}
     image: vromero/activemq-artemis:2.9.0-alpine
     environment:
       ARTEMIS_USERNAME: artemis
