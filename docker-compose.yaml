@@ -14,8 +14,6 @@ services:
       POSTGRES_PORT: 5432
       MESSAGE_QUEUE_HOST : host.docker.internal
       MESSAGE_QUEUE_PORT : 5672
-    networks:
-      - ffc-demo-claim
     volumes:
       - node_modules:/usr/src/app/node_modules
       - .:/usr/src/app
@@ -24,11 +22,9 @@ services:
     image: postgres:11.4-alpine
     env_file:
       - variables/postgres.env
-    networks:
-      - ffc-demo-claim
-
-networks:
-  ffc-demo-claim: {}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
+  postgres_data: {}
   node_modules: {}

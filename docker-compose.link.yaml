@@ -13,6 +13,7 @@ services:
         npm run start:watch"
     networks:
       - ffc-demo
+      - default
     ports:
       - "3003:3003"
 
