@@ -53,6 +53,6 @@
     ]
   },
   "nodemonConfig": {
-    "ignore": ["**/test-output/**"]
+    "ignore": ["test-output/**"]
   }
 }
