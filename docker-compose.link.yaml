@@ -17,13 +17,6 @@ services:
     ports:
       - "3003:3003"
 
-  ffc-demo-claim-postgres:
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-
 networks:
   ffc-demo:
     external: true
-
-volumes:
-  postgres_data: {}
