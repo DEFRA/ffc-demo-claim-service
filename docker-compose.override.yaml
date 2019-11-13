@@ -13,17 +13,14 @@ services:
         npm run start:watch"
     depends_on:
       - ffc-demo-claim-message-queue
-    networks:
-      - ffc-demo-claim
+    ports:
+      - "3003:3003"
 
   ffc-demo-claim-message-queue:
-    container_name: ffc-demo-claim-message-queue
     image: vromero/activemq-artemis:2.9.0-alpine
     environment:
       ARTEMIS_USERNAME: artemis
       ARTEMIS_PASSWORD: artemis
-    networks:
-      - ffc-demo-claim
     ports:
       - "8161:8161"
       - "5672:5672"
@@ -33,9 +30,6 @@ services:
       - message-queue-etc:/var/lib/artemis/etc
       - message-queue-etc-override:/var/lib/artemis/etc-override
       - message-queue-lock:/var/lib/artemis/lock
-
-networks:
-  ffc-demo-claim: {}
 
 volumes:
   message-queue-data: {}

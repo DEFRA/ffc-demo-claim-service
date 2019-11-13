@@ -4,7 +4,7 @@ set -e
 projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; pwd)"
 
 # Set Docker/Kubernetes resource names managed by this script
-containerName="ffc-demo-claim-service"
+serviceName="ffc-demo-claim-service"
 
 show_help() {
   echo "
@@ -54,6 +54,7 @@ compose() {
   (
     cd "${projectRoot}"
     docker-compose \
+    -p ${serviceName}-test \
     -f docker-compose.yaml \
     -f docker-compose.test.yaml \
     $@
@@ -72,7 +73,7 @@ compose() {
   fi
 
   # Run tests
-  compose run ${containerName}
+  compose run ${serviceName}
 
   # Clean up
   compose down --volumes
