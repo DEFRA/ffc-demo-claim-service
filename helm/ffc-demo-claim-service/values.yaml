@@ -2,7 +2,11 @@ environment: development
 postgresUsername: postgres@mine-support2
 postgresPassword: changeme
 postgresDatabase: mine_claims
+# postgresHost is the host name of the PostgreSQL service
 postgresHost: ffc-demo-claims-postgres
+# postgresExternalName is the external host name to which PostgreSQL
+# requests should be forwarded. If empty, PostgreSQL is assumed to be
+# within the cluster and accessible via postgresHost
 postgresExternalName: host.docker.internal
 postgresPort: 5432
 name: ffc-demo-claim-service
