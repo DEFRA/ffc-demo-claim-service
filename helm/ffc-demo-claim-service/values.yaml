@@ -7,7 +7,7 @@ postgresHost: ffc-demo-claims-postgres
 # postgresExternalName is the external host name to which PostgreSQL
 # requests should be forwarded. If empty, PostgreSQL is assumed to be
 # within the cluster and accessible via postgresHost
-postgresExternalName: host.docker.internal
+postgresExternalName:
 postgresPort: 5432
 name: ffc-demo-claim-service
 image: ffc-demo-claim-service
