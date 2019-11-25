@@ -16,7 +16,7 @@ spec:
         app: {{ .Values.name }}
         environment: {{ .Values.environment }}
       annotations:
-        redeployOnChange: "{{ .Values.container.redeployOnChange }}"
+        redeployOnChange: {{ .Values.container.redeployOnChange | quote }}
     spec:
       restartPolicy: {{ .Values.container.restartPolicy }}
       {{- if .Values.imagePullSecret }}
