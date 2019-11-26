@@ -30,13 +30,30 @@ node {
     if (pr != '') {
       stage('Helm install') {
         withCredentials([
-            string(credentialsId: 'messageQueueHostPR', variable: 'messageQueueHost'),
-            usernamePassword(credentialsId: 'calculationSendPR', usernameVariable: 'calculationQueueUsername', passwordVariable: 'calculationQueuePassword'),
-            usernamePassword(credentialsId: 'scheduleSendPR', usernameVariable: 'scheduleQueueUsername', passwordVariable: 'scheduleQueuePassword'),
-            string(credentialsId: 'postgresExternalNameClaimsPR', variable: 'postgresExternalName'),
-            usernamePassword(credentialsId: 'postgresClaimsPR', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
-          ]) {
-          def extraCommands = "--values ./helm/ffc-demo-claim-service/jenkins-aws.yaml --set container.messageQueueHost=\"$messageQueueHost\",container.scheduleQueueUser=\"$scheduleQueueUsername\",container.scheduleQueuePassword=\"$scheduleQueuePassword\",container.calculationQueueUser=\"$calculationQueueUsername\",container.calculationQueuePassword=\"$calculationQueuePassword\",postgresExternalName=\"$postgresExternalName\",postgresUsername=\"$postgresUsername\",postgresPassword=\"$postgresPassword\""
+          string(credentialsId: 'messageQueueHostPR', variable: 'messageQueueHost'),
+          usernamePassword(credentialsId: 'calculationSendPR', usernameVariable: 'calculationQueueUsername', passwordVariable: 'calculationQueuePassword'),
+          usernamePassword(credentialsId: 'scheduleSendPR', usernameVariable: 'scheduleQueueUsername', passwordVariable: 'scheduleQueuePassword'),
+          string(credentialsId: 'postgresExternalNameClaimsPR', variable: 'postgresExternalName'),
+          usernamePassword(credentialsId: 'postgresClaimsPR', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
+        ]) {
+
+          def helmValues = [
+            /container.calculationQueuePassword="$calculationQueuePassword"/,
+            /container.calculationQueueUser="$calculationQueueUsername"/,
+            /container.messageQueueHost="$messageQueueHost"/,
+            /container.redeployOnChange="$pr-$BUILD_NUMBER"/,
+            /container.scheduleQueuePassword="$scheduleQueuePassword"/,
+            /container.scheduleQueueUser="$scheduleQueueUsername"/,
+            /postgresExternalName="$postgresExternalName"/,
+            /postgresPassword="$postgresPassword"/,
+            /postgresUsername="$postgresUsername"/
+          ].join(',')
+
+          def extraCommands = [
+            "--values ./helm/ffc-demo-claim-service/jenkins-aws.yaml",
+            "--set $helmValues"
+          ].join(' ')
+
           defraUtils.deployChart(kubeCredsId, registry, imageName, containerTag, extraCommands)
         }
       }
@@ -65,4 +82,3 @@ node {
     throw e
   }
 }
-
