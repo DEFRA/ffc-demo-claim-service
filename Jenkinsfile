@@ -1,4 +1,4 @@
-@Library('defra-library@0.0.4')
+@Library('defra-library@0.0.5')
 import uk.gov.defra.ffc.DefraUtils
 def defraUtils = new DefraUtils()
 
@@ -17,6 +17,9 @@ node {
     stage('Set branch, PR, and containerTag variables') {
       (pr, containerTag, mergedPrNo) = defraUtils.getVariables(repoName)
       defraUtils.setGithubStatusPending()
+    }
+    stage('Helm lint') {
+      defraUtils.lintHelm(imageName)
     }
     stage('Build test image') {
       defraUtils.buildTestImage(imageName, BUILD_NUMBER)
