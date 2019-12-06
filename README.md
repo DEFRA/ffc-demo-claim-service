@@ -63,7 +63,6 @@ npm run test
 
 The application is designed to run in containerised environments, using Docker Compose in development and Kubernetes in production.
 
-- Scripts are provided to aid local development and testing using Docker Compose.
 - A Helm chart is provided for production deployments to Kubernetes.
 
 ### Build container image
@@ -79,23 +78,15 @@ docker-compose build
 
 ### Start and stop the service
 
-Use the provided [`start`](./scripts/start) and [`stop`](./scripts/stop) scripts to run the service locally via Docker Compose. Both scripts accept a number of flags to customise their behaviour. For full instructions on the flags available to each script, use the `--help` or `-h` flag:
+Use Docker Compose to run service locally. 
 
+`docker-compose up`
+
+Additional Docker Compose files are provided for scenarios such as linking to other running services.
+
+Link to other services:
 ```
-# View instructions for the start script
-scripts/start --help
-
-# View instructions for the stop script
-scripts/stop --help
-```
-
-By default, the start script will build new container images before starting the service on an isolated Docker network along with any direct dependencies, such as message queues and databases. It will not automatically replace existing containers or volumes, but will warn if there is a conflict and abort the request. Use the `--clean` or `--quick` flags to instruct the script to replace or keep existing resources, respectively.
-
-The underlying `docker-compose up/down` commands can be customised by appending `-- [DOCKER_COMPOSE_ARGS]` after any other arguments to the `start/stop` scripts. For example:
-
-```
-# Start the service without attaching to logs
-scripts/start -- --detach
+docker-compose -f docker-compose.yaml -f docker-compose.link.yaml up
 ```
 
 ### Test the service
