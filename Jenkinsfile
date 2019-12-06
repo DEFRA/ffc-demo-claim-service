@@ -4,7 +4,7 @@ def defraUtils = new DefraUtils()
 
 def registry = '562955126301.dkr.ecr.eu-west-2.amazonaws.com'
 def regCredsId = 'ecr:eu-west-2:ecr-user'
-def kubeCredsId = 'awskubeconfig002'
+def kubeCredsId = 'FFCLDNEKSAWSS001_KUBECONFIG'
 def imageName = 'ffc-demo-claim-service'
 def repoName = 'ffc-demo-claim-service'
 def pr = ''
