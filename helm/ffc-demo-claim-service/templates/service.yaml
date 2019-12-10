@@ -8,7 +8,7 @@ spec:
   externalName: {{ quote .Values.postgresExternalName }}
   ports:
     - name: port
-      port: {{ quote .Values.postgresPort }}
+      port: {{ .Values.postgresPort }}
 {{- end }}
 ---
 apiVersion: v1
@@ -19,7 +19,7 @@ metadata:
     app: {{ quote .Values.name }}
 spec:
   ports:
-  - port: {{ quote .Values.service.port }}
+  - port: {{ .Values.service.port }}
     targetPort: http
     protocol: TCP
     name: http
