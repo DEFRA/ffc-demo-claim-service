@@ -1,103 +1,103 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ .Values.name }}
+  name: {{ quote .Values.name }}
 spec:
-  replicas: {{ .Values.replicaCount }}
-  minReadySeconds: {{ .Values.minReadySeconds }}
+  replicas: {{ quote .Values.replicaCount }}
+  minReadySeconds: {{ quote .Values.minReadySeconds }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxSurge: {{ .Values.maxSurge }}
-      maxUnavailable: {{ .Values.maxUnavailable }}
+      maxSurge: {{ quote .Values.maxSurge }}
+      maxUnavailable: {{ quote .Values.maxUnavailable }}
   template:
     metadata:
       labels:
-        app: {{ .Values.name }}
-        environment: {{ .Values.environment }}
+        app: {{ quote .Values.name }}
+        environment: {{ quote .Values.environment }}
       annotations:
-        redeployOnChange: {{ .Values.container.redeployOnChange | quote }}
+        redeployOnChange: {{ quote .Values.container.redeployOnChange }}
     spec:
-      restartPolicy: {{ .Values.container.restartPolicy }}
-      {{- if .Values.imagePullSecret }}
+      restartPolicy: {{ quote .Values.container.restartPolicy }}
+      {{- if quote .Values.imagePullSecret }}
       imagePullSecrets:
-      - name: {{ .Values.imagePullSecret }}
+      - name: {{ quote .Values.imagePullSecret }}
       {{- end }}
       containers:
-        - name: {{ .Values.name }}
-          image: {{ .Values.image }}
-        {{- if .Values.container.command }}
-        {{- with .Values.container.command }}
+        - name: {{ quote .Values.name }}
+          image: {{ quote .Values.image }}
+        {{- if quote .Values.container.command }}
+        {{- with quote .Values.container.command }}
           command:
             {{- toYaml . | nindent 12 }}
         {{- end }}
-        {{- with .Values.container.args }}
+        {{- with quote .Values.container.args }}
           args:
             {{- toYaml . | nindent 12 }}
         {{- end }}
         {{- end }}
-          imagePullPolicy: {{ .Values.container.imagePullPolicy }}
+          imagePullPolicy: {{ quote .Values.container.imagePullPolicy }}
           securityContext:
-            runAsUser: {{ .Values.container.runAsUser }}
-            runAsNonRoot: {{ .Values.container.runAsNonRoot }}
-            readOnlyRootFilesystem: {{ .Values.container.readOnlyRootFilesystem }}
-            allowPrivilegeEscalation: {{ .Values.container.allowPrivilegeEscalation }}
+            runAsUser: {{ quote .Values.container.runAsUser }}
+            runAsNonRoot: {{ quote .Values.container.runAsNonRoot }}
+            readOnlyRootFilesystem: {{ quote .Values.container.readOnlyRootFilesystem }}
+            allowPrivilegeEscalation: {{ quote .Values.container.allowPrivilegeEscalation }}
           ports:
             - name: http
               containerPort: 3003
               protocol: TCP
           resources:
             requests:
-                memory: {{ .Values.container.requestMemory | quote }}
-                cpu: {{ .Values.container.requestCpu | quote }}
+                memory: {{ quote .Values.container.requestMemory }}
+                cpu: {{ quote .Values.container.requestCpu }}
             limits:
-                memory: {{ .Values.container.limitMemory | quote }}
-                cpu: {{ .Values.container.limitCpu | quote }}
+                memory: {{ quote .Values.container.limitMemory }}
+                cpu: {{ quote .Values.container.limitCpu }}
           env:
             - name: NODE_ENV
-              value: {{ .Values.environment }}
+              value: {{ quote .Values.environment }}
             - name: POSTGRES_USERNAME
-              value: {{ .Values.postgresUsername }}
+              value: {{ quote .Values.postgresUsername }}
             - name: POSTGRES_PASSWORD
-              value: {{ .Values.postgresPassword }}
+              value: {{ quote .Values.postgresPassword }}
             - name: POSTGRES_DB
-              value: {{ .Values.postgresDatabase }}
+              value: {{ quote .Values.postgresDatabase }}
             - name: POSTGRES_HOST
-              value: {{ .Values.postgresHost }}
+              value: {{ quote .Values.postgresHost }}
             - name: POSTGRES_PORT
-              value: {{ .Values.postgresPort | quote }}
+              value: {{ quote .Values.postgresPort }}
             - name: MESSAGE_QUEUE_HOST
-              value: {{ .Values.container.messageQueueHost }}
+              value: {{ quote .Values.container.messageQueueHost }}
             - name: MESSAGE_QUEUE_PORT
-              value: {{ .Values.container.messageQueuePort | quote}}
+              value: {{ quote .Values.container.messageQueuePort }}
             - name: MESSAGE_QUEUE_TRANSPORT
-              value: {{ .Values.container.messageQueueTransport }}
+              value: {{ quote .Values.container.messageQueueTransport }}
             - name: CALCULATION_QUEUE_ADDRESS
-              value: {{ .Values.container.calculationQueueAddress }}
+              value: {{ quote .Values.container.calculationQueueAddress }}
             - name: CALCULATION_QUEUE_USER
-              value: {{ .Values.container.calculationQueueUser }}
+              value: {{ quote .Values.container.calculationQueueUser }}
             - name: CALCULATION_QUEUE_PASSWORD
-              value: {{ .Values.container.calculationQueuePassword }}
+              value: {{ quote .Values.container.calculationQueuePassword }}
             - name: SCHEDULE_QUEUE_ADDRESS
-              value: {{ .Values.container.scheduleQueueAddress }}
+              value: {{ quote .Values.container.scheduleQueueAddress }}
             - name: SCHEDULE_QUEUE_USER
-              value: {{ .Values.container.scheduleQueueUser }}
+              value: {{ quote .Values.container.scheduleQueueUser }}
             - name: SCHEDULE_QUEUE_PASSWORD
-              value: {{ .Values.container.scheduleQueuePassword }}
+              value: {{ quote .Values.container.scheduleQueuePassword }}
             - name: PORT
               value: "3003"
           livenessProbe:
             httpGet:
-              path: {{ .Values.livenessProbe.path }}
-              port: {{ .Values.livenessProbe.port }}
-            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
-            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+              path: {{ quote .Values.livenessProbe.path }}
+              port: {{ quote .Values.livenessProbe.port }}
+            initialDelaySeconds: {{ quote .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ quote .Values.livenessProbe.periodSeconds }}
+            failureThreshold: {{ quote .Values.livenessProbe.failureThreshold }}
           readinessProbe:
             httpGet:
-              path: {{ .Values.readinessProbe.path }}
-              port: {{ .Values.readinessProbe.port }}
-            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
-            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+              path: {{ quote .Values.readinessProbe.path }}
+              port: {{ quote .Values.readinessProbe.port }}
+            initialDelaySeconds: {{ quote .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ quote .Values.readinessProbe.periodSeconds }}
+            failureThreshold: {{ quote .Values.readinessProbe.failureThreshold }}
 status: {}
