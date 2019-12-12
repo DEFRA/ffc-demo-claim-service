@@ -1,11 +1,11 @@
-{{- if .Values.postgresExternalName }}
+{{- if quote .Values.postgresExternalName }}
 kind: Service
 apiVersion: v1
 metadata:
-  name: {{ .Values.postgresHost }}
+  name: {{ quote .Values.postgresHost }}
 spec:
   type: ExternalName
-  externalName: {{ .Values.postgresExternalName }}
+  externalName: {{ quote .Values.postgresExternalName }}
   ports:
     - name: port
       port: {{ .Values.postgresPort }}
@@ -14,9 +14,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.name }}
+  name: {{ quote .Values.name }}
   labels:
-    app: {{ .Values.name }}
+    app: {{ quote .Values.name }}
 spec:
   ports:
   - port: {{ .Values.service.port }}
@@ -24,5 +24,5 @@ spec:
     protocol: TCP
     name: http
   selector:
-    app: {{ .Values.name }}
-  type: {{ .Values.service.type }}
+    app: {{ quote .Values.name }}
+  type: {{ quote .Values.service.type }}

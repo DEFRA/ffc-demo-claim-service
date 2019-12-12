@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ .Values.name }}
+  name: {{ quote .Values.name }}
 spec:
   replicas: {{ .Values.replicaCount }}
   minReadySeconds: {{ .Values.minReadySeconds }}
@@ -13,19 +13,19 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ .Values.name }}
-        environment: {{ .Values.environment }}
+        app: {{ quote .Values.name }}
+        environment: {{ quote .Values.environment }}
       annotations:
-        redeployOnChange: {{ .Values.container.redeployOnChange | quote }}
+        redeployOnChange: {{ quote .Values.container.redeployOnChange }}
     spec:
-      restartPolicy: {{ .Values.container.restartPolicy }}
+      restartPolicy: {{ quote .Values.container.restartPolicy }}
       {{- if .Values.imagePullSecret }}
       imagePullSecrets:
-      - name: {{ .Values.imagePullSecret }}
+      - name: {{ quote .Values.imagePullSecret }}
       {{- end }}
       containers:
-        - name: {{ .Values.name }}
-          image: {{ .Values.image }}
+        - name: {{ quote .Values.name }}
+          image: {{ quote .Values.image }}
         {{- if .Values.container.command }}
         {{- with .Values.container.command }}
           command:
@@ -36,7 +36,7 @@ spec:
             {{- toYaml . | nindent 12 }}
         {{- end }}
         {{- end }}
-          imagePullPolicy: {{ .Values.container.imagePullPolicy }}
+          imagePullPolicy: {{ quote .Values.container.imagePullPolicy }}
           securityContext:
             runAsUser: {{ .Values.container.runAsUser }}
             runAsNonRoot: {{ .Values.container.runAsNonRoot }}
@@ -48,54 +48,54 @@ spec:
               protocol: TCP
           resources:
             requests:
-                memory: {{ .Values.container.requestMemory | quote }}
-                cpu: {{ .Values.container.requestCpu | quote }}
+                memory: {{ quote .Values.container.requestMemory }}
+                cpu: {{ quote .Values.container.requestCpu }}
             limits:
-                memory: {{ .Values.container.limitMemory | quote }}
-                cpu: {{ .Values.container.limitCpu | quote }}
+                memory: {{ quote .Values.container.limitMemory }}
+                cpu: {{ quote .Values.container.limitCpu }}
           env:
             - name: NODE_ENV
-              value: {{ .Values.environment }}
+              value: {{ quote .Values.environment }}
             - name: POSTGRES_USERNAME
-              value: {{ .Values.postgresUsername }}
+              value: {{ quote .Values.postgresUsername }}
             - name: POSTGRES_PASSWORD
-              value: {{ .Values.postgresPassword }}
+              value: {{ quote .Values.postgresPassword }}
             - name: POSTGRES_DB
-              value: {{ .Values.postgresDatabase }}
+              value: {{ quote .Values.postgresDatabase }}
             - name: POSTGRES_HOST
-              value: {{ .Values.postgresHost }}
+              value: {{ quote .Values.postgresHost }}
             - name: POSTGRES_PORT
-              value: {{ .Values.postgresPort | quote }}
+              value: {{ quote .Values.postgresPort }}
             - name: MESSAGE_QUEUE_HOST
-              value: {{ .Values.container.messageQueueHost }}
+              value: {{ quote .Values.container.messageQueueHost }}
             - name: MESSAGE_QUEUE_PORT
-              value: {{ .Values.container.messageQueuePort | quote}}
+              value: {{ quote .Values.container.messageQueuePort }}
             - name: MESSAGE_QUEUE_TRANSPORT
-              value: {{ .Values.container.messageQueueTransport }}
+              value: {{ quote .Values.container.messageQueueTransport }}
             - name: CALCULATION_QUEUE_ADDRESS
-              value: {{ .Values.container.calculationQueueAddress }}
+              value: {{ quote .Values.container.calculationQueueAddress }}
             - name: CALCULATION_QUEUE_USER
-              value: {{ .Values.container.calculationQueueUser }}
+              value: {{ quote .Values.container.calculationQueueUser }}
             - name: CALCULATION_QUEUE_PASSWORD
-              value: {{ .Values.container.calculationQueuePassword }}
+              value: {{ quote .Values.container.calculationQueuePassword }}
             - name: SCHEDULE_QUEUE_ADDRESS
-              value: {{ .Values.container.scheduleQueueAddress }}
+              value: {{ quote .Values.container.scheduleQueueAddress }}
             - name: SCHEDULE_QUEUE_USER
-              value: {{ .Values.container.scheduleQueueUser }}
+              value: {{ quote .Values.container.scheduleQueueUser }}
             - name: SCHEDULE_QUEUE_PASSWORD
-              value: {{ .Values.container.scheduleQueuePassword }}
+              value: {{ quote .Values.container.scheduleQueuePassword }}
             - name: PORT
               value: "3003"
           livenessProbe:
             httpGet:
-              path: {{ .Values.livenessProbe.path }}
+              path: {{ quote .Values.livenessProbe.path }}
               port: {{ .Values.livenessProbe.port }}
             initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
             failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
           readinessProbe:
             httpGet:
-              path: {{ .Values.readinessProbe.path }}
+              path: {{ quote .Values.readinessProbe.path }}
               port: {{ .Values.readinessProbe.port }}
             initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
