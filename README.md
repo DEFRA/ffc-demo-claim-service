@@ -1,4 +1,3 @@
-[![Build Status](https://defradev.visualstudio.com/DEFRA_FutureFarming/_apis/build/status/defra-ffc-demo-claim-service?branchName=master)](https://defradev.visualstudio.com/DEFRA_FutureFarming/_build/latest?definitionId=613&branchName=master)
 [![Known Vulnerabilities](https://snyk.io//test/github/DEFRA/ffc-demo-claim-service/badge.svg?targetFile=package.json)](https://snyk.io//test/github/DEFRA/ffc-demo-claim-service?targetFile=package.json)
 
 # FFC Demo Claim Service
