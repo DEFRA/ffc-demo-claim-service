@@ -1,4 +1,4 @@
-@Library('defra-library@0.0.6')
+@Library('defra-library@0.0.7')
 import uk.gov.defra.ffc.DefraUtils
 def defraUtils = new DefraUtils()
 
@@ -12,6 +12,9 @@ def mergedPrNo = ''
 def containerTag = ''
 def sonarQubeEnv = 'SonarQube'
 def sonarScanner = 'SonarScanner'
+def containerSrcFolder = '\\/usr\\/src\\/app'
+def localSrcFolder = '.'
+def lcovFile = './test-output/lcov.info'
 def timeoutInMinutes = 5
 
 node {
@@ -29,6 +32,9 @@ node {
     }
     stage('Run tests') {
       defraUtils.runTests(imageName, BUILD_NUMBER)
+    }
+    stage('Fix absolute paths in lcov file') {
+      defraUtils.replaceInFile(containerSrcFolder, localSrcFolder, lcovFile)
     }
     stage('SonarQube analysis') {
       defraUtils.analyseCode(sonarQubeEnv, sonarScanner, ['sonar.projectKey' : repoName, 'sonar.sources' : '.'])
@@ -92,5 +98,7 @@ node {
   } catch(e) {
     defraUtils.setGithubStatusFailure(e.message)
     throw e
+  } finally {
+    defraUtils.deleteTestOutput(imageName)
   }
 }
