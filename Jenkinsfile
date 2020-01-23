@@ -1,4 +1,4 @@
-@Library('defra-library@0.0.8')
+@Library('defra-library@0.0.9')
 import uk.gov.defra.ffc.DefraUtils
 def defraUtils = new DefraUtils()
 
@@ -32,6 +32,9 @@ node {
     }
     stage('Run tests') {
       defraUtils.runTests(imageName, BUILD_NUMBER)
+    }
+    stage('Create Test Report JUnit'){
+      defraUtils.createTestReportJUnit()
     }
     stage('Fix absolute paths in lcov file') {
       defraUtils.replaceInFile(containerSrcFolder, localSrcFolder, lcovFile)
