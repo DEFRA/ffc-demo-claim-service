@@ -12,11 +12,19 @@ services:
     environment:
       POSTGRES_HOST: ffc-demo-claim-postgres
       POSTGRES_PORT: 5432
-      MESSAGE_QUEUE_HOST : host.docker.internal
-      MESSAGE_QUEUE_PORT : 5672
+      CALCULATION_ENDPOINT: http://ffc-demo-claim-message-queue:9324
+      CALCULATION_QUEUE_URL: http://ffc-demo-claim-message-queue:9324/queue/calculation
+      CALCULATION_QUEUE_ACCESS_KEY_ID: elasticmq
+      CALCULATION_QUEUE_ACCESS_KEY: elasticmq
+      SCHEDULE_ENDPOINT: http://ffc-demo-claim-message-queue:9324
+      SCHEDULE_QUEUE_URL: http://ffc-demo-claim-message-queue:9324/queue/schedule
+      SCHEDULE_QUEUE_ACCESS_KEY_ID: elasticmq
+      SCHEDULE_QUEUE_ACCESS_KEY: elasticmq
     volumes:
-      - node_modules:/usr/src/app/node_modules
-      - .:/usr/src/app
+      - ./server/:/usr/src/app/server/
+      - ./scripts/:/usr/src/app/scripts/
+      - ./index.js:/usr/src/app/index.js
+      - ./package.json:/usr/src/app/package.json
 
   ffc-demo-claim-postgres:
     image: postgres:11.4-alpine

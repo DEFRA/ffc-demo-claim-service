@@ -1,22 +1,33 @@
-const MessageSender = require('./messaging/message-sender')
+const { messageAction }= require('./messaging/message-action')
+const MessageConsumer = require('./messaging/message-consumer')
+const createQueue = require('./messaging/create-queue')
 const config = require('../config')
 
 const calculationSender = new MessageSender('claim-service-calculation-sender', config.messageQueues.calculationQueue)
 const scheduleSender = new MessageSender('claim-service-schedule-sender', config.messageQueues.scheduleQueue)
 
-async function registerQueues () {
-  await openConnections()
+let consumer
+
+async function registerService () {
+  if (config.calculationQueueConfig.createQueue) {
+    await createQueue(config.calculationQueueConfig.name, config.calculationQueueConfig)
+  }
+  if (config.paymentQueueConfig.createQueue) {
+    await createQueue(config.paymentQueueConfig.name, config.paymentQueueConfig)
+  }
+  registerCalculationConsumer()
+}
+
+function registerCalculationConsumer () {
+  consumer = new MessageConsumer(config.calculationQueueConfig, config.calculationQueueConfig.queueUrl, messageAction)
+  consumer.start()
 }
 
 async function closeConnections () {
-  await calculationSender.closeConnection()
-  await scheduleSender.closeConnection()
+  consumer.stop()
 }
 
-async function openConnections () {
-  await calculationSender.openConnection()
-  await scheduleSender.openConnection()
-}
+
 
 async function publishClaim (claim) {
   try {
@@ -47,5 +58,5 @@ module.exports = {
   getScheduleSender,
   openConnections,
   publishClaim,
-  registerQueues
+  registerService
 }
