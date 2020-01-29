@@ -75,7 +75,7 @@ spec:
             - name: CALCULATION_QUEUE_REGION
               value: {{ quote .Values.container.calculationQueueRegion }}
             - name: CALCULATION_QUEUE_ACCESS_KEY_ID
-             value: {{ quote .Values.container.calculationQueueAccessKeyId }}
+              value: {{ quote .Values.container.calculationQueueAccessKeyId }}
             - name: CALCULATION_QUEUE_ACCESS_KEY
               value: {{ quote .Values.container.calculationQueueSecretAccessKey }}
             - name: CREATE_CALCULATION_QUEUE
