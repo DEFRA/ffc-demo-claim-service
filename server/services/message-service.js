@@ -1,38 +1,21 @@
-const { messageAction }= require('./messaging/message-action')
-const MessageConsumer = require('./messaging/message-consumer')
 const createQueue = require('./messaging/create-queue')
+const MessageSender = require('./messaging/message-sender')
 const config = require('../config')
 
-const calculationSender = new MessageSender('claim-service-calculation-sender', config.messageQueues.calculationQueue)
-const scheduleSender = new MessageSender('claim-service-schedule-sender', config.messageQueues.scheduleQueue)
+const calculationSender = new MessageSender(config.calculationQueueConfig, config.calculationQueueConfig.queueUrl)
+const scheduleSender = new MessageSender(config.scheduleQueueConfig, config.scheduleQueueConfig.queueUrl)
 
-let consumer
-
-async function registerService () {
+async function createQueuesIfRequired () {
   if (config.calculationQueueConfig.createQueue) {
     await createQueue(config.calculationQueueConfig.name, config.calculationQueueConfig)
   }
-  if (config.paymentQueueConfig.createQueue) {
-    await createQueue(config.paymentQueueConfig.name, config.paymentQueueConfig)
+  if (config.scheduleQueueConfig.createQueue) {
+    await createQueue(config.scheduleQueueConfig.name, config.scheduleQueueConfig)
   }
-  registerCalculationConsumer()
 }
-
-function registerCalculationConsumer () {
-  consumer = new MessageConsumer(config.calculationQueueConfig, config.calculationQueueConfig.queueUrl, messageAction)
-  consumer.start()
-}
-
-async function closeConnections () {
-  consumer.stop()
-}
-
-
 
 async function publishClaim (claim) {
   try {
-    console.log('calculationSender connected', calculationSender.isConnected())
-    console.log('scheduleSender connected', scheduleSender.isConnected())
     const delivery = await Promise.all([
       calculationSender.sendMessage(claim),
       scheduleSender.sendMessage(claim)
@@ -44,19 +27,7 @@ async function publishClaim (claim) {
   }
 }
 
-function getCalculationSender () {
-  return calculationSender
-}
-
-function getScheduleSender () {
-  return scheduleSender
-}
-
 module.exports = {
-  closeConnections,
-  getCalculationSender,
-  getScheduleSender,
-  openConnections,
   publishClaim,
-  registerService
+  createQueuesIfRequired
 }

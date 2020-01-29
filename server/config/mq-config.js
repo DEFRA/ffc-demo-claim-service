@@ -1,7 +1,6 @@
 const joi = require('@hapi/joi')
 
 const mqSchema = joi.object({
-  
 
   calculationQueue: {
     name: joi.string().default('calculation'),
@@ -23,7 +22,7 @@ const mqSchema = joi.object({
   }
 })
 
-const mqConfig = {  
+const mqConfig = {
   calculationQueue: {
     name: process.env.CALCULATION_QUEUE_NAME,
     endpoint: process.env.CALCULATION_ENDPOINT,
@@ -57,6 +56,6 @@ const calculationQueueConfig = { ...mqResult.value.messageQueue, ...mqResult.val
 const scheduleQueueConfig = { ...mqResult.value.messageQueue, ...mqResult.value.scheduleQueue }
 
 module.exports = {
-  calculationQueue: calculationQueueConfig,
-  scheduleQueue: scheduleQueueConfig
+  calculationQueueConfig: calculationQueueConfig,
+  scheduleQueueConfig: scheduleQueueConfig
 }
