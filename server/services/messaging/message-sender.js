@@ -17,6 +17,7 @@ class MessageSender {
   async sendMessage (message) {
     const jsonMessage = JSON.stringify(message)
     try {
+      console.log(`sending ${message} to ${this.queueUrl}`)
       return this.sqs.sendMessage({
         QueueUrl: this.queueUrl,
         MessageBody: jsonMessage

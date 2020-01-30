@@ -16,12 +16,10 @@ async function createQueuesIfRequired () {
 
 async function publishClaim (claim) {
   try {
-    const delivery = await Promise.all([
+    await Promise.all([
       calculationSender.sendMessage(claim),
       scheduleSender.sendMessage(claim)
     ])
-    console.log(delivery)
-    delivery.map(del => { console.log(del.settled) })
   } catch (err) {
     console.log(err)
     throw err
