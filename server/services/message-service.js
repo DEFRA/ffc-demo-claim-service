@@ -20,6 +20,7 @@ async function publishClaim (claim) {
       calculationSender.sendMessage(claim),
       scheduleSender.sendMessage(claim)
     ])
+    console.log(delivery)
     delivery.map(del => { console.log(del.settled) })
   } catch (err) {
     console.log(err)
