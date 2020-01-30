@@ -17,3 +17,4 @@ services:
       - ./jest.config.js:/usr/src/app/jest.config.js
     depends_on: 
       - ffc-demo-claim-message-queue
+  
