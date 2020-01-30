@@ -53,8 +53,8 @@ node {
         withCredentials([
           string(credentialsId: 'sqsQueueEndpoint', variable: 'sqsQueueEndpoint'),
           string(credentialsId: 'calculationQueueUrlPR', variable: 'calculationQueueUrl'),
-          string(credentialsId: 'calculationQueueAccessKeyIdListen', variable: 'calculationQueueAccessKeyId'),
-          string(credentialsId: 'calculationQueueSecretAccessKeyListen', variable: 'calculationQueueSecretAccessKey'),
+          string(credentialsId: 'calculationQueueAccessKeyIdSend', variable: 'calculationQueueAccessKeyId'),
+          string(credentialsId: 'calculationQueueSecretAccessKeySend', variable: 'calculationQueueSecretAccessKey'),
           string(credentialsId: 'scheduleQueueUrlPR', variable: 'scheduleQueueUrl'),
           string(credentialsId: 'scheduleQueueAccessKeyIdSend', variable: 'scheduleQueueAccessKeyId'),
           string(credentialsId: 'scheduleQueueSecretAccessKeySend', variable: 'scheduleQueueSecretAccessKey'),
