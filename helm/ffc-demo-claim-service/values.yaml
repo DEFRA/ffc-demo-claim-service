@@ -29,15 +29,20 @@ container:
   restartPolicy: Always
   command: ["/bin/sh","-c"]
   args: ["npm --no-update-notifier run migrate && node index"]
-  messageQueueHost: mine-support-artemis
-  messageQueuePort: 5672
-  messageQueueTransport: tcp
-  calculationQueueAddress: calculation
-  calculationQueueUser: artemis
-  calculationQueuePassword: artemis
-  scheduleQueueAddress: schedule
-  scheduleQueueUser: artemis
-  scheduleQueuePassword: artemis
+  calculationQueueName: calculation
+  calculationQueueEndpoint: http://ffc-demo-claim-message-queue:9324
+  calculationQueueUrl: http://ffc-demo-claim-message-queue:9324/queue/calculation
+  calculationQueueRegion: eu-west-2
+  calculationQueueAccessKeyId: elasticmq
+  calculationQueueSecretAccessKey: elasticmq
+  calculationCreateQueue: true
+  scheduleQueueName: schedule
+  scheduleQueueEndpoint: http://ffc-demo-claim-message-queue:9324
+  scheduleQueueUrl: http://ffc-demo-claim-message-queue:9324/queue/schedule
+  scheduleQueueRegion: eu-west-2
+  scheduleQueueAccessKeyId: elasticmq
+  scheduleQueueSecretAccessKey: elasticmq
+  scheduleCreateQueue: true 
 replicaCount: 1
 minReadySeconds: 10
 maxSurge: 1

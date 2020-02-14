@@ -1,44 +1,45 @@
 const joi = require('@hapi/joi')
 
 const mqSchema = joi.object({
-  messageQueue: {
-    host: joi.string().default('localhost'),
-    hostname: joi.string().default('localhost'),
-    port: joi.number().default(5672),
-    reconnect_Limit: joi.number().default(10),
-    transport: joi.string().default('tcp')
-  },
+
   calculationQueue: {
-    address: joi.string().default('calculation'),
-    username: joi.string(),
-    password: joi.string()
+    name: joi.string().default('calculation'),
+    endpoint: joi.string().default('http://localhost:9324'),
+    queueUrl: joi.string().default('http://localhost:9324/queue/calculation'),
+    region: joi.string().default('eu-west-2'),
+    accessKeyId: joi.string(),
+    secretAccessKey: joi.string(),
+    createQueue: joi.bool().default(true)
   },
   scheduleQueue: {
-    address: joi.string().default('schedule'),
-    username: joi.string(),
-    password: joi.string(),
-    sendTimeoutInSeconds: joi.number().default(10)
+    name: joi.string().default('schedule'),
+    endpoint: joi.string().default('http://localhost:9324'),
+    queueUrl: joi.string().default('http://localhost:9324/queue/schedule'),
+    region: joi.string().default('eu-west-2'),
+    accessKeyId: joi.string(),
+    secretAccessKey: joi.string(),
+    createQueue: joi.bool().default(true)
   }
 })
 
 const mqConfig = {
-  messageQueue: {
-    host: process.env.MESSAGE_QUEUE_HOST,
-    hostname: process.env.MESSAGE_QUEUE_HOST,
-    port: process.env.MESSAGE_QUEUE_PORT,
-    reconnect_Limit: process.env.MESSAGE_QUEUE_RECONNECT_LIMIT,
-    transport: process.env.MESSAGE_QUEUE_TRANSPORT
-  },
   calculationQueue: {
-    address: process.env.CALCULATION_QUEUE_ADDRESS,
-    username: process.env.CALCULATION_QUEUE_USER,
-    password: process.env.CALCULATION_QUEUE_PASSWORD
+    name: process.env.CALCULATION_QUEUE_NAME,
+    endpoint: process.env.CALCULATION_ENDPOINT,
+    queueUrl: process.env.CALCULATION_QUEUE_URL,
+    region: process.env.CALCULATION_QUEUE_REGION,
+    accessKeyId: process.env.CALCULATION_QUEUE_ACCESS_KEY_ID,
+    secretAccessKey: process.env.CALCULATION_QUEUE_ACCESS_KEY,
+    createQueue: process.env.CREATE_CALCULATION_QUEUE
   },
   scheduleQueue: {
-    address: process.env.SCHEDULE_QUEUE_ADDRESS,
-    username: process.env.SCHEDULE_QUEUE_USER,
-    password: process.env.SCHEDULE_QUEUE_PASSWORD,
-    sendTimeoutInSeconds: process.env.SEND_TIMEOUT_IN_SECONDS
+    name: process.env.SCHEDULE_QUEUE_NAME,
+    endpoint: process.env.SCHEDULE_ENDPOINT,
+    queueUrl: process.env.SCHEDULE_QUEUE_URL,
+    region: process.env.SCHEDULE_QUEUE_REGION,
+    accessKeyId: process.env.SCHEDULE_QUEUE_ACCESS_KEY_ID,
+    secretAccessKey: process.env.SCHEDULE_QUEUE_ACCESS_KEY,
+    createQueue: process.env.CREATE_SCHEDULE_QUEUE
   }
 }
 
@@ -55,6 +56,6 @@ const calculationQueueConfig = { ...mqResult.value.messageQueue, ...mqResult.val
 const scheduleQueueConfig = { ...mqResult.value.messageQueue, ...mqResult.value.scheduleQueue }
 
 module.exports = {
-  calculationQueue: calculationQueueConfig,
-  scheduleQueue: scheduleQueueConfig
+  calculationQueueConfig: calculationQueueConfig,
+  scheduleQueueConfig: scheduleQueueConfig
 }

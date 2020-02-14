@@ -1,3 +1,4 @@
+psd-488-psd-488-add-versioning
 @Library('defra-library@0.0.16')
 import uk.gov.defra.ffc.DefraUtils
 def defraUtils = new DefraUtils()
@@ -34,6 +35,9 @@ node {
     stage('Run tests') {
       defraUtils.runTests(repoName, BUILD_NUMBER)
     }
+    stage('Create Test Report JUnit'){
+      defraUtils.createTestReportJUnit()
+    }
     stage('Fix absolute paths in lcov file') {
       defraUtils.replaceInFile(containerSrcFolder, localSrcFolder, lcovFile)
     }
@@ -52,23 +56,33 @@ node {
       }
       stage('Helm install') {
         withCredentials([
-          string(credentialsId: 'messageQueueHostPR', variable: 'messageQueueHost'),
-          usernamePassword(credentialsId: 'calculationSendPR', usernameVariable: 'calculationQueueUsername', passwordVariable: 'calculationQueuePassword'),
-          usernamePassword(credentialsId: 'scheduleSendPR', usernameVariable: 'scheduleQueueUsername', passwordVariable: 'scheduleQueuePassword'),
+          string(credentialsId: 'sqsQueueEndpoint', variable: 'sqsQueueEndpoint'),
+          string(credentialsId: 'calculationQueueUrlPR', variable: 'calculationQueueUrl'),
+          string(credentialsId: 'calculationQueueAccessKeyIdSend', variable: 'calculationQueueAccessKeyId'),
+          string(credentialsId: 'calculationQueueSecretAccessKeySend', variable: 'calculationQueueSecretAccessKey'),
+          string(credentialsId: 'scheduleQueueUrlPR', variable: 'scheduleQueueUrl'),
+          string(credentialsId: 'scheduleQueueAccessKeyIdSend', variable: 'scheduleQueueAccessKeyId'),
+          string(credentialsId: 'scheduleQueueSecretAccessKeySend', variable: 'scheduleQueueSecretAccessKey'),
           string(credentialsId: 'postgresExternalNameClaimsPR', variable: 'postgresExternalName'),
           usernamePassword(credentialsId: 'postgresClaimsPR', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
-        ]) {
+          ]) {
 
           def helmValues = [
-            /container.calculationQueuePassword="$calculationQueuePassword"/,
-            /container.calculationQueueUser="$calculationQueueUsername"/,
-            /container.messageQueueHost="$messageQueueHost"/,
+            /container.calculationQueueEndpoint="$sqsQueueEndpoint"/,
+            /container.calculationQueueUrl="$calculationQueueUrl"/,
+            /container.calculationQueueAccessKeyId="$calculationQueueAccessKeyId"/,
+            /container.calculationQueueSecretAccessKey="$calculationQueueSecretAccessKey"/,
+            /container.calculationCreateQueue="false"/,
+            /container.scheduleQueueEndpoint="$sqsQueueEndPoint"/,
+            /container.scheduleQueueUrl="$scheduleQueueUrl"/,
+            /container.scheduleQueueAccessKeyId="$scheduleQueueAccessKeyId"/,
+            /container.scheduleQueueSecretAccessKey="$scheduleQueueSecretAccessKey"/,
+            /container.scheduleCreateQueue="false"/,
             /container.redeployOnChange="$pr-$BUILD_NUMBER"/,
-            /container.scheduleQueuePassword="$scheduleQueuePassword"/,
-            /container.scheduleQueueUser="$scheduleQueueUsername"/,
             /postgresExternalName="$postgresExternalName"/,
             /postgresPassword="$postgresPassword"/,
-            /postgresUsername="$postgresUsername"/
+            /postgresUsername="$postgresUsername"/,
+            
           ].join(',')
 
           def extraCommands = [
