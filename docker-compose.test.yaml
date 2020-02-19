@@ -15,9 +15,9 @@ services:
         npm run migrate &&
         npm run test"
     volumes:
-      - ./test/:/usr/src/app/test/
-      - ./test-output/:/usr/src/app/test-output/
-      - ./jest.config.js:/usr/src/app/jest.config.js
+      - ./test/:/home/node/test/
+      - ./test-output/:/home/node/test-output/
+      - ./jest.config.js:/home/node/jest.config.js
     depends_on:
       - ffc-demo-claim-message-queue
 

@@ -23,10 +23,10 @@ services:
       SCHEDULE_QUEUE_ACCESS_KEY_ID: elasticmq
       SCHEDULE_QUEUE_ACCESS_KEY: elasticmq
     volumes:
-      - ./server/:/usr/src/app/server/
-      - ./scripts/:/usr/src/app/scripts/
-      - ./index.js:/usr/src/app/index.js
-      - ./package.json:/usr/src/app/package.json
+      - ./server/:/home/node/server/
+      - ./scripts/:/home/node/scripts/
+      - ./index.js:/home/node/index.js
+      - ./package.json:/home/node/package.json
 
   ffc-demo-claim-postgres:
     image: postgres:11.4-alpine
