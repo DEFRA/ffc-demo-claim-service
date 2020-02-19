@@ -5,6 +5,9 @@ version: '3.7'
 
 services:
   ffc-demo-claim-service:
+    build:
+      context: .
+      target: development
     command: >
       sh -c "
         scripts/wait-for/wait-for ffc-demo-claim-postgres:5432 --

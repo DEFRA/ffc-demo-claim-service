@@ -2,7 +2,9 @@ version: '3.7'
 
 services:
   ffc-demo-claim-service:
-    build: .
+    build:
+      context: .
+      target: production
     image: ffc-demo-claim-service
     depends_on:
       - ffc-demo-claim-postgres
@@ -33,7 +35,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  ffc-demo-claim-message-queue:    
+  ffc-demo-claim-message-queue:
     image: softwaremill/elasticmq
     ports:
       - "9324:9324"

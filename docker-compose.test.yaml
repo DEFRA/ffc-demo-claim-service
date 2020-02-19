@@ -5,6 +5,9 @@ version: '3.7'
 
 services:
   ffc-demo-claim-service:
+    build:
+      context: .
+      target: development
     command: >
       sh -c "
         scripts/wait-for/wait-for ffc-demo-claim-postgres:5432 --
@@ -15,6 +18,6 @@ services:
       - ./test/:/usr/src/app/test/
       - ./test-output/:/usr/src/app/test-output/
       - ./jest.config.js:/usr/src/app/jest.config.js
-    depends_on: 
+    depends_on:
       - ffc-demo-claim-message-queue
-  
+

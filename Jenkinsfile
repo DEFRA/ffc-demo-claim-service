@@ -5,13 +5,14 @@ def defraUtils = new DefraUtils()
 def registry = '562955126301.dkr.ecr.eu-west-2.amazonaws.com'
 def regCredsId = 'ecr:eu-west-2:ecr-user'
 def kubeCredsId = 'FFCLDNEKSAWSS001_KUBECONFIG'
+def imageName = 'ffc-demo-claim-service'
 def repoName = 'ffc-demo-claim-service'
 def pr = ''
 def mergedPrNo = ''
 def containerTag = ''
 def sonarQubeEnv = 'SonarQube'
 def sonarScanner = 'SonarScanner'
-def containerSrcFolder = '\\/usr\\/src\\/app'
+def containerSrcFolder = '\\/home\\/node'
 def localSrcFolder = '.'
 def lcovFile = './test-output/lcov.info'
 def timeoutInMinutes = 5
@@ -21,18 +22,18 @@ node {
   try {
     stage('Set GitHub status as pending'){
       defraUtils.setGithubStatusPending()
-    }  
+    }
     stage('Set branch, PR, and containerTag variables') {
       (pr, containerTag, mergedPrNo) = defraUtils.getVariables(repoName, defraUtils.getPackageJsonVersion())
     }
     stage('Helm lint') {
-      defraUtils.lintHelm(repoName)
+      defraUtils.lintHelm(imageName)
     }
     stage('Build test image') {
-      defraUtils.buildTestImage(repoName, BUILD_NUMBER)
+      defraUtils.buildTestImage(imageName, BUILD_NUMBER)
     }
     stage('Run tests') {
-      defraUtils.runTests(repoName, repoName, BUILD_NUMBER)
+      defraUtils.runTests(imageName, imageName, BUILD_NUMBER)
     }
     stage('Create Test Report JUnit'){
       defraUtils.createTestReportJUnit()
@@ -47,7 +48,7 @@ node {
       defraUtils.waitForQualityGateResult(timeoutInMinutes)
     }
     stage('Push container image') {
-      defraUtils.buildAndPushContainerImage(regCredsId, registry, repoName, containerTag)
+      defraUtils.buildAndPushContainerImage(regCredsId, registry, imageName, containerTag)
     }
     if (pr != '') {
       stage('Verify version incremented') {
@@ -81,7 +82,7 @@ node {
             /postgresExternalName="$postgresExternalName"/,
             /postgresPassword="$postgresPassword"/,
             /postgresUsername="$postgresUsername"/,
-            
+
           ].join(',')
 
           def extraCommands = [
@@ -89,17 +90,17 @@ node {
             "--set $helmValues"
           ].join(' ')
 
-          defraUtils.deployChart(kubeCredsId, registry, repoName, containerTag, extraCommands)
+          defraUtils.deployChart(kubeCredsId, registry, imageName, containerTag, extraCommands)
         }
       }
     }
     if (pr == '') {
       stage('Publish chart') {
-        defraUtils.publishChart(registry, repoName, containerTag)
+        defraUtils.publishChart(registry, imageName, containerTag)
       }
       stage('Trigger GitHub release') {
         withCredentials([
-          string(credentialsId: 'github_ffc_platform_repo', variable: 'gitToken') 
+          string(credentialsId: 'github_ffc_platform_repo', variable: 'gitToken')
         ]) {
           defraUtils.triggerRelease(containerTag, repoName, containerTag, gitToken)
         }
@@ -114,17 +115,17 @@ node {
     }
     if (mergedPrNo != '') {
       stage('Remove merged PR') {
-        defraUtils.undeployChart(kubeCredsId, repoName, mergedPrNo)
+        defraUtils.undeployChart(kubeCredsId, imageName, mergedPrNo)
       }
     }
     stage('Set GitHub status as success'){
       defraUtils.setGithubStatusSuccess()
-    } 
+    }
   } catch(e) {
     defraUtils.setGithubStatusFailure(e.message)
     defraUtils.notifySlackBuildFailure(e.message, "#generalbuildfailures")
     throw e
   } finally {
-    defraUtils.deleteTestOutput(repoName)
+    defraUtils.deleteTestOutput(imageName, containerSrcFolder)
   }
 }

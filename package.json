@@ -22,12 +22,13 @@
   ],
   "license": "OGL-UK-3.0",
   "dependencies": {
-    "@hapi/hapi": "^18.4.0",
+    "@hapi/hapi": "^18.4.1",
     "@hapi/joi": "^16.1.4",
     "aws-sdk": "^2.610.0",
     "pg": "^7.12.1",
     "rhea-promise": "^1.0.0",
     "sequelize": "^5.19.0",
+    "sequelize-cli": "^5.5.1",
     "sqs-consumer": "^5.4.0"
   },
   "devDependencies": {
@@ -38,7 +39,6 @@
     "jest": "^24.9.0",
     "jest-junit": "^8.0.0",
     "nodemon": "^1.19.2",
-    "sequelize-cli": "^5.5.1",
     "sequelize-mock": "^0.10.2",
     "standard": "^14.3.1"
   },
