@@ -104,6 +104,7 @@ node {
         ]) {
           defraUtils.triggerRelease(containerTag, repoName, containerTag, gitToken)
         }
+      }
       stage('Trigger Deployment') {
         withCredentials([
           string(credentialsId: 'JenkinsDeployUrl', variable: 'jenkinsDeployUrl'),
