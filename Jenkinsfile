@@ -1,9 +1,8 @@
-psd-488-psd-488-add-versioning
 @Library('defra-library@0.0.16')
 import uk.gov.defra.ffc.DefraUtils
 def defraUtils = new DefraUtils()
 
-def registry = '562955126301.dkr.ecr.eu-west-2.amazonaws.com'
+def registry = '171014905211.dkr.ecr.eu-west-2.amazonaws.com'
 def regCredsId = 'ecr:eu-west-2:ecr-user'
 def kubeCredsId = 'FFCLDNEKSAWSS001_KUBECONFIG'
 def repoName = 'ffc-demo-claim-service'
