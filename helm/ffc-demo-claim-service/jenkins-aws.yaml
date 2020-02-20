@@ -1,3 +1,4 @@
+environment: production
 name: ffc-demo-claim-service
 imagePullSecret: myregistrykey
 container:
