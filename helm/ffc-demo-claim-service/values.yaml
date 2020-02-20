@@ -1,4 +1,4 @@
-environment: development
+environment: production
 postgresUsername: postgres@mine-support2
 postgresPassword: changeme
 postgresDatabase: mine_claims
@@ -42,7 +42,7 @@ container:
   scheduleQueueRegion: eu-west-2
   scheduleQueueAccessKeyId: elasticmq
   scheduleQueueSecretAccessKey: elasticmq
-  scheduleCreateQueue: true 
+  scheduleCreateQueue: true
 replicaCount: 1
 minReadySeconds: 10
 maxSurge: 1

@@ -32,7 +32,7 @@ The following environment variables are required by the application container. V
 | POSTGRES_PASSWORD                | Postgres password              | yes      |                                         |                                           |                     |
 | CALCULATION_QUEUE_NAME           | Message queue name             | no       | calculation                             |                                           |                     |
 | CALCULATION_ENDPOINT             | Message base url               | no       | http://localhost:9324                   |                                           |                     |
-| CALCULATION_QUEUE_URL            | Message queue url              | no       | http://localhost:9324/queue/calculation |                                           |or tcp               |   
+| CALCULATION_QUEUE_URL            | Message queue url              | no       | http://localhost:9324/queue/calculation |                                           |or tcp               |
 | CALCULATION_QUEUE_REGION         | AWS region                     | no       | eu-west-2                               |                                           |Ignored in local dev |
 | CALCULATION_QUEUE_ACCESS_KEY_ID  | Message access key Id          | no       |                                         |                                           |                     |
 | CALCULATION_QUEUE_ACCESS_KEY     | Message access key             | no       |                                         |                                           |                     |
@@ -85,7 +85,7 @@ docker-compose build
 
 ### Start and stop the service
 
-Use Docker Compose to run service locally. 
+Use Docker Compose to run service locally.
 
 `docker-compose up`
 
@@ -124,7 +124,7 @@ Sample valid JSON for the `/submit` endpoint is:
 
 To test interactions with sibling services in the FFC demo application, it is necessary to connect each service to an external Docker network, along with shared dependencies such as message queues. The most convenient approach for this is to start the entire application stack from the [`ffc-demo-development`](https://github.com/DEFRA/ffc-demo-development) repository.
 
-It is also possible to run a limited subset of the application stack, using the [`start`](./scripts/start) script's `--link` flag to join each service to the shared Docker network. See the [`ffc-demo-development`](https://github.com/DEFRA/ffc-demo-development) Readme for instructions.
+It is also possible to run a limited subset of the application stack. See the [`ffc-demo-development`](https://github.com/DEFRA/ffc-demo-development) Readme for instructions.
 
 ### Deploy to Kubernetes
 
