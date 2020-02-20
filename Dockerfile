@@ -28,7 +28,7 @@ LABEL uk.gov.defra.ffc.parent-image=${REGISTRY}/ffc-node:${PARENT_VERSION}
 ENV PORT ${PORT}
 EXPOSE ${PORT}
 
-COPY --from=development /home/node/.sequelizerc /homme/node/
+COPY --chown=node:node .sequelizerc .
 COPY --from=development /home/node/index.js /home/node/package*.json /home/node/
 COPY --from=development /home/node/server  /home/node/server
 RUN npm ci
