@@ -1,4 +1,4 @@
-@Library('defra-library@0.0.16')
+@Library('defra-library@1.0.0')
 import uk.gov.defra.ffc.DefraUtils
 def defraUtils = new DefraUtils()
 
@@ -32,7 +32,7 @@ node {
       defraUtils.buildTestImage(repoName, BUILD_NUMBER)
     }
     stage('Run tests') {
-      defraUtils.runTests(repoName, BUILD_NUMBER)
+      defraUtils.runTests(repoName, repoName, BUILD_NUMBER)
     }
     stage('Create Test Report JUnit'){
       defraUtils.createTestReportJUnit()
