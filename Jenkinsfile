@@ -3,7 +3,7 @@ import uk.gov.defra.ffc.DefraUtils
 def defraUtils = new DefraUtils()
 
 def registry = '171014905211.dkr.ecr.eu-west-2.amazonaws.com'
-def regCredsId = 'ecr:eu-west-2:ecr-user'
+def regCredsId = 'ecr:eu-west-2:devffc-user'
 def kubeCredsId = 'FFCLDNEKSAWSS001_KUBECONFIG'
 def imageName = 'ffc-demo-claim-service'
 def repoName = 'ffc-demo-claim-service'
@@ -30,7 +30,9 @@ node {
       defraUtils.lintHelm(imageName)
     }
     stage('Build test image') {
-      defraUtils.buildTestImage(imageName, BUILD_NUMBER)
+      docker.withRegistry("https://$registry", regCredsId) {
+        defraUtils.buildTestImage(imageName, BUILD_NUMBER)
+      }
     }
     stage('Run tests') {
       defraUtils.runTests(imageName, imageName, BUILD_NUMBER)

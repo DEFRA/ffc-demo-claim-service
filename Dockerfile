@@ -1,6 +1,6 @@
 ARG PORT=3003
-ARG PARENT_VERSION=1.0.0-node12.16.0
-ARG REGISTRY=562955126301.dkr.ecr.eu-west-2.amazonaws.com
+ARG PARENT_VERSION=1.0.0-node12.16.0-pr5
+ARG REGISTRY=171014905211.dkr.ecr.eu-west-2.amazonaws.com
 
 # Development
 FROM ${REGISTRY}/ffc-node-development:${PARENT_VERSION} AS development
