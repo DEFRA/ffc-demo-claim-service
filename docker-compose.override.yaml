@@ -5,6 +5,9 @@ version: '3.7'
 
 services:
   ffc-demo-claim-service:
+    build:
+      context: .
+      target: development
     command: >
       sh -c "
         scripts/wait-for/wait-for ffc-demo-claim-postgres:5432 --
@@ -14,4 +17,4 @@ services:
     depends_on:
       - ffc-demo-claim-message-queue
     ports:
-      - "3003:3003"     
+      - "3003:3003"
