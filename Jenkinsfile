@@ -54,11 +54,14 @@ node {
         withCredentials([
           string(credentialsId: 'sqs-queue-endpoint', variable: 'sqsQueueEndpoint'),
           string(credentialsId: 'calculation-queue-url-pr', variable: 'calculationQueueUrl'),
+          string(credentialsId: 'calculation-queue-access-key-id-send', variable: 'calculationQueueAccessKeyId'),
+          string(credentialsId: 'calculation-queue-secret-access-key-send', variable: 'calculationQueueSecretAccessKey'),
           string(credentialsId: 'schedule-queue-url-pr', variable: 'scheduleQueueUrl'),
+          string(credentialsId: 'schedule-queue-access-key-id-send', variable: 'scheduleQueueAccessKeyId'),
+          string(credentialsId: 'schedule-queue-secret-access-key-send', variable: 'scheduleQueueSecretAccessKey'),
           string(credentialsId: 'postgres-external-name-claims-pr', variable: 'postgresExternalName'),
           usernamePassword(credentialsId: 'claims-service-postgres-user-pr', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
         ]) {
-
           def helmValues = [
             /container.calculationQueueEndpoint="$sqsQueueEndpoint"/,
             /container.calculationQueueUrl="$calculationQueueUrl"/,
