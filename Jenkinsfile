@@ -56,7 +56,7 @@ node {
           string(credentialsId: 'calculation-queue-url-pr', variable: 'calculationQueueUrl'),
           string(credentialsId: 'schedule-queue-url-pr', variable: 'scheduleQueueUrl'),
           string(credentialsId: 'postgres-external-name-claims-pr', variable: 'postgresExternalName'),
-          usernamePassword(credentialsId: 'postgres-claims-pr', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
+          usernamePassword(credentialsId: 'claims-service-postgres-user-pr', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
         ]) {
 
           def helmValues = [
