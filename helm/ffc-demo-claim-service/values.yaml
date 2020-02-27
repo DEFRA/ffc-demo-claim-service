@@ -16,6 +16,7 @@ service:
   type: ClusterIP
   port: 80
 container:
+  priorityClassName: low
   imagePullPolicy: IfNotPresent
   redeployOnChange: update this field to force a change
   requestMemory: 60Mi
