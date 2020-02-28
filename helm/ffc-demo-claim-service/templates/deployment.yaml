@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: {{ quote .Values.name }}
 spec:
+  priorityClassName: {{ quote .Values.container.priorityClassName }}
   replicas: {{ .Values.replicaCount }}
   minReadySeconds: {{ .Values.minReadySeconds }}
   strategy:
