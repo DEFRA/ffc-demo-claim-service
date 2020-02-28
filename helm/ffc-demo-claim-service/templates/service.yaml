@@ -3,6 +3,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: {{ quote .Values.postgresHost }}
+  namespace: {{ quote .Values.namespace }}
 spec:
   type: ExternalName
   externalName: {{ quote .Values.postgresExternalName }}

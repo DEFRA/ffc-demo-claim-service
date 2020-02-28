@@ -1,4 +1,5 @@
 name: ffc-demo-claim-service
+namespace: ffc-demo
 imagePullSecret: myregistrykey
 container:
   allowPrivilegeEscalation: true
