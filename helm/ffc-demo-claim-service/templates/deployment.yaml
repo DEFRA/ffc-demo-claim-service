@@ -4,6 +4,7 @@ metadata:
   name: {{ quote .Values.name }}
   namespace: {{ quote .Values.namespace }}
 spec:
+  priorityClassName: {{ quote .Values.container.priorityClassName }}
   replicas: {{ .Values.replicaCount }}
   minReadySeconds: {{ .Values.minReadySeconds }}
   strategy:
