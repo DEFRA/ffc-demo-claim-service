@@ -16,6 +16,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ quote .Values.name }}
+  namespace: {{ quote .Values.namespace }}
   labels:
     app: {{ quote .Values.name }}
 spec:
