@@ -60,6 +60,7 @@ node {
           string(credentialsId: 'schedule-queue-access-key-id-send', variable: 'scheduleQueueAccessKeyId'),
           string(credentialsId: 'schedule-queue-secret-access-key-send', variable: 'scheduleQueueSecretAccessKey'),
           string(credentialsId: 'postgres-external-name-pr', variable: 'postgresExternalName'),
+          string(credentialsId: 'claim-service-account-role-arn', variable: 'serviceAccountRoleArn'),
           usernamePassword(credentialsId: 'claims-service-postgres-user-pr', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
         ]) {
           def helmValues = [
@@ -74,6 +75,7 @@ node {
             /postgresPassword="$postgresPassword"/,
             /postgresUsername="$postgresUsername"/,
             /labels.version="$containerTag"/
+            /serviceAccount.roleArn="$serviceAccountRoleArn"/,
           ].join(',')
 
           def extraCommands = [

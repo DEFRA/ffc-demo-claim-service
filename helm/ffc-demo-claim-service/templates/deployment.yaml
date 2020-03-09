@@ -20,6 +20,9 @@ spec:
       annotations:
         redeployOnChange: {{ quote .Values.container.redeployOnChange }}
     spec:
+{{- if .Values.serviceAccount.roleArn }}
+      serviceAccountName: {{ quote .Values.container.serviceAccountName }}
+{{- end }}
       restartPolicy: {{ quote .Values.container.restartPolicy }}
       {{- if .Values.imagePullSecret }}
       imagePullSecrets:

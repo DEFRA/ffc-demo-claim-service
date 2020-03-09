@@ -62,3 +62,7 @@ readinessProbe:
   initialDelaySeconds: 10
   periodSeconds: 10
   failureThreshold: 3
+  serviceAccountName: ffc-demo-claim-service-account
+serviceAccount:
+  name: ffc-demo-claim-service-account
+  roleArn: 
