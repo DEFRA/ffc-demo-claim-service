@@ -21,7 +21,7 @@ spec:
         redeployOnChange: {{ quote .Values.container.redeployOnChange }}
     spec:
 {{- if .Values.serviceAccount.roleArn }}
-      serviceAccountName: {{ quote .Values.container.serviceAccountName }}
+      serviceAccountName: {{ quote .Values.serviceAccount.name }}
 {{- end }}
       restartPolicy: {{ quote .Values.container.restartPolicy }}
       {{- if .Values.imagePullSecret }}
