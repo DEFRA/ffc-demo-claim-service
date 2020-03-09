@@ -40,15 +40,11 @@ container:
   calculationQueueEndpoint: http://ffc-demo-claim-message-queue:9324
   calculationQueueUrl: http://ffc-demo-claim-message-queue:9324/queue/calculation
   calculationQueueRegion: eu-west-2
-  calculationQueueAccessKeyId: elasticmq
-  calculationQueueSecretAccessKey: elasticmq
   calculationCreateQueue: true
   scheduleQueueName: schedule
   scheduleQueueEndpoint: http://ffc-demo-claim-message-queue:9324
   scheduleQueueUrl: http://ffc-demo-claim-message-queue:9324/queue/schedule
   scheduleQueueRegion: eu-west-2
-  scheduleQueueAccessKeyId: elasticmq
-  scheduleQueueSecretAccessKey: elasticmq
   scheduleCreateQueue: true
 replicaCount: 1
 minReadySeconds: 10

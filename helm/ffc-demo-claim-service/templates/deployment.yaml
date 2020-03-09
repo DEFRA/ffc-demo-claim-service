@@ -76,10 +76,6 @@ spec:
               value: {{ quote .Values.container.calculationQueueUrl }}
             - name: CALCULATION_QUEUE_REGION
               value: {{ quote .Values.container.calculationQueueRegion }}
-            - name: CALCULATION_QUEUE_ACCESS_KEY_ID
-              value: {{ quote .Values.container.calculationQueueAccessKeyId }}
-            - name: CALCULATION_QUEUE_ACCESS_KEY
-              value: {{ quote .Values.container.calculationQueueSecretAccessKey }}
             - name: CREATE_CALCULATION_QUEUE
               value: {{ quote .Values.container.calculationCreateQueue }}
             - name: SCHEDULE_QUEUE_NAME
@@ -90,10 +86,6 @@ spec:
               value: {{ quote .Values.container.scheduleQueueUrl }}
             - name: SCHEDULE_QUEUE_REGION
               value: {{ quote .Values.container.scheduleQueueRegion }}
-            - name: SCHEDULE_QUEUE_ACCESS_KEY_ID
-              value: {{ quote .Values.container.scheduleQueueAccessKeyId }}
-            - name: SCHEDULE_QUEUE_ACCESS_KEY
-              value: {{ quote .Values.container.scheduleQueueSecretAccessKey }}
             - name: CREATE_SCHEDULE_QUEUE
               value: {{ quote .Values.container.scheduleCreateQueue }}
             - name: PORT
