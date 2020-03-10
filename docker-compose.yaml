@@ -41,8 +41,6 @@ services:
 
   ffc-demo-claim-message-queue:
     image: softwaremill/elasticmq
-    ports:
-      - "9324:9324"
 
 volumes:
   postgres_data: {}
