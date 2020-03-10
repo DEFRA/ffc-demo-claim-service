@@ -64,7 +64,8 @@ node {
             /container.scheduleQueueUser="$scheduleQueueUsername"/,
             /postgresExternalName="$postgresExternalName"/,
             /postgresPassword="$postgresPassword"/,
-            /postgresUsername="$postgresUsername"/
+            /postgresUsername="$postgresUsername"/,
+            /labels.version="$containerTag"/
           ].join(',')
 
           def extraCommands = [
