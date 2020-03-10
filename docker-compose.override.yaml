@@ -5,35 +5,16 @@ version: '3.7'
 
 services:
   ffc-demo-claim-service:
+    build:
+      context: .
+      target: development
     command: >
       sh -c "
         scripts/wait-for/wait-for ffc-demo-claim-postgres:5432 --
-        scripts/wait-for/wait-for ffc-demo-claim-message-queue:8161 --
+        scripts/wait-for/wait-for ffc-demo-claim-message-queue:9324 --
         npm run migrate &&
         npm run start:watch"
     depends_on:
       - ffc-demo-claim-message-queue
     ports:
       - "3003:3003"
-
-  ffc-demo-claim-message-queue:
-    image: vromero/activemq-artemis:2.9.0-alpine
-    environment:
-      ARTEMIS_USERNAME: artemis
-      ARTEMIS_PASSWORD: artemis
-    ports:
-      - "8161:8161"
-      - "5672:5672"
-    volumes:
-      - message-queue-data:/var/lib/artemis/data
-      - message-queue-tmp:/var/lib/artemis/tmp
-      - message-queue-etc:/var/lib/artemis/etc
-      - message-queue-etc-override:/var/lib/artemis/etc-override
-      - message-queue-lock:/var/lib/artemis/lock
-
-volumes:
-  message-queue-data: {}
-  message-queue-tmp: {}
-  message-queue-etc: {}
-  message-queue-etc-override: {}
-  message-queue-lock: {}
