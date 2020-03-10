@@ -54,11 +54,11 @@ describe('Healthy test', () => {
 
     const response = await server.inject(options)
 
-    expect(response.statusCode).toBe(500)
-    expect(response.payload).toBe('Dependencies unavailable: database')
+    expect(response.statusCode).toBe(503)
+    expect(response.payload).toBe('database unavailable')
   })
 
-  test('GET /healthy returns 500 if calculation queue not connected', async () => {
+  test('GET /healthy returns 503 if calculation queue not connected', async () => {
     const options = {
       method: 'GET',
       url: '/healthy'
@@ -70,11 +70,11 @@ describe('Healthy test', () => {
 
     const response = await server.inject(options)
 
-    expect(response.statusCode).toBe(500)
-    expect(response.payload).toBe('Dependencies unavailable: calculationQueue')
+    expect(response.statusCode).toBe(200)
+    expect(response.payload).toBe('ok')
   })
 
-  test('GET /healthy returns 500 if schedule queue not connected', async () => {
+  test('GET /healthy returns 503 if schedule queue not connected', async () => {
     const options = {
       method: 'GET',
       url: '/healthy'
@@ -86,11 +86,11 @@ describe('Healthy test', () => {
 
     const response = await server.inject(options)
 
-    expect(response.statusCode).toBe(500)
-    expect(response.payload).toBe('Dependencies unavailable: scheduleQueue')
+    expect(response.statusCode).toBe(200)
+    expect(response.payload).toBe('ok')
   })
 
-  test('GET /healthy returns 500 with appropriate message if all downstream services are disconnected', async () => {
+  test('GET /healthy returns 503 with appropriate message if all downstream services are disconnected', async () => {
     const options = {
       method: 'GET',
       url: '/healthy'
@@ -102,8 +102,8 @@ describe('Healthy test', () => {
 
     const response = await server.inject(options)
 
-    expect(response.statusCode).toBe(500)
-    expect(response.payload).toBe('Dependencies unavailable: calculationQueue, database, scheduleQueue')
+    expect(response.statusCode).toBe(503)
+    expect(response.payload).toBe('database unavailable')
   })
 
   afterEach(async () => {

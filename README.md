@@ -17,25 +17,33 @@ Or:
 Or:
 - Node 10
 - PostgreSQL database
-- AMQP 1.0 message queue
+- AWS SQS compatible message queue
 
 ## Environment variables
 
 The following environment variables are required by the application container. Values for development are set in the Docker Compose configuration. Default values for production-like deployments are set in the Helm chart and may be overridden by build and release pipelines.
 
-| Name                            | Description        | Required | Default              | Valid                       | Notes |
-|---------------------------------|--------------------|:--------:|----------------------|:---------------------------:|-------|
-| NODE_ENV                        | Node environment   |    no    |                      | development,test,production |       |
-| PORT                            | Port number        |    no    | 3003                 |                             |       |
-| POSTGRES_DB                     | Postgres database  |   yes    |                      |                             |       |
-| POSTGRES_USERNAME               | Postgres username  |   yes    |                      |                             |       |
-| POSTGRES_PASSWORD               | Postgres password  |   yes    |                      |                             |       |
-| MESSAGE_QUEUE_HOST              | MQ Server hostname |    no    | mine-support-artemis |                             |       |
-| MESSAGE_QUEUE_PORT              | MQ Server port     |    no    | 5672                 |                             |       |
-| MESSAGE_QUEUE_USER              | MQ Server username |    no    |                      |                             |       |
-| MESSAGE_QUEUE_PASS              | MQ Server password |    no    |                      |                             |       |
-| MESSAGE_QUEUE_RECONNECT_LIMIT   | MQ reconnect limit |    no    | 10                   |                             |       |
-| MESSAGE_QUEUE_TRANSPORT         | MQ transport       |    no    | tcp                  | tcp,ssl                     |       |
+| Name                             | Description                    | Required | Default                                 | Valid                           | Notes               |
+|----------------------------------|--------------------------------|:--------:|-----------------------------------------|:----------------------------------------:|---------------------|
+| NODE_ENV                         | Node environment               | no       |                                         | development,test,production           |                     |
+| PORT                             | Port number                    | no       | 3003                                    |                                           |                     |
+| POSTGRES_DB                      | Postgres database              | yes      |                                         |                                           |                     |
+| POSTGRES_USERNAME                | Postgres username              | yes      |                                         |                                           |                     |
+| POSTGRES_PASSWORD                | Postgres password              | yes      |                                         |                                           |                     |
+| CALCULATION_QUEUE_NAME           | Message queue name             | no       | calculation                             |                                           |                     |
+| CALCULATION_ENDPOINT             | Message base url               | no       | http://localhost:9324                   |                                           |                     |
+| CALCULATION_QUEUE_URL            | Message queue url              | no       | http://localhost:9324/queue/calculation |                                           |or tcp               |
+| CALCULATION_QUEUE_REGION         | AWS region                     | no       | eu-west-2                               |                                           |Ignored in local dev |
+| CALCULATION_QUEUE_ACCESS_KEY_ID  | Message access key Id          | no       |                                         |                                           |                     |
+| CALCULATION_QUEUE_ACCESS_KEY     | Message access key             | no       |                                         |                                           |                     |
+| CREATE_CALCULATION_QUEUE         | Create queue before connection | no       | true                                    | For AWS deployments must be set to false |                     |
+| SCHEDULE_QUEUE_NAME              | Message queue name             | no       | schedule                                |                                           |                     |
+| SCHEDULE_ENDPOINT                | Message base url               | no       | http://localhost:9324                   |                                           |                     |
+| SCHEDULE_QUEUE_URL               | Message queue url              | no       | http://localhost:9324/queue/schedule    |                                           |or tcp               |
+| SCHEDULE_QUEUE_REGION            | AWS region                     | no       | eu-west-2                               |                                           |Ignored in local dev |
+| SCHEDULE_QUEUE_ACCESS_KEY_ID     | Message access key Id          | no       |                                         |                                           |                     |
+| SCHEDULE_QUEUE_ACCESS_KEY        | Message access key             | no       |                                         |                                           |                     |
+| CREATE_SCHEDULE_QUEUE            | Create queue before connection | no       | true                                    | For AWS deployments must be set to false |                     |
 
 ## How to run tests
 
@@ -77,7 +85,7 @@ docker-compose build
 
 ### Start and stop the service
 
-Use Docker Compose to run service locally. 
+Use Docker Compose to run service locally.
 
 `docker-compose up`
 
@@ -116,11 +124,11 @@ Sample valid JSON for the `/submit` endpoint is:
 
 To test interactions with sibling services in the FFC demo application, it is necessary to connect each service to an external Docker network, along with shared dependencies such as message queues. The most convenient approach for this is to start the entire application stack from the [`ffc-demo-development`](https://github.com/DEFRA/ffc-demo-development) repository.
 
-It is also possible to run a limited subset of the application stack, using the [`start`](./scripts/start) script's `--link` flag to join each service to the shared Docker network. See the [`ffc-demo-development`](https://github.com/DEFRA/ffc-demo-development) Readme for instructions.
+It is also possible to run a limited subset of the application stack. See the [`ffc-demo-development`](https://github.com/DEFRA/ffc-demo-development) Readme for instructions.
 
 ### Deploy to Kubernetes
 
-For production deployments, a helm chart is included in the `.\helm` folder. This service connects to an AMQP 1.0 message broker, using credentials defined in [values.yaml](./helm/ffc-demo-claim-service/values.yaml), which must be made available prior to deployment.
+For production deployments, a helm chart is included in the `.\helm` folder. This service connects to an sqs message broker, using credentials defined in [values.yaml](./helm/ffc-demo-claim-service/values.yaml), which must be made available prior to deployment.
 
 Scripts are provided to test the Helm chart by deploying the service, along with an appropriate message broker, into the current Helm/Kubernetes context.
 
@@ -130,7 +138,7 @@ scripts/helm/install
 
 # Remove from current Kubernetes context
 scripts/helm/delete
-```
+
 
 #### Accessing the pod
 

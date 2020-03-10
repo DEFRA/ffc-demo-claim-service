@@ -5,4 +5,19 @@ version: '3.7'
 
 services:
   ffc-demo-claim-service:
-    command: npm run test
+    build:
+      context: .
+      target: development
+    command: >
+      sh -c "
+        scripts/wait-for/wait-for ffc-demo-claim-postgres:5432 --
+        scripts/wait-for/wait-for ffc-demo-claim-message-queue:9324 --
+        npm run migrate &&
+        npm run test"
+    volumes:
+      - ./test/:/home/node/test/
+      - ./test-output/:/home/node/test-output/
+      - ./jest.config.js:/home/node/jest.config.js
+    depends_on:
+      - ffc-demo-claim-message-queue
+
