@@ -75,8 +75,6 @@ spec:
               value: {{ quote .Values.container.calculationQueueName }}
             - name: CALCULATION_ENDPOINT
               value: {{ quote .Values.container.calculationQueueEndpoint }}
-            - name: CALCULATION_QUEUE_URL
-              value: {{ quote .Values.container.calculationQueueUrl }}
             - name: CALCULATION_QUEUE_REGION
               value: {{ quote .Values.container.calculationQueueRegion }}
             - name: CREATE_CALCULATION_QUEUE
@@ -85,8 +83,6 @@ spec:
               value: {{ quote .Values.container.scheduleQueueName }}
             - name: SCHEDULE_ENDPOINT
               value: {{ quote .Values.container.scheduleQueueEndpoint }}
-            - name: SCHEDULE_QUEUE_URL
-              value: {{ quote .Values.container.scheduleQueueUrl }}
             - name: SCHEDULE_QUEUE_REGION
               value: {{ quote .Values.container.scheduleQueueRegion }}
             - name: CREATE_SCHEDULE_QUEUE

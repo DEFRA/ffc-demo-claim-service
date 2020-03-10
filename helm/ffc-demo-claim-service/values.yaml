@@ -38,14 +38,12 @@ container:
   args: ["npm --no-update-notifier run migrate && node index"]
   calculationQueueName: calculation
   calculationQueueEndpoint: http://ffc-demo-claim-message-queue:9324
-  calculationQueueUrl: http://ffc-demo-claim-message-queue:9324/queue/calculation
   calculationQueueRegion: eu-west-2
-  calculationCreateQueue: true
+  calculationCreateQueue: false
   scheduleQueueName: schedule
   scheduleQueueEndpoint: http://ffc-demo-claim-message-queue:9324
-  scheduleQueueUrl: http://ffc-demo-claim-message-queue:9324/queue/schedule
   scheduleQueueRegion: eu-west-2
-  scheduleCreateQueue: true
+  scheduleCreateQueue: false
 replicaCount: 1
 minReadySeconds: 10
 maxSurge: 1

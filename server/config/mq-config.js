@@ -19,7 +19,7 @@ const mqConfig = {
   calculationQueue: {
     name: process.env.CALCULATION_QUEUE_NAME,
     endpoint: process.env.CALCULATION_ENDPOINT,
-    queueUrl: process.env.CALCULATION_QUEUE_URL,
+    queueUrl: `${process.env.CALCULATION_ENDPOINT}/${process.env.CALCULATION_QUEUE_NAME}`,
     accessKeyId: process.env.DEV_ACCESS_KEY_ID,
     secretAccessKey: process.env.DEV_ACCESS_KEY,
     region: process.env.CALCULATION_QUEUE_REGION,
@@ -28,7 +28,7 @@ const mqConfig = {
   scheduleQueue: {
     name: process.env.SCHEDULE_QUEUE_NAME,
     endpoint: process.env.SCHEDULE_ENDPOINT,
-    queueUrl: process.env.SCHEDULE_QUEUE_URL,
+    queueUrl: `${process.env.SCHEDULE_ENDPOINT}/${process.env.SCHEDULE_QUEUE_NAME}`,
     region: process.env.SCHEDULE_QUEUE_REGION,
     accessKeyId: process.env.DEV_ACCESS_KEY_ID,
     secretAccessKey: process.env.DEV_ACCESS_KEY,

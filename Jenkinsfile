@@ -13,6 +13,34 @@ def sonarQubeEnv = 'SonarQube'
 def sonarScanner = 'SonarScanner'
 def timeoutInMinutes = 5
 
+def getExtraCommands(pr) {
+  withCredentials([
+    string(credentialsId: 'sqs-queue-endpoint', variable: 'sqsQueueEndpoint'),
+    string(credentialsId: 'calculation-queue-name-pr', variable: 'calculationQueueName'),
+    string(credentialsId: 'schedule-queue-name-pr', variable: 'scheduleQueueName'),
+    string(credentialsId: 'postgres-external-name-pr', variable: 'postgresExternalName'),
+    string(credentialsId: 'claim-service-account-role-arn', variable: 'serviceAccountRoleArn'),
+    usernamePassword(credentialsId: 'claims-service-postgres-user-pr', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
+  ]) {
+    def helmValues = [
+      /container.calculationQueueEndpoint="$sqsQueueEndpoint"/,
+      /container.calculationQueueName="$calculationQueueName"/,
+      /container.scheduleQueueEndpoint="$sqsQueueEndPoint"/,
+      /container.scheduleQueueName="$scheduleQueueName"/,
+      /container.redeployOnChange="$pr-$BUILD_NUMBER"/,
+      /postgresExternalName="$postgresExternalName"/,
+      /postgresPassword="$postgresPassword"/,
+      /postgresUsername="$postgresUsername"/,
+      /serviceAccount.roleArn="$serviceAccountRoleArn"/,
+    ].join(',')
+
+    return [
+      "--values ./helm/ffc-demo-claim-service/jenkins-aws.yaml",
+      "--set $helmValues"
+    ].join(' ')
+  }
+}
+
 node {
   checkout scm
   try {
@@ -85,6 +113,8 @@ node {
 
           defraUtils.deployChart(KUBE_CREDENTIALS_ID, DOCKER_REGISTRY, serviceName, containerTag, extraCommands)
         }
+        defraUtils.deployChart(KUBE_CREDENTIALS_ID, DOCKER_REGISTRY, serviceName, containerTag, getExtraCommands())
+        defraUtils.deployChart(KUBE_CREDENTIALS_ID, DOCKER_REGISTRY, serviceName, containerTag, getExtraCommands(pr))
       }
     }
     if (pr == '') {
