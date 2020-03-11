@@ -11,12 +11,12 @@ const queueSchema = joi.object({
 })
 
 const mqSchema = joi.object({
-  calculationQueue: queueSchema,
-  scheduleQueue: queueSchema
+  calculationQueueConfig: queueSchema,
+  scheduleQueueConfig: queueSchema
 })
 
 const mqConfig = {
-  calculationQueue: {
+  calculationQueueConfig: {
     name: process.env.CALCULATION_QUEUE_NAME,
     endpoint: process.env.CALCULATION_ENDPOINT,
     queueUrl: process.env.CALCULATION_QUEUE_URL || `${process.env.CALCULATION_ENDPOINT}/${process.env.CALCULATION_QUEUE_NAME}`,
@@ -25,7 +25,7 @@ const mqConfig = {
     region: process.env.CALCULATION_QUEUE_REGION,
     createQueue: process.env.CREATE_CALCULATION_QUEUE
   },
-  scheduleQueue: {
+  scheduleQueueConfig: {
     name: process.env.SCHEDULE_QUEUE_NAME,
     endpoint: process.env.SCHEDULE_ENDPOINT,
     queueUrl: process.env.SCHEDULE_QUEUE_URL || `${process.env.SCHEDULE_ENDPOINT}/${process.env.SCHEDULE_QUEUE_NAME}`,
@@ -45,10 +45,4 @@ if (mqResult.error) {
   throw new Error(`The message queue config is invalid. ${mqResult.error.message}`)
 }
 
-const calculationQueueConfig = mqResult.value.calculationQueue
-const scheduleQueueConfig = mqResult.value.scheduleQueue
-
-module.exports = {
-  calculationQueueConfig,
-  scheduleQueueConfig
-}
+module.exports = mqResult.value
