@@ -62,4 +62,4 @@ readinessProbe:
   failureThreshold: 3
 serviceAccount:
   name: ffc-demo-claim-service-account
-  roleArn: 
+  roleArn:
