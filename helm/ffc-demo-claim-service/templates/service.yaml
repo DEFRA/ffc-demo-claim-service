@@ -43,4 +43,5 @@ spec:
     name: http
   selector:
     app.kubernetes.io/name: {{ quote .Values.name }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
   type: {{ quote .Values.service.type }}
