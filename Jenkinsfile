@@ -73,6 +73,7 @@ node {
             /postgresExternalName="$postgresExternalName"/,
             /postgresPassword="$postgresPassword"/,
             /postgresUsername="$postgresUsername"/,
+            /labels.version="$containerTag"/
           ].join(',')
 
           def extraCommands = [

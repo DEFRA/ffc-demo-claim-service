@@ -13,6 +13,10 @@ name: ffc-demo-claim-service
 namespace: ffc-demo
 image: ffc-demo-claim-service
 imagePullSecret:
+labels:
+  instance:
+  version: 1.0.0
+  component: service
 service:
   type: ClusterIP
   port: 80
