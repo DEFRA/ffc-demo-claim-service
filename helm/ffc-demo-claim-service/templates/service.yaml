@@ -5,7 +5,7 @@ metadata:
   name: {{ quote .Values.postgresHost }}
   namespace: {{ quote .Values.namespace }}
   labels:
-    app: {{ quote .Values.name }}
+    app: {{ quote .Values.namespace }}
     app.kubernetes.io/name: {{ quote .Values.name }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/version: {{ quote .Values.labels.version }}
@@ -28,7 +28,7 @@ metadata:
   name: {{ quote .Values.name }}
   namespace: {{ quote .Values.namespace }}
   labels:
-    app: {{ quote .Values.name }}
+    app: {{ quote .Values.namespace }}
     app.kubernetes.io/name: {{ quote .Values.name }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/version: {{ quote .Values.labels.version }}
@@ -44,7 +44,7 @@ spec:
     protocol: TCP
     name: http
   selector:
-    app: {{ quote .Values.name }}
+    app: {{ quote .Values.namespace }}
     app.kubernetes.io/name: {{ quote .Values.name }}
     app.kubernetes.io/instance: {{ .Release.Name }}
   type: {{ quote .Values.service.type }}
