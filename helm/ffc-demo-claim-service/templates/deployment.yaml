@@ -16,6 +16,7 @@ spec:
   template:
     metadata:
       labels: {{ include "ffc-demo.labels" . | trimSuffix "\n" | indent 6 }}
+      namespace: {{ quote .Values.namespace }}
       annotations:
         redeployOnChange: {{ quote .Values.container.redeployOnChange }}
     spec:
