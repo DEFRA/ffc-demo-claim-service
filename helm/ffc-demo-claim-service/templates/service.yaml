@@ -4,16 +4,7 @@ apiVersion: v1
 metadata:
   name: {{ quote .Values.postgresHost }}
   namespace: {{ quote .Values.namespace }}
-  labels:
-    app: {{ quote .Values.namespace }}
-    app.kubernetes.io/name: {{ quote .Values.name }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/version: {{ quote .Values.labels.version }}
-    app.kubernetes.io/component: {{ quote .Values.labels.component }}
-    app.kubernetes.io/part-of: {{ quote .Values.namespace }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    environment: {{ quote .Values.environment }}
+  labels: {{ include "ffc-demo.labels" . | trimSuffix "\n" | indent 2 }}
 spec:
   type: ExternalName
   externalName: {{ quote .Values.postgresExternalName }}
@@ -27,16 +18,7 @@ kind: Service
 metadata:
   name: {{ quote .Values.name }}
   namespace: {{ quote .Values.namespace }}
-  labels:
-    app: {{ quote .Values.namespace }}
-    app.kubernetes.io/name: {{ quote .Values.name }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/version: {{ quote .Values.labels.version }}
-    app.kubernetes.io/component: {{ quote .Values.labels.component }}
-    app.kubernetes.io/part-of: {{ quote .Values.namespace }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    environment: {{ quote .Values.environment }}
+  labels: {{ include "ffc-demo.labels" . | trimSuffix "\n" | indent 2 }}
 spec:
   ports:
   - port: {{ .Values.service.port }}
