@@ -13,7 +13,7 @@ def sonarQubeEnv = 'SonarQube'
 def sonarScanner = 'SonarScanner'
 def timeoutInMinutes = 5
 
-def getExtraCommands(pr) {
+def getExtraCommands(pr, containerTag) {
   withCredentials([
     string(credentialsId: 'sqs-queue-endpoint', variable: 'sqsQueueEndpoint'),
     string(credentialsId: 'calculation-queue-name-pr', variable: 'calculationQueueName'),
@@ -32,6 +32,7 @@ def getExtraCommands(pr) {
       /postgresPassword="$postgresPassword"/,
       /postgresUsername="$postgresUsername"/,
       /serviceAccount.roleArn="$serviceAccountRoleArn"/,
+      /labels.version="$containerTag"/
     ].join(',')
 
     return [
@@ -79,42 +80,7 @@ node {
         defraUtils.verifyPackageJsonVersionIncremented()
       }
       stage('Helm install') {
-        withCredentials([
-          string(credentialsId: 'sqs-queue-endpoint', variable: 'sqsQueueEndpoint'),
-          string(credentialsId: 'calculation-queue-url-pr', variable: 'calculationQueueUrl'),
-          string(credentialsId: 'calculation-queue-access-key-id-send', variable: 'calculationQueueAccessKeyId'),
-          string(credentialsId: 'calculation-queue-secret-access-key-send', variable: 'calculationQueueSecretAccessKey'),
-          string(credentialsId: 'schedule-queue-url-pr', variable: 'scheduleQueueUrl'),
-          string(credentialsId: 'schedule-queue-access-key-id-send', variable: 'scheduleQueueAccessKeyId'),
-          string(credentialsId: 'schedule-queue-secret-access-key-send', variable: 'scheduleQueueSecretAccessKey'),
-          string(credentialsId: 'postgres-external-name-pr', variable: 'postgresExternalName'),
-          string(credentialsId: 'claim-service-account-role-arn', variable: 'serviceAccountRoleArn'),
-          usernamePassword(credentialsId: 'claims-service-postgres-user-pr', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
-        ]) {
-          def helmValues = [
-            /container.calculationQueueEndpoint="$sqsQueueEndpoint"/,
-            /container.calculationQueueUrl="$calculationQueueUrl"/,
-            /container.calculationCreateQueue="false"/,
-            /container.scheduleQueueEndpoint="$sqsQueueEndPoint"/,
-            /container.scheduleQueueUrl="$scheduleQueueUrl"/,
-            /container.scheduleCreateQueue="false"/,
-            /container.redeployOnChange="$pr-$BUILD_NUMBER"/,
-            /postgresExternalName="$postgresExternalName"/,
-            /postgresPassword="$postgresPassword"/,
-            /postgresUsername="$postgresUsername"/,
-            /labels.version="$containerTag"/
-            /serviceAccount.roleArn="$serviceAccountRoleArn"/,
-          ].join(',')
-
-          def extraCommands = [
-            "--values ./helm/ffc-demo-claim-service/jenkins-aws.yaml",
-            "--set $helmValues"
-          ].join(' ')
-
-          defraUtils.deployChart(KUBE_CREDENTIALS_ID, DOCKER_REGISTRY, serviceName, containerTag, extraCommands)
-        }
-        defraUtils.deployChart(KUBE_CREDENTIALS_ID, DOCKER_REGISTRY, serviceName, containerTag, getExtraCommands())
-        defraUtils.deployChart(KUBE_CREDENTIALS_ID, DOCKER_REGISTRY, serviceName, containerTag, getExtraCommands(pr))
+        defraUtils.deployChart(KUBE_CREDENTIALS_ID, DOCKER_REGISTRY, serviceName, containerTag, getExtraCommands(pr, containerTag))
       }
     }
     if (pr == '') {
