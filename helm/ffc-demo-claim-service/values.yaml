@@ -11,6 +11,7 @@ postgresExternalName:
 postgresPort: 5432
 name: ffc-demo-claim-service
 namespace: ffc-demo
+workstream: ffc-demo
 image: ffc-demo-claim-service
 imagePullSecret:
 labels:
