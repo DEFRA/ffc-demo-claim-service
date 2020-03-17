@@ -28,5 +28,4 @@ spec:
   selector:
     app: {{ quote .Values.namespace }}
     app.kubernetes.io/name: {{ quote .Values.name }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
   type: {{ quote .Values.service.type }}
