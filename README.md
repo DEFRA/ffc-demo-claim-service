@@ -23,27 +23,25 @@ Or:
 
 The following environment variables are required by the application container. Values for development are set in the Docker Compose configuration. Default values for production-like deployments are set in the Helm chart and may be overridden by build and release pipelines.
 
-| Name                             | Description                    | Required | Default                                 | Valid                           | Notes               |
-|----------------------------------|--------------------------------|:--------:|-----------------------------------------|:----------------------------------------:|---------------------|
-| NODE_ENV                         | Node environment               | no       |                                         | development,test,production           |                     |
-| PORT                             | Port number                    | no       | 3003                                    |                                           |                     |
-| POSTGRES_DB                      | Postgres database              | yes      |                                         |                                           |                     |
-| POSTGRES_USERNAME                | Postgres username              | yes      |                                         |                                           |                     |
-| POSTGRES_PASSWORD                | Postgres password              | yes      |                                         |                                           |                     |
-| CALCULATION_QUEUE_NAME           | Message queue name             | no       | calculation                             |                                           |                     |
-| CALCULATION_ENDPOINT             | Message base url               | no       | http://localhost:9324                   |                                           |                     |
-| CALCULATION_QUEUE_URL            | Message queue url              | no       | http://localhost:9324/queue/calculation |                                           |or tcp               |
-| CALCULATION_QUEUE_REGION         | AWS region                     | no       | eu-west-2                               |                                           |Ignored in local dev |
-| CALCULATION_QUEUE_ACCESS_KEY_ID  | Message access key Id          | no       |                                         |                                           |                     |
-| CALCULATION_QUEUE_ACCESS_KEY     | Message access key             | no       |                                         |                                           |                     |
-| CREATE_CALCULATION_QUEUE         | Create queue before connection | no       | true                                    | For AWS deployments must be set to false |                     |
-| SCHEDULE_QUEUE_NAME              | Message queue name             | no       | schedule                                |                                           |                     |
-| SCHEDULE_ENDPOINT                | Message base url               | no       | http://localhost:9324                   |                                           |                     |
-| SCHEDULE_QUEUE_URL               | Message queue url              | no       | http://localhost:9324/queue/schedule    |                                           |or tcp               |
-| SCHEDULE_QUEUE_REGION            | AWS region                     | no       | eu-west-2                               |                                           |Ignored in local dev |
-| SCHEDULE_QUEUE_ACCESS_KEY_ID     | Message access key Id          | no       |                                         |                                           |                     |
-| SCHEDULE_QUEUE_ACCESS_KEY        | Message access key             | no       |                                         |                                           |                     |
-| CREATE_SCHEDULE_QUEUE            | Create queue before connection | no       | true                                    | For AWS deployments must be set to false |                     |
+| Name                             | Description                    | Required | Default   | Valid                       | Notes                             |
+|----------------------------------|--------------------------------|:--------:|-----------|:---------------------------:|-----------------------------------|
+| NODE_ENV                         | Node environment               | no       |           | development,test,production |                                   |
+| PORT                             | Port number                    | no       | 3003      |                             |                                   |
+| POSTGRES_DB                      | Postgres database              | yes      |           |                             |                                   |
+| POSTGRES_USERNAME                | Postgres username              | yes      |           |                             |                                   |
+| POSTGRES_PASSWORD                | Postgres password              | yes      |           |                             |                                   |
+| CALCULATION_QUEUE_NAME           | Message queue name             | yes      |           |                             |                                   |
+| CALCULATION_ENDPOINT             | Message base url               | no       |           |                             |                                   |
+| CALCULATION_QUEUE_URL            | Message queue url              | yes      |           |                             |                                   |
+| CALCULATION_QUEUE_REGION         | AWS region                     | no       | eu-west-2 |                             |Ignored in local dev               |
+| DEV_ACCESS_KEY_ID                | Local dev only access key Id   | no       |           |                             |                                   |
+| DEV_ACCESS_KEY                   | Local dev only access key Id   | no       |           |                             |                                   |
+| CREATE_CALCULATION_QUEUE         | Create queue before connection | no       | false     |                             | For local development set to true |
+| SCHEDULE_QUEUE_NAME              | Message queue name             | yes      |           |                             |                                   |
+| SCHEDULE_ENDPOINT                | Message base url               | yes      |           |                             |                                   |
+| SCHEDULE_QUEUE_URL               | Message queue url              | no       |           |                             |                                   |
+| SCHEDULE_QUEUE_REGION            | AWS region                     | no       | eu-west-2 |                             | Ignored in local dev              |
+| CREATE_SCHEDULE_QUEUE            | Create queue before connection | no       | false     |                             | For local development set to true |
 
 ## How to run tests
 
@@ -111,13 +109,7 @@ curl  -i --header "Content-Type: application/json" \
 Sample valid JSON for the `/submit` endpoint is:
 
 ```
-{
-  "claimId": "MINE123",
-  "propertyType": "business",
-  "accessible": false,
-  "dateOfSubsidence": "2019-07-26T09:54:19.622Z",
-  "mineType": ["gold"]
-}
+{  "claimId": "MINE123",  "propertyType": "business",  "accessible": false,  "dateOfSubsidence": "2019-07-26T09:54:19.622Z",  "mineType": ["gold"]}
 ```
 
 ### Link to sibling services

@@ -20,6 +20,9 @@ spec:
       annotations:
         redeployOnChange: {{ quote .Values.container.redeployOnChange }}
     spec:
+{{- if .Values.serviceAccount.roleArn }}
+      serviceAccountName: {{ quote .Values.serviceAccount.name }}
+{{- end }}
       restartPolicy: {{ quote .Values.container.restartPolicy }}
       {{- if .Values.imagePullSecret }}
       imagePullSecrets:
@@ -72,28 +75,16 @@ spec:
               value: {{ quote .Values.container.calculationQueueName }}
             - name: CALCULATION_ENDPOINT
               value: {{ quote .Values.container.calculationQueueEndpoint }}
-            - name: CALCULATION_QUEUE_URL
-              value: {{ quote .Values.container.calculationQueueUrl }}
             - name: CALCULATION_QUEUE_REGION
               value: {{ quote .Values.container.calculationQueueRegion }}
-            - name: CALCULATION_QUEUE_ACCESS_KEY_ID
-              value: {{ quote .Values.container.calculationQueueAccessKeyId }}
-            - name: CALCULATION_QUEUE_ACCESS_KEY
-              value: {{ quote .Values.container.calculationQueueSecretAccessKey }}
             - name: CREATE_CALCULATION_QUEUE
               value: {{ quote .Values.container.calculationCreateQueue }}
             - name: SCHEDULE_QUEUE_NAME
               value: {{ quote .Values.container.scheduleQueueName }}
             - name: SCHEDULE_ENDPOINT
               value: {{ quote .Values.container.scheduleQueueEndpoint }}
-            - name: SCHEDULE_QUEUE_URL
-              value: {{ quote .Values.container.scheduleQueueUrl }}
             - name: SCHEDULE_QUEUE_REGION
               value: {{ quote .Values.container.scheduleQueueRegion }}
-            - name: SCHEDULE_QUEUE_ACCESS_KEY_ID
-              value: {{ quote .Values.container.scheduleQueueAccessKeyId }}
-            - name: SCHEDULE_QUEUE_ACCESS_KEY
-              value: {{ quote .Values.container.scheduleQueueSecretAccessKey }}
             - name: CREATE_SCHEDULE_QUEUE
               value: {{ quote .Values.container.scheduleCreateQueue }}
             - name: PORT

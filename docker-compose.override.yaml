@@ -18,3 +18,4 @@ services:
       - ffc-demo-claim-message-queue
     ports:
       - "3003:3003"
+      - "9324:9324"
