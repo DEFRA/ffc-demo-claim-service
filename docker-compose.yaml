@@ -6,7 +6,7 @@ services:
       context: .
       target: production
       args:
-        REGISTRY: ${DOCKER_REGISTRY:-562955126301.dkr.ecr.eu-west-2.amazonaws.com}
+        REGISTRY: ${DOCKER_REGISTRY}
     image: ffc-demo-claim-service
     depends_on:
       - ffc-demo-claim-postgres
