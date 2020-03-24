@@ -1,4 +1,4 @@
-[![Known Vulnerabilities](https://snyk.io//test/github/DEFRA/ffc-demo-claim-service/badge.svg?targetFile=package.json)](https://snyk.io//test/github/DEFRA/ffc-demo-claim-service?targetFile=package.json)
+[![Known Vulnerabilities](https://snyk.io/test/github/DEFRA/ffc-demo-claim-service/badge.svg?targetFile=package.json)](https://snyk.io/test/github/DEFRA/ffc-demo-claim-service?targetFile=package.json)
 
 # FFC Demo Claim Service
 
