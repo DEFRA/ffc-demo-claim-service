@@ -23,8 +23,8 @@
   "license": "OGL-UK-3.0",
   "dependencies": {
     "@hapi/catbox-memory": "^5.0.0",
-    "@hapi/hapi": "^18.4.1",
-    "@hapi/joi": "^16.1.4",
+    "@hapi/hapi": "^19.1.1",
+    "@hapi/joi": "^17.1.1",
     "aws-sdk": "^2.610.0",
     "pg": "^7.12.1",
     "sequelize": "^5.19.0",
