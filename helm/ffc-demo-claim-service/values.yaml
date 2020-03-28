@@ -1,30 +1,27 @@
-environment: production
-postgresUsername: postgres@mine-support2
-postgresPassword: changeme
-postgresDatabase: mine_claims
-# postgresHost is the host name of the PostgreSQL service
-postgresHost: ffc-demo-claims-postgres
-# postgresExternalName is the external host name to which PostgreSQL
-# requests should be forwarded. If empty, PostgreSQL is assumed to be
-# within the cluster and accessible via postgresHost
-postgresExternalName:
-postgresPort: 5432
+environment: development
 name: ffc-demo-claim-service
 namespace: ffc-demo
 workstream: ffc-demo
 image: ffc-demo-claim-service
-imagePullSecret:
+
 labels:
   instance:
   version: 1.0.0
-  component: service
-service:
-  type: ClusterIP
-  port: 80
-container:
+
+serviceAccount:
+  name: ffc-demo-claim-service-account
+  roleArn:
+
+deployment:
+  restartPolicy: Always
   priorityClassName: low
-  imagePullPolicy: IfNotPresent
+  replicas: 1
+  minReadySeconds: 5
   redeployOnChange: update this field to force a change
+  imagePullSecret:
+
+container:
+  imagePullPolicy: IfNotPresent
   requestMemory: 60Mi
   requestCpu: 60m
   limitMemory: 120Mi
@@ -33,7 +30,7 @@ container:
   runAsUser: 1000
   readOnlyRootFilesystem: true
   allowPrivilegeEscalation: false
-  restartPolicy: Always
+  port: 3003
   command: ["/bin/sh","-c"]
   args: ["npm --no-update-notifier run migrate && node index"]
   calculationQueueName: calculation
@@ -44,22 +41,28 @@ container:
   scheduleQueueEndpoint: http://ffc-demo-claim-message-queue:9324
   scheduleQueueRegion: eu-west-2
   scheduleCreateQueue: false
-replicaCount: 1
-minReadySeconds: 10
-maxSurge: 1
-maxUnavailable: 1
+
+postgresUsername: postgres@mine-support2
+postgresPassword: changeme
+postgresDatabase: mine_claims
+# postgresHost is the host name of the PostgreSQL service
+postgresHost: ffc-demo-claims-postgres
+# postgresExternalName is the external host name to which PostgreSQL
+# requests should be forwarded. If empty, PostgreSQL is assumed to be
+# within the cluster and accessible via postgresHost
+postgresExternalName:
+postgresPort: 5432
+  
 livenessProbe:
   path: /healthz
   port: 3003
   initialDelaySeconds: 10
   periodSeconds: 10
   failureThreshold: 3
+
 readinessProbe:
   path: /healthy
   port: 3003
   initialDelaySeconds: 10
   periodSeconds: 10
   failureThreshold: 3
-serviceAccount:
-  name: ffc-demo-claim-service-account
-  roleArn:
