@@ -4,52 +4,5 @@ spec:
   template:
     spec:
       containers:
-      - name: {{ quote .Values.name }}
-        env:
-        - name: NODE_ENV
-          value: {{ quote .Values.environment }}
-        - name: POSTGRES_USERNAME
-          value: {{ quote .Values.postgresUsername }}
-        - name: POSTGRES_PASSWORD
-          value: {{ quote .Values.postgresPassword }}
-        - name: POSTGRES_DB
-          value: {{ quote .Values.postgresDatabase }}
-        - name: POSTGRES_HOST
-          value: {{ quote .Values.postgresHost }}
-        - name: POSTGRES_PORT
-          value: {{ quote .Values.postgresPort }}
-        - name: CALCULATION_QUEUE_NAME
-          value: {{ quote .Values.container.calculationQueueName }}
-        - name: CALCULATION_ENDPOINT
-          value: {{ quote .Values.container.calculationQueueEndpoint }}
-        - name: CALCULATION_QUEUE_REGION
-          value: {{ quote .Values.container.calculationQueueRegion }}
-        - name: CREATE_CALCULATION_QUEUE
-          value: {{ quote .Values.container.calculationCreateQueue }}
-        - name: SCHEDULE_QUEUE_NAME
-          value: {{ quote .Values.container.scheduleQueueName }}
-        - name: SCHEDULE_ENDPOINT
-          value: {{ quote .Values.container.scheduleQueueEndpoint }}
-        - name: SCHEDULE_QUEUE_REGION
-          value: {{ quote .Values.container.scheduleQueueRegion }}
-        - name: CREATE_SCHEDULE_QUEUE
-          value: {{ quote .Values.container.scheduleCreateQueue }}
-        - name: PORT
-          value: {{ .Values.container.port }}
-        ports:
-        - containerPort: {{ .Values.container.port }}
-        livenessProbe:
-          httpGet:
-            path: {{ quote .Values.livenessProbe.path }}
-            port: {{ .Values.livenessProbe.port }}
-          initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
-          periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
-          failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
-        readinessProbe:
-          httpGet:
-            path: {{ quote .Values.readinessProbe.path }}
-            port: {{ .Values.readinessProbe.port }}
-          initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
-          periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
-          failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+      - {{ template "ffc-helm-library.container" (list . "ffc-demo-claim-service.container") }}
 {{- end -}}
