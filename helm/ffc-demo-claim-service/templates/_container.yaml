@@ -30,7 +30,7 @@ env:
 - name: CREATE_SCHEDULE_QUEUE
   value: {{ quote .Values.container.scheduleCreateQueue }}
 - name: PORT
-  value: {{ .Values.container.port }}
+  value: {{ quote .Values.container.port }}
 ports:
 - containerPort: {{ .Values.container.port }}
 livenessProbe:
