@@ -1,7 +1,7 @@
 {
   "name": "ffc-demo-claim-service",
   "description": "Digital service mock to claim public money in the event property subsides into mine shaft.",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "homepage": "https://github.com/DEFRA/mine-support-claim-service",
   "main": "index.js",
   "scripts": {
