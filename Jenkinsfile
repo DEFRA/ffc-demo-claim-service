@@ -1,4 +1,4 @@
-@Library('defra-library@4')
+@Library('defra-library@PSD-622-migrate-to-sonarcloud-poc')
 import uk.gov.defra.ffc.DefraUtils
 def defraUtils = new DefraUtils()
 
@@ -67,7 +67,7 @@ node {
       defraUtils.replaceInFile(containerSrcFolder, localSrcFolder, lcovFile)
     }
     stage('SonarCloud analysis') {
-      defraUtils.analyseCode(sonarQubeEnv, sonarScanner, ['sonar.projectKey' : serviceName, 'sonar.sources' : '.'])
+      defraUtils.analyseCodeWithSonarCloud(sonarQubeEnv, sonarScanner, ['sonar.projectKey' : serviceName, 'sonar.sources' : '.'])
     }
     stage("SonarCloud code quality gate") {
       defraUtils.waitForQualityGateResult(timeoutInMinutes)
