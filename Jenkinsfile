@@ -70,10 +70,7 @@ node {
       defraUtils.analyseCodeWithSonarCloud(sonarQubeEnv, sonarScanner, 
       [
         'sonar.projectKey' : serviceName, 
-        'sonar.sources' : '.', 
-        'sonar.organization' : 'defra', 
-        'sonar.login' : 'seymour.pattisson@defra.gov.uk', 
-        'sonar.password' : ''
+        'sonar.sources' : '.'
       ])
     }
     stage("SonarCloud code quality gate") {
