@@ -72,7 +72,8 @@ node {
         'sonar.projectKey' : serviceName, 
         'sonar.sources' : '.', 
         'sonar.organization' : 'defra', 
-        'sonar.login' : 'spattisson@github'
+        'sonar.login' : 'spattisson@github',
+        'sonar.password' : ''
       ])
     }
     stage("SonarCloud code quality gate") {
