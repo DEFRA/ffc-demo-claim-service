@@ -70,7 +70,8 @@ node {
       defraUtils.analyseCodeWithSonarCloud(sonarQubeEnv, sonarScanner, 
       [
         'sonar.projectKey' : serviceName, 
-        'sonar.sources' : '.'
+        'sonar.sources' : '.', 
+        'sonar.organization' : 'defra'
       ])
     }
     stage("SonarCloud code quality gate") {
