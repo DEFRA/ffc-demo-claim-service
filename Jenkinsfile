@@ -69,7 +69,7 @@ node {
     stage('SonarCloud analysis') {
       defraUtils.analyseCodeWithSonarCloud(sonarQubeEnv, sonarScanner, 
       [
-        'sonar.projectKey' : 'DEFRA_ffc-demo-claim-service', 
+        'sonar.projectKey' : serviceName, 
         'sonar.sources' : '.', 
         'sonar.organization' : 'defra', 
         'sonar.login' : 'spattisson@github',
