@@ -72,7 +72,7 @@ node {
         'sonar.projectKey' : serviceName, 
         'sonar.sources' : '.', 
         'sonar.organization' : 'defra', 
-        'sonar.login' : 'spattisson@github', 
+        'sonar.login' : 'spattisson', 
         'sonar.password' : ''
       ])
     }
