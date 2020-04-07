@@ -66,20 +66,6 @@ node {
     stage('Fix absolute paths in lcov file') {
       defraUtils.replaceInFile(containerSrcFolder, localSrcFolder, lcovFile)
     }
-    stage('SonarCloud analysis') {
-      withCredentials([
-          string(credentialsId: 'sonarcloud-token', variable: 'token')
-        ]) {
-        defraUtils.analyseCodeWithSonarCloud(sonarQubeEnv, sonarScanner, 
-        [
-          'sonar.projectKey' : 'DEFRA_ffc-demo-claim-service', 
-          'sonar.sources' : '.', 
-          'sonar.organization' : 'defra', 
-          'sonar.login' : "$token",
-          'sonar.password' : ''
-        ])
-      }
-    }
     stage("SonarCloud code quality gate") {
       defraUtils.waitForQualityGateResult(timeoutInMinutes)
     }
