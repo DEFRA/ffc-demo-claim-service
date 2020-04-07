@@ -66,9 +66,6 @@ node {
     stage('Fix absolute paths in lcov file') {
       defraUtils.replaceInFile(containerSrcFolder, localSrcFolder, lcovFile)
     }
-    stage("SonarCloud code quality gate") {
-      defraUtils.waitForQualityGateResult(timeoutInMinutes)
-    }
     stage('Push container image') {
       defraUtils.buildAndPushContainerImage(DOCKER_REGISTRY_CREDENTIALS_ID, DOCKER_REGISTRY, serviceName, containerTag)
     }
