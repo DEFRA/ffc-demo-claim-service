@@ -68,17 +68,17 @@ node {
     }
     stage('SonarCloud analysis') {
       withCredentials([
-        string(credentialsId: 'sonarcloud-token', variable: 'token')
+          string(credentialsId: 'sonarcloud-token', variable: 'token')
         ]) {
         defraUtils.analyseCodeWithSonarCloud(sonarQubeEnv, sonarScanner, 
-          [
-          'sonar.projectKey' : serviceName, 
+        [
+          'sonar.projectKey' : 'DEFRA_ffc-demo-claim-service', 
           'sonar.sources' : '.', 
           'sonar.organization' : 'defra', 
           'sonar.login' : "$token",
           'sonar.password' : ''
-          ])
-        }
+        ])
+      }
     }
     stage("SonarCloud code quality gate") {
       defraUtils.waitForQualityGateResult(timeoutInMinutes)
