@@ -68,14 +68,14 @@ node {
     }
     stage('SonarCloud analysis') {
       withCredentials([
-        string(credentialsId: 'sonarcloud-token', variable: 'sonarcloud-token-value')
+        string(credentialsId: 'sonarcloud-token', variable: 'token')
         ]) {
         defraUtils.analyseCodeWithSonarCloud(sonarQubeEnv, sonarScanner, 
           [
           'sonar.projectKey' : serviceName, 
           'sonar.sources' : '.', 
           'sonar.organization' : 'defra', 
-          'sonar.login' : "$sonarcloud-token-value",
+          'sonar.login' : "$token",
           'sonar.password' : ''
           ])
         }
