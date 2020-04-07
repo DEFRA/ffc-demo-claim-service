@@ -67,14 +67,18 @@ node {
       defraUtils.replaceInFile(containerSrcFolder, localSrcFolder, lcovFile)
     }
     stage('SonarCloud analysis') {
-      defraUtils.analyseCodeWithSonarCloud(sonarQubeEnv, sonarScanner, 
-      [
-        'sonar.projectKey' : serviceName, 
-        'sonar.sources' : '.', 
-        'sonar.organization' : 'defra', 
-        'sonar.login' : '3df296e6f4381c5f0f59fe880fea2ffcca073222',
-        'sonar.password' : ''
-      ])
+      withCredentials([
+        string(credentialsId: 'sonarcloud-token', variable: 'sonarcloud-token-value')
+        ]) {
+        defraUtils.analyseCodeWithSonarCloud(sonarQubeEnv, sonarScanner, 
+          [
+          'sonar.projectKey' : serviceName, 
+          'sonar.sources' : '.', 
+          'sonar.organization' : 'defra', 
+          'sonar.login' : "$sonarcloud-token-value",
+          'sonar.password' : ''
+          ])
+        }
     }
     stage("SonarCloud code quality gate") {
       defraUtils.waitForQualityGateResult(timeoutInMinutes)
