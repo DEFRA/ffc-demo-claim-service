@@ -1,3 +1,3 @@
-@Library('defra-library@fix-ingress-link') _
+@Library('defra-library@4') _
 
 buildNodeJs environment: 'dev'
