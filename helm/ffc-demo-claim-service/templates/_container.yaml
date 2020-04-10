@@ -4,15 +4,15 @@ env:
 - name: NODE_ENV
   value: {{ quote .Values.environment }}
 - name: POSTGRES_USERNAME
-  value: {{ quote .Values.postgresUsername }}
+  value: {{ quote .Values.postgresService.postgresUsername }}
 - name: POSTGRES_PASSWORD
-  value: {{ quote .Values.postgresPassword }}
+  value: {{ quote .Values.postgresService.postgresPassword }}
 - name: POSTGRES_DB
-  value: {{ quote .Values.postgresDatabase }}
+  value: {{ quote .Values.postgresService.postgresDatabase }}
 - name: POSTGRES_HOST
-  value: {{ quote .Values.postgresHost }}
+  value: {{ quote .Values.postgresService.postgresHost }}
 - name: POSTGRES_PORT
-  value: {{ quote .Values.postgresPort }}
+  value: {{ quote .Values.postgresService.postgresPort }}
 - name: CALCULATION_QUEUE_NAME
   value: {{ quote .Values.container.calculationQueueName }}
 - name: CALCULATION_ENDPOINT
