@@ -1,4 +1,4 @@
-environment: development
+environment: production
 name: ffc-demo-claim-service
 namespace: ffc-demo
 workstream: ffc-demo
