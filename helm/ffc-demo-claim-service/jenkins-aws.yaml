@@ -1,5 +1,0 @@
-name: ffc-demo-claim-service
-namespace: ffc-demo
-container:
-  allowPrivilegeEscalation: true
-  imagePullPolicy: Always
