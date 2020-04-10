@@ -5,7 +5,6 @@ workstream: ffc-demo
 image: ffc-demo-claim-service
 
 labels:
-  instance:
   version: 1.0.0
 
 serviceAccount:
@@ -19,6 +18,8 @@ deployment:
   minReadySeconds: 5
   redeployOnChange: update this field to force a change
   imagePullSecret:
+  runAsNonRoot: true
+  runAsUser: 1000
 
 container:
   imagePullPolicy: IfNotPresent
@@ -26,8 +27,6 @@ container:
   requestCpu: 60m
   limitMemory: 120Mi
   limitCpu: 120m
-  runAsNonRoot: true
-  runAsUser: 1000
   readOnlyRootFilesystem: true
   allowPrivilegeEscalation: false
   port: 3003
@@ -42,17 +41,18 @@ container:
   scheduleQueueRegion: eu-west-2
   scheduleCreateQueue: false
 
-postgresUsername: postgres@mine-support2
-postgresPassword: changeme
-postgresDatabase: mine_claims
-# postgresHost is the host name of the PostgreSQL service
-postgresHost: ffc-demo-claims-postgres
-# postgresExternalName is the external host name to which PostgreSQL
-# requests should be forwarded. If empty, PostgreSQL is assumed to be
-# within the cluster and accessible via postgresHost
-postgresExternalName:
-postgresPort: 5432
-  
+postgresService:
+  postgresUsername: postgres@mine-support2
+  postgresPassword: changeme
+  postgresDatabase: mine_claims
+  # postgresHost is the host name of the PostgreSQL service
+  postgresHost: ffc-demo-claims-postgres
+  # postgresExternalName is the external host name to which PostgreSQL
+  # requests should be forwarded. If empty, PostgreSQL is assumed to be
+  # within the cluster and accessible via postgresHost
+  postgresExternalName:
+  postgresPort: 5432
+
 livenessProbe:
   path: /healthz
   port: 3003

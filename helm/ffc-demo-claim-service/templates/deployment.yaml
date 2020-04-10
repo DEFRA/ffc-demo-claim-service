@@ -4,5 +4,5 @@ spec:
   template:
     spec:
       containers:
-      - {{ template "ffc-helm-library.container" (list . "ffc-demo-claim-service.container") }}
+      - {{ include "ffc-helm-library.container" (list . "ffc-demo-claim-service.container") }}
 {{- end -}}

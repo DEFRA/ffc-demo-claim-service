@@ -31,20 +31,8 @@ env:
   value: {{ quote .Values.container.scheduleCreateQueue }}
 - name: PORT
   value: {{ quote .Values.container.port }}
+livenessProbe: {{ include "ffc-helm-library.http-get-probe" (list . .Values.livenessProbe) | nindent 4}}
+readinessProbe: {{ include "ffc-helm-library.http-get-probe" (list . .Values.readinessProbe) | nindent 4}}
 ports:
 - containerPort: {{ .Values.container.port }}
-livenessProbe:
-  httpGet:
-    path: {{ quote .Values.livenessProbe.path }}
-    port: {{ .Values.livenessProbe.port }}
-  initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
-  periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
-  failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
-readinessProbe:
-  httpGet:
-    path: {{ quote .Values.readinessProbe.path }}
-    port: {{ .Values.readinessProbe.port }}
-  initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
-  periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
-  failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
 {{- end -}}

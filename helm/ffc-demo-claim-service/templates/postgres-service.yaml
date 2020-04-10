@@ -1,4 +1,4 @@
-{{- if .Values.postgresExternalName }}
+{{- if .Values.postgresService.postgresExternalName }}
 {{- include "ffc-helm-library.postgres-service" (list . "ffc-demo-claim-service.postgres-service") -}}
 {{- end }}
 {{- define "ffc-demo-claim-service.postgres-service" -}}
