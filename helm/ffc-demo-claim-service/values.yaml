@@ -4,8 +4,7 @@ namespace: ffc-demo
 workstream: ffc-demo
 image: ffc-demo-claim-service
 
-labels:
-  version: 1.0.0
+labels: {}
 
 serviceAccount:
   name: ffc-demo-claim-service-account
