@@ -8,7 +8,6 @@ labels: {}
 
 serviceAccount:
   name: ffc-demo-claim-service-account
-  roleArn:
 
 deployment:
   restartPolicy: Always
