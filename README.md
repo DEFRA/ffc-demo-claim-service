@@ -55,6 +55,10 @@ i.e.
 export DOCKER_REGISTRY=registryid.myprivatedockersite.com
 ```
 
+## How to view SonarCloud automatic analysis
+All branches of this repo are now automatically analysed by SonarCloud and can be viewed here
+https://sonarcloud.io/organizations/defra/projects
+
 ## How to run tests
 
 A convenience script is provided to run automated tests in a containerised environment. The first time this is run, container images required for testing will be automatically built. An optional `--build` (or `-b`) flag may be used to rebuild these images in future (for example, to apply dependency updates).
