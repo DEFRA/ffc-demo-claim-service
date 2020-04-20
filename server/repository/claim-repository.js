@@ -13,7 +13,8 @@ module.exports = {
       claimId: claim.claimId,
       propertyType: claim.propertyType,
       accessible: claim.accessible,
-      dateOfSubsidence: claim.dateOfSubsidence
+      dateOfSubsidence: claim.dateOfSubsidence,
+      email: claim.email || 'joe.bloggs@defra.gov.uk'
     })
   }
 }
