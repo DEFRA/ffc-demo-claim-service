@@ -1,12 +1,8 @@
+const { claimMessageAction } = require('./claim-message-action')
 const createQueue = require('./messaging/create-queue')
-const MessageSender = require('./messaging/message-sender')
 const MessageConsumer = require('./messaging/message-consumer')
-const claimService = require('../services/claim-service')
 const config = require('../config')
 let claimConsumer
-
-const calculationSender = new MessageSender(config.calculationQueueConfig, config.calculationQueueConfig.queueUrl)
-const scheduleSender = new MessageSender(config.scheduleQueueConfig, config.scheduleQueueConfig.queueUrl)
 
 async function registerService () {
   if (config.calculationQueueConfig.createQueue) {
@@ -25,30 +21,8 @@ async function registerService () {
 }
 
 function registerClaimConsumer () {
-  claimConsumer = new MessageConsumer(config.claimQueueConfig, config.claimQueueConfig.queueUrl, receiveClaim)
+  claimConsumer = new MessageConsumer(config.claimQueueConfig, config.claimQueueConfig.queueUrl, claimMessageAction)
   claimConsumer.start()
-}
-
-async function publishClaim (claim) {
-  try {
-    await Promise.all([
-      calculationSender.sendMessage(claim),
-      scheduleSender.sendMessage(claim)
-    ])
-  } catch (err) {
-    console.log(err)
-    throw err
-  }
-}
-
-async function receiveClaim (message) {
-  try {
-    console.log('message received - claim ', message.Body)
-    const claim = JSON.parse(message.Body)
-    await claimService.create(claim)
-  } catch (ex) {
-    console.error('unable to process message ', ex)
-  }
 }
 
 process.on('SIGTERM', async function () {
@@ -66,7 +40,6 @@ async function closeConnections () {
 }
 
 module.exports = {
-  publishClaim,
   closeConnections,
   registerService
 }

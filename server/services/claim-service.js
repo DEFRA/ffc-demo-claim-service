@@ -1,6 +1,6 @@
 const claimRepository = require('../repository/claim-repository')
 const mineTypeRepository = require('../repository/minetype-repository')
-const messageService = require('./message-service')
+const { publishMessageAction } = require('./publish-message-action')
 
 module.exports = {
   create: async function (claim) {
@@ -19,7 +19,7 @@ module.exports = {
       }
     }
 
-    await messageService.publishClaim(claim)
+    publishMessageAction(claim)
 
     return claimRecord
   }
