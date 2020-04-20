@@ -42,6 +42,11 @@ The following environment variables are required by the application container. V
 | SCHEDULE_QUEUE_URL               | Message queue url              | no       |           |                             |                                   |
 | SCHEDULE_QUEUE_REGION            | AWS region                     | no       | eu-west-2 |                             | Ignored in local dev              |
 | CREATE_SCHEDULE_QUEUE            | Create queue before connection | no       | false     |                             | For local development set to true |
+| CLAIM_QUEUE_NAME                 | Message queue name             | yes      |           |                             |                                   |
+| CLAIM_ENDPOINT                   | Message base url               | yes      |           |                             |                                   |
+| CLAIM_QUEUE_URL                  | Message queue url              | no       |           |                             |                                   |
+| CLAIM_QUEUE_REGION               | AWS region                     | no       | eu-west-2 |                             | Ignored in local dev              |
+| CREATE_CLAIM_QUEUE               | Create queue before connection | no       | false     |                             | For local development set to true |
 
 ## Building the project locally
 

@@ -38,6 +38,10 @@ container:
   scheduleQueueEndpoint: http://ffc-demo-claim-message-queue:9324
   scheduleQueueRegion: eu-west-2
   scheduleCreateQueue: false
+  claimQueueName: claim
+  claimQueueEndpoint: http://ffc-demo-claim-message-queue:9324
+  claimQueueRegion: eu-west-2
+  claimCreateQueue: false
 
 postgresService:
   postgresUsername: postgres@mine-support2
