@@ -129,6 +129,12 @@ Sample valid JSON for the `/submit` endpoint is:
 {  "claimId": "MINE123",  "propertyType": "business",  "accessible": false,  "dateOfSubsidence": "2019-07-26T09:54:19.622Z",  "mineType": ["gold"]}
 ```
 
+### Test the message queue
+
+```
+curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d 'Action=SendMessage&MessageBody={"claimId":"MINE123","propertyType":"business","accessible":false,"dateOfSubsidence":"2019-07-26T09:54:19.622Z","mineType":["gold"],"email":"joe.bloggs@defra.gov.uk"}' "http://localhost:9324/queue/claim"
+```
+
 ### Link to sibling services
 
 To test interactions with sibling services in the FFC demo application, it is necessary to connect each service to an external Docker network, along with shared dependencies such as message queues. The most convenient approach for this is to start the entire application stack from the [`ffc-demo-development`](https://github.com/DEFRA/ffc-demo-development) repository.
@@ -216,3 +222,4 @@ The following attribution statement MUST be cited in your products and applicati
 The Open Government Licence (OGL) was developed by the Controller of Her Majesty's Stationery Office (HMSO) to enable information providers in the public sector to license the use and re-use of their information under a common open licence.
 
 It is designed to encourage use and re-use of information freely and flexibly, with only a few conditions.
+
