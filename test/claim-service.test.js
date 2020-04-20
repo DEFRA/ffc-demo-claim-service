@@ -3,7 +3,7 @@ describe('Test claim service', () => {
   let claimService
   let mockClaimRepository
   let mockMinetypeRepository
-  let mockMessageService
+  // let mockMessageService
 
   beforeAll(async () => {
     jest.mock('../server/repository/claim-repository')
@@ -15,7 +15,7 @@ describe('Test claim service', () => {
     jest.resetModules()
     mockClaimRepository = require('../server/repository/claim-repository')
     mockMinetypeRepository = require('../server/repository/minetype-repository')
-    mockMessageService = require('../server/services/message-service')
+    // mockMessageService = require('../server/services/message-service')
     claimService = require('../server/services/claim-service')
   })
 
@@ -61,17 +61,18 @@ describe('Test claim service', () => {
     expect(mockMinetypeRepository.create).toHaveBeenCalledTimes(2)
   })
 
-  test('Claim service publishes the claim to the message broker', async () => {
-    const claimRecord = {
-      claimId: 'MINE123',
-      propertyType: 'business',
-      accessible: false,
-      dateOfSubsidence: new Date(),
-      mineType: ['gold', 'iron']
-    }
-    await claimService.create(claimRecord)
-    expect(mockMessageService.publishClaim).toHaveBeenCalledTimes(1)
-  })
+  // TODO: move to publish-message-action tests
+  // test('Claim service publishes the claim to the message broker', async () => {
+  //   const claimRecord = {
+  //     claimId: 'MINE123',
+  //     propertyType: 'business',
+  //     accessible: false,
+  //     dateOfSubsidence: new Date(),
+  //     mineType: ['gold', 'iron']
+  //   }
+  //   await claimService.create(claimRecord)
+  //   expect(mockMessageService.publishClaim).toHaveBeenCalledTimes(1)
+  // })
 
   afterAll(async () => {
     jest.unmock('../server/repository/claim-repository')
