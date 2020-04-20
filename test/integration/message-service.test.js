@@ -9,9 +9,3 @@ describe('message service', () => {
     await messageService.closeConnections()
   })
 })
-
-describe('message service', () => {
-  test('smoke test', async () => {
-    await messageService.registerService()
-  })
-})
