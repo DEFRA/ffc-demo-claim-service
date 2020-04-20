@@ -1,6 +1,7 @@
 const createQueue = require('./messaging/create-queue')
 const MessageSender = require('./messaging/message-sender')
 const MessageConsumer = require('./messaging/message-consumer')
+const claimService = require('../services/claim-service')
 const config = require('../config')
 let claimConsumer
 
@@ -43,6 +44,8 @@ async function publishClaim (claim) {
 async function receiveClaim (message) {
   try {
     console.log('message received - claim ', message.Body)
+    const claim = JSON.parse(message.Body)
+    await claimService.create(claim)
   } catch (ex) {
     console.error('unable to process message ', ex)
   }
