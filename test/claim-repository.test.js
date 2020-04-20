@@ -12,7 +12,8 @@ describe('Test claim repository', () => {
         claimId: 'MINE123',
         propertyType: 'business',
         accessible: false,
-        dateOfSubsidence: new Date('2019-01-01 12:00:00')
+        dateOfSubsidence: new Date('2019-01-01 12:00:00'),
+        email: 'joe.bloggs@defra.gov.uk'
       })
     })
     claimRepository = require('../server/repository/claim-repository')
@@ -25,13 +26,15 @@ describe('Test claim repository', () => {
       claimId: 'MINE123',
       propertyType: 'business',
       accessible: false,
-      dateOfSubsidence: new Date('2019-01-01 12:00:00')
+      dateOfSubsidence: new Date('2019-01-01 12:00:00'),
+      email: 'joe.bloggs@defra.gov.uk'
     })
     const claim = await claimRepository.getById('MINE123')
     await expect(claim.claimId).toEqual('MINE123')
     await expect(claim.propertyType).toEqual('business')
     await expect(claim.accessible).toEqual(false)
     await expect(claim.dateOfSubsidence).toEqual(new Date('2019-01-01 12:00:00'))
+    await expect(claim.email).toEqual('joe.bloggs@defra.gov.uk')
   })
 
   test('Claim repository creates object in database', async () => {
@@ -39,7 +42,8 @@ describe('Test claim repository', () => {
       claimId: 'MINE123',
       propertyType: 'business',
       accessible: false,
-      dateOfSubsidence: new Date('2019-01-01 12:00:00')
+      dateOfSubsidence: new Date('2019-01-01 12:00:00'),
+      email: 'joe.bloggs@defra.gov.uk'
     })
     const claim = await claimRepository.create({
       claimId: 'MINE123',
@@ -51,6 +55,7 @@ describe('Test claim repository', () => {
     await expect(claim.propertyType).toEqual('business')
     await expect(claim.accessible).toEqual(false)
     await expect(claim.dateOfSubsidence).toEqual(new Date('2019-01-01 12:00:00'))
+    await expect(claim.email).toEqual('joe.bloggs@defra.gov.uk')
   })
 
   test('Claim repository handles database failure', async () => {
