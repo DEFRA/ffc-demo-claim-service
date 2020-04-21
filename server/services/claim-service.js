@@ -19,7 +19,7 @@ module.exports = {
       }
     }
 
-    publishMessageAction(claim)
+    await publishMessageAction(claim)
 
     return claimRecord
   }
