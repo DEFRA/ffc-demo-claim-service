@@ -131,6 +131,8 @@ Sample valid JSON for the `/submit` endpoint is:
 
 ### Test the message queue
 
+This service reacts to messages retrieved from an AWS SQS message queue (the "claim" queue). It can be tested locally with:
+
 ```
 curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d 'Action=SendMessage&MessageBody={"claimId":"MINE123","propertyType":"business","accessible":false,"dateOfSubsidence":"2019-07-26T09:54:19.622Z","mineType":["gold"],"email":"joe.bloggs@defra.gov.uk"}' "http://localhost:9324/queue/claim"
 ```
