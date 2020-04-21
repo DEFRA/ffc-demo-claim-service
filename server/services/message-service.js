@@ -25,16 +25,6 @@ function registerClaimConsumer () {
   claimConsumer.start()
 }
 
-process.on('SIGTERM', async function () {
-  await closeConnections()
-  process.exit(0)
-})
-
-process.on('SIGINT', async function () {
-  await closeConnections()
-  process.exit(0)
-})
-
 async function closeConnections () {
   claimConsumer.stop()
 }
