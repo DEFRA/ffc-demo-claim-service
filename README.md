@@ -42,6 +42,11 @@ The following environment variables are required by the application container. V
 | SCHEDULE_QUEUE_URL               | Message queue url              | no       |           |                             |                                   |
 | SCHEDULE_QUEUE_REGION            | AWS region                     | no       | eu-west-2 |                             | Ignored in local dev              |
 | CREATE_SCHEDULE_QUEUE            | Create queue before connection | no       | false     |                             | For local development set to true |
+| CLAIM_QUEUE_NAME                 | Message queue name             | yes      |           |                             |                                   |
+| CLAIM_ENDPOINT                   | Message base url               | yes      |           |                             |                                   |
+| CLAIM_QUEUE_URL                  | Message queue url              | no       |           |                             |                                   |
+| CLAIM_QUEUE_REGION               | AWS region                     | no       | eu-west-2 |                             | Ignored in local dev              |
+| CREATE_CLAIM_QUEUE               | Create queue before connection | no       | false     |                             | For local development set to true |
 
 ## Building the project locally
 
@@ -122,6 +127,14 @@ Sample valid JSON for the `/submit` endpoint is:
 
 ```
 {  "claimId": "MINE123",  "propertyType": "business",  "accessible": false,  "dateOfSubsidence": "2019-07-26T09:54:19.622Z",  "mineType": ["gold"]}
+```
+
+### Test the message queue
+
+This service reacts to messages retrieved from an AWS SQS message queue (the "claim" queue). It can be tested locally with:
+
+```
+curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d 'Action=SendMessage&MessageBody={"claimId":"MINE123","propertyType":"business","accessible":false,"dateOfSubsidence":"2019-07-26T09:54:19.622Z","mineType":["gold"],"email":"joe.bloggs@defra.gov.uk"}' "http://localhost:9324/queue/claim"
 ```
 
 ### Link to sibling services
@@ -211,3 +224,4 @@ The following attribution statement MUST be cited in your products and applicati
 The Open Government Licence (OGL) was developed by the Controller of Her Majesty's Stationery Office (HMSO) to enable information providers in the public sector to license the use and re-use of their information under a common open licence.
 
 It is designed to encourage use and re-use of information freely and flexibly, with only a few conditions.
+

@@ -1,32 +1,35 @@
+const { claimMessageAction } = require('./claim-message-action')
 const createQueue = require('./messaging/create-queue')
-const MessageSender = require('./messaging/message-sender')
+const MessageConsumer = require('./messaging/message-consumer')
 const config = require('../config')
+let claimConsumer
 
-const calculationSender = new MessageSender(config.calculationQueueConfig, config.calculationQueueConfig.queueUrl)
-const scheduleSender = new MessageSender(config.scheduleQueueConfig, config.scheduleQueueConfig.queueUrl)
-
-async function createQueuesIfRequired () {
+async function registerService () {
   if (config.calculationQueueConfig.createQueue) {
     await createQueue(config.calculationQueueConfig.name, config.calculationQueueConfig)
   }
+
   if (config.scheduleQueueConfig.createQueue) {
     await createQueue(config.scheduleQueueConfig.name, config.scheduleQueueConfig)
   }
+
+  if (config.claimQueueConfig.createQueue) {
+    await createQueue(config.claimQueueConfig.name, config.claimQueueConfig)
+  }
+
+  registerClaimConsumer()
 }
 
-async function publishClaim (claim) {
-  try {
-    await Promise.all([
-      calculationSender.sendMessage(claim),
-      scheduleSender.sendMessage(claim)
-    ])
-  } catch (err) {
-    console.log(err)
-    throw err
-  }
+function registerClaimConsumer () {
+  claimConsumer = new MessageConsumer(config.claimQueueConfig, config.claimQueueConfig.queueUrl, claimMessageAction)
+  claimConsumer.start()
+}
+
+async function closeConnections () {
+  claimConsumer.stop()
 }
 
 module.exports = {
-  publishClaim,
-  createQueuesIfRequired
+  closeConnections,
+  registerService
 }
