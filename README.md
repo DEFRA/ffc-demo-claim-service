@@ -121,7 +121,7 @@ curl  -i --header "Content-Type: application/json" \
 Sample valid JSON for the `/submit` endpoint is:
 
 ```
-{  "claimId": "MINE123",  "propertyType": "business",  "accessible": false,  "dateOfSubsidence": "2019-07-26T09:54:19.622Z",  "mineType": ["gold"]}
+{  "claimId": "MINE123",  "propertyType": "business",  "accessible": false,  "dateOfSubsidence": "2019-07-26T09:54:19.622Z",  "mineType": ["gold"] }
 ```
 
 ### Link to sibling services
@@ -142,7 +142,7 @@ scripts/helm/install
 
 # Remove from current Kubernetes context
 scripts/helm/delete
-
+```
 
 #### Accessing the pod
 
@@ -154,7 +154,6 @@ Access may be granted by forwarding a local port to the deployed pod:
 # Forward local port to the Kubernetes deployment
 kubectl port-forward --namespace=ffc-demo deployment/ffc-demo-claim-service 3003:3003
 ```
-
 Once the port is forwarded, the service can be accessed and tested in the same way as described in the "Test the service" section above.
 
 #### Probes
@@ -164,37 +163,11 @@ The service has both an Http readiness probe and an Http liveness probe configur
 Readiness: `/healthy`
 Liveness: `/healthz`
 
-## Dependency management
-
-Dependencies should be managed within a container using the development image for the app. This will ensure that any packages with environment-specific variants are installed with the correct variant for the contained environment, rather than the host system which may differ between development and production.
-
-The [`exec`](./scripts/exec) script is provided to run arbitrary commands, such as npm, in a running service container. If the service is not running when this script is called, it will be started for the duration of the command and then removed.
-
-Since dependencies are installed into the container image, a full build should always be run immediately after any dependency change.
-
-In development, the `node_modules` folder is mounted to a named volume. This volume must be removed in order for dependency changes to propagate from the rebuilt image into future instances of the app container. The [`start`](./scripts/start) script has a `--clean` (or `-c`) option  which will achieve this.
-
-The following example will update all npm dependencies, rebuild the container image and replace running containers and volumes:
-
-```
 # Run the NPM update
 scripts/exec npm update
 
 # Rebuild and restart the service
 scripts/start --clean
-```
-
-## Build Pipeline
-
-The [azure-pipelines.yaml](azure-pipelines.yaml) performs the following tasks:
-- Runs unit tests
-- Publishes test result
-- Pushes containers to the registry tagged with the PR number or release version
-- Deletes PR deployments, containers, and namepace upon merge
-
-Builds will be deployed into a namespace with the format `ffc-demo-claim-service-{identifier}` where `{identifier}` is either the release version, the PR number, or the branch name.
-
-A detailed description on the build pipeline and PR work flow is available in the [Defra Confluence page](https://eaflood.atlassian.net/wiki/spaces/FFCPD/pages/1281359920/Build+Pipeline+and+PR+Workflow)
 
 ## License
 

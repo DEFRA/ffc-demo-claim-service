@@ -16,9 +16,12 @@ async function createQueuesIfRequired () {
 
 async function publishClaim (claim) {
   try {
+    const calculationMessage = getCalculationMessage(claim)
+    const scheduleMessage = getScheduleMessage(claim)
+
     await Promise.all([
-      calculationSender.sendMessage(claim),
-      scheduleSender.sendMessage(claim)
+      calculationSender.sendMessage(calculationMessage),
+      scheduleSender.sendMessage(scheduleMessage)
     ])
   } catch (err) {
     console.log(err)
@@ -26,7 +29,19 @@ async function publishClaim (claim) {
   }
 }
 
+function getCalculationMessage (claim) {
+  return claim
+}
+
+function getScheduleMessage (claim) {
+  return {
+    claimId: claim.claimId
+  }
+}
+
 module.exports = {
   publishClaim,
-  createQueuesIfRequired
+  createQueuesIfRequired,
+  getCalculationMessage,
+  getScheduleMessage
 }

@@ -6,12 +6,12 @@
   "main": "index.js",
   "scripts": {
     "migrate": "sequelize db:migrate",
-    "pretest": "npm run test:lint",
     "start:watch": "nodemon --inspect=0.0.0.0 --ext js --legacy-watch index.js",
-    "test": "npm run test:unit",
+    "pretest": "npm run test:lint",
+    "test": "jest",
+    "test:pact": "jest --testPathPattern=test/contract --coverage=false",
     "test:lint": "standard",
-    "test:unit": "jest",
-    "test:unit-watch": "jest --coverage=false --watchAll"
+    "test:watch": "jest --coverage=false --watchAll"
   },
   "author": "Defra DDTS",
   "contributors": [
@@ -25,6 +25,7 @@
     "@hapi/catbox-memory": "^5.0.0",
     "@hapi/hapi": "^19.1.1",
     "@hapi/joi": "^17.1.1",
+    "@pact-foundation/pact": "^9.9.12",
     "aws-sdk": "^2.610.0",
     "pg": "^7.12.1",
     "sequelize": "^5.19.0",
