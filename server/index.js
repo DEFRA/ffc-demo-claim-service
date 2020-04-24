@@ -34,7 +34,7 @@ async function createServer () {
     process.exit(0)
   })
 
-  await messageService.createQueuesIfRequired()
+  await messageService.registerService()
   return server
 }
 

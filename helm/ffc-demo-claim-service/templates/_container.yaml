@@ -29,6 +29,14 @@ env:
   value: {{ quote .Values.container.scheduleQueueRegion }}
 - name: CREATE_SCHEDULE_QUEUE
   value: {{ quote .Values.container.scheduleCreateQueue }}
+- name: CLAIM_QUEUE_NAME
+  value: {{ quote .Values.container.claimQueueName }}
+- name: CLAIM_ENDPOINT
+  value: {{ quote .Values.container.claimQueueEndpoint }}
+- name: CLAIM_QUEUE_REGION
+  value: {{ quote .Values.container.claimQueueRegion }}
+- name: CREATE_CLAIM_QUEUE
+  value: {{ quote .Values.container.claimCreateQueue }}
 - name: PORT
   value: {{ quote .Values.container.port }}
 livenessProbe: {{ include "ffc-helm-library.http-get-probe" (list . .Values.livenessProbe) | nindent 4}}

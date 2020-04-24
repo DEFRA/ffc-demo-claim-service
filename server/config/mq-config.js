@@ -12,7 +12,8 @@ const queueSchema = joi.object({
 
 const mqSchema = joi.object({
   calculationQueueConfig: queueSchema,
-  scheduleQueueConfig: queueSchema
+  scheduleQueueConfig: queueSchema,
+  claimQueueConfig: queueSchema
 })
 
 const mqConfig = {
@@ -33,6 +34,15 @@ const mqConfig = {
     accessKeyId: process.env.DEV_ACCESS_KEY_ID,
     secretAccessKey: process.env.DEV_ACCESS_KEY,
     createQueue: process.env.CREATE_SCHEDULE_QUEUE
+  },
+  claimQueueConfig: {
+    name: process.env.CLAIM_QUEUE_NAME,
+    endpoint: process.env.CLAIM_ENDPOINT,
+    queueUrl: process.env.CLAIM_QUEUE_URL || `${process.env.CLAIM_ENDPOINT}/${process.env.CLAIM_QUEUE_NAME}`,
+    region: process.env.CLAIM_QUEUE_REGION,
+    accessKeyId: process.env.DEV_ACCESS_KEY_ID,
+    secretAccessKey: process.env.DEV_ACCESS_KEY,
+    createQueue: process.env.CREATE_CLAIM_QUEUE
   }
 }
 

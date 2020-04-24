@@ -1,14 +1,14 @@
 {
   "name": "ffc-demo-claim-service",
   "description": "Digital service mock to claim public money in the event property subsides into mine shaft.",
-  "version": "2.0.8",
+  "version": "2.3.0",
   "homepage": "https://github.com/DEFRA/mine-support-claim-service",
   "main": "index.js",
   "scripts": {
     "migrate": "sequelize db:migrate",
     "start:watch": "nodemon --inspect=0.0.0.0 --ext js --legacy-watch index.js",
     "pretest": "npm run test:lint",
-    "test": "jest",
+    "test": "jest --detectOpenHandles",
     "test:pact": "jest --testPathPattern=test/contract --coverage=false",
     "test:lint": "standard",
     "test:watch": "jest --coverage=false --watchAll"
@@ -18,6 +18,7 @@
     "John Watson <john.watson2@rpa.gov.uk>",
     "Mark Harrop <mark.harrop@defra.gov.uk>",
     "Matthew Collins <matthew.collins@defra.gov.uk>",
+    "Paul Andrews <paul.andrews@defra.gov.uk>",
     "David Bingham <david.bingham@defra.gov.uk>"
   ],
   "license": "OGL-UK-3.0",

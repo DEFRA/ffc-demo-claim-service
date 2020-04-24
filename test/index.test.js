@@ -7,6 +7,7 @@ describe('Web test', () => {
     jest.mock('../server/repository/claim-repository')
     jest.mock('../server/repository/minetype-repository')
     jest.mock('../server/services/message-service')
+    jest.mock('../server/services/publish-message-action')
     createServer = require('../server')
     mockClaimRepository = require('../server/repository/claim-repository')
   })
@@ -90,6 +91,7 @@ describe('Web test', () => {
     jest.unmock('../server/repository/claim-repository')
     jest.unmock('../server/repository/minetype-repository')
     jest.unmock('../server/services/message-service')
+    jest.unmock('../server/services/publish-message-action')
   })
 
   afterEach(async () => {

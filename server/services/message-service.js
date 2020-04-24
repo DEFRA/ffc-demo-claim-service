@@ -1,47 +1,38 @@
+const { claimMessageAction } = require('./claim-message-action')
 const createQueue = require('./messaging/create-queue')
-const MessageSender = require('./messaging/message-sender')
+const MessageConsumer = require('./messaging/message-consumer')
 const config = require('../config')
+let claimConsumer
 
-const calculationSender = new MessageSender(config.calculationQueueConfig, config.calculationQueueConfig.queueUrl)
-const scheduleSender = new MessageSender(config.scheduleQueueConfig, config.scheduleQueueConfig.queueUrl)
+async function registerService () {
+  await createQueues()
+  registerClaimConsumer()
+}
 
-async function createQueuesIfRequired () {
+async function createQueues () {
   if (config.calculationQueueConfig.createQueue) {
     await createQueue(config.calculationQueueConfig.name, config.calculationQueueConfig)
   }
+
   if (config.scheduleQueueConfig.createQueue) {
     await createQueue(config.scheduleQueueConfig.name, config.scheduleQueueConfig)
   }
-}
 
-async function publishClaim (claim) {
-  try {
-    const calculationMessage = getCalculationMessage(claim)
-    const scheduleMessage = getScheduleMessage(claim)
-
-    await Promise.all([
-      calculationSender.sendMessage(calculationMessage),
-      scheduleSender.sendMessage(scheduleMessage)
-    ])
-  } catch (err) {
-    console.log(err)
-    throw err
+  if (config.claimQueueConfig.createQueue) {
+    await createQueue(config.claimQueueConfig.name, config.claimQueueConfig)
   }
 }
 
-function getCalculationMessage (claim) {
-  return claim
+function registerClaimConsumer () {
+  claimConsumer = new MessageConsumer(config.claimQueueConfig, config.claimQueueConfig.queueUrl, claimMessageAction)
+  claimConsumer.start()
 }
 
-function getScheduleMessage (claim) {
-  return {
-    claimId: claim.claimId
-  }
+function closeConnections () {
+  claimConsumer.stop()
 }
 
 module.exports = {
-  publishClaim,
-  createQueuesIfRequired,
-  getCalculationMessage,
-  getScheduleMessage
+  closeConnections,
+  registerService
 }

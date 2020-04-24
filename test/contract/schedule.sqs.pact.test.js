@@ -1,6 +1,6 @@
 describe('Pact Verification', () => {
   const { MessageProviderPact } = require('@pact-foundation/pact')
-  const { getScheduleMessage } = require('../../server/services/message-service')
+  const { getScheduleMessage } = require('../../server/services/publish-message-action')
   const path = require('path')
 
   test('validates the expectations of ffc-demo-payment-service', () => {

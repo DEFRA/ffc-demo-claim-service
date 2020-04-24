@@ -18,4 +18,11 @@ services:
       - ffc-demo-claim-message-queue
     ports:
       - "3003:3003"
+
+  ffc-demo-claim-message-queue:
+    ports:
       - "9324:9324"
+
+  ffc-demo-claim-postgres:
+    ports:
+      - "5432:5432"
