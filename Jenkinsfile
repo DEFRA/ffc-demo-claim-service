@@ -39,7 +39,7 @@ def finallyClosure = {
 buildNodeJs environment: 'dev',
             validateClosure: validateClosure,
             buildClosure: buildClosure,
-            testClosure: testClosure
+            testClosure: testClosure,
             deployClosure: deployClosure,
             failureClosure: failureClosure,
             finallyClosure: finallyClosure
