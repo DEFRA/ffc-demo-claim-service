@@ -3,6 +3,9 @@
 def validateClosure = {
   stage('Validate Closure') {
     echo 'IN VALIDATE CLOSURE'
+    echo "$repoName"
+    echo "$pr"
+    throw new Exception("Abort from validate closure")
   }
 }
 
@@ -27,5 +30,4 @@ def deployClosure = {
 buildNodeJs environment: 'dev',
             validateClosure: validateClosure,
             buildClosure: buildClosure,
-            testClosure: testClosure,
             deployClosure: deployClosure
