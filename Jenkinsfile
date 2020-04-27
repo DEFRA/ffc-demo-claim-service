@@ -31,7 +31,6 @@ def deployClosure = {
 
 buildNodeJs environment: 'dev', {
   echo "IN BODY CLOSURE"
-  echo "$test1"
   echo "$test2"
   echo "$test3"
   echo "$test4"
