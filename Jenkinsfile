@@ -31,9 +31,11 @@ def deployClosure = {
 
 buildNodeJs environment: 'dev', {
   echo "IN BODY CLOSURE"
-  echo "$test2"
-  echo "$test3"
-  echo "$test4"
+  def d = getDelegate()
+  echo "$d.pr"
+  // echo "$test2"
+  // echo "$test3"
+  // echo "$test4"
   echo "EXITING BODY CLOSURE"
 }
 
