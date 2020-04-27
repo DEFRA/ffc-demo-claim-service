@@ -31,6 +31,11 @@ def deployClosure = {
 
 buildNodeJs environment: 'dev', {
   echo "IN BODY CLOSURE"
+
+  stage('Verify version incremented') {
+    version.verifyPackageJsonIncremented()
+  }
+
   def me = this
   echo "$me"
   def owner = getOwner()
