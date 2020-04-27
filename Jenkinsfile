@@ -32,9 +32,7 @@ def deployClosure = {
 buildNodeJs environment: 'dev', {
   echo "IN BODY CLOSURE"
 
-  stage('Verify version incremented') {
-    version.verifyPackageJsonIncremented()
-  }
+  echo "$globals.testVar"
 
   def me = this
   echo "$me"
