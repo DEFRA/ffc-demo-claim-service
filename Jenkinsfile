@@ -32,15 +32,20 @@ def deployClosure = {
 buildNodeJs environment: 'dev', {
   echo "IN BODY CLOSURE"
 
-  echo "$globals.testVar"
+  echo "PR: $buildNodeJs.pr"
 
-  def me = this
-  echo "$me"
-  def owner = getOwner()
-  echo "$owner"
-  // echo "$test2"
-  // echo "$test3"
-  // echo "$test4"
+  // def qqq = globals.testVar
+  // echo "$qqq"
+
+  // // echo "$globals.testVar"
+
+  // def me = this
+  // echo "$me"
+  // def owner = getOwner()
+  // echo "$owner"
+  // // echo "$test2"
+  // // echo "$test3"
+  // // echo "$test4"
   echo "EXITING BODY CLOSURE"
 }
 
