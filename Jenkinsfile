@@ -1,14 +1,10 @@
 @Library('defra-library@psd-656-grouped-steps') _
 
 def validateClosure = {
-  echo "HERE 3"
-  echo "$pr"
-  echo "HERE 4"
-  // stage('Validate Closure') {
-  //   echo 'IN VALIDATE CLOSURE'
-  //   echo "$repoName"
-  //   echo "$pr"
-  // }
+  stage('Validate Closure') {
+    echo 'IN VALIDATE CLOSURE'
+    echo "PR = $buildNodeJs.pr"
+  }
 }
 
 def buildClosure = {
@@ -29,26 +25,7 @@ def deployClosure = {
   }
 }
 
-buildNodeJs environment: 'dev', {
-  echo "IN BODY CLOSURE"
-
-  echo "PR: $buildNodeJs.pr"
-
-  // def qqq = globals.testVar
-  // echo "$qqq"
-
-  // // echo "$globals.testVar"
-
-  // def me = this
-  // echo "$me"
-  // def owner = getOwner()
-  // echo "$owner"
-  // // echo "$test2"
-  // // echo "$test3"
-  // // echo "$test4"
-  echo "EXITING BODY CLOSURE"
-}
-
-            // validateClosure: validateClosure,
-            // buildClosure: buildClosure,
-            // deployClosure: deployClosure
+buildNodeJs environment: 'dev',
+            validateClosure: validateClosure,
+            buildClosure: buildClosure,
+            deployClosure: deployClosure
