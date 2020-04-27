@@ -5,7 +5,6 @@ def validateClosure = {
     echo 'IN VALIDATE CLOSURE'
     echo "$repoName"
     echo "$pr"
-    throw new Exception("Abort from validate closure")
   }
 }
 
