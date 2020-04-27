@@ -29,7 +29,12 @@ def deployClosure = {
   }
 }
 
-buildNodeJs environment: 'dev',
-            validateClosure: validateClosure,
-            buildClosure: buildClosure,
-            deployClosure: deployClosure
+buildNodeJs environment: 'dev' {
+  echo "IN BODY CLOSURE"
+  echo "$pr"
+  echo "EXITING BODY CLOSURE"
+}
+
+            // validateClosure: validateClosure,
+            // buildClosure: buildClosure,
+            // deployClosure: deployClosure
