@@ -31,7 +31,9 @@ def deployClosure = {
 
 buildNodeJs environment: 'dev', {
   echo "IN BODY CLOSURE"
-  def owner = this
+  def me = this
+  echo "$me"
+  def owner = getOwner()
   echo "$owner"
   // echo "$test2"
   // echo "$test3"
