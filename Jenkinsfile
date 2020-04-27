@@ -3,7 +3,6 @@
 def validateClosure = {
   stage('Validate Closure') {
     echo 'IN VALIDATE CLOSURE'
-    echo "PR = $buildNodeJs.pr"
   }
 }
 
@@ -25,7 +24,22 @@ def deployClosure = {
   }
 }
 
+def failureClosure = {
+  stage('Failure Closure') {
+    echo 'IN FAILURE CLOSURE'
+  }
+}
+
+def finallyClosure = {
+  stage('Finally Closure') {
+    echo 'IN FINALLY CLOSURE'
+  }
+}
+
 buildNodeJs environment: 'dev',
             validateClosure: validateClosure,
             buildClosure: buildClosure,
-            deployClosure: deployClosure
+            testClosure: testClosure
+            deployClosure: deployClosure,
+            failureClosure: failureClosure,
+            finallyClosure: finallyClosure
