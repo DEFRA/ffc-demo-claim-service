@@ -1,6 +1,7 @@
 @Library('defra-library@psd-656-grouped-steps') _
 
 def validateClosure = {
+  echo "$pr"
   stage('Validate Closure') {
     echo 'IN VALIDATE CLOSURE'
     echo "$repoName"
