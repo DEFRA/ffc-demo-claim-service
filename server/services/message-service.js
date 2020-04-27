@@ -25,7 +25,7 @@ function registerClaimConsumer () {
   claimConsumer.start()
 }
 
-async function closeConnections () {
+function closeConnections () {
   claimConsumer.stop()
 }
 

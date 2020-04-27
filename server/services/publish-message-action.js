@@ -6,9 +6,11 @@ const scheduleSender = new MessageSender(config.scheduleQueueConfig, config.sche
 
 async function publishMessageAction (claim) {
   try {
+    const calculationMessage = getCalculationMessage(claim)
+    const scheduleMessage = getScheduleMessage(claim)
     await Promise.all([
-      calculationSender.sendMessage(claim),
-      scheduleSender.sendMessage(claim)
+      calculationSender.sendMessage(calculationMessage),
+      scheduleSender.sendMessage(scheduleMessage)
     ])
   } catch (err) {
     console.log(err)
@@ -16,4 +18,18 @@ async function publishMessageAction (claim) {
   }
 }
 
-module.exports = { publishMessageAction }
+function getCalculationMessage (claim) {
+  return claim
+}
+
+function getScheduleMessage (claim) {
+  return {
+    claimId: claim.claimId
+  }
+}
+
+module.exports = {
+  publishMessageAction,
+  getCalculationMessage,
+  getScheduleMessage
+}

@@ -24,13 +24,13 @@ async function createServer () {
     await server.register(require('./plugins/logging'))
   }
 
-  process.on('SIGTERM', async function () {
-    await messageService.closeConnections()
+  process.on('SIGTERM', function () {
+    messageService.closeConnections()
     process.exit(0)
   })
 
-  process.on('SIGINT', async function () {
-    await messageService.closeConnections()
+  process.on('SIGINT', function () {
+    messageService.closeConnections()
     process.exit(0)
   })
 
