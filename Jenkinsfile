@@ -3,7 +3,6 @@
 def validateClosure = {
   stage('Validate Closure') {
     echo 'IN VALIDATE CLOSURE'
-    echo "$qqq"
   }
 }
 
