@@ -2,11 +2,12 @@
 
 def validateClosure = {
   echo "$pr"
-  stage('Validate Closure') {
-    echo 'IN VALIDATE CLOSURE'
-    echo "$repoName"
-    echo "$pr"
-  }
+  echo "HERE 3"
+  // stage('Validate Closure') {
+  //   echo 'IN VALIDATE CLOSURE'
+  //   echo "$repoName"
+  //   echo "$pr"
+  // }
 }
 
 def buildClosure = {
