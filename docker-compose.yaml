@@ -5,8 +5,6 @@ services:
     build:
       context: .
       target: production
-      args:
-        REGISTRY: ${DOCKER_REGISTRY}
     image: ffc-demo-claim-service
     depends_on:
       - ffc-demo-claim-postgres
