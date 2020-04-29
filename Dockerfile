@@ -1,12 +1,10 @@
 ARG PORT=3003
 ARG PARENT_VERSION=1.0.0-node12.16.0
-ARG REGISTRY
 
 # Development
 FROM defradigital/node-development:${PARENT_VERSION} AS development
 ARG PORT
 ARG PARENT_VERSION
-ARG REGISTRY
 LABEL uk.gov.defra.ffc.parent-image=defradigital/node-development:${PARENT_VERSION}
 
 ARG PORT_DEBUG=9229
@@ -21,7 +19,6 @@ CMD [ "npm", "run", "start:watch" ]
 # Production
 FROM defradigital/node:${PARENT_VERSION} AS production
 ARG PARENT_VERSION
-ARG REGISTRY
 ARG PORT
 LABEL uk.gov.defra.ffc.parent-image=defradigital/node:${PARENT_VERSION}
 
