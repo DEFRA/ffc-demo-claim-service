@@ -1,3 +1,3 @@
-@Library('defra-library@v-6') _
+@Library('defra-library@psd-494-tidy-on-delete') _
 
 buildNodeJs environment: 'dev'
