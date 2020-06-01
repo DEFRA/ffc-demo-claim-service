@@ -29,6 +29,7 @@
     "@pact-foundation/pact": "^9.9.12",
     "aws-sdk": "^2.610.0",
     "pg": "^7.12.1",
+    "rhea-promise": "^1.0.0",
     "sequelize": "^5.19.0",
     "sequelize-cli": "^5.5.1",
     "sqs-consumer": "^5.4.0"
