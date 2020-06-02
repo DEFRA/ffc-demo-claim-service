@@ -3,19 +3,19 @@ describe('Test claim service', () => {
   let claimService
   let mockClaimRepository
   let mockMinetypeRepository
-  let mockPublishMessageAction
+  let mockMessageService
 
   beforeAll(async () => {
     jest.mock('../server/repository/claim-repository')
     jest.mock('../server/repository/minetype-repository')
-    jest.mock('../server/services/publish-message-action')
+    jest.mock('../server/services/message-service')
   })
 
   beforeEach(async () => {
     jest.resetModules()
     mockClaimRepository = require('../server/repository/claim-repository')
     mockMinetypeRepository = require('../server/repository/minetype-repository')
-    mockPublishMessageAction = require('../server/services/publish-message-action')
+    mockMessageService = require('../server/services/message-service')
     claimService = require('../server/services/claim-service')
   })
 
@@ -70,12 +70,12 @@ describe('Test claim service', () => {
       mineType: ['gold', 'iron']
     }
     await claimService.create(claimRecord)
-    expect(mockPublishMessageAction.publishMessageAction).toHaveBeenCalledTimes(1)
+    expect(mockMessageService.publishClaim).toHaveBeenCalledTimes(1)
   })
 
   afterAll(async () => {
     jest.unmock('../server/repository/claim-repository')
     jest.unmock('../server/repository/minetype-repository')
-    jest.unmock('../server/services/publish-message-action')
+    jest.unmock('../server/services/message-service')
   })
 })

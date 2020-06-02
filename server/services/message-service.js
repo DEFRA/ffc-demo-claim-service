@@ -22,11 +22,13 @@ async function publishClaim (claim) {
   try {
     console.log('calculationSender connected', calculationSender.isConnected())
     console.log('scheduleSender connected', scheduleSender.isConnected())
-    const delivery = await Promise.all([
+    const deliveries = await Promise.all([
       calculationSender.sendMessage(claim),
       scheduleSender.sendMessage(claim)
     ])
-    delivery.map(del => { console.log(del.settled) })
+    for (const delivery of deliveries) {
+      console.log(delivery.settled)
+    }
   } catch (err) {
     console.log(err)
     throw err

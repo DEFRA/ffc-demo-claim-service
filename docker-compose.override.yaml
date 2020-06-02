@@ -11,17 +11,10 @@ services:
     command: >
       sh -c "
         scripts/wait-for/wait-for ffc-demo-claim-postgres:5432 --
-        scripts/wait-for/wait-for ffc-demo-claim-message-queue:9324 --
         npm run migrate &&
         npm run start:watch"
-    depends_on:
-      - ffc-demo-claim-message-queue
     ports:
       - "3003:3003"
-
-  ffc-demo-claim-message-queue:
-    ports:
-      - "9324:9324"
 
   ffc-demo-claim-postgres:
     ports:
