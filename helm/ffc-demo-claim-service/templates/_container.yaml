@@ -26,17 +26,17 @@ env:
 - name: CALCULATION_QUEUE_PASSWORD
   value: {{ quote .Values.container.calculationQueuePassword }}
 - name: SCHEDULE_QUEUE_ADDRESS
-  value: {{ quote .Values.container.calculationQueueName }}
+  value: {{ quote .Values.container.scheduleQueueName }}
 - name: SCHEDULE_QUEUE_USER
-  value: {{ quote .Values.container.calculationQueueUser }}
+  value: {{ quote .Values.container.scheduleQueueUser }}
 - name: SCHEDULE_QUEUE_PASSWORD
-  value: {{ quote .Values.container.calculationQueuePassword }}
+  value: {{ quote .Values.container.scheduleQueuePassword }}
 - name: CLAIM_QUEUE_ADDRESS
-  value: {{ quote .Values.container.calculationQueueName }}
+  value: {{ quote .Values.container.claimQueueName }}
 - name: CLAIM_QUEUE_USER
-  value: {{ quote .Values.container.calculationQueueUser }}
+  value: {{ quote .Values.container.claimQueueUser }}
 - name: CLAIM_QUEUE_PASSWORD
-  value: {{ quote .Values.container.calculationQueuePassword }}
+  value: {{ quote .Values.container.claimQueuePassword }}
 - name: PORT
   value: {{ quote .Values.container.port }}
 livenessProbe: {{ include "ffc-helm-library.http-get-probe" (list . .Values.livenessProbe) | nindent 4}}

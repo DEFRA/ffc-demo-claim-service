@@ -39,6 +39,9 @@ container:
   scheduleQueueAddress: schedule
   scheduleQueueUser: artemis
   scheduleQueuePassword: artemis
+  claimQueueAddress: claim
+  claimQueueUser: artemis
+  claimQueuePassword: artemis
 postgresService:
   postgresUsername: postgres@mine-support2
   postgresPassword: changeme
