@@ -11,7 +11,7 @@ services:
     command: >
       sh -c "
         scripts/wait-for/wait-for ffc-demo-claim-postgres:5432 --
-        scripts/wait-for/wait-for ffc-demo-claim-message-queue:5672 --
+        scripts/wait-for/wait-for ffc-demo-message-queue:5672 --
         npm run migrate &&
         npm run start:watch"
     networks:

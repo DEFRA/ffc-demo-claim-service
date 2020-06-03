@@ -16,7 +16,7 @@ const mqSchema = joi.object({
     transport: joi.string().default('tcp')
   },
   calculationQueue: queueSchema,
-  //  claimQueue: queueSchema,
+  claimQueue: queueSchema,
   scheduleQueue: queueSchema
 })
 
@@ -38,12 +38,12 @@ const mqConfig = {
     username: process.env.SCHEDULE_QUEUE_USER,
     password: process.env.SCHEDULE_QUEUE_PASSWORD,
     sendTimeoutInSeconds: process.env.SEND_TIMEOUT_IN_SECONDS
-  } /*,
+  },
   claimQueue: {
     address: process.env.CLAIM_QUEUE_ADDRESS,
     username: process.env.CLAIM_QUEUE_USER,
     password: process.env.CLAIM_QUEUE_PASSWORD
-  } */
+  }
 }
 
 const mqResult = mqSchema.validate(mqConfig, {
@@ -59,10 +59,10 @@ const calculationQueue = {
   ...mqResult.value.messageQueue,
   ...mqResult.value.calculationQueue
 }
-/* const claimQueue = {
+const claimQueue = {
   ...mqResult.value.messageQueue,
   ...mqResult.value.claimQueue
-} */
+}
 const scheduleQueue = {
   ...mqResult.value.messageQueue,
   ...mqResult.value.scheduleQueue
@@ -70,6 +70,6 @@ const scheduleQueue = {
 
 module.exports = {
   calculationQueue,
-  //  claimQueue,
+  claimQueue,
   scheduleQueue
 }
