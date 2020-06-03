@@ -43,11 +43,23 @@ function getScheduleSender () {
   return scheduleSender
 }
 
+function getCalculationMessage (claim) {
+  return claim
+}
+
+function getScheduleMessage (claim) {
+  return {
+    claimId: claim.claimId
+  }
+}
+
 module.exports = {
   closeConnections,
   getCalculationSender,
   getScheduleSender,
   openConnections,
   publishClaim,
-  registerQueues
+  registerQueues,
+  getCalculationMessage,
+  getScheduleMessage
 }
