@@ -25,7 +25,6 @@ compose() {
   compose build
 
   # Run tests
-  echo "service: ${service} command: ${command}"
   compose run ${service} ${command}
 
   # Clean up
