@@ -20,3 +20,4 @@ data:
   CLAIM_QUEUE_REGION: {{ quote .Values.container.claimQueueRegion }}
   CREATE_CLAIM_QUEUE: {{ quote .Values.container.claimCreateQueue }}
   PORT: {{ quote .Values.container.port }}
+{{- end -}}
