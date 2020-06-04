@@ -1,0 +1,22 @@
+{{- include "ffc-helm-library.config-map" (list . "ffc-demo-claim-service.config-map") -}}
+{{- define "ffc-demo-claim-service.config-map" -}}
+data:
+  NODE_ENV: {{ quote .Values.environment }}
+  POSTGRES_USERNAME: {{ quote .Values.postgresService.postgresUsername }}
+  POSTGRES_PASSWORD: {{ quote .Values.postgresService.postgresPassword }}
+  POSTGRES_DB: {{ quote .Values.postgresService.postgresDatabase }}
+  POSTGRES_HOST: {{ quote .Values.postgresService.postgresHost }}
+  POSTGRES_PORT: {{ quote .Values.postgresService.postgresPort }}
+  CALCULATION_QUEUE_NAME: {{ quote .Values.container.calculationQueueName }}
+  CALCULATION_ENDPOINT: {{ quote .Values.container.calculationQueueEndpoint }}
+  CALCULATION_QUEUE_REGION: {{ quote .Values.container.calculationQueueRegion }}
+  CREATE_CALCULATION_QUEUE: {{ quote .Values.container.calculationCreateQueue }}
+  SCHEDULE_QUEUE_NAME: {{ quote .Values.container.scheduleQueueName }}
+  SCHEDULE_ENDPOINT: {{ quote .Values.container.scheduleQueueEndpoint }}
+  SCHEDULE_QUEUE_REGION: {{ quote .Values.container.scheduleQueueRegion }}
+  CREATE_SCHEDULE_QUEUE: {{ quote .Values.container.scheduleCreateQueue }}
+  CLAIM_QUEUE_NAME: {{ quote .Values.container.claimQueueName }}
+  CLAIM_ENDPOINT: {{ quote .Values.container.claimQueueEndpoint }}
+  CLAIM_QUEUE_REGION: {{ quote .Values.container.claimQueueRegion }}
+  CREATE_CLAIM_QUEUE: {{ quote .Values.container.claimCreateQueue }}
+  PORT: {{ quote .Values.container.port }}

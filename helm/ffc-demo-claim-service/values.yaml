@@ -6,6 +6,9 @@ image: ffc-demo-claim-service
 
 labels: {}
 
+configMap:
+  name: my-config-map
+
 serviceAccount:
   name: ffc-demo-claim-service-account
 
