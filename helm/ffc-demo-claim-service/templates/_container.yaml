@@ -20,19 +20,19 @@ env:
 - name: MESSAGE_QUEUE_TRANSPORT
   value: {{ quote .Values.container.messageQueueTransport }}
 - name: CALCULATION_QUEUE_ADDRESS
-  value: {{ quote .Values.container.calculationQueueName }}
+  value: {{ quote .Values.container.calculationQueueAddress }}
 - name: CALCULATION_QUEUE_USER
   value: {{ quote .Values.container.calculationQueueUser }}
 - name: CALCULATION_QUEUE_PASSWORD
   value: {{ quote .Values.container.calculationQueuePassword }}
 - name: SCHEDULE_QUEUE_ADDRESS
-  value: {{ quote .Values.container.scheduleQueueName }}
+  value: {{ quote .Values.container.scheduleQueueAddress }}
 - name: SCHEDULE_QUEUE_USER
   value: {{ quote .Values.container.scheduleQueueUser }}
 - name: SCHEDULE_QUEUE_PASSWORD
   value: {{ quote .Values.container.scheduleQueuePassword }}
 - name: CLAIM_QUEUE_ADDRESS
-  value: {{ quote .Values.container.claimQueueName }}
+  value: {{ quote .Values.container.claimQueueAddress }}
 - name: CLAIM_QUEUE_USER
   value: {{ quote .Values.container.claimQueueUser }}
 - name: CLAIM_QUEUE_PASSWORD
