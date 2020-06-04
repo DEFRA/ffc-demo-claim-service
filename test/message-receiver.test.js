@@ -22,7 +22,7 @@ describe('message receiver', () => {
     const promise = new Promise((resolve) => {
       done = resolve
     })
-    const testConfig = { ...config.claimQueueConfig, address }
+    const testConfig = { ...config.messageQueues.claimQueue, address }
     messageReceiver = new MessageReceiver('test-receiver', testConfig)
     await messageReceiver.openConnection()
     await messageReceiver.setupReceiver((result) => done(result.hello === message.hello))
