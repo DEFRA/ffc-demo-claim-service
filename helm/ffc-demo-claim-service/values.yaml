@@ -30,7 +30,7 @@ container:
   port: 3003
   command: ["/bin/sh","-c"]
   args: ["npm --no-update-notifier run migrate && node index"]
-  messageQueueHost: mine-support-artemis
+  messageQueueHost: amq
   messageQueuePort: 5672
   messageQueueTransport: tcp
   calculationQueueAddress: calculation
