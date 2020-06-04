@@ -16,8 +16,8 @@ function getSenderConfig (name, config) {
   return {
     name,
     target: { address: config.address },
-    onError: (context) => onSenderError(context, name),
-    onSessionError: (context) => onSessionError(context, name),
+    onError: context => onSenderError(context, name),
+    onSessionError: context => onSessionError(context, name),
     sendTimeoutInSeconds: config.sendTimeoutInSeconds
   }
 }
@@ -26,7 +26,7 @@ function getReceiverConfig (name, config) {
   return {
     name,
     source: { address: config.address },
-    onSessionError: (context) => onSessionError(context, name)
+    onSessionError: context => onSessionError(context, name)
   }
 }
 
