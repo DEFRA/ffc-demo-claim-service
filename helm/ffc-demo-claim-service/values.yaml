@@ -6,7 +6,7 @@ image: ffc-demo-claim-service
 
 labels: {}
 
-configMap:
+containerConfigMap:
   name: my-config-map
 
 serviceAccount:
