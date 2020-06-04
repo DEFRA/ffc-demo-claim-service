@@ -1,5 +1,4 @@
 {{- define "ffc-demo-claim-service.container" -}}
-name: {{ quote .Values.name }}
 livenessProbe: {{ include "ffc-helm-library.http-get-probe" (list . .Values.livenessProbe) | nindent 4}}
 readinessProbe: {{ include "ffc-helm-library.http-get-probe" (list . .Values.readinessProbe) | nindent 4}}
 ports:
