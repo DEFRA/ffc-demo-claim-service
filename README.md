@@ -30,23 +30,18 @@ The following environment variables are required by the application container. V
 | POSTGRES_DB                      | Postgres database              | yes      |           |                             |                                   |
 | POSTGRES_USERNAME                | Postgres username              | yes      |           |                             |                                   |
 | POSTGRES_PASSWORD                | Postgres password              | yes      |           |                             |                                   |
-| CALCULATION_QUEUE_NAME           | Message queue name             | yes      |           |                             |                                   |
-| CALCULATION_ENDPOINT             | Message base url               | no       |           |                             |                                   |
-| CALCULATION_QUEUE_URL            | Message queue url              | yes      |           |                             |                                   |
-| CALCULATION_QUEUE_REGION         | AWS region                     | no       | eu-west-2 |                             |Ignored in local dev               |
-| DEV_ACCESS_KEY_ID                | Local dev only access key Id   | no       |           |                             |                                   |
-| DEV_ACCESS_KEY                   | Local dev only access key Id   | no       |           |                             |                                   |
-| CREATE_CALCULATION_QUEUE         | Create queue before connection | no       | false     |                             | For local development set to true |
-| SCHEDULE_QUEUE_NAME              | Message queue name             | yes      |           |                             |                                   |
-| SCHEDULE_ENDPOINT                | Message base url               | yes      |           |                             |                                   |
-| SCHEDULE_QUEUE_URL               | Message queue url              | no       |           |                             |                                   |
-| SCHEDULE_QUEUE_REGION            | AWS region                     | no       | eu-west-2 |                             | Ignored in local dev              |
-| CREATE_SCHEDULE_QUEUE            | Create queue before connection | no       | false     |                             | For local development set to true |
-| CLAIM_QUEUE_NAME                 | Message queue name             | yes      |           |                             |                                   |
-| CLAIM_ENDPOINT                   | Message base url               | yes      |           |                             |                                   |
-| CLAIM_QUEUE_URL                  | Message queue url              | no       |           |                             |                                   |
-| CLAIM_QUEUE_REGION               | AWS region                     | no       | eu-west-2 |                             | Ignored in local dev              |
-| CREATE_CLAIM_QUEUE               | Create queue before connection | no       | false     |                             | For local development set to true |
+| MESSAGE_QUEUE_HOST               | MQ Server hostname             | no       | amq       |                             |                                   |
+| MESSAGE_QUEUE_PORT               | MQ Server port                 | no       | 5672      |                             |                                   |
+| MESSAGE_QUEUE_TRANSPORT          | MQ transport                   | no       | tcp       | tcp,ssl                     |                                   |
+| CALCULATION_QUEUE_ADDRESS        | Message queue address          | yes      |           |                             |                                   |
+| CALCULATION_QUEUE_USER           | calculation queue user name    | no       |           |                             |                                   |
+| CALCULATION_QUEUE_PASSWORD       | calculation queue password     | no       |           |                             |                                   |
+| SCHEDULE_QUEUE_ADDRESS           | Message queue address          | yes      |           |                             |                                   |
+| SCHEDULE_QUEUE_USER              | schedule queue user name       | no       |           |                             |                                   |
+| SCHEDULE_QUEUE_PASSWORD          | schedule queue password        | no       |           |                             |                                   |
+| CLAIM_QUEUE_ADDRESS              | Message queue address          | yes      |           |                             |                                   |
+| CLAIM_QUEUE_USER                 | claim queue user name          | no       |           |                             |                                   |
+| CLAIM_QUEUE_PASSWORD             | claim queue password           | no       |           |                             |                                   |
 
 ## How to run tests
 
