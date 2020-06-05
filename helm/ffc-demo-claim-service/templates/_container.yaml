@@ -1,44 +1,4 @@
 {{- define "ffc-demo-claim-service.container" -}}
-name: {{ quote .Values.name }}
-env:
-- name: NODE_ENV
-  value: {{ quote .Values.environment }}
-- name: POSTGRES_USERNAME
-  value: {{ quote .Values.postgresService.postgresUsername }}
-- name: POSTGRES_PASSWORD
-  value: {{ quote .Values.postgresService.postgresPassword }}
-- name: POSTGRES_DB
-  value: {{ quote .Values.postgresService.postgresDatabase }}
-- name: POSTGRES_HOST
-  value: {{ quote .Values.postgresService.postgresHost }}
-- name: POSTGRES_PORT
-  value: {{ quote .Values.postgresService.postgresPort }}
-- name: CALCULATION_QUEUE_NAME
-  value: {{ quote .Values.container.calculationQueueName }}
-- name: CALCULATION_ENDPOINT
-  value: {{ quote .Values.container.calculationQueueEndpoint }}
-- name: CALCULATION_QUEUE_REGION
-  value: {{ quote .Values.container.calculationQueueRegion }}
-- name: CREATE_CALCULATION_QUEUE
-  value: {{ quote .Values.container.calculationCreateQueue }}
-- name: SCHEDULE_QUEUE_NAME
-  value: {{ quote .Values.container.scheduleQueueName }}
-- name: SCHEDULE_ENDPOINT
-  value: {{ quote .Values.container.scheduleQueueEndpoint }}
-- name: SCHEDULE_QUEUE_REGION
-  value: {{ quote .Values.container.scheduleQueueRegion }}
-- name: CREATE_SCHEDULE_QUEUE
-  value: {{ quote .Values.container.scheduleCreateQueue }}
-- name: CLAIM_QUEUE_NAME
-  value: {{ quote .Values.container.claimQueueName }}
-- name: CLAIM_ENDPOINT
-  value: {{ quote .Values.container.claimQueueEndpoint }}
-- name: CLAIM_QUEUE_REGION
-  value: {{ quote .Values.container.claimQueueRegion }}
-- name: CREATE_CLAIM_QUEUE
-  value: {{ quote .Values.container.claimCreateQueue }}
-- name: PORT
-  value: {{ quote .Values.container.port }}
 livenessProbe: {{ include "ffc-helm-library.http-get-probe" (list . .Values.livenessProbe) | nindent 4}}
 readinessProbe: {{ include "ffc-helm-library.http-get-probe" (list . .Values.readinessProbe) | nindent 4}}
 ports:
