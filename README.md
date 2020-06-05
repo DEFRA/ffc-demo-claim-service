@@ -17,7 +17,7 @@ Or:
 Or:
 - Node 10
 - PostgreSQL database
-- AWS SQS compatible message queue
+- AMQP 1.0 compatible message queue
 
 ## Environment variables
 
