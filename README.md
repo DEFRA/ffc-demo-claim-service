@@ -114,7 +114,22 @@ Sample valid JSON for the `/submit` endpoint is:
 
 ### Test the message queue
 
-This service reacts to messages retrieved from an AWS SQS message queue (the "claim" queue). It can be tested locally with:
+This service reacts to messages retrieved from an AMQP 1.0 message broker (the "claim" queue). It can be tested locally with:
+
+`docker-compose up` runs [ActiveMQ Artemis](https://activemq.apache.org/components/artemis) alongside the application to provide the required message bus and broker.
+
+Test messages can be sent via the Artemis console UI hosted at http://localhost:8161/console/login (username: artemis, password: artemis). Messages should match the format of the sample JSON below.
+
+```
+{
+  "claimId":"MINE123",
+  "propertyType":"business",
+  "accessible":false,
+  "dateOfSubsidence":"2019-07-26T09:54:19.622Z",
+  "mineType":["gold"],
+  "email":"joe.bloggs@defra.gov.uk"
+}
+```
 
 ```
 curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d 'Action=SendMessage&MessageBody={"claimId":"MINE123","propertyType":"business","accessible":false,"dateOfSubsidence":"2019-07-26T09:54:19.622Z","mineType":["gold"],"email":"joe.bloggs@defra.gov.uk"}' "http://localhost:9324/queue/claim"
@@ -128,7 +143,7 @@ It is also possible to run a limited subset of the application stack. See the [`
 
 ### Deploy to Kubernetes
 
-For production deployments, a helm chart is included in the `.\helm` folder. This service connects to an sqs message broker, using credentials defined in [values.yaml](./helm/ffc-demo-claim-service/values.yaml), which must be made available prior to deployment.
+For production deployments, a helm chart is included in the `.\helm` folder. This service connects to an AMQP message broker, using credentials defined in [values.yaml](./helm/ffc-demo-claim-service/values.yaml), which must be made available prior to deployment.
 
 Scripts are provided to test the Helm chart by deploying the service, along with an appropriate message broker, into the current Helm/Kubernetes context.
 
