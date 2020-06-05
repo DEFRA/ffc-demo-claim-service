@@ -10,7 +10,7 @@ containerConfigMap:
   name: my-config-map
 
 containerSecret:
-  name: demo-claim-container-secret
+  name: ffc-demo-claim-container-secret
   type: Opaque
 
 serviceAccount:
