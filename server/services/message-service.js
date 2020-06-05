@@ -1,21 +1,27 @@
 const MessageSender = require('./messaging/message-sender')
+const MessageReceiver = require('./messaging/message-receiver')
+const { claimMessageAction } = require('./message-action')
 const config = require('../config')
 
 const calculationSender = new MessageSender('claim-service-calculation-sender', config.messageQueues.calculationQueue)
 const scheduleSender = new MessageSender('claim-service-schedule-sender', config.messageQueues.scheduleQueue)
+const claimReceiver = new MessageReceiver('claim-service-claim-receiver', config.messageQueues.claimQueue)
 
 async function registerQueues () {
   await openConnections()
+  await claimReceiver.setupReceiver(claimMessageAction)
 }
 
 async function closeConnections () {
   await calculationSender.closeConnection()
   await scheduleSender.closeConnection()
+  await claimReceiver.closeConnection()
 }
 
 async function openConnections () {
   await calculationSender.openConnection()
   await scheduleSender.openConnection()
+  await claimReceiver.openConnection()
 }
 
 async function publishClaim (claim) {
