@@ -7,10 +7,10 @@ image: ffc-demo-claim-service
 labels: {}
 
 containerConfigMap:
-  name: my-config-map
+  name: ffc-demo-claim-service-config-map
 
 containerSecret:
-  name: ffc-demo-claim-container-secret
+  name: ffc-demo-claim-service-container-secret
   type: Opaque
 
 serviceAccount:
