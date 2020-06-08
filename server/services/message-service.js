@@ -9,7 +9,9 @@ const claimReceiver = new MessageReceiver('claim-service-claim-receiver', config
 
 async function registerQueues () {
   await openConnections()
-  await claimReceiver.setupReceiver((claim) => { claimMessageAction(claim, publishClaim) })
+  await claimReceiver.setupReceiver(claim => {
+    claimMessageAction(claim, publishClaim)
+  })
 }
 
 async function closeConnections () {
