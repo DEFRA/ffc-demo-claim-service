@@ -1,12 +1,11 @@
 const claimSchema = require('../schema/claimFromMessage')
 const claimService = require('./claim-service')
 
-async function claimMessageAction (message) {
+async function claimMessageAction (claim, publisher) {
   try {
-    console.log('message received - claim ', message.Body)
-    const claim = JSON.parse(message.Body)
+    console.log('message received - claim ', claim)
     await claimSchema.validateAsync(claim)
-    await claimService.create(claim)
+    await claimService.create(claim, publisher)
   } catch (ex) {
     console.error('unable to process message ', ex)
   }

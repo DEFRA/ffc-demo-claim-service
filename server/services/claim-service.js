@@ -1,9 +1,8 @@
 const claimRepository = require('../repository/claim-repository')
 const mineTypeRepository = require('../repository/minetype-repository')
-const messageService = require('./message-service')
 
 module.exports = {
-  create: async function (claim) {
+  create: async function (claim, publisher) {
     const existingClaim = await claimRepository.getById(claim.claimId)
     if (existingClaim != null) {
       console.log('Found existing claim ', existingClaim)
@@ -19,7 +18,7 @@ module.exports = {
       }
     }
 
-    await messageService.publishClaim(claim)
+    await publisher(claim)
 
     return claimRecord
   }

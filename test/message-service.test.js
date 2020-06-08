@@ -79,7 +79,14 @@ describe('Test message service', () => {
     await messageService.registerQueues()
     const callback = messageReceiverInst.setupReceiver.mock.calls[0][0]
     callback(sampleClaim)
-    expect(claimMessageAction).toHaveBeenCalledWith(sampleClaim)
+    expect(claimMessageAction).toHaveBeenCalledWith(sampleClaim, expect.any(Function))
+  })
+
+  test('Message receiver callback passes publish claim as publisher', async () => {
+    await messageService.registerQueues()
+    const callback = messageReceiverInst.setupReceiver.mock.calls[0][0]
+    callback(generateSampleClaim())
+    expect(claimMessageAction).toHaveBeenCalledWith(expect.any(Object), messageService.publishClaim)
   })
 
   test('Message receiver connection closed', async () => {
