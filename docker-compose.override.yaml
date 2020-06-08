@@ -20,7 +20,6 @@ services:
   ffc-demo-claim-postgres:
     ports:
       - "5432:5432"
-      - "5672:5672"
   ffc-demo-claim-message-queue:
     ports:
       - "8161:8161"

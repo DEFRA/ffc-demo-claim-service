@@ -131,10 +131,6 @@ Test messages can be sent via the Artemis console UI hosted at http://localhost:
 }
 ```
 
-```
-curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d 'Action=SendMessage&MessageBody={"claimId":"MINE123","propertyType":"business","accessible":false,"dateOfSubsidence":"2019-07-26T09:54:19.622Z","mineType":["gold"],"email":"joe.bloggs@defra.gov.uk"}' "http://localhost:9324/queue/claim"
-```
-
 ### Link to sibling services
 
 To test interactions with sibling services in the FFC demo application, it is necessary to connect each service to an external Docker network, along with shared dependencies such as message queues. The most convenient approach for this is to start the entire application stack from the [`ffc-demo-development`](https://github.com/DEFRA/ffc-demo-development) repository.
