@@ -11,9 +11,12 @@ data:
   MESSAGE_QUEUE_TRANSPORT: {{ quote .Values.container.messageQueueTransport }}
   CALCULATION_QUEUE_ADDRESS: {{ quote .Values.container.calculationQueueAddress }}
   CALCULATION_QUEUE_USER: {{ quote .Values.container.calculationQueueUser }}
+  CALCULATION_QUEUE_PASSWORD: {{ quote .Values.container.calculationQueuePassword }}
   SCHEDULE_QUEUE_ADDRESS: {{ quote .Values.container.scheduleQueueAddress }}
   SCHEDULE_QUEUE_USER: {{ quote .Values.container.scheduleQueueUser }}
+  SCHEDULE_QUEUE_PASSWORD: {{ quote .Values.container.scheduleQueuePassword }}
   CLAIM_QUEUE_ADDRESS: {{ quote .Values.container.claimQueueAddress }}
   CLAIM_QUEUE_USER: {{ quote .Values.container.claimQueueUser }}
+  CLAIM_QUEUE_PASSWORD: {{ quote .Values.container.claimQueuePassword }}
   PORT: {{ quote .Values.container.port }}
 {{- end -}}
