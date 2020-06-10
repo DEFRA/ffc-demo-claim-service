@@ -7,7 +7,6 @@ describe('Web test', () => {
     jest.mock('../server/repository/claim-repository')
     jest.mock('../server/repository/minetype-repository')
     jest.mock('../server/services/message-service')
-    jest.mock('../server/services/publish-message-action')
     createServer = require('../server')
     mockClaimRepository = require('../server/repository/claim-repository')
   })

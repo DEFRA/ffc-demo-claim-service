@@ -1,35 +1,73 @@
-const { claimMessageAction } = require('./claim-message-action')
-const createQueue = require('./messaging/create-queue')
-const MessageConsumer = require('./messaging/message-consumer')
+const MessageSender = require('./messaging/message-sender')
+const MessageReceiver = require('./messaging/message-receiver')
+const { claimMessageAction } = require('./message-action')
 const config = require('../config')
-let claimConsumer
 
-async function registerService () {
-  if (config.calculationQueueConfig.createQueue) {
-    await createQueue(config.calculationQueueConfig.name, config.calculationQueueConfig)
-  }
+const calculationSender = new MessageSender('claim-service-calculation-sender', config.messageQueues.calculationQueue)
+const scheduleSender = new MessageSender('claim-service-schedule-sender', config.messageQueues.scheduleQueue)
+const claimReceiver = new MessageReceiver('claim-service-claim-receiver', config.messageQueues.claimQueue)
 
-  if (config.scheduleQueueConfig.createQueue) {
-    await createQueue(config.scheduleQueueConfig.name, config.scheduleQueueConfig)
-  }
-
-  if (config.claimQueueConfig.createQueue) {
-    await createQueue(config.claimQueueConfig.name, config.claimQueueConfig)
-  }
-
-  registerClaimConsumer()
+async function registerQueues () {
+  await openConnections()
+  await claimReceiver.setupReceiver(claim => {
+    claimMessageAction(claim, publishClaim)
+  })
 }
 
-function registerClaimConsumer () {
-  claimConsumer = new MessageConsumer(config.claimQueueConfig, config.claimQueueConfig.queueUrl, claimMessageAction)
-  claimConsumer.start()
+async function closeConnections () {
+  await calculationSender.closeConnection()
+  await scheduleSender.closeConnection()
+  await claimReceiver.closeConnection()
 }
 
-function closeConnections () {
-  claimConsumer.stop()
+async function openConnections () {
+  await calculationSender.openConnection()
+  await scheduleSender.openConnection()
+  await claimReceiver.openConnection()
+}
+
+async function publishClaim (claim) {
+  try {
+    console.log('calculationSender connected', calculationSender.isConnected())
+    console.log('scheduleSender connected', scheduleSender.isConnected())
+    const deliveries = await Promise.all([
+      calculationSender.sendMessage(claim),
+      scheduleSender.sendMessage(claim)
+    ])
+    for (const delivery of deliveries) {
+      console.log(delivery.settled)
+    }
+  } catch (err) {
+    console.log(err)
+    throw err
+  }
+}
+
+function getCalculationSender () {
+  return calculationSender
+}
+
+function getScheduleSender () {
+  return scheduleSender
+}
+
+function getCalculationMessage (claim) {
+  return claim
+}
+
+function getScheduleMessage (claim) {
+  return {
+    claimId: claim.claimId
+  }
 }
 
 module.exports = {
   closeConnections,
-  registerService
+  getCalculationSender,
+  getScheduleSender,
+  openConnections,
+  publishClaim,
+  registerQueues,
+  getCalculationMessage,
+  getScheduleMessage
 }

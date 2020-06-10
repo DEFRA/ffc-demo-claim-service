@@ -17,7 +17,7 @@ Or:
 Or:
 - Node 10
 - PostgreSQL database
-- AWS SQS compatible message queue
+- AMQP 1.0 compatible message queue
 
 ## Environment variables
 
@@ -30,23 +30,18 @@ The following environment variables are required by the application container. V
 | POSTGRES_DB                      | Postgres database              | yes      |           |                             |                                   |
 | POSTGRES_USERNAME                | Postgres username              | yes      |           |                             |                                   |
 | POSTGRES_PASSWORD                | Postgres password              | yes      |           |                             |                                   |
-| CALCULATION_QUEUE_NAME           | Message queue name             | yes      |           |                             |                                   |
-| CALCULATION_ENDPOINT             | Message base url               | no       |           |                             |                                   |
-| CALCULATION_QUEUE_URL            | Message queue url              | yes      |           |                             |                                   |
-| CALCULATION_QUEUE_REGION         | AWS region                     | no       | eu-west-2 |                             |Ignored in local dev               |
-| DEV_ACCESS_KEY_ID                | Local dev only access key Id   | no       |           |                             |                                   |
-| DEV_ACCESS_KEY                   | Local dev only access key Id   | no       |           |                             |                                   |
-| CREATE_CALCULATION_QUEUE         | Create queue before connection | no       | false     |                             | For local development set to true |
-| SCHEDULE_QUEUE_NAME              | Message queue name             | yes      |           |                             |                                   |
-| SCHEDULE_ENDPOINT                | Message base url               | yes      |           |                             |                                   |
-| SCHEDULE_QUEUE_URL               | Message queue url              | no       |           |                             |                                   |
-| SCHEDULE_QUEUE_REGION            | AWS region                     | no       | eu-west-2 |                             | Ignored in local dev              |
-| CREATE_SCHEDULE_QUEUE            | Create queue before connection | no       | false     |                             | For local development set to true |
-| CLAIM_QUEUE_NAME                 | Message queue name             | yes      |           |                             |                                   |
-| CLAIM_ENDPOINT                   | Message base url               | yes      |           |                             |                                   |
-| CLAIM_QUEUE_URL                  | Message queue url              | no       |           |                             |                                   |
-| CLAIM_QUEUE_REGION               | AWS region                     | no       | eu-west-2 |                             | Ignored in local dev              |
-| CREATE_CLAIM_QUEUE               | Create queue before connection | no       | false     |                             | For local development set to true |
+| MESSAGE_QUEUE_HOST               | MQ Server hostname             | no       | amq       |                             |                                   |
+| MESSAGE_QUEUE_PORT               | MQ Server port                 | no       | 5672      |                             |                                   |
+| MESSAGE_QUEUE_TRANSPORT          | MQ transport                   | no       | tcp       | tcp,ssl                     |                                   |
+| CALCULATION_QUEUE_ADDRESS        | Message queue address          | yes      |           |                             |                                   |
+| CALCULATION_QUEUE_USER           | calculation queue user name    | no       |           |                             |                                   |
+| CALCULATION_QUEUE_PASSWORD       | calculation queue password     | no       |           |                             |                                   |
+| SCHEDULE_QUEUE_ADDRESS           | Message queue address          | yes      |           |                             |                                   |
+| SCHEDULE_QUEUE_USER              | schedule queue user name       | no       |           |                             |                                   |
+| SCHEDULE_QUEUE_PASSWORD          | schedule queue password        | no       |           |                             |                                   |
+| CLAIM_QUEUE_ADDRESS              | Message queue address          | yes      |           |                             |                                   |
+| CLAIM_QUEUE_USER                 | claim queue user name          | no       |           |                             |                                   |
+| CLAIM_QUEUE_PASSWORD             | claim queue password           | no       |           |                             |                                   |
 
 ## How to run tests
 
@@ -119,10 +114,21 @@ Sample valid JSON for the `/submit` endpoint is:
 
 ### Test the message queue
 
-This service reacts to messages retrieved from an AWS SQS message queue (the "claim" queue). It can be tested locally with:
+This service reacts to messages retrieved from an AMQP 1.0 message broker (the "claim" queue). It can be tested locally with:
+
+`docker-compose up` runs [ActiveMQ Artemis](https://activemq.apache.org/components/artemis) alongside the application to provide the required message bus and broker.
+
+Test messages can be sent via the Artemis console UI hosted at http://localhost:8161/console/login (username: artemis, password: artemis). Messages should match the format of the sample JSON below.
 
 ```
-curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d 'Action=SendMessage&MessageBody={"claimId":"MINE123","propertyType":"business","accessible":false,"dateOfSubsidence":"2019-07-26T09:54:19.622Z","mineType":["gold"],"email":"joe.bloggs@defra.gov.uk"}' "http://localhost:9324/queue/claim"
+{
+  "claimId":"MINE123",
+  "propertyType":"business",
+  "accessible":false,
+  "dateOfSubsidence":"2019-07-26T09:54:19.622Z",
+  "mineType":["gold"],
+  "email":"joe.bloggs@defra.gov.uk"
+}
 ```
 
 ### Link to sibling services
@@ -133,7 +139,7 @@ It is also possible to run a limited subset of the application stack. See the [`
 
 ### Deploy to Kubernetes
 
-For production deployments, a helm chart is included in the `.\helm` folder. This service connects to an sqs message broker, using credentials defined in [values.yaml](./helm/ffc-demo-claim-service/values.yaml), which must be made available prior to deployment.
+For production deployments, a helm chart is included in the `.\helm` folder. This service connects to an AMQP message broker, using credentials defined in [values.yaml](./helm/ffc-demo-claim-service/values.yaml), which must be made available prior to deployment.
 
 Scripts are provided to test the Helm chart by deploying the service, along with an appropriate message broker, into the current Helm/Kubernetes context.
 
