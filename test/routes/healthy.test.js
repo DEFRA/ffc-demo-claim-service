@@ -16,7 +16,6 @@ describe('Healthy test', () => {
       method: 'GET',
       url: '/healthy'
     }
-
     databaseService.isConnected.mockReturnValue(true)
 
     const response = await server.inject(options)
@@ -24,7 +23,7 @@ describe('Healthy test', () => {
     expect(response.statusCode).toBe(200)
   })
 
-  test('GET /healthy returns 500 if database not connected', async () => {
+  test('GET /healthy returns 503 if database not connected', async () => {
     const options = {
       method: 'GET',
       url: '/healthy'
@@ -38,7 +37,27 @@ describe('Healthy test', () => {
     expect(response.payload).toBe('database unavailable')
   })
 
+  test('GET /healthy returns 503 and error message if database check throws an error', async () => {
+    const options = {
+      method: 'GET',
+      url: '/healthy'
+    }
+
+    const errorMessage = 'database connection timeout'
+    databaseService.isConnected.mockImplementation(() => { throw new Error(errorMessage) })
+
+    const response = await server.inject(options)
+
+    expect(response.statusCode).toBe(503)
+    expect(response.payload).toBe(`error running healthy check: ${errorMessage}`)
+  })
+
   afterEach(async () => {
     await server.stop()
+    jest.clearAllMocks()
+  })
+
+  afterAll(() => {
+    jest.resetAllMocks()
   })
 })

@@ -14,7 +14,8 @@ module.exports = {
         }
         return h.response('database unavailable').code(SERVICE_UNAVAILABLE)
       } catch (ex) {
-        return h.response(`Error checking database health: ${ex.message}`).code(SERVICE_UNAVAILABLE)
+        console.error('error running healthy check', ex)
+        return h.response(`error running healthy check: ${ex.message}`).code(SERVICE_UNAVAILABLE)
       }
     }
   }
