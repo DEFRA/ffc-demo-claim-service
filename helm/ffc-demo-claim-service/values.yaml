@@ -50,8 +50,8 @@ container:
   claimQueueUser: artemis
   claimQueuePassword: artemis
 postgresService:
-  postgresUsername: postgres@mine-support2
-  postgresPassword: changeme
+  claimUsername: postgres@mine-support2
+  claimPassword: changeme
   postgresDatabase: mine_claims
   # postgresHost is the host name of the PostgreSQL service
   postgresHost: ffc-demo-claims-postgres
