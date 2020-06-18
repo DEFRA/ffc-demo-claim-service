@@ -1,10 +1,10 @@
-environment = production
-container.allowPrivilegeEscalation = true
-container.imagePullPolicy = Always
-container.messageQueueHost = sndffcinfsb1001.servicebus.windows.net
-container.messageQueuePort = 5671
-container.messageQueueTransport = ssl
-container.calculationQueueAddress = ffc-demo-calculation-dev
-container.scheduleQueueAddress = ffc-demo-schedule-dev
-container.claimQueueAddress = ffc-demo-claim-dev
-postgresService.postgresExternalName = sndffcdbssq1001.postgres.database.azure.com
+environment
+container.allowPrivilegeEscalation
+container.imagePullPolicy
+container.messageQueueHost
+container.messageQueuePort
+container.messageQueueTransport 
+container.calculationQueueAddress 
+container.scheduleQueueAddress 
+container.claimQueueAddress 
+postgresService.postgresExternalName
