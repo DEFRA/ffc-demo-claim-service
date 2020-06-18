@@ -1,5 +1,12 @@
 {{- include "ffc-helm-library.container-secret" (list . "ffc-demo-claim-service.container-secret") -}}
 {{- define "ffc-demo-claim-service.container-secret" -}}
-data:
-  POSTGRES_PASSWORD: {{ .Values.postgresService.postgresPassword | b64enc | quote }}
+stringData:
+  POSTGRES_PASSWORD: {{ .Values.postgresService.postgresPassword | quote }}
+  POSTGRES_USERNAME: {{ .Values.postgresService.postgresUsername | quote }}
+  CALCULATION_QUEUE_USER: {{ .Values.container.calculationQueueUser | quote }}
+  CALCULATION_QUEUE_PASSWORD: {{ .Values.container.calculationQueuePassword | quote }}
+  SCHEDULE_QUEUE_USER: {{ .Values.container.scheduleQueueUser | quote }}
+  SCHEDULE_QUEUE_PASSWORD: {{ .Values.container.scheduleQueuePassword | quote }}
+  CLAIM_QUEUE_USER: {{ .Values.container.claimQueueUser | quote }}
+  CLAIM_QUEUE_PASSWORD: {{ .Values.container.claimQueuePassword | quote }}
 {{- end -}}
