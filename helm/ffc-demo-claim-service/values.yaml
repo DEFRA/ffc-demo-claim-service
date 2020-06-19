@@ -13,9 +13,6 @@ containerSecret:
   name: ffc-demo-claim-service-container-secret
   type: Opaque
 
-serviceAccount:
-  name: ffc-demo-claim-service-account
-
 deployment:
   restartPolicy: Always
   priorityClassName: low
@@ -50,8 +47,8 @@ container:
   claimQueueUser: artemis
   claimQueuePassword: artemis
 postgresService:
-  postgresUsername: postgres@mine-support2
-  postgresPassword: changeme
+  claimUsername: postgres
+  claimPassword: changeme
   postgresDatabase: mine_claims
   # postgresHost is the host name of the PostgreSQL service
   postgresHost: ffc-demo-claims-postgres
