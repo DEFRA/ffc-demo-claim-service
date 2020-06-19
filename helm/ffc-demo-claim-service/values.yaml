@@ -13,9 +13,6 @@ containerSecret:
   name: ffc-demo-claim-service-container-secret
   type: Opaque
 
-serviceAccount:
-  name: ffc-demo-claim-service-account
-
 deployment:
   restartPolicy: Always
   priorityClassName: low
