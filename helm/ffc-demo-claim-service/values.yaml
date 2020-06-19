@@ -47,7 +47,7 @@ container:
   claimQueueUser: artemis
   claimQueuePassword: artemis
 postgresService:
-  claimUsername: postgres@mine-support2
+  claimUsername: postgres
   claimPassword: changeme
   postgresDatabase: mine_claims
   # postgresHost is the host name of the PostgreSQL service
