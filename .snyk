@@ -4,6 +4,6 @@ version: v1.14.1
 ignore:
   SNYK-JS-LODASH-567746:
     - '*':
-        reason: Not vulnerable
+        reason: No uses of `zipObjectDeep` function within codebase
         expires: 2020-12-31T00:00:00.000Z
 patch: {}
