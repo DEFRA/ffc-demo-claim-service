@@ -28,4 +28,7 @@ const value = {
   isProd: result.value.env === 'production'
 }
 
+console.log(`TEST: ${process.env.TEST}`)
+console.log(`TEST_SECRET: ${process.env.TEST_SECRET}`)
+
 module.exports = value

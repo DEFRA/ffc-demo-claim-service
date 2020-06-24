@@ -12,4 +12,5 @@ data:
   SCHEDULE_QUEUE_ADDRESS: {{ quote .Values.container.scheduleQueueAddress }}
   CLAIM_QUEUE_ADDRESS: {{ quote .Values.container.claimQueueAddress }}
   PORT: {{ quote .Values.container.port }}
+  TEST: {{ quote .Values.test }}
 {{- end -}}
