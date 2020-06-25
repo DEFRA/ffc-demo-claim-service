@@ -71,9 +71,12 @@ def config = [environment: 'dev']
       //   config['testClosure']()
       // }
 
-      // stage('Push container image') {
-      //   build.buildAndPushContainerImage(DOCKER_REGISTRY_CREDENTIALS_ID, DOCKER_REGISTRY, repoName, tag)
-      // }
+      pr = ''
+      tag = '0.7.0'
+
+      stage('Push container image') {
+        build.buildAndPushContainerImage(DOCKER_REGISTRY_CREDENTIALS_ID, DOCKER_REGISTRY, repoName, tag)
+      }
 
       if (pr != '') {
         stage('Helm install') {
