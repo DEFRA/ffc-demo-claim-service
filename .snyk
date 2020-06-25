@@ -6,4 +6,8 @@ ignore:
     - '*':
         reason: No uses of `zipObjectDeep` function within codebase
         expires: 2020-12-31T00:00:00.000Z
+  SNYK-JS-BUNYAN-573166:
+    - '*':
+        reason: No known exploit, used within Pact which has open PR to resolve so expecting resolution in short term
+        expires: 2020-07-03T00:00:00.000Z
 patch: {}
