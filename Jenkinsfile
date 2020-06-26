@@ -1,4 +1,4 @@
-@Library('defra-library@psd843-app-config') _
+@Library('defra-library@v-8') _
 
 // buildNodeJs environment: 'dev'
 

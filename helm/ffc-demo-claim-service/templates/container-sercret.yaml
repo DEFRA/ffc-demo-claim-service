@@ -9,5 +9,4 @@ stringData:
   SCHEDULE_QUEUE_PASSWORD: {{ .Values.container.scheduleQueuePassword | quote }}
   CLAIM_QUEUE_USER: {{ .Values.container.claimQueueUser | quote }}
   CLAIM_QUEUE_PASSWORD: {{ .Values.container.claimQueuePassword | quote }}
-  TEST_SECRET: {{ quote .Values.test }}
 {{- end -}}

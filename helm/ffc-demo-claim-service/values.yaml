@@ -4,8 +4,6 @@ namespace: ffc-demo
 workstream: ffc-demo
 image: ffc-demo-claim-service
 
-test: ing123
-
 labels: {}
 
 containerConfigMap:
