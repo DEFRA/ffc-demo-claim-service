@@ -11,5 +11,6 @@ data:
   CALCULATION_QUEUE_ADDRESS: {{ quote .Values.container.calculationQueueAddress }}
   SCHEDULE_QUEUE_ADDRESS: {{ quote .Values.container.scheduleQueueAddress }}
   CLAIM_QUEUE_ADDRESS: {{ quote .Values.container.claimQueueAddress }}
+  APPINSIGHTS_CLOUDROLE: {{ quote .Values.name }}
   PORT: {{ quote .Values.container.port }}
 {{- end -}}

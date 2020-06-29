@@ -6,6 +6,9 @@ image: ffc-demo-claim-service
 
 labels: {}
 
+appInsights:
+  key:
+
 containerConfigMap:
   name: ffc-demo-claim-service-config-map
 

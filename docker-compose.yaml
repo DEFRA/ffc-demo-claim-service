@@ -13,6 +13,8 @@ services:
       - variables/message-queues.env
       - variables/postgres.env
     environment:
+      APPINSIGHTS_CLOUDROLE: ffc-demo-claim-service-local
+      APPINSIGHTS_INSTRUMENTATIONKEY:
       POSTGRES_HOST: ffc-demo-claim-postgres
       POSTGRES_PORT: 5432
       MESSAGE_QUEUE_HOST: ffc-demo-claim-message-queue

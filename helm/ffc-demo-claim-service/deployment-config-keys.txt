@@ -16,3 +16,4 @@ container.claimQueuePassword
 postgresService.claimUsername
 postgresService.claimPassword
 postgresService.postgresExternalName
+appInsights.key
