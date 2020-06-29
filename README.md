@@ -23,26 +23,26 @@ Or:
 
 The following environment variables are required by the application container. Values for development are set in the Docker Compose configuration. Default values for production-like deployments are set in the Helm chart and may be overridden by build and release pipelines.
 
-| Name                             | Description                    | Required | Default   | Valid                       | Notes                                                                             |
-|----------------------------------|--------------------------------|:--------:|-----------|:---------------------------:|-----------------------------------------------------------------------------------|
-| NODE_ENV                         | Node environment               | no       |           | development,test,production |                                                                                   |
-| PORT                             | Port number                    | no       | 3003      |                             |                                                                                   |
-| POSTGRES_DB                      | Postgres database              | yes      |           |                             |                                                                                   |
-| POSTGRES_USERNAME                | Postgres username              | yes      |           |                             |                                                                                   |
-| POSTGRES_PASSWORD                | Postgres password              | yes      |           |                             |                                                                                   |
-| MESSAGE_QUEUE_HOST               | MQ Server hostname             | no       | amq       |                             |                                                                                   |
-| MESSAGE_QUEUE_PORT               | MQ Server port                 | no       | 5672      |                             |                                                                                   |
-| MESSAGE_QUEUE_TRANSPORT          | MQ transport                   | no       | tcp       | tcp,ssl                     |                                                                                   |
-| CALCULATION_QUEUE_ADDRESS        | Message queue address          | yes      |           |                             |                                                                                   |
-| CALCULATION_QUEUE_USER           | calculation queue user name    | no       |           |                             |                                                                                   |
-| CALCULATION_QUEUE_PASSWORD       | calculation queue password     | no       |           |                             |                                                                                   |
-| SCHEDULE_QUEUE_ADDRESS           | Message queue address          | yes      |           |                             |                                                                                   |
-| SCHEDULE_QUEUE_USER              | schedule queue user name       | no       |           |                             |                                                                                   |
-| SCHEDULE_QUEUE_PASSWORD          | schedule queue password        | no       |           |                             |                                                                                   |
-| CLAIM_QUEUE_ADDRESS              | Message queue address          | yes      |           |                             |                                                                                   |
-| CLAIM_QUEUE_USER                 | claim queue user name          | no       |           |                             |                                                                                   |
-| CLAIM_QUEUE_PASSWORD             | claim queue password           | no       |           |                             |                                                                                   |
-| APPINSIGHTS_INSTRUMENTATIONKEY   | Key for application insight    | no       |           |                             | App insights only enabled if key is present. Note: Silently fails for invalid key |
+| Name                             | Description                 | Required | Default   | Valid                       | Notes                                                                             |
+|----------------------------------|-----------------------------|:--------:|-----------|:---------------------------:|-----------------------------------------------------------------------------------|
+| NODE_ENV                         | Node environment            | no       |           | development,test,production |                                                                                   |
+| PORT                             | Port number                 | no       | 3003      |                             |                                                                                   |
+| POSTGRES_DB                      | Postgres database           | yes      |           |                             |                                                                                   |
+| POSTGRES_USERNAME                | Postgres username           | yes      |           |                             |                                                                                   |
+| POSTGRES_PASSWORD                | Postgres password           | yes      |           |                             |                                                                                   |
+| MESSAGE_QUEUE_HOST               | MQ Server hostname          | no       | amq       |                             |                                                                                   |
+| MESSAGE_QUEUE_PORT               | MQ Server port              | no       | 5672      |                             |                                                                                   |
+| MESSAGE_QUEUE_TRANSPORT          | MQ transport                | no       | tcp       | tcp,ssl                     |                                                                                   |
+| CALCULATION_QUEUE_ADDRESS        | Message queue address       | yes      |           |                             |                                                                                   |
+| CALCULATION_QUEUE_USER           | calculation queue user name | no       |           |                             |                                                                                   |
+| CALCULATION_QUEUE_PASSWORD       | calculation queue password  | no       |           |                             |                                                                                   |
+| SCHEDULE_QUEUE_ADDRESS           | Message queue address       | yes      |           |                             |                                                                                   |
+| SCHEDULE_QUEUE_USER              | schedule queue user name    | no       |           |                             |                                                                                   |
+| SCHEDULE_QUEUE_PASSWORD          | schedule queue password     | no       |           |                             |                                                                                   |
+| CLAIM_QUEUE_ADDRESS              | Message queue address       | yes      |           |                             |                                                                                   |
+| CLAIM_QUEUE_USER                 | claim queue user name       | no       |           |                             |                                                                                   |
+| CLAIM_QUEUE_PASSWORD             | claim queue password        | no       |           |                             |                                                                                   |
+| APPINSIGHTS_INSTRUMENTATIONKEY   | Key for application insight | no       |           |                             | App insights only enabled if key is present. Note: Silently fails for invalid key |
 
 ## How to run tests
 
