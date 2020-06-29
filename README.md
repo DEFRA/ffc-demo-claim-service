@@ -43,7 +43,7 @@ The following environment variables are required by the application container. V
 | CLAIM_QUEUE_USER                 | claim queue user name       | no       |           |                             |                                                                                   |
 | CLAIM_QUEUE_PASSWORD             | claim queue password        | no       |           |                             |                                                                                   |
 | APPINSIGHTS_INSTRUMENTATIONKEY   | Key for application insight | no       |           |                             | App insights only enabled if key is present. Note: Silently fails for invalid key |
-
+| APPINSIGHTS_CLOUDROLE            | Role used for filtering metrics| no    |           |                             | Set to `ffc-demo-claim-service-local` in docker compose files                     |
 ## How to run tests
 
 A convenience script is provided to run automated tests in a containerised environment. The first time this is run, container images required for testing will be automatically built. An optional `--build` (or `-b`) flag may be used to rebuild these images in future (for example, to apply dependency updates).
