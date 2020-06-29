@@ -43,8 +43,6 @@ The following environment variables are required by the application container. V
 | CLAIM_QUEUE_USER                 | claim queue user name          | no       |           |                             |                                                                                   |
 | CLAIM_QUEUE_PASSWORD             | claim queue password           | no       |           |                             |                                                                                   |
 | APPINSIGHTS_INSTRUMENTATIONKEY   | Key for application insight    | no       |           |                             | App insights only enabled if key is present. Note: Silently fails for invalid key |
-| APPINSIGHTS_CLOUDROLE            | Role used for filtering metrics| no       |           |                             | Set to `payment-service-local` in docker compose files                            |
-
 
 ## How to run tests
 

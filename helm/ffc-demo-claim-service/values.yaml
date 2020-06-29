@@ -8,7 +8,6 @@ labels: {}
 
 appInsights:
   key:
-  role: ffc-demo-claim-service
 
 containerConfigMap:
   name: ffc-demo-claim-service-config-map

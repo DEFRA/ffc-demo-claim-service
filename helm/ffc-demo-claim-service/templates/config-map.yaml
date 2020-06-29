@@ -11,7 +11,7 @@ data:
   CALCULATION_QUEUE_ADDRESS: {{ quote .Values.container.calculationQueueAddress }}
   SCHEDULE_QUEUE_ADDRESS: {{ quote .Values.container.scheduleQueueAddress }}
   CLAIM_QUEUE_ADDRESS: {{ quote .Values.container.claimQueueAddress }}
-  APPINSIGHTS_CLOUDROLE: {{ quote .Values.appInsights.role }}
+  APPINSIGHTS_CLOUDROLE: {{ quote .Values.name }}
   APPINSIGHTS_INSTRUMENTATIONKEY: {{ quote .Values.appInsights.key }}
   PORT: {{ quote .Values.container.port }}
 {{- end -}}
