@@ -25,6 +25,11 @@ LABEL uk.gov.defra.ffc.parent-image=defradigital/node:${PARENT_VERSION}
 ENV PORT ${PORT}
 EXPOSE ${PORT}
 
+USER root
+RUN apk --no-cache add python3-dev libffi-dev openssl-dev
+RUN pip3 install azure-cli
+USER node
+
 COPY --from=development /home/node/index.js /home/node/package*.json /home/node/.sequelizerc /home/node/
 COPY --from=development /home/node/server  /home/node/server
 RUN npm ci
