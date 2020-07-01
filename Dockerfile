@@ -26,7 +26,7 @@ ENV PORT ${PORT}
 EXPOSE ${PORT}
 
 USER root
-RUN apk --no-cache add python3-dev libffi-dev openssl-dev make g++
+RUN apk --no-cache add python3-dev libffi-dev openssl-dev make g++ curl jq
 RUN pip3 install azure-cli
 USER node
 
