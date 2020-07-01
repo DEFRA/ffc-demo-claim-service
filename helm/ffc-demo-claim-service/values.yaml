@@ -36,7 +36,7 @@ container:
   requestCpu: 60m
   limitMemory: 120Mi
   limitCpu: 120m
-  readOnlyRootFilesystem: true
+  readOnlyRootFilesystem: false
   allowPrivilegeEscalation: false
   port: 3003
   command: ["/bin/sh","-c"]
