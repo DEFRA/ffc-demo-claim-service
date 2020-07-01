@@ -40,7 +40,7 @@ container:
   allowPrivilegeEscalation: false
   port: 3003
   command: ["/bin/sh","-c"]
-  args: ["az login --identity && npm --no-update-notifier run migrate && node index"]
+  args: ["npm --no-update-notifier run migrate && node index"]
   messageQueueHost: amq
   messageQueuePort: 5672
   messageQueueTransport: tcp
@@ -56,7 +56,7 @@ container:
 postgresService:
   postgresUsername: postgres
   postgresPassword: changeme
-  postgresDatabase: mine_claims_test_ad
+  postgresDatabase: mine_claims
   # postgresHost is the host name of the PostgreSQL service
   postgresHost: ffc-demo-claims-postgres
   # postgresExternalName is the external host name to which PostgreSQL
