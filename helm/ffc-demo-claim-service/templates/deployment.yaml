@@ -2,6 +2,9 @@
 {{- define "ffc-demo-claim-service.deployment" -}}
 spec:
   template:
+    metadata:
+      labels:
+        aadpodidbinding: claim-service-demo-identity-binding
     spec:
       containers:
       - {{ include "ffc-helm-library.container" (list . "ffc-demo-claim-service.container") }}
