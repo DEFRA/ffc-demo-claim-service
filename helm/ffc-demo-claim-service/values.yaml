@@ -45,9 +45,14 @@ container:
   messageQueuePort: 5672
   messageQueueTransport: tcp
   calculationQueueAddress: calculation
+  calculationQueueUser: artemis
+  calculationQueuePassword: artemis
   scheduleQueueAddress: schedule
+  scheduleQueueUser: artemis
+  scheduleQueuePassword: artemis
   claimQueueAddress: claim
-
+  claimQueueUser: artemis
+  claimQueuePassword: artemis
 postgresService:
   postgresUsername: postgres
   postgresPassword: changeme
