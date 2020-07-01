@@ -4,7 +4,7 @@ spec:
   template:
     metadata:
       labels:
-        aadpodidbinding: demo
+        aadpodidbinding: claim-service-demo-identity-binding
     spec:
       containers:
       - {{ include "ffc-helm-library.container" (list . "ffc-demo-claim-service.container") }}

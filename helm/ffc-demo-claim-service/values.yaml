@@ -6,6 +6,10 @@ image: ffc-demo-claim-service
 
 labels: {}
 
+azureIdentity:
+  resourceID:
+  clientID:
+
 appInsights:
   key:
 
