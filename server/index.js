@@ -27,7 +27,7 @@ async function createServer () {
   await messageService.registerQueues()
 
   // Testing
-  await messageService.publishClaim({ message: 'this is a test' })
+  // await messageService.publishClaim({ message: 'this is a test' })
 
   process.on('SIGTERM', async function () {
     await messageService.closeConnections()
