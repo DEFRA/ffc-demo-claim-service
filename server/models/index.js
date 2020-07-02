@@ -9,8 +9,6 @@ async function db () {
   const config = require(path.join(__dirname, '/../config')).database[env]
   const db = {}
 
-  await new Promise(resolve => setTimeout(resolve, 10000))
-
   let sequelize
   if (config.use_env_variable) {
     sequelize = new Sequelize(process.env[config.use_env_variable], config)
