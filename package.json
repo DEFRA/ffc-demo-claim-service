@@ -25,6 +25,7 @@
   "license": "OGL-UK-3.0",
   "dependencies": {
     "@azure/identity": "^1.0.3",
+    "@azure/ms-rest-nodeauth": "^3.0.5",
     "@hapi/catbox-memory": "^5.0.0",
     "@hapi/hapi": "^19.1.1",
     "@hapi/joi": "^17.1.1",
