@@ -1,6 +1,6 @@
 'use strict'
 
-async function getDb () {
+async function db () {
   const fs = require('fs')
   const path = require('path')
   const Sequelize = require('sequelize')
@@ -38,4 +38,4 @@ async function getDb () {
   return db
 }
 
-module.exports = getDb()
+module.exports = db
