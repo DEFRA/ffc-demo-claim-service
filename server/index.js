@@ -32,11 +32,13 @@ async function createServer () {
   // await messageService.publishClaim({ message: 'this is a test' })
 
   process.on('SIGTERM', async function () {
+    console.log('SIGTERM')
     await messageService.closeConnections()
     process.exit(0)
   })
 
   process.on('SIGINT', async function () {
+    console.log('SIGINT')
     await messageService.closeConnections()
     process.exit(0)
   })
