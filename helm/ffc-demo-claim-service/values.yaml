@@ -40,7 +40,7 @@ container:
   allowPrivilegeEscalation: false
   port: 3003
   command: ["/bin/sh","-c"]
-  args: ["az login --identity && npm --no-update-notifier run migrate && node index"]
+  args: ["npm --no-update-notifier run migrate && node index"]
   messageQueueHost: amq
   messageQueuePort: 5672
   messageQueueTransport: tcp

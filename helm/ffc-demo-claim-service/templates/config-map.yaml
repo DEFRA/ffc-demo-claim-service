@@ -13,4 +13,5 @@ data:
   CLAIM_QUEUE_ADDRESS: {{ quote .Values.container.claimQueueAddress }}
   APPINSIGHTS_CLOUDROLE: {{ quote .Values.name }}
   PORT: {{ quote .Values.container.port }}
+  CLIENT_ID: {{ quote .Values.azureIdentity.clientID }}
 {{- end -}}
