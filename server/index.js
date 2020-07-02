@@ -3,6 +3,10 @@ const config = require('./config')
 const messageService = require('./services/message-service')
 
 async function createServer () {
+  console.log('waiting')
+  await new Promise(resolve => setTimeout(resolve, 10000))
+  console.log('finished')
+
   // Create the hapi server
   const server = hapi.server({
     port: config.port,
