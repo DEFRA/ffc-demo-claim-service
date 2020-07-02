@@ -1,11 +1,11 @@
 const MessageSender = require('./messaging/message-sender')
 const MessageReceiver = require('./messaging/message-receiver')
 const { claimMessageAction } = require('./message-action')
-const config = require('../config')
+const mqconfig = require('../config/mq-config')
 
-const calculationSender = new MessageSender('claim-service-calculation-sender', config.messageQueues.calculationQueue)
-const scheduleSender = new MessageSender('claim-service-schedule-sender', config.messageQueues.scheduleQueue)
-const claimReceiver = new MessageReceiver('claim-service-claim-receiver', config.messageQueues.claimQueue)
+const calculationSender = new MessageSender('claim-service-calculation-sender', mqconfig.calculationQueue)
+const scheduleSender = new MessageSender('claim-service-schedule-sender', mqconfig.scheduleQueue)
+const claimReceiver = new MessageReceiver('claim-service-claim-receiver', mqconfig.claimQueue)
 
 async function registerQueues () {
   await openConnections()
