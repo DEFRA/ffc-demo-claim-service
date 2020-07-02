@@ -53,6 +53,8 @@ container:
   claimQueueAddress: claim
   claimQueueUser: artemis
   claimQueuePassword: artemis
+  messageUser: test
+  messagePassword: test
 postgresService:
   postgresUsername: postgres
   postgresPassword: changeme
