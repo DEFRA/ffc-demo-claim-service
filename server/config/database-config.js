@@ -4,6 +4,8 @@ async function getConfig () {
   const creds = await auth.loginWithVmMSI({ clientId: process.env.CLIENT_ID, resource: 'https://ossrdbms-aad.database.windows.net' })
   const token = await creds.getToken()
 
+  console.log(token.accessToken)
+
   const dbConfig = {
     username: process.env.POSTGRES_USERNAME,
     password: token.accessToken,
