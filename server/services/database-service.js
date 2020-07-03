@@ -3,7 +3,6 @@ const db = require('../models')
 module.exports = {
   isConnected: async function () {
     try {
-      await db()
       await db.sequelize.authenticate()
       return true
     } catch (err) {
