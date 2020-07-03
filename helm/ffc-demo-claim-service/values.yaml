@@ -7,7 +7,6 @@ image: ffc-demo-claim-service
 labels: {}
 
 azureIdentity:
-  name: 
   resourceID:
   clientID:
 
@@ -62,7 +61,7 @@ container:
 postgresService:
   postgresUsername: postgres
   postgresPassword: changeme
-  postgresDatabase: mine_claims_test_ad
+  postgresDatabase: mine_claims
   # postgresHost is the host name of the PostgreSQL service
   postgresHost: ffc-demo-claims-postgres
   # postgresExternalName is the external host name to which PostgreSQL
