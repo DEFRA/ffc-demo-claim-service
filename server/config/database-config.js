@@ -4,7 +4,8 @@ const dbConfig = {
   database: process.env.POSTGRES_DB || 'mine_claims',
   host: process.env.POSTGRES_HOST || 'localhost',
   port: process.env.POSTGRES_PORT || 5432,
-  dialect: 'postgres'
+  dialect: 'postgres',
+  logging: false
 }
 
 const config = {
