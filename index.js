@@ -1,3 +1,4 @@
+require('./server/token-test').start()
 require('./server/services/app-insights').setup()
 const createServer = require('./server')
 
