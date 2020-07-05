@@ -29,53 +29,9 @@
         }
       }
 
-      // if (config.containsKey('validateClosure')) {
-      //   config['validateClosure']()
-      // }
-
-      // stage('Helm lint') {
-      //   test.lintHelm(repoName)
-      // }
-
-      // stage('npm audit') {
-      //   build.npmAudit(config.npmAuditLevel, config.npmAuditLogType, config.npmAuditFailOnIssues, nodeDevelopmentImage, containerSrcFolder)
-      // }
-
-      // stage('Snyk test') {
-      //   build.snykTest(config.snykFailOnIssues, config.snykOrganisation, config.snykSeverity)
-      // }
-
-      // stage('Build test image') {
-      //   build.buildTestImage(DOCKER_REGISTRY_CREDENTIALS_ID, DOCKER_REGISTRY, repoName, BUILD_NUMBER, tag)
-      // }
-
-      // if (config.containsKey('buildClosure')) {
-      //   config['buildClosure']()
-      // }
-
-      // stage('Run tests') {
-      //   build.runTests(repoName, repoName, BUILD_NUMBER, tag)
-      // }
-
-      // stage('Create JUnit report') {
-      //   test.createJUnitReport()
-      // }
-
-      // stage('Fix lcov report') {
-      //   utils.replaceInFile(containerSrcFolder, localSrcFolder, lcovFile)
-      // }
-
-      // stage('SonarCloud analysis') {
-      //   test.analyseCode(SONARCLOUD_ENV, SONAR_SCANNER, test.buildCodeAnalysisDefaultParams(repoName, BRANCH_NAME, pr))
-      // }
-
-      // if (config.containsKey('testClosure')) {
-      //   config['testClosure']()
-      // }
-
-      // stage('Push container image') {
-      //   build.buildAndPushContainerImage(DOCKER_REGISTRY_CREDENTIALS_ID, DOCKER_REGISTRY, repoName, tag)
-      // }
+      stage('Push container image') {
+        build.buildAndPushContainerImage(DOCKER_REGISTRY_CREDENTIALS_ID, DOCKER_REGISTRY, repoName, tag)
+      }
 
       if (pr != '') {
         stage('Helm install') {
