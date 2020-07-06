@@ -20,6 +20,7 @@ async function testMessaging (sender) {
     console.log(`Sent message at ${date.toISOString()}`)
   } catch (err) {
     console.log('FAIL sending message')
+    console.log(err)
   }
 }
 
@@ -29,17 +30,24 @@ async function testDB (sequelize, postgresCreds) {
     console.log('SUCCESS db auth')
   } catch (err) {
     console.log('FAIL db auth')
+    console.log(err)
     await sequelizeSetup(postgresCreds)
     console.log('SUCCESS db re-authenticated')
   }
 }
 
 async function sequelizeSetup (postgresCreds) {
-  const token = await postgresCreds.getToken()
-  dbConfig.password = token.accessToken
-  sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig)
-  await sequelize.authenticate()
-  console.log('SUCCESS sequelize init and auth')
+  try {
+    const token = await postgresCreds.getToken()
+    dbConfig.password = token.accessToken
+    sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig)
+    console.log('Attempting authenticate ...')
+    await sequelize.authenticate()
+    console.log('SUCCESS sequelize init and auth')
+  } catch (err) {
+    console.log('FAIL sequelize init and auth')
+    console.log(err)
+  }
 }
 
 async function start () {
