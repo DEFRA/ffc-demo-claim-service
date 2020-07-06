@@ -23,11 +23,7 @@ async function testMessaging (sender) {
   }
 }
 
-async function testDB (sequelize, dbConfig, postgresCreds) {
-  const postgresToken = await postgresCreds.getToken()
-  console.log('Postgres Token:')
-  console.log(postgresToken)
-
+async function testDB (sequelize, postgresCreds) {
   try {
     await sequelize.authenticate()
     console.log('SUCCESS db auth')
@@ -52,12 +48,12 @@ async function start () {
   const postgresCreds = await auth.loginWithVmMSI({ resource: 'https://ossrdbms-aad.database.windows.net/' })
   await sequelizeSetup(postgresCreds)
 
-  testMessaging(sender)
-  testDB(sequelize, postgresCreds)
-  testDB(sequelize, postgresCreds)
+  await testMessaging(sender)
+  await testDB(sequelize, postgresCreds)
+  await testDB(sequelize, postgresCreds)
 
   setInterval(() => testMessaging(sender), 1000 * 60 * 60)
-  setInterval(() => testDB(sequelize, dbConfig, postgresCreds), 1000 * 60 * 60)
+  setInterval(() => testDB(sequelize, postgresCreds), 1000 * 60 * 60)
 }
 
 module.exports = { start }
