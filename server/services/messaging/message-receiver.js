@@ -18,15 +18,19 @@ class MessageReceiver extends MessageBase {
       console.log(context.message)
       console.log('context.message.body***********************')
       console.log(context.message.body)
-      console.log('context.message.application_properties***********************')
-      console.log(context.message.application_properties)
+      console.log('context.message.correlation_id***********************')
+      const correlationId = context.message.correlation_id
+      console.log(correlationId)
+
       const phonyReq = {
+        // TODO: Update the name to something meaningul and the url to the message queue
         name: 'phony',
         url: 'message-queue',
         duration: 0,
         resultCode: 200,
         success: true,
-        contextObjects: { ctx: 'here' }
+        // see https://docs.microsoft.com/en-us/azure/azure-monitor/app/data-model-context#operation-id
+        properties: { operationId: correlationId }
       }
       console.log('trackRequest***********************')
       appInsights.defaultClient.trackRequest(phonyReq)
