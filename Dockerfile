@@ -26,8 +26,7 @@ ENV PORT ${PORT}
 EXPOSE ${PORT}
 
 USER root
-RUN apk --no-cache add python3-dev libffi-dev openssl-dev make g++ curl jq postgresql-client
-RUN pip3 install azure-cli
+RUN apk --no-cache add postgresql-client
 USER node
 
 COPY --from=development /home/node/index.js /home/node/package*.json /home/node/.sequelizerc /home/node/

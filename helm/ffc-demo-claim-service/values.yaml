@@ -59,6 +59,7 @@ container:
   claimQueueUser: artemis
   claimQueuePassword: artemis
 postgresService:
+  postgresUsernameAlt: postgres
   postgresUsername: postgres
   postgresPassword: changeme
   postgresDatabase: mine_claims
