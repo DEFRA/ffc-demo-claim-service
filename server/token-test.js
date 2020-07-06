@@ -14,22 +14,25 @@ const dbConfig = {
 let sequelize
 
 async function testMessaging (sender) {
+  const date = new Date()
+
   try {
-    const date = new Date()
     sender.send({ body: `Test message at ${date.toISOString()}` })
     console.log(`Sent message at ${date.toISOString()}`)
   } catch (err) {
-    console.log('FAIL sending message')
+    console.log(`FAIL sending message at ${date.toISOString()}`)
     console.log(err)
   }
 }
 
 async function testDB (sequelize, postgresCreds) {
+  const date = new Date()
+
   try {
     await sequelize.authenticate()
-    console.log('SUCCESS db auth')
+    console.log(`SUCCESS db auth at ${date.toISOString()}`)
   } catch (err) {
-    console.log('FAIL db auth')
+    console.log(`FAIL db auth at ${date.toISOString()}`)
     console.log(err)
     await sequelizeSetup(postgresCreds)
   }
