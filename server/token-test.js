@@ -45,15 +45,15 @@ async function start () {
   const myBus = ServiceBusClient.createFromAadTokenCredentials(process.env.MESSAGE_QUEUE_HOST, serviceBusCreds)
   const sender = myBus.createQueueClient(process.env.CALCULATION_QUEUE_ADDRESS).createSender()
 
-  const postgresCreds = await auth.loginWithVmMSI({ resource: 'https://ossrdbms-aad.database.windows.net/' })
-  await sequelizeSetup(postgresCreds)
+  // const postgresCreds = await auth.loginWithVmMSI({ resource: 'https://ossrdbms-aad.database.windows.net/' })
+  // await sequelizeSetup(postgresCreds)
 
-  await testMessaging(sender)
-  await testDB(sequelize, postgresCreds)
-  await testDB(sequelize, postgresCreds)
+  testMessaging(sender)
+  // await testDB(sequelize, postgresCreds)
+  // await testDB(sequelize, postgresCreds)
 
   setInterval(() => testMessaging(sender), 1000 * 60 * 60)
-  setInterval(() => testDB(sequelize, postgresCreds), 1000 * 60 * 60)
+  // setInterval(() => testDB(sequelize, postgresCreds), 1000 * 60 * 60)
 }
 
 module.exports = { start }
