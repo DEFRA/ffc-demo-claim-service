@@ -10,7 +10,7 @@ const message = {
   content: 'hello'
 }
 
-describe('message receiver', () => {
+describe.skip('message receiver', () => {
   afterEach(async () => {
     await messageReceiver.closeConnection()
     await messageSender.closeConnection()
