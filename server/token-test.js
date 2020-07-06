@@ -36,7 +36,9 @@ async function testMessaging (sender) {
 
 async function sequelizeSetup (postgresCreds) {
   dbConfig.password = postgresCreds.getToken()
+  console.log(dbConfig)
   sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig)
+  console.log('Made seq')
   await sequelize.authenticate()
   console.log('SUCCESS db auth')
 }
@@ -47,6 +49,8 @@ async function start () {
   const sender = myBus.createQueueClient(process.env.CALCULATION_QUEUE_ADDRESS).createSender()
 
   const postgresCreds = await auth.loginWithVmMSI({ resource: 'https://ossrdbms-aad.database.windows.net/' })
+  console.log(dbConfig)
+  console.log(postgresCreds.getToken())
   await sequelizeSetup(postgresCreds)
 
   testMessaging(sender)
