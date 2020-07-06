@@ -23,21 +23,22 @@ async function testMessaging (sender) {
   }
 }
 
-async function testDB (sequelize, postgresCreds) {
-  try {
-    await sequelize.authenticate()
-    console.log('SUCCESS db auth')
-  } catch (err) {
-    console.log('FAIL db auth')
-    await sequelizeSetup(postgresCreds)
-    console.log('SUCCESS db re-authenticated')
-  }
-}
+// async function testDB (sequelize, postgresCreds) {
+//   try {
+//     await sequelize.authenticate()
+//     console.log('SUCCESS db auth')
+//   } catch (err) {
+//     console.log('FAIL db auth')
+//     await sequelizeSetup(postgresCreds)
+//     console.log('SUCCESS db re-authenticated')
+//   }
+// }
 
 async function sequelizeSetup (postgresCreds) {
   dbConfig.password = postgresCreds.getToken()
   sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig)
   await sequelize.authenticate()
+  console.log('SUCCESS db auth')
 }
 
 async function start () {
@@ -45,11 +46,10 @@ async function start () {
   const myBus = ServiceBusClient.createFromAadTokenCredentials(process.env.MESSAGE_QUEUE_HOST, serviceBusCreds)
   const sender = myBus.createQueueClient(process.env.CALCULATION_QUEUE_ADDRESS).createSender()
 
-  // const postgresCreds = await auth.loginWithVmMSI({ resource: 'https://ossrdbms-aad.database.windows.net/' })
-  // await sequelizeSetup(postgresCreds)
+  const postgresCreds = await auth.loginWithVmMSI({ resource: 'https://ossrdbms-aad.database.windows.net/' })
+  await sequelizeSetup(postgresCreds)
 
   testMessaging(sender)
-  // await testDB(sequelize, postgresCreds)
   // await testDB(sequelize, postgresCreds)
 
   setInterval(() => testMessaging(sender), 1000 * 60 * 60)
