@@ -12,8 +12,14 @@ class MessageReceiver extends MessageBase {
   registerEvents (receiver, action) {
     receiver.on(rheaPromise.ReceiverEvents.message, async (context) => {
       // context is no good, it just contains the keys and the tags
-      console.log(appInsights.defaultClient.context)
-      console.log('***********************')
+      // console.log('context***********************')
+      // console.log(context)
+      console.log('context.message***********************')
+      console.log(context.message)
+      console.log('context.message.body***********************')
+      console.log(context.message.body)
+      console.log('context.message.application_properties***********************')
+      console.log(context.message.application_properties)
       const phonyReq = {
         name: 'phony',
         url: 'message-queue',
@@ -22,16 +28,17 @@ class MessageReceiver extends MessageBase {
         success: true,
         contextObjects: { ctx: 'here' }
       }
-      console.log(appInsights.defaultClient.trackRequest(phonyReq))
-      console.log('track***********************')
-      console.log(appInsights.defaultClient.context)
-      console.log('***********************')
+      console.log('trackRequest***********************')
+      appInsights.defaultClient.trackRequest(phonyReq)
+      // console.log('***********************')
+      // console.log(appInsights.defaultClient.context)
       // console.log(context)
       console.log('***********************')
       console.log(`${this.name} received message`, context.message.body)
       try {
-        const message = JSON.parse(context.message.body)
-        await action(message)
+        // const message = JSON.parse(context.message.body)
+        // const message = { word: 'up' }
+        await action(context.message.body)
       } catch (ex) {
         console.error(`${this.name} error with message`, ex)
       }
