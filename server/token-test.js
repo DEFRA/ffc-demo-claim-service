@@ -35,8 +35,8 @@ async function testDB (sequelize, postgresCreds) {
 }
 
 async function sequelizeSetup (postgresCreds) {
-  dbConfig.password = await postgresCreds.getToken()
-  console.log(dbConfig)
+  const token = await postgresCreds.getToken()
+  dbConfig.password = token.accessToken
   sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig)
   await sequelize.authenticate()
   console.log('SUCCESS sequelize init and auth')
