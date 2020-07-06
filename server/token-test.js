@@ -1,5 +1,5 @@
 const auth = require('@azure/ms-rest-nodeauth')
-// const { ServiceBusClient } = require('@azure/service-bus')
+const { ServiceBusClient } = require('@azure/service-bus')
 const Sequelize = require('sequelize')
 
 const dbConfig = {
@@ -13,16 +13,16 @@ const dbConfig = {
 
 let sequelize
 
-// async function testMessaging (sender) {
-//   try {
-//     const date = new Date()
-//     sender.send({ body: `Test message at ${date.toISOString()}` })
-//     console.log(`Sent message at ${date.toISOString()}`)
-//   } catch (err) {
-//     console.log('FAIL sending message')
-//     console.log(err)
-//   }
-// }
+async function testMessaging (sender) {
+  try {
+    const date = new Date()
+    sender.send({ body: `Test message at ${date.toISOString()}` })
+    console.log(`Sent message at ${date.toISOString()}`)
+  } catch (err) {
+    console.log('FAIL sending message')
+    console.log(err)
+  }
+}
 
 async function testDB (sequelize, postgresCreds) {
   try {
@@ -50,18 +50,18 @@ async function sequelizeSetup (postgresCreds) {
 }
 
 async function start () {
-  // const serviceBusCreds = await auth.loginWithVmMSI({ resource: 'https://servicebus.azure.net/' })
-  // const myBus = ServiceBusClient.createFromAadTokenCredentials(process.env.MESSAGE_QUEUE_HOST, serviceBusCreds)
-  // const sender = myBus.createQueueClient(process.env.CALCULATION_QUEUE_ADDRESS).createSender()
+  const serviceBusCreds = await auth.loginWithVmMSI({ resource: 'https://servicebus.azure.net/' })
+  const myBus = ServiceBusClient.createFromAadTokenCredentials(process.env.MESSAGE_QUEUE_HOST, serviceBusCreds)
+  const sender = myBus.createQueueClient(process.env.CALCULATION_QUEUE_ADDRESS).createSender()
 
-  const postgresCreds = await auth.loginWithVmMSI({ resource: 'https://ossrdbms-aad.database.windows.net/' })
+  const postgresCreds = await auth.loginWithVmMSI({ resource: 'https://ossrdbms-aad.database.windows.net' })
   await sequelizeSetup(postgresCreds)
 
-  // testMessaging(sender)
+  testMessaging(sender)
   testDB(sequelize, postgresCreds)
 
-  // setInterval(() => testMessaging(sender), 1000 * 60 * 60)
-  // setInterval(() => testDB(sequelize, postgresCreds), 1000 * 60 * 60)
+  setInterval(() => testMessaging(sender), 1000 * 60 * 60)
+  setInterval(() => testDB(sequelize, postgresCreds), 1000 * 60 * 60)
 }
 
 module.exports = { start }
