@@ -4,7 +4,7 @@ const Sequelize = require('sequelize')
 
 const dbConfig = {
   username: process.env.POSTGRES_USERNAME_ALT,
-  database: 'mine_claims_test_az',
+  database: 'mine_claims_test_ad',
   host: process.env.POSTGRES_HOST,
   port: 5432,
   dialect: 'postgres',
@@ -32,7 +32,6 @@ async function testDB (sequelize, postgresCreds) {
     console.log('FAIL db auth')
     console.log(err)
     await sequelizeSetup(postgresCreds)
-    console.log('SUCCESS db re-authenticated')
   }
 }
 
