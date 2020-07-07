@@ -11,15 +11,18 @@ class MessageReceiver extends MessageBase {
 
   registerEvents (receiver, action) {
     receiver.on(rheaPromise.ReceiverEvents.message, async (context) => {
-      console.log('context:', context)
+      const processingStartTime = Date.now()
+      // console.log('context:', context)
       // TODO: Might want to add other properties into the overrides
-      const correlationId = context.message.correlation_id
+      const msgCreationTime = context.message.creation_time
+      const [traceId, spanId] = context.message.correlation_id.split('.')
       const tagOverrides = {}
-      tagOverrides[appInsights.defaultClient.context.keys.operationId] = correlationId
-      tagOverrides[appInsights.defaultClient.context.keys.operationParentId] = correlationId
+      tagOverrides[appInsights.defaultClient.context.keys.operationId] = traceId
+      tagOverrides[appInsights.defaultClient.context.keys.operationParentId] = spanId
 
       const requestTelemetry = {
-        duration: 0,
+        // this might be a bit of a silly measure but then again...
+        duration: msgCreationTime - processingStartTime,
         name: this.name,
         resultCode: 200,
         source: `AMQP message from ${this.receiverConfig.source.address}`,
