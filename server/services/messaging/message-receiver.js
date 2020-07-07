@@ -1,7 +1,7 @@
+const appInsights = require('applicationinsights')
 const rheaPromise = require('rhea-promise')
 const { getReceiverConfig } = require('./config-helper')
 const MessageBase = require('./message-base')
-const appInsights = require('applicationinsights')
 
 class MessageReceiver extends MessageBase {
   constructor (name, config) {
@@ -12,9 +12,6 @@ class MessageReceiver extends MessageBase {
   registerEvents (receiver, action) {
     receiver.on(rheaPromise.ReceiverEvents.message, async (context) => {
       const correlationId = context.message.correlation_id
-      console.log(`correlationId: ${correlationId}`)
-
-      // see https://docs.microsoft.com/en-us/azure/azure-monitor/app/data-model-context#operation-id
       const properties = {}
       properties[appInsights.defaultClient.context.keys.operationParentId] = correlationId
 
