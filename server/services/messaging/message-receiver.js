@@ -11,31 +11,25 @@ class MessageReceiver extends MessageBase {
 
   registerEvents (receiver, action) {
     receiver.on(rheaPromise.ReceiverEvents.message, async (context) => {
-      console.log('context.message***********************')
-      console.log(context.message)
-
       const correlationId = context.message.correlation_id
-      console.log(correlationId)
+      console.log(`correlationId: ${correlationId}`)
 
       // see https://docs.microsoft.com/en-us/azure/azure-monitor/app/data-model-context#operation-id
       const properties = {}
       properties[appInsights.defaultClient.context.keys.operationParentId] = correlationId
 
-      const phonyReq = {
-        name: this.name,
-        url: this.receiverConfig.source.address,
+      const requestTelemetry = {
         duration: 0,
+        name: this.name,
         resultCode: 200,
+        source: `AMQP message from ${this.receiverConfig.source.address}`,
         success: true,
-        properties
+        tagOverrides: properties,
+        url: this.receiverConfig.source.address
       }
 
-      console.log('call trackRequest with phonyReq')
-      appInsights.defaultClient.trackRequest(phonyReq)
-
-      const correlationContext = appInsights.getCorrelationContext()
-      console.log('correlationContext')
-      console.log(correlationContext)
+      console.log('call trackRequest with requestTelemetry object:', requestTelemetry)
+      appInsights.defaultClient.trackRequest(requestTelemetry)
 
       console.log(`${this.name} received message`, context.message.body)
       try {
