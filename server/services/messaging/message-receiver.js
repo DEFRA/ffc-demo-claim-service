@@ -11,14 +11,9 @@ class MessageReceiver extends MessageBase {
 
   registerEvents (receiver, action) {
     receiver.on(rheaPromise.ReceiverEvents.message, async (context) => {
-      // context is no good, it just contains the keys and the tags
-      // console.log('context***********************')
-      // console.log(context)
       console.log('context.message***********************')
       console.log(context.message)
-      console.log('context.message.body***********************')
-      console.log(context.message.body)
-      console.log('context.message.correlation_id***********************')
+
       const correlationId = context.message.correlation_id
       console.log(correlationId)
 
@@ -32,17 +27,19 @@ class MessageReceiver extends MessageBase {
         // see https://docs.microsoft.com/en-us/azure/azure-monitor/app/data-model-context#operation-id
         properties: { operationId: correlationId }
       }
-      console.log('trackRequest***********************')
+
+      console.log('call trackRequest with phonyReq')
       appInsights.defaultClient.trackRequest(phonyReq)
-      // console.log('***********************')
-      // console.log(appInsights.defaultClient.context)
-      // console.log(context)
-      console.log('***********************')
+
+      const correlationContext = appInsights.getCorrelationContext()
+      console.log('correlationContext')
+      console.log(correlationContext)
+
       console.log(`${this.name} received message`, context.message.body)
       try {
-        // const message = JSON.parse(context.message.body)
+        const message = JSON.parse(context.message.body)
         // const message = { word: 'up' }
-        await action(context.message.body)
+        await action(message)
       } catch (ex) {
         console.error(`${this.name} error with message`, ex)
       }
