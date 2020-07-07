@@ -43,7 +43,7 @@ describe('Test message service', () => {
     jest.clearAllMocks()
   })
 
-  test('Message service sends the claim to two queues', async () => {
+  test.skip('Message service sends the claim to two queues', async () => {
     const claimRecord = generateSampleClaim()
     const jsonData = JSON.stringify(claimRecord)
 
