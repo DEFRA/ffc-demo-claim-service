@@ -11,9 +11,9 @@ class MessageReceiver extends MessageBase {
 
   registerEvents (receiver, action) {
     receiver.on(rheaPromise.ReceiverEvents.message, async (context) => {
-      const correlationId = context.message.correlation_id
-      const properties = {}
-      properties[appInsights.defaultClient.context.keys.operationParentId] = correlationId
+      const operationId = context.message.operationId
+      const tagOverrides = {}
+      tagOverrides[appInsights.defaultClient.context.keys.operationId] = operationId
 
       const requestTelemetry = {
         duration: 0,
@@ -21,7 +21,7 @@ class MessageReceiver extends MessageBase {
         resultCode: 200,
         source: `AMQP message from ${this.receiverConfig.source.address}`,
         success: true,
-        tagOverrides: properties,
+        tagOverrides,
         url: this.receiverConfig.source.address
       }
 

@@ -25,10 +25,13 @@ class MessageSender extends MessageBase {
     const sender = await this.connection.createAwaitableSender(this.senderConfig)
     try {
       startTime = Date.now()
-      const correlationContext = appInsights.getCorrelationContext()
+      console.log('appInsights.defaultClient.config')
+      console.log(appInsights.defaultClient.config)
+      console.log('appInsights.defaultClient.context')
+      console.log(appInsights.defaultClient.context)
 
-      const traceParentTraceId = correlationContext.operation.traceparent.traceId
-      const msg = { body: data, correlation_id: traceParentTraceId }
+      const operationId = appInsights.defaultClient.context.tags[appInsights.defaultClient.context.keys.operationId]
+      const msg = { body: data, operationId }
       console.log(msg)
 
       console.log(`${this.name} sending message`, msg)
