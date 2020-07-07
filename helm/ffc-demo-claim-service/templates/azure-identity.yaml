@@ -1,0 +1,3 @@
+{{- include "ffc-helm-library.azure-identity" (list . "ffc-demo-claim-service.azure-identity") -}}
+{{- define "ffc-demo-claim-service.azure-identity" -}}
+{{- end -}}
