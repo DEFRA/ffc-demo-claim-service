@@ -25,13 +25,16 @@ class MessageSender extends MessageBase {
     const sender = await this.connection.createAwaitableSender(this.senderConfig)
     try {
       startTime = Date.now()
-      console.log('appInsights.defaultClient.config')
-      console.log(appInsights.defaultClient.config)
       console.log('appInsights.defaultClient.context')
       console.log(appInsights.defaultClient.context)
 
-      const operationId = appInsights.defaultClient.context.tags[appInsights.defaultClient.context.keys.operationId]
-      const msg = { body: data, operationId }
+      // TODO: operationId will need to passed through on the object if it isn't
+      // available on appInsights object
+      // const operationId = context.message.operationId
+      // appInsights.defaultClient.context.tags[appInsights.defaultClient.context.keys.operationId] = operationId
+      console.log('appInsights.getCorrelationContext:', appInsights.getCorrelationContext())
+
+      const msg = { body: data, operationId: 'tbc' }
       console.log(msg)
 
       console.log(`${this.name} sending message`, msg)
