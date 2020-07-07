@@ -17,15 +17,17 @@ class MessageReceiver extends MessageBase {
       const correlationId = context.message.correlation_id
       console.log(correlationId)
 
+      // see https://docs.microsoft.com/en-us/azure/azure-monitor/app/data-model-context#operation-id
+      const properties = {}
+      properties[appInsights.defaultClient.context.keys.operationParentId] = correlationId
+
       const phonyReq = {
-        // TODO: Update the name to something meaningul and the url to the message queue
-        name: 'phony',
-        url: 'message-queue',
+        name: this.name,
+        url: this.receiverConfig.source.address,
         duration: 0,
         resultCode: 200,
         success: true,
-        // see https://docs.microsoft.com/en-us/azure/azure-monitor/app/data-model-context#operation-id
-        properties: { operationId: correlationId }
+        properties
       }
 
       console.log('call trackRequest with phonyReq')
@@ -38,7 +40,6 @@ class MessageReceiver extends MessageBase {
       console.log(`${this.name} received message`, context.message.body)
       try {
         const message = JSON.parse(context.message.body)
-        // const message = { word: 'up' }
         await action(message)
       } catch (ex) {
         console.error(`${this.name} error with message`, ex)
