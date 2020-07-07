@@ -22,7 +22,7 @@ class MessageReceiver extends MessageBase {
 
       const requestTelemetry = {
         // this might be a bit of a silly measure but then again...
-        duration: msgCreationTime - processingStartTime,
+        duration: processingStartTime - msgCreationTime,
         name: this.name,
         resultCode: 200,
         source: `AMQP message from ${this.receiverConfig.source.address}`,
