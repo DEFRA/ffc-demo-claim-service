@@ -8,8 +8,8 @@ labels: {}
 
 azureIdentity:
   name: ffc-demo-claim-service-identity
-  resourceID:
-  clientID:
+  resourceID: dummy
+  clientID: dummy
 
 azureIdentityBinding:
   name: ffc-demo-claim-service-identity-binding
