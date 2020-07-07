@@ -12,10 +12,11 @@ class MessageReceiver extends MessageBase {
   registerEvents (receiver, action) {
     receiver.on(rheaPromise.ReceiverEvents.message, async (context) => {
       console.log('context:', context)
-      const operationId = context.message.operationId
+      // TODO: Might want to add other properties into the overrides
+      const correlationId = context.message.correlation_id
       const tagOverrides = {}
-      tagOverrides[appInsights.defaultClient.context.keys.operationId] = operationId
-      tagOverrides[appInsights.defaultClient.context.keys.operationParentId] = operationId
+      tagOverrides[appInsights.defaultClient.context.keys.operationId] = correlationId
+      tagOverrides[appInsights.defaultClient.context.keys.operationParentId] = correlationId
 
       const requestTelemetry = {
         duration: 0,
