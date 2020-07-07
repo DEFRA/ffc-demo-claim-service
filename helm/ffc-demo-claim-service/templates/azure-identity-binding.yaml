@@ -1,3 +1,5 @@
 {{- include "ffc-helm-library.azure-identity-binding" (list . "ffc-demo-claim-service.azure-identity-binding") -}}
 {{- define "ffc-demo-claim-service.azure-identity-binding" -}}
+metadata:
+  namespace: {{ required (printf $requiredMsg "namespace") .Values.namespace | quote }}
 {{- end -}}
