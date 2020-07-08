@@ -1,4 +1,4 @@
-const { ReceiveMode, ServiceBusClient } = require('@azure/service-bus')
+const { ReceiveMode } = require('@azure/service-bus')
 const { getReceiverConfig } = require('./config-helper')
 const MessageBase = require('./message-base')
 
