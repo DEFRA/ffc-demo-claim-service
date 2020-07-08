@@ -17,12 +17,12 @@ class MessageSender extends MessageBase {
 
   async sendMessage (message) {
     const data = this.decodeMessage(message)
-    const sender = await this.connection.createAwaitableSender(this.senderConfig)
+    const queueClient = this.sbClient.createQueueClient(this.senderConfig.target.address)
+    const sender = await queueClient.createSender()
     try {
       console.log(`${this.name} sending message`, data)
-      const delivery = await sender.send({ body: data })
+      await sender.send({ body: data })
       console.log(`message sent ${this.name}`)
-      return delivery
     } finally {
       await sender.close()
     }
