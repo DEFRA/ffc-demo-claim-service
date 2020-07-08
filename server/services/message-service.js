@@ -21,8 +21,6 @@ async function closeConnections () {
 
 async function publishClaim (claim) {
   try {
-    console.log('calculationSender connected', calculationSender.isConnected())
-    console.log('scheduleSender connected', scheduleSender.isConnected())
     await Promise.all([
       calculationSender.sendMessage(claim),
       scheduleSender.sendMessage(claim)

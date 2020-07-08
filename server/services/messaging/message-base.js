@@ -7,23 +7,9 @@ class MessageBase {
     this.sbClient = ServiceBusClient.createFromConnectionString(connectionString)
   }
 
-  // async openConnection () {
-  //   try {
-  //     await this.connection.open()
-  //     console.log(`${this.name} connection opened`)
-  //   } catch (error) {
-  //     console.error(`error opening ${this.name} connection`, error)
-  //     throw error
-  //   }
-  // }
-
   async closeConnection () {
     await this.connection.close()
     console.log(`${this.name} connection closed`)
-  }
-
-  isConnected () {
-    return this.connection.isOpen()
   }
 }
 
