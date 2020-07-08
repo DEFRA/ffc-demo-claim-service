@@ -9,7 +9,7 @@ class MessageSender extends MessageBase {
 
   async sendMessage (message) {
     const queueClient = this.sbClient.createQueueClient(this.senderConfig.target.address)
-    const sender = await queueClient.createSender()
+    const sender = queueClient.createSender()
     try {
       console.log(`${this.name} sending message`, message)
       await sender.send({ body: message })
