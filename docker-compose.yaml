@@ -42,11 +42,6 @@ services:
       - variables/postgres.env
     volumes:
       - postgres_data:/var/lib/postgresql/data
-  ffc-demo-claim-message-queue:
-     image: vromero/activemq-artemis:2.9.0-alpine
-     environment:
-       ARTEMIS_USERNAME: artemis
-       ARTEMIS_PASSWORD: artemis
 volumes:
   postgres_data: {}
   node_modules: {}
