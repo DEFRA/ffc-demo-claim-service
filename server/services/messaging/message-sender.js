@@ -17,23 +17,17 @@ class MessageSender extends MessageBase {
   }
 
   async sendMessage (message) {
-    let startTime
+    let msgCreationTime
     let success = true
     let resultCode = 200
 
     const data = this.decodeMessage(message)
     const sender = await this.connection.createAwaitableSender(this.senderConfig)
     try {
-      startTime = Date.now()
-      // TODO: operationId will need to passed through on the object if it isn't
-      // available on appInsights object
-      // const operationId = context.message.operationId
-      // appInsights.defaultClient.context.tags[appInsights.defaultClient.context.keys.operationId] = operationId
-      // this is rubbish - just null!
-      console.log('appInsights.defaultClient.context:', appInsights.defaultClient.context)
-      console.log('appInsights.getCorrelationContext:', appInsights.getCorrelationContext())
-
-      const msg = { body: data, operationId: 'tbc' }
+      const traceId = appInsights.defaultClient.context.tags[appInsights.defaultClient.context.keys.operationId]
+      const spanId = appInsights.defaultClient.context.tags[appInsights.defaultClient.context.keys.operationParentId]
+      msgCreationTime = Date.now()
+      const msg = { body: data, correlation_id: `${traceId}.${spanId}`, creation_time: msgCreationTime }
       console.log(msg)
 
       console.log(`${this.name} sending message`, msg)
@@ -46,7 +40,7 @@ class MessageSender extends MessageBase {
       console.error('failed to send message', error)
       throw error
     } finally {
-      const duration = Date.now() - startTime
+      const duration = Date.now() - msgCreationTime
       appInsights.defaultClient.trackDependency({ data, dependencyTypeName: 'AMQP', duration, name: this.name, resultCode, success, target: this.senderConfig.target.address })
       await sender.close()
     }
