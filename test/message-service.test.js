@@ -64,11 +64,6 @@ describe('Test message service', () => {
     return expect(messageService.publishClaim(claimRecord)).rejects.toThrow()
   })
 
-  test('Message receiver connection opened', async () => {
-    await messageService.openConnections()
-    expect(messageReceiverInst.openConnection).toHaveBeenCalled()
-  })
-
   test('Message receiver setup to listen to claim queue', async () => {
     await messageService.registerQueues()
     expect(messageReceiverInst.setupReceiver).toHaveBeenCalled()

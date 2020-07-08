@@ -24,11 +24,9 @@ describe('message receiver', () => {
     })
     const testConfig = { ...config.messageQueues.claimQueue, address }
     messageReceiver = new MessageReceiver('test-receiver', testConfig)
-    await messageReceiver.openConnection()
     await messageReceiver.setupReceiver((result) => done(result.hello === message.hello))
 
     messageSender = new MessageSender('test-sender', testConfig)
-    await messageSender.openConnection()
     await messageSender.sendMessage(message)
 
     return expect(promise).resolves.toEqual(true)
