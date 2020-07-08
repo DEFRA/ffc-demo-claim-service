@@ -1,3 +1,6 @@
+jest.mock('@azure/service-bus')
+const { ServiceBusClient: ServiceBusClientMock } = require('@azure/service-bus')
+
 const mockReceiver = (receiveMode) => {
   return {
     registerMessageHandler: jest.fn((onMessage, onError) => {})
@@ -11,7 +14,7 @@ const mockQueueClient = (address) => {
   }
 }
 
-const mockSbClient = {
+const mockSBClient = {
   close: jest.fn(async () => {}),
   createQueueClient: jest.fn(address => mockQueueClient(address))
 }
@@ -24,7 +27,8 @@ const mockSender = {
 }
 
 module.exports = {
-  mockSbClient,
+  mockSBClient,
   mockSender,
-  mockSend
+  mockSend,
+  ServiceBusClientMock
 }

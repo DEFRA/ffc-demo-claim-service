@@ -1,6 +1,5 @@
-const { mockSbClient, mockSend } = require('./utils/mocks')
-jest.mock('@azure/service-bus')
-const { ServiceBusClient: sbClientMock } = require('@azure/service-bus')
+const { mockSBClient, mockSend, ServiceBusClientMock } = require('./mocks/serviceBusMocks')
+
 jest.mock('../server/config', () => ({
   messageQueues: {
     calculationQueue: 'calculationQueue',
@@ -22,7 +21,7 @@ describe('Test message service', () => {
   let messageReceiverInst
 
   beforeAll(() => {
-    sbClientMock.createFromConnectionString.mockImplementation(() => mockSbClient)
+    ServiceBusClientMock.createFromConnectionString.mockImplementation(() => mockSBClient)
     messageService = require('../server/services/message-service')
     messageReceiverInst = MessageReceiver.mock.instances[0]
   })

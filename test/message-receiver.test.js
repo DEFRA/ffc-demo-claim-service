@@ -1,6 +1,4 @@
-const { mockSbClient } = require('./utils/mocks')
-jest.mock('@azure/service-bus')
-const { ServiceBusClient: sbClientMock } = require('@azure/service-bus')
+const { mockSBClient, ServiceBusClientMock } = require('./mocks/serviceBusMocks')
 const MessageReceiver = require('../server/services/messaging/message-receiver')
 const MessageSender = require('../server/services/messaging/message-sender')
 const config = require('../server/config')
@@ -15,7 +13,7 @@ const message = {
 
 describe('message receiver', () => {
   beforeAll(() => {
-    sbClientMock.createFromConnectionString.mockImplementation(() => mockSbClient)
+    ServiceBusClientMock.createFromConnectionString.mockImplementation(() => mockSBClient)
   })
 
   beforeEach(() => {
