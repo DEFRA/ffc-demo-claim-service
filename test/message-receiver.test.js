@@ -1,3 +1,6 @@
+const { mockSbClient } = require('./utils/mocks')
+jest.mock('@azure/service-bus')
+const { ServiceBusClient: sbClientMock } = require('@azure/service-bus')
 const MessageReceiver = require('../server/services/messaging/message-receiver')
 const MessageSender = require('../server/services/messaging/message-sender')
 const config = require('../server/config')
@@ -11,6 +14,14 @@ const message = {
 }
 
 describe('message receiver', () => {
+  beforeAll(() => {
+    sbClientMock.createFromConnectionString.mockImplementation(() => mockSbClient)
+  })
+
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
   afterEach(async () => {
     await messageReceiver.closeConnection()
     await messageSender.closeConnection()
@@ -29,6 +40,7 @@ describe('message receiver', () => {
     messageSender = new MessageSender('test-sender', testConfig)
     await messageSender.sendMessage(message)
 
+    console.log('end of function')
     return expect(promise).resolves.toEqual(true)
   })
 })

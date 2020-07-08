@@ -1,4 +1,6 @@
-jest.mock('rhea-promise')
+const { mockSbClient, mockSend } = require('./utils/mocks')
+jest.mock('@azure/service-bus')
+const { ServiceBusClient: sbClientMock } = require('@azure/service-bus')
 jest.mock('../server/config', () => ({
   messageQueues: {
     calculationQueue: 'calculationQueue',
@@ -11,30 +13,16 @@ jest.mock('../server/services/message-action', () => ({
   claimMessageAction: jest.fn()
 }))
 jest.mock('../server/services/claim-service')
-const mockSender = {
-  close: () => {},
-  send: jest.fn(async () => ({ settled: 'settled' }))
-}
-const mockConnection = {
-  open: () => {},
-  close: () => {},
-  isOpen: () => true,
-  createAwaitableSender: async () => mockSender
-}
+
 const MessageReceiver = require('../server/services/messaging/message-receiver.js')
 const { claimMessageAction } = require('../server/services/message-action')
 
 describe('Test message service', () => {
   let messageService
-  let rheaPromiseMock
   let messageReceiverInst
 
-  beforeAll(async () => {
-    rheaPromiseMock = require('rhea-promise')
-    rheaPromiseMock.Container.mockImplementation(() => ({
-      identifyYourself: 'abc',
-      createConnection: () => mockConnection
-    }))
+  beforeAll(() => {
+    sbClientMock.createFromConnectionString.mockImplementation(() => mockSbClient)
     messageService = require('../server/services/message-service')
     messageReceiverInst = MessageReceiver.mock.instances[0]
   })
@@ -44,12 +32,11 @@ describe('Test message service', () => {
   })
 
   test('Message service sends the claim to two queues', async () => {
-    const claimRecord = generateSampleClaim()
-    const jsonData = JSON.stringify(claimRecord)
+    const message = generateSampleClaim()
 
-    await messageService.publishClaim(claimRecord)
-    await expect(mockSender.send).toHaveBeenCalledTimes(2)
-    await expect(mockSender.send).toHaveBeenCalledWith({ body: jsonData })
+    await messageService.publishClaim(message)
+    await expect(mockSend).toHaveBeenCalledTimes(2)
+    await expect(mockSend).toHaveBeenCalledWith({ body: message })
   })
 
   test('Message service acts correctly to an error while sending', async () => {
@@ -60,7 +47,7 @@ describe('Test message service', () => {
       dateOfSubsidence: new Date(),
       mineType: ['gold', 'iron']
     }
-    mockSender.send.mockImplementation(() => { throw new Error() })
+    mockSend.mockImplementation(() => { throw new Error() })
     return expect(messageService.publishClaim(claimRecord)).rejects.toThrow()
   })
 
