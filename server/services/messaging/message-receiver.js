@@ -20,6 +20,9 @@ class MessageReceiver extends MessageBase {
       tagOverrides[appInsights.defaultClient.context.keys.operationId] = traceId
       tagOverrides[appInsights.defaultClient.context.keys.operationParentId] = spanId
 
+      appInsights.defaultClient.context.keys.operationId = traceId
+      appInsights.defaultClient.context.keys.operationParentId = spanId
+
       const requestTelemetry = {
         // this might be a bit of a silly measure but then again...
         duration: processingStartTime - msgCreationTime,
