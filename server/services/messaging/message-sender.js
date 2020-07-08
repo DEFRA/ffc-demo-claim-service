@@ -21,11 +21,12 @@ class MessageSender extends MessageBase {
     let success = true
     let resultCode = 200
 
+    const client = new appInsights.TelemetryClient()
     const data = this.decodeMessage(message)
     const sender = await this.connection.createAwaitableSender(this.senderConfig)
     try {
-      const traceId = appInsights.defaultClient.context.tags[appInsights.defaultClient.context.keys.operationId]
-      const spanId = appInsights.defaultClient.context.tags[appInsights.defaultClient.context.keys.operationParentId]
+      const traceId = client.context.tags[appInsights.defaultClient.context.keys.operationId]
+      const spanId = client.context.tags[appInsights.defaultClient.context.keys.operationParentId]
       msgCreationTime = Date.now()
       const msg = { body: data, correlation_id: `${traceId}.${spanId}`, creation_time: msgCreationTime }
       console.log(msg)
@@ -41,7 +42,7 @@ class MessageSender extends MessageBase {
       throw error
     } finally {
       const duration = Date.now() - msgCreationTime
-      appInsights.defaultClient.trackDependency({ data, dependencyTypeName: 'AMQP', duration, name: this.name, resultCode, success, target: this.senderConfig.target.address })
+      client.trackDependency({ data, dependencyTypeName: 'AMQP', duration, name: this.name, resultCode, success, target: this.senderConfig.target.address })
       await sender.close()
     }
   }

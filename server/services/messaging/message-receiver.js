@@ -11,17 +11,15 @@ class MessageReceiver extends MessageBase {
 
   registerEvents (receiver, action) {
     receiver.on(rheaPromise.ReceiverEvents.message, async (context) => {
+      const client = new appInsights.TelemetryClient()
       const processingStartTime = Date.now()
       // console.log('context:', context)
       // TODO: Might want to add other properties into the overrides
       const msgCreationTime = context.message.creation_time
       const [traceId, spanId] = context.message.correlation_id.split('.')
-      // const tagOverrides = {}
-      // tagOverrides[appInsights.defaultClient.context.keys.operationId] = traceId
-      // tagOverrides[appInsights.defaultClient.context.keys.operationParentId] = spanId
 
-      appInsights.defaultClient.context.tags[appInsights.defaultClient.context.keys.operationId] = traceId
-      appInsights.defaultClient.context.tags[appInsights.defaultClient.context.keys.operationParentId] = spanId
+      client.context.tags[appInsights.defaultClient.context.keys.operationId] = traceId
+      client.context.tags[appInsights.defaultClient.context.keys.operationParentId] = spanId
 
       const requestTelemetry = {
         // this might be a bit of a silly measure but then again...
@@ -35,7 +33,7 @@ class MessageReceiver extends MessageBase {
       }
 
       console.log('call trackRequest with requestTelemetry object:', requestTelemetry)
-      appInsights.defaultClient.trackRequest(requestTelemetry)
+      client.trackRequest(requestTelemetry)
 
       console.log(`${this.name} received message`, context.message.body)
       try {
