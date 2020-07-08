@@ -16,12 +16,12 @@ class MessageReceiver extends MessageBase {
       // TODO: Might want to add other properties into the overrides
       const msgCreationTime = context.message.creation_time
       const [traceId, spanId] = context.message.correlation_id.split('.')
-      const tagOverrides = {}
-      tagOverrides[appInsights.defaultClient.context.keys.operationId] = traceId
-      tagOverrides[appInsights.defaultClient.context.keys.operationParentId] = spanId
+      // const tagOverrides = {}
+      // tagOverrides[appInsights.defaultClient.context.keys.operationId] = traceId
+      // tagOverrides[appInsights.defaultClient.context.keys.operationParentId] = spanId
 
-      appInsights.defaultClient.context.keys.operationId = traceId
-      appInsights.defaultClient.context.keys.operationParentId = spanId
+      appInsights.defaultClient.context.tags[appInsights.defaultClient.context.keys.operationId] = traceId
+      appInsights.defaultClient.context.tags[appInsights.defaultClient.context.keys.operationParentId] = spanId
 
       const requestTelemetry = {
         // this might be a bit of a silly measure but then again...
@@ -30,7 +30,7 @@ class MessageReceiver extends MessageBase {
         resultCode: 200,
         source: `AMQP message from ${this.receiverConfig.source.address}`,
         success: true,
-        tagOverrides,
+        // tagOverrides,
         url: this.receiverConfig.source.address
       }
 
