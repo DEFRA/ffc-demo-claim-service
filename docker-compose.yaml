@@ -8,7 +8,6 @@ services:
     image: ffc-demo-claim-service
     depends_on:
       - ffc-demo-claim-postgres
-      - ffc-demo-claim-message-queue
     env_file:
       - variables/message-queues.env
       - variables/postgres.env
