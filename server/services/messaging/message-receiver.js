@@ -27,7 +27,7 @@ class MessageReceiver extends MessageBase {
   }
 
   async setupReceiver (action) {
-    const queueClient = ServiceBusClient.createQueueClient(this.receiverConfig.source.address)
+    const queueClient = this.sbClient.createQueueClient(this.receiverConfig.source.address)
     const receiver = queueClient.createReceiver(ReceiveMode.peekLock)
     this.registerEvents(receiver, action)
   }
