@@ -30,7 +30,7 @@
       }
 
       stage('Helm lint') {
-        sh("helm lint $repoName")
+        test.lintHelm(repoName)
       }
 
       stage('Push container image') {
