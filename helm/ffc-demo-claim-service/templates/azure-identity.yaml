@@ -1,8 +1,3 @@
-apiVersion: "aadpodidentity.k8s.io/v1"
-kind: AzureIdentity
-metadata:
-  name: claim-service-demo-identity
-spec:
-  type: 0
-  resourceID: {{ .Values.azureIdentity.resourceID | quote }}
-  clientID: {{ .Values.azureIdentity.clientID | quote }}
+{{- include "ffc-helm-library.azure-identity" (list . "ffc-demo-claim-service.azure-identity") -}}
+{{- define "ffc-demo-claim-service.azure-identity" -}}
+{{- end -}}

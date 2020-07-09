@@ -7,13 +7,13 @@ image: ffc-demo-claim-service
 labels: {}
 
 azureIdentity:
+  name: ffc-demo-claim-service-identity
   resourceID:
   clientID:
 
 azureIdentityBinding:
-  name:
-  selector:
-
+  name: ffc-demo-claim-service-identity-binding
+  selector: ffc-demo-claim-service-identity-selector
 
 appInsights:
   key:

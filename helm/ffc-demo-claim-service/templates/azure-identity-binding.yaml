@@ -1,7 +1,3 @@
-apiVersion: "aadpodidentity.k8s.io/v1"
-kind: AzureIdentityBinding
-metadata:
-  name: claim-service-demo-identity-binding
-spec:
-  azureIdentity: claim-service-demo-identity
-  selector: claim-service-demo-identity-binding
+{{- include "ffc-helm-library.azure-identity-binding" (list . "ffc-demo-claim-service.azure-identity-binding") -}}
+{{- define "ffc-demo-claim-service.azure-identity-binding" -}}
+{{- end -}}
