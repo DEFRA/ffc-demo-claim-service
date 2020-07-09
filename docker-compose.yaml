@@ -9,7 +9,6 @@ services:
     depends_on:
       - ffc-demo-claim-postgres
     env_file:
-      - variables/message-queues.env
       - variables/postgres.env
     environment:
       APPINSIGHTS_CLOUDROLE: ffc-demo-claim-service-local
