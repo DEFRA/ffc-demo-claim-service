@@ -1,85 +1,46 @@
-const { mockSBClient, mockSend, ServiceBusClientMock } = require('../../unit/mocks/serviceBusMocks')
+const dbHelper = require('../../db-helper')
+const messageService = require('../../../server/services/message-service')
 
-jest.mock('../../../server/config', () => ({
-  messageQueues: {
-    calculationQueue: 'calculationQueue',
-    scheduleQueue: 'scheduleQueue',
-    claimQueue: 'claimQueue'
-  }
-}))
-jest.mock('../../../server/services/messaging/message-receiver')
-jest.mock('../../../server/services/message-action', () => ({
-  claimMessageAction: jest.fn()
-}))
-jest.mock('../../../server/services/claim-service')
-
-const MessageReceiver = require('../../../server/services/messaging/message-receiver.js')
-const { claimMessageAction } = require('../../../server/services/message-action')
+const generateSampleClaim = () => ({
+  email: 'test@test.com',
+  claimId: 'MINE123',
+  propertyType: 'business',
+  accessible: false,
+  dateOfSubsidence: new Date(),
+  mineType: ['gold', 'iron']
+})
 
 describe('Test message service', () => {
-  let messageService
-  let messageReceiverInst
-
-  beforeAll(() => {
-    ServiceBusClientMock.createFromConnectionString.mockImplementation(() => mockSBClient)
-    messageService = require('../../../server/services/message-service')
-    messageReceiverInst = MessageReceiver.mock.instances[0]
+  beforeEach(async () => {
+    await dbHelper.truncate()
+    jest.restoreAllMocks()
   })
 
-  beforeEach(() => {
-    jest.clearAllMocks()
+  afterAll(() => {
+    dbHelper.close()
   })
 
-  test('Message service sends the claim to two queues', async () => {
+  test('message service sends messages on new claim', async () => {
     const message = generateSampleClaim()
+    await messageService.publishClaim(message)
+  })
+
+  test('Message service sends the claim to schedule queue', async () => {
+    const message = generateSampleClaim()
+    const scheduleSender = messageService.getScheduleSender()
+    const spy = jest.spyOn(scheduleSender, 'sendMessage')
 
     await messageService.publishClaim(message)
-    await expect(mockSend).toHaveBeenCalledTimes(2)
-    await expect(mockSend).toHaveBeenCalledWith({ body: message })
+    await expect(spy).toHaveBeenCalledTimes(1)
   })
 
-  test('Message service acts correctly to an error while sending', async () => {
-    const claimRecord = {
-      claimId: 'MINE123',
-      propertyType: 'business',
-      accessible: false,
-      dateOfSubsidence: new Date(),
-      mineType: ['gold', 'iron']
-    }
-    mockSend.mockImplementation(() => { throw new Error() })
-    return expect(messageService.publishClaim(claimRecord)).rejects.toThrow()
-  })
+  test('Message service sends the claim to calculation queue', async () => {
+    const message = generateSampleClaim()
+    const calculationSender = messageService.getCalculationSender()
+    const spy = jest.spyOn(calculationSender, 'sendMessage')
 
-  test('Message receiver setup to listen to claim queue', async () => {
-    await messageService.registerQueues()
-    expect(messageReceiverInst.setupReceiver).toHaveBeenCalled()
-  })
-
-  test('Message receiver callback triggers message action', async () => {
-    const sampleClaim = generateSampleClaim()
-    await messageService.registerQueues()
-    const callback = messageReceiverInst.setupReceiver.mock.calls[0][0]
-    callback(sampleClaim)
-    expect(claimMessageAction).toHaveBeenCalledWith(sampleClaim, expect.any(Function))
-  })
-
-  test('Message receiver callback passes publish claim as publisher', async () => {
-    await messageService.registerQueues()
-    const callback = messageReceiverInst.setupReceiver.mock.calls[0][0]
-    callback(generateSampleClaim())
-    expect(claimMessageAction).toHaveBeenCalledWith(expect.any(Object), messageService.publishClaim)
-  })
-
-  test('Message receiver connection closed', async () => {
-    await messageService.closeConnections()
-    expect(messageReceiverInst.closeConnection).toHaveBeenCalled()
-  })
-
-  const generateSampleClaim = () => ({
-    claimId: 'MINE123',
-    propertyType: 'business',
-    accessible: false,
-    dateOfSubsidence: new Date(),
-    mineType: ['gold', 'iron']
+    await messageService.publishClaim(message)
+    await expect(spy).toHaveBeenCalledTimes(1)
+    await expect(spy).toHaveBeenCalledWith(message)
   })
 })
