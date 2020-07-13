@@ -8,10 +8,10 @@
     "migrate": "sequelize db:migrate",
     "start:watch": "nodemon --inspect=0.0.0.0 --ext js --legacy-watch index.js",
     "pretest": "npm run test:lint",
-    "test": "jest",
+    "test": "jest  --runInBand",
     "test:pact": "jest --testPathPattern=test/contract --coverage=false",
     "test:lint": "standard",
-    "test:watch": "jest --coverage=false --watchAll"
+    "test:watch": "jest --coverage=false --watchAll --runInBand"
   },
   "author": "Defra DDTS",
   "contributors": [
