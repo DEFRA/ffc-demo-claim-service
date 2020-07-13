@@ -5,7 +5,7 @@ describe('Message queue config', () => {
     process.env.MESSAGE_QUEUE_PORT = 'invalid'
 
     try {
-      require('../../server/config/mq-config')
+      require('../../../server/config/mq-config')
     } catch (error) {
       caughtError = error
     }

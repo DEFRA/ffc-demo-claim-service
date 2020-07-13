@@ -1,20 +1,20 @@
-const { mockSBClient, mockSend, ServiceBusClientMock } = require('./mocks/serviceBusMocks')
+const { mockSBClient, mockSend, ServiceBusClientMock } = require('../../unit/mocks/serviceBusMocks')
 
-jest.mock('../server/config', () => ({
+jest.mock('../../../server/config', () => ({
   messageQueues: {
     calculationQueue: 'calculationQueue',
     scheduleQueue: 'scheduleQueue',
     claimQueue: 'claimQueue'
   }
 }))
-jest.mock('../server/services/messaging/message-receiver')
-jest.mock('../server/services/message-action', () => ({
+jest.mock('../../../server/services/messaging/message-receiver')
+jest.mock('../../../server/services/message-action', () => ({
   claimMessageAction: jest.fn()
 }))
-jest.mock('../server/services/claim-service')
+jest.mock('../../../server/services/claim-service')
 
-const MessageReceiver = require('../server/services/messaging/message-receiver.js')
-const { claimMessageAction } = require('../server/services/message-action')
+const MessageReceiver = require('../../../server/services/messaging/message-receiver.js')
+const { claimMessageAction } = require('../../../server/services/message-action')
 
 describe('Test message service', () => {
   let messageService
@@ -22,7 +22,7 @@ describe('Test message service', () => {
 
   beforeAll(() => {
     ServiceBusClientMock.createFromConnectionString.mockImplementation(() => mockSBClient)
-    messageService = require('../server/services/message-service')
+    messageService = require('../../../server/services/message-service')
     messageReceiverInst = MessageReceiver.mock.instances[0]
   })
 
