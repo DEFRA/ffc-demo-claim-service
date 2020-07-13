@@ -1,5 +1,5 @@
-const MessageSender = require('./messaging/message-sender')
-const MessageReceiver = require('./messaging/message-receiver')
+const MessageSender = require('./messaging/rhea-message-sender')
+const MessageReceiver = require('./messaging/rhea-message-receiver')
 const { claimMessageAction } = require('./message-action')
 const config = require('../config')
 
@@ -8,6 +8,7 @@ const scheduleSender = new MessageSender('claim-service-schedule-sender', config
 const claimReceiver = new MessageReceiver('claim-service-claim-receiver', config.messageQueues.claimQueue)
 
 async function registerQueues () {
+  await openConnections()
   await claimReceiver.setupReceiver(claim => {
     claimMessageAction(claim, publishClaim)
   })
@@ -19,12 +20,23 @@ async function closeConnections () {
   await claimReceiver.closeConnection()
 }
 
+async function openConnections () {
+  await calculationSender.openConnection()
+  await scheduleSender.openConnection()
+  await claimReceiver.openConnection()
+}
+
 async function publishClaim (claim) {
   try {
-    await Promise.all([
+    console.log('calculationSender connected', calculationSender.isConnected())
+    console.log('scheduleSender connected', scheduleSender.isConnected())
+    const deliveries = await Promise.all([
       calculationSender.sendMessage(claim),
       scheduleSender.sendMessage(claim)
     ])
+    for (const delivery of deliveries) {
+      console.log(delivery.settled)
+    }
   } catch (err) {
     console.log(err)
     throw err
@@ -53,6 +65,7 @@ module.exports = {
   closeConnections,
   getCalculationSender,
   getScheduleSender,
+  openConnections,
   publishClaim,
   registerQueues,
   getCalculationMessage,

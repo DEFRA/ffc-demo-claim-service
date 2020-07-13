@@ -1,6 +1,6 @@
 const { ReceiveMode } = require('@azure/service-bus')
 const { getReceiverConfig } = require('./config-helper')
-const MessageBase = require('./message-base')
+const MessageBase = require('./sb-message-base')
 
 class MessageReceiver extends MessageBase {
   constructor (name, config) {

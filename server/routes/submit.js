@@ -1,6 +1,6 @@
 const schema = require('../schema/claim')
 const claimService = require('../services/claim-service')
-const messageService = require('../services/message-service')
+const messageService = require('../services/sb-message-service')
 
 module.exports = {
   method: 'POST',

@@ -1,5 +1,5 @@
 const { getSenderConfig } = require('./config-helper')
-const MessageBase = require('./message-base')
+const MessageBase = require('./sb-message-base')
 
 class MessageSender extends MessageBase {
   constructor (name, config) {

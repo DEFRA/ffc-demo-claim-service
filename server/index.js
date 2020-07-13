@@ -1,6 +1,6 @@
 const hapi = require('@hapi/hapi')
 const config = require('./config')
-const messageService = require('./services/message-service')
+const messageService = config.isProd ? require('./services/sb-message-service') : require('./services/rhea-message-service')
 
 async function createServer () {
   // Create the hapi server
