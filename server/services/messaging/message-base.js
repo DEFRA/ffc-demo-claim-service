@@ -1,24 +1,22 @@
 const { ServiceBusClient } = require('@azure/service-bus')
-const { loginWithUsernamePassword } = require('@azure/ms-rest-nodeauth')
 
 class MessageBase {
   constructor (name, config) {
     this.name = name
-    this.createClient(config)
+    this.config = config
+    this.createClient()
   }
 
-  createClient (config) {
-    this.sbClient = config.username ? this.createClientFromUserToken(config) : this.createClientFromPodIdentityToken(config)
+  createClient () {
+    this.sbClient = this.config.username ? this.createClientFromConnectionString(this.config) : this.createClientFromAADToken(this.config)
   }
 
-  async createClientFromUserToken (config) {
-    const credentials = await loginWithUsernamePassword(config.username, config.password, {
-      tokenAudience: `https://${config.host}/`
-    })
-    return ServiceBusClient.createFromAadTokenCredentials(config.host, credentials)
+  createClientFromConnectionString (config) {
+    const connectionString = `Endpoint=sb://${config.host}/;SharedAccessKeyName=${config.username};SharedAccessKey=${config.password}`
+    return ServiceBusClient.createFromConnectionString(connectionString)
   }
 
-  createClientFromPodIdentityToken (config) {
+  createClientFromAADToken (config) {
     // TODO add Azure Pod Identity logic
   }
 
