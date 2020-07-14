@@ -1,10 +1,10 @@
 describe('Healthy test', () => {
   let server
 
-  jest.mock('../../server/services/message-service')
-  jest.mock('../../server/services/database-service')
-  const databaseService = require('../../server/services/database-service')
-  const createServer = require('../../server')
+  jest.mock('../../../server/services/message-service')
+  jest.mock('../../../server/services/database-service')
+  const databaseService = require('../../../server/services/database-service')
+  const createServer = require('../../../server')
 
   beforeEach(async () => {
     server = await createServer()

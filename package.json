@@ -6,12 +6,14 @@
   "main": "index.js",
   "scripts": {
     "migrate": "sequelize db:migrate",
-    "start:watch": "nodemon --inspect=0.0.0.0 --ext js --legacy-watch index.js",
     "pretest": "npm run test:lint",
-    "test": "jest",
-    "test:pact": "jest --testPathPattern=test/contract --coverage=false",
+    "test": "jest --testPathIgnorePatterns=test/integration/local --runInBand",
     "test:lint": "standard",
-    "test:watch": "jest --coverage=false --watchAll"
+    "test:pact": "jest --testPathPattern=test/contract --coverage=false",
+    "test:integration": "jest --testPathPattern=test/integration --coverage=false",
+    "test:unit": "jest --testPathPattern=test/unit --coverage=false",
+    "test:watch": "jest --coverage=false --onlyChanged --watch --runInBand",
+    "start:watch": "nodemon --inspect=0.0.0.0 --ext js --legacy-watch index.js"
   },
   "author": "Defra DDTS",
   "contributors": [
