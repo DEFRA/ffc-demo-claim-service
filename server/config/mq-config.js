@@ -12,7 +12,6 @@ const mqSchema = joi.object({
     host: joi.string().default('localhost'),
     hostname: joi.string().default('localhost'),
     port: joi.number().default(5672),
-    reconnect_Limit: joi.number().default(10),
     transport: joi.string().default('tcp')
   },
   calculationQueue: queueSchema,
@@ -25,7 +24,6 @@ const mqConfig = {
     host: process.env.MESSAGE_QUEUE_HOST,
     hostname: process.env.MESSAGE_QUEUE_HOST,
     port: process.env.MESSAGE_QUEUE_PORT,
-    reconnect_Limit: process.env.MESSAGE_QUEUE_RECONNECT_LIMIT,
     transport: process.env.MESSAGE_QUEUE_TRANSPORT
   },
   calculationQueue: {
