@@ -7,7 +7,7 @@
   "scripts": {
     "migrate": "sequelize db:migrate",
     "pretest": "npm run test:lint",
-    "test": "jest --testPathIgnorePatterns=test/integration/local --runInBand",
+    "test": "jest --testPathIgnorePatterns=test/integration/local,test/contract/claim.test.js --runInBand",
     "test:lint": "standard",
     "test:pact": "jest --testPathPattern=test/contract --coverage=false",
     "test:integration": "jest --testPathPattern=test/integration --coverage=false",
