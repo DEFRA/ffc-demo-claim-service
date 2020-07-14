@@ -38,8 +38,6 @@ The following environment variables are required by the application container. V
 | POSTGRES_USERNAME                | Postgres username           | yes      |           |                             |                                                                                   |
 | POSTGRES_PASSWORD                | Postgres password           | yes      |           |                             |                                                                                   |
 | MESSAGE_QUEUE_HOST               | MQ Server hostname          | no       | amq       |                             |                                                                                   |
-| MESSAGE_QUEUE_PORT               | MQ Server port              | no       | 5672      |                             |                                                                                   |
-| MESSAGE_QUEUE_TRANSPORT          | MQ transport                | no       | tcp       | tcp,ssl                     |                                                                                   |
 | CALCULATION_QUEUE_ADDRESS        | Message queue address       | yes      |           |                             |                                                                                   |
 | CALCULATION_QUEUE_USER           | calculation queue user name | no       |           |                             |                                                                                   |
 | CALCULATION_QUEUE_PASSWORD       | calculation queue password  | no       |           |                             |                                                                                   |
