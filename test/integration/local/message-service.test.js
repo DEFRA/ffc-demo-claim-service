@@ -20,11 +20,6 @@ describe('Test message service', () => {
     dbHelper.close()
   })
 
-  test('message service sends messages on new claim', async () => {
-    const message = generateSampleClaim()
-    await messageService.publishClaim(message)
-  })
-
   test('Message service sends the claim to schedule queue', async () => {
     const message = generateSampleClaim()
     const scheduleSender = messageService.getScheduleSender()
@@ -32,6 +27,7 @@ describe('Test message service', () => {
 
     await messageService.publishClaim(message)
     await expect(spy).toHaveBeenCalledTimes(1)
+    await expect(spy).toHaveBeenCalledWith(message)
   })
 
   test('Message service sends the claim to calculation queue', async () => {
