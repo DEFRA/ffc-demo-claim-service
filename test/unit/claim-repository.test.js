@@ -4,8 +4,8 @@ let mockDb
 
 describe('Test claim repository', () => {
   beforeAll(async () => {
-    jest.mock('../server/models')
-    jest.mock('../server/models/claim', () => {
+    jest.mock('../../server/models')
+    jest.mock('../../server/models/claim', () => {
       MockSequelize = require('sequelize-mock')
       mockDb = new MockSequelize()
       return mockDb.define('claims', {
@@ -16,7 +16,7 @@ describe('Test claim repository', () => {
         email: 'joe.bloggs@defra.gov.uk'
       })
     })
-    claimRepository = require('../server/repository/claim-repository')
+    claimRepository = require('../../server/repository/claim-repository')
   })
 
   test('Claim repository loads object from database', async () => {
@@ -69,7 +69,7 @@ describe('Test claim repository', () => {
   })
 
   afterAll(async () => {
-    jest.unmock('../server/models/claim')
-    jest.unmock('../server/models')
+    jest.unmock('../../server/models/claim')
+    jest.unmock('../../server/models')
   })
 })

@@ -6,6 +6,8 @@ Digital service mock to claim public money in the event property subsides into m
 
 ## Prerequisites
 
+- Azure Service Bus instance
+
 Either:
 - Docker
 - Docker Compose
@@ -14,10 +16,15 @@ Or:
 - Kubernetes
 - Helm
 
-Or:
-- Node 10
-- PostgreSQL database
-- AMQP 1.0 compatible message queue
+### Azure Service Bus
+This service depends on a valid Azure Service Bus connection string for asynchronous communication.  The following environment variables need to be set in any environment before the Docker container is started.
+
+| Name                             | Description                                                                                |
+|----------------------------------|--------------------------------------------------------------------------------------------|
+| MESSAGE_QUEUE_HOST               | Azure Service Bus hostname, eg `myservicebus.servicebus.windows.net`                       |
+| MESSAGE_QUEUE_USER               | Azure Service Bus SAS policy name, eg `RootManageSharedAccessKey`                          |
+| MESSAGE_QUEUE_PASSWORD           | Azure Service Bus SAS policy key                                                           |
+| MESSAGE_QUEUE_SUFFIX             | Developer specific queue suffix to prevent collisions, only required for local development |
 
 ## Environment variables
 
@@ -29,10 +36,8 @@ The following environment variables are required by the application container. V
 | PORT                             | Port number                 | no       | 3003      |                             |                                                                                   |
 | POSTGRES_DB                      | Postgres database           | yes      |           |                             |                                                                                   |
 | POSTGRES_USERNAME                | Postgres username           | yes      |           |                             |                                                                                   |
-| POSTGRES_PASSWORD                | Postgres password           | yes      |           |                             |                                                                                   |
-| MESSAGE_QUEUE_HOST               | MQ Server hostname          | no       | amq       |                             |                                                                                   |
-| MESSAGE_QUEUE_PORT               | MQ Server port              | no       | 5672      |                             |                                                                                   |
-| MESSAGE_QUEUE_TRANSPORT          | MQ transport                | no       | tcp       | tcp,ssl                     |                                                                                   |
+| POSTGRES_PASSWORD                | Postgres password           | yes      |           |                             
+|                                                                                   |
 | CALCULATION_QUEUE_ADDRESS        | Message queue address       | yes      |           |                             |                                                                                   |
 | CALCULATION_QUEUE_USER           | calculation queue user name | no       |           |                             |                                                                                   |
 | CALCULATION_QUEUE_PASSWORD       | calculation queue password  | no       |           |                             |                                                                                   |
@@ -44,6 +49,7 @@ The following environment variables are required by the application container. V
 | CLAIM_QUEUE_PASSWORD             | claim queue password        | no       |           |                             |                                                                                   |
 | APPINSIGHTS_INSTRUMENTATIONKEY   | Key for application insight | no       |           |                             | App insights only enabled if key is present. Note: Silently fails for invalid key |
 | APPINSIGHTS_CLOUDROLE            | Role used for filtering metrics| no    |           |                             | Set to `ffc-demo-claim-service-local` in docker compose files                     |
+
 ## How to run tests
 
 A convenience script is provided to run automated tests in a containerised environment. The first time this is run, container images required for testing will be automatically built. An optional `--build` (or `-b`) flag may be used to rebuild these images in future (for example, to apply dependency updates).
@@ -58,11 +64,11 @@ scripts/test --build
 
 This runs tests via a `docker-compose run` command. If tests complete successfully, all containers, networks and volumes are cleaned up before the script exits. If there is an error or any tests fail, the associated Docker resources will be left available for inspection.
 
-Alternatively, the same tests may be run locally via npm:
+Alternatively, unit tests may be run locally via npm:
 
 ```
-# Run tests without Docker
-npm run test
+# Run unit tests without Docker
+npm run test:unit
 ```
 
 ## Running the application
@@ -115,11 +121,11 @@ Sample valid JSON for the `/submit` endpoint is:
 
 ### Test the message queue
 
-This service reacts to messages retrieved from an AMQP 1.0 message broker (the "claim" queue). It can be tested locally with:
+This service reacts to messages retrieved from Azure Service Bus (the "ffc-demo-claim" queue). It can be tested locally with:
 
-`docker-compose up` runs [ActiveMQ Artemis](https://activemq.apache.org/components/artemis) alongside the application to provide the required message bus and broker.
+`docker-compose up` to start the service with a connection to the configured Azure Service Bus instance and developer queues.
 
-Test messages can be sent via the Artemis console UI hosted at http://localhost:8161/console/login (username: artemis, password: artemis). Messages should match the format of the sample JSON below.
+Test messages can be sent via a client that supports sending to Azure Service Bus. Messages should match the format of the sample JSON below.
 
 ```
 {
@@ -177,7 +183,7 @@ scripts/exec npm update
 # Rebuild and restart the service
 scripts/start --clean
 
-## License
+## Licence
 
 THIS INFORMATION IS LICENSED UNDER THE CONDITIONS OF THE OPEN GOVERNMENT LICENCE found at:
 
@@ -187,7 +193,7 @@ The following attribution statement MUST be cited in your products and applicati
 
 > Contains public sector information licensed under the Open Government license v3
 
-### About the license
+### About the licence
 
 The Open Government Licence (OGL) was developed by the Controller of Her Majesty's Stationery Office (HMSO) to enable information providers in the public sector to license the use and re-use of their information under a common open licence.
 

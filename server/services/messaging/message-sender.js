@@ -12,6 +12,7 @@ class MessageSender extends MessageBase {
     const sender = queueClient.createSender()
     try {
       console.log(`${this.name} sending message`, message)
+
       await sender.send({ body: message })
       console.log(`message sent ${this.name}`)
     } finally {

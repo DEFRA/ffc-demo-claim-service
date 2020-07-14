@@ -5,20 +5,20 @@ describe('Test claim service', () => {
   let mockMinetypeRepository
 
   beforeAll(async () => {
-    jest.mock('../server/repository/claim-repository', () => ({
+    jest.mock('../../server/repository/claim-repository', () => ({
       getById: jest.fn(),
       create: jest.fn()
     }))
-    jest.mock('../server/repository/minetype-repository', () => ({
+    jest.mock('../../server/repository/minetype-repository', () => ({
       create: jest.fn()
     }))
   })
 
   beforeEach(async () => {
     jest.resetModules()
-    mockClaimRepository = require('../server/repository/claim-repository')
-    mockMinetypeRepository = require('../server/repository/minetype-repository')
-    claimService = require('../server/services/claim-service')
+    mockClaimRepository = require('../../server/repository/claim-repository')
+    mockMinetypeRepository = require('../../server/repository/minetype-repository')
+    claimService = require('../../server/services/claim-service')
   })
 
   afterEach(async () => {
@@ -53,9 +53,9 @@ describe('Test claim service', () => {
   })
 
   afterAll(async () => {
-    jest.unmock('../server/repository/claim-repository')
-    jest.unmock('../server/repository/minetype-repository')
-    jest.unmock('../server/services/message-service')
+    jest.unmock('../../server/repository/claim-repository')
+    jest.unmock('../../server/repository/minetype-repository')
+    jest.unmock('../../server/services/message-service')
   })
 
   const getSampleClaim = () => ({
