@@ -17,14 +17,14 @@ Or:
 - Helm
 
 ### Azure Service Bus
-This service depends on a valid Azure Service Bus connection string for asynchronous communication.  The following environment variables need to be set on the local device before the Docker container is started.
+This service depends on a valid Azure Service Bus connection string for asynchronous communication.  The following environment variables need to be set in any environment before the Docker container is started.
 
-| Name                             | Description                                                           |
-|----------------------------------|-----------------------------------------------------------------------|
-| MESSAGE_QUEUE_HOST               | Azure Service Bus hostname, eg `myservicebus.servicebus.windows.net`  |
-| MESSAGE_QUEUE_USER               | Azure Service Bus SAS policy name, eg `RootManageSharedAccessKey`     |
-| MESSAGE_QUEUE_PASSWORD           | Azure Service Bus SAS policy key                                      |
-| MESSAGE_QUEUE_SUFFIX             | Developer specific queue suffix to prevent collisions                 |
+| Name                             | Description                                                                                |
+|----------------------------------|--------------------------------------------------------------------------------------------|
+| MESSAGE_QUEUE_HOST               | Azure Service Bus hostname, eg `myservicebus.servicebus.windows.net`                       |
+| MESSAGE_QUEUE_USER               | Azure Service Bus SAS policy name, eg `RootManageSharedAccessKey`                          |
+| MESSAGE_QUEUE_PASSWORD           | Azure Service Bus SAS policy key                                                           |
+| MESSAGE_QUEUE_SUFFIX             | Developer specific queue suffix to prevent collisions, only required for local development |
 
 ## Environment variables
 
@@ -36,8 +36,8 @@ The following environment variables are required by the application container. V
 | PORT                             | Port number                 | no       | 3003      |                             |                                                                                   |
 | POSTGRES_DB                      | Postgres database           | yes      |           |                             |                                                                                   |
 | POSTGRES_USERNAME                | Postgres username           | yes      |           |                             |                                                                                   |
-| POSTGRES_PASSWORD                | Postgres password           | yes      |           |                             |                                                                                   |
-| MESSAGE_QUEUE_HOST               | MQ Server hostname          | no       | amq       |                             |                                                                                   |
+| POSTGRES_PASSWORD                | Postgres password           | yes      |           |                             
+|                                                                                   |
 | CALCULATION_QUEUE_ADDRESS        | Message queue address       | yes      |           |                             |                                                                                   |
 | CALCULATION_QUEUE_USER           | calculation queue user name | no       |           |                             |                                                                                   |
 | CALCULATION_QUEUE_PASSWORD       | calculation queue password  | no       |           |                             |                                                                                   |
