@@ -38,8 +38,6 @@ container:
   command: ["/bin/sh","-c"]
   args: ["npm --no-update-notifier run migrate && node index"]
   messageQueueHost: amq
-  messageQueuePort: 5672
-  messageQueueTransport: tcp
   calculationQueueAddress: calculation
   calculationQueueUser: artemis
   calculationQueuePassword: artemis

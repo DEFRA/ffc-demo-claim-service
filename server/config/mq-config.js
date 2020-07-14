@@ -9,10 +9,7 @@ const queueSchema = joi.object({
 
 const mqSchema = joi.object({
   messageQueue: {
-    host: joi.string().default('localhost'),
-    hostname: joi.string().default('localhost'),
-    port: joi.number().default(5672),
-    transport: joi.string().default('tcp')
+    host: joi.string().default('localhost')
   },
   calculationQueue: queueSchema,
   claimQueue: queueSchema,
@@ -21,10 +18,7 @@ const mqSchema = joi.object({
 
 const mqConfig = {
   messageQueue: {
-    host: process.env.MESSAGE_QUEUE_HOST,
-    hostname: process.env.MESSAGE_QUEUE_HOST,
-    port: process.env.MESSAGE_QUEUE_PORT,
-    transport: process.env.MESSAGE_QUEUE_TRANSPORT
+    host: process.env.MESSAGE_QUEUE_HOST
   },
   calculationQueue: {
     address: process.env.CALCULATION_QUEUE_ADDRESS,
