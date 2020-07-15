@@ -1,4 +1,3 @@
-
 const db = require('../server/models')
 
 async function truncate () {
