@@ -1,3 +1,5 @@
+{{- if .Values.pr }}
 {{- include "ffc-helm-library.role-binding" (list . "ffc-demo-user-service.role-binding") -}}
+{{- end }}
 {{- define "ffc-demo-user-service.role-binding" -}}
 {{- end -}}
