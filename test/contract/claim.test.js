@@ -1,6 +1,7 @@
 const path = require('path')
 const { MessageConsumerPact } = require('@pact-foundation/pact')
 const Matchers = require('@pact-foundation/pact/dsl/matchers')
+const asbHelper = require('../asb-helper')
 const { claimMessageAction } = require('../../server/services/message-action')
 const dbHelper = require('../db-helper')
 const { publishClaim } = require('../../server/services/message-service')
@@ -9,6 +10,7 @@ describe('receiving a new claim', () => {
   let messagePact
 
   beforeAll(async () => {
+    await asbHelper.clearAllQueues()
     await dbHelper.truncate()
 
     messagePact = new MessageConsumerPact({
@@ -17,11 +19,12 @@ describe('receiving a new claim', () => {
       log: path.resolve(process.cwd(), 'test-output', 'pact.log'),
       dir: path.resolve(process.cwd(), 'test-output')
     })
-  })
+  }, 30000)
 
-  afterAll(() => {
+  afterAll(async () => {
+    await asbHelper.clearAllQueues()
     dbHelper.close()
-  })
+  }, 30000)
 
   test('new claim is received, saved and published to other services', async () => {
     await messagePact

@@ -1,4 +1,5 @@
 const dbHelper = require('../../db-helper')
+const asbHelper = require('../../asb-helper')
 const messageService = require('../../../server/services/message-service')
 
 const generateSampleClaim = () => ({
@@ -10,15 +11,20 @@ const generateSampleClaim = () => ({
   mineType: ['gold', 'iron']
 })
 
-describe('Test message service', () => {
+describe.only('Test message service', () => {
+  beforeAll(async () => {
+    await asbHelper.clearAllQueues()
+  }, 30000)
+
   beforeEach(async () => {
     await dbHelper.truncate()
     jest.restoreAllMocks()
   })
 
-  afterAll(() => {
+  afterAll(async () => {
+    await asbHelper.clearAllQueues()
     dbHelper.close()
-  })
+  }, 30000)
 
   test('Message service sends the claim to schedule queue', async () => {
     const message = generateSampleClaim()
