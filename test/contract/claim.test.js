@@ -5,7 +5,7 @@ const { claimMessageAction } = require('../../server/services/message-action')
 const dbHelper = require('../db-helper')
 const { publishClaim } = require('../../server/services/message-service')
 
-describe('Receiving a new claim', () => {
+describe('receiving a new claim', () => {
   let messagePact
 
   beforeAll(async () => {
@@ -23,7 +23,7 @@ describe('Receiving a new claim', () => {
     dbHelper.close()
   })
 
-  test('messageAction can process message', async () => {
+  test('new claim is received, saved and published to other services', async () => {
     await messagePact
       .given('valid message')
       .expectsToReceive('a request for new claim')
