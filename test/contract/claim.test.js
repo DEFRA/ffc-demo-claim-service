@@ -1,10 +1,11 @@
-describe('Schedule message contract test', () => {
-  const path = require('path')
-  const { MessageConsumerPact } = require('@pact-foundation/pact')
-  const Matchers = require('@pact-foundation/pact/dsl/matchers')
-  const { claimMessageAction } = require('../../server/services/message-action')
-  const dbHelper = require('../db-helper')
-  const { publishClaim } = require('../../server/services/message-service')
+const path = require('path')
+const { MessageConsumerPact } = require('@pact-foundation/pact')
+const Matchers = require('@pact-foundation/pact/dsl/matchers')
+const { claimMessageAction } = require('../../server/services/message-action')
+const dbHelper = require('../db-helper')
+const { publishClaim } = require('../../server/services/message-service')
+
+describe('Receiving a new claim', () => {
   let messagePact
 
   beforeAll(async () => {
