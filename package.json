@@ -1,17 +1,19 @@
 {
   "name": "ffc-demo-claim-service",
   "description": "Digital service mock to claim public money in the event property subsides into mine shaft.",
-  "version": "3.5.2",
+  "version": "3.7.0",
   "homepage": "https://github.com/DEFRA/mine-support-claim-service",
   "main": "index.js",
   "scripts": {
     "migrate": "sequelize db:migrate",
-    "start:watch": "nodemon --inspect=0.0.0.0 --ext js --legacy-watch index.js",
     "pretest": "npm run test:lint",
-    "test": "jest",
-    "test:pact": "jest --testPathPattern=test/contract --coverage=false",
+    "test": "jest --runInBand",
     "test:lint": "standard",
-    "test:watch": "jest --coverage=false --watchAll"
+    "test:pact": "jest --testPathPattern=test/contract --coverage=false",
+    "test:integration": "jest --testPathPattern=test/integration --coverage=false",
+    "test:unit": "jest --testPathPattern=test/unit --coverage=false",
+    "test:watch": "jest --coverage=false --onlyChanged --watch --runInBand",
+    "start:watch": "nodemon --inspect=0.0.0.0 --ext js --legacy-watch index.js"
   },
   "author": "Defra DDTS",
   "contributors": [
@@ -20,10 +22,13 @@
     "Matthew Collins <matthew.collins@defra.gov.uk>",
     "Paul Andrews <paul.andrews@defra.gov.uk>",
     "David Bingham <david.bingham@defra.gov.uk>",
-    "Phil Benson <phil.benson@defra.gov.uk>"
+    "Phil Benson <phil.benson@defra.gov.uk>",
+    "Fay Toward <fay.toward@rpa.gov.uk>",
+    "Steve Hunt <steven.hunt@defra.gov.uk>"
   ],
   "license": "OGL-UK-3.0",
   "dependencies": {
+    "@azure/service-bus": "^1.1.7",
     "@hapi/catbox-memory": "^5.0.0",
     "@hapi/hapi": "^19.1.1",
     "@hapi/joi": "^17.1.1",
@@ -31,7 +36,6 @@
     "applicationinsights": "^1.8.0",
     "aws-sdk": "^2.699.0",
     "pg": "^7.12.1",
-    "rhea-promise": "^1.0.0",
     "sequelize": "^5.21.13",
     "sequelize-cli": "^5.5.1"
   },

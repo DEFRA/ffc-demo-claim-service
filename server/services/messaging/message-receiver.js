@@ -1,4 +1,4 @@
-const rheaPromise = require('rhea-promise')
+const { ReceiveMode } = require('@azure/service-bus')
 const { getReceiverConfig } = require('./config-helper')
 const MessageBase = require('./message-base')
 
@@ -9,26 +9,25 @@ class MessageReceiver extends MessageBase {
   }
 
   registerEvents (receiver, action) {
-    receiver.on(rheaPromise.ReceiverEvents.message, async (context) => {
-      console.log(`${this.name} received message`, context.message.body)
+    const receiverError = (error) => {
+      console.log(error)
+    }
+
+    const receiverHandler = async (message) => {
+      console.log(`${this.name} received message`, message.body)
       try {
-        const message = JSON.parse(context.message.body)
         await action(message)
       } catch (ex) {
         console.error(`${this.name} error with message`, ex)
       }
-    })
+    }
 
-    receiver.on(rheaPromise.ReceiverEvents.receiverError, context => {
-      const receiverError = context.receiver && context.receiver.error
-      if (receiverError) {
-        console.error(`${this.name} receipt error`, receiverError)
-      }
-    })
+    receiver.registerMessageHandler(receiverHandler, receiverError)
   }
 
   async setupReceiver (action) {
-    const receiver = await this.connection.createReceiver(this.receiverConfig)
+    const queueClient = this.sbClient.createQueueClient(this.receiverConfig.source.address)
+    const receiver = queueClient.createReceiver(ReceiveMode.peekLock)
     this.registerEvents(receiver, action)
   }
 }

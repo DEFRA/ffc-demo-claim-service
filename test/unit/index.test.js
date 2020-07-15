@@ -4,11 +4,11 @@ describe('Web test', () => {
   let mockClaimRepository
 
   beforeAll(async () => {
-    jest.mock('../server/repository/claim-repository')
-    jest.mock('../server/repository/minetype-repository')
-    jest.mock('../server/services/message-service')
-    createServer = require('../server')
-    mockClaimRepository = require('../server/repository/claim-repository')
+    jest.mock('../../server/repository/claim-repository')
+    jest.mock('../../server/repository/minetype-repository')
+    jest.mock('../../server/services/message-service')
+    createServer = require('../../server')
+    mockClaimRepository = require('../../server/repository/claim-repository')
   })
 
   beforeEach(async () => {
@@ -33,7 +33,7 @@ describe('Web test', () => {
       method: 'GET',
       url: '/'
     }
-    jest.mock('../server/config', () => {
+    jest.mock('../../server/config', () => {
       return {
         isDev: true,
         port: 80
@@ -43,7 +43,7 @@ describe('Web test', () => {
     const response = await server.inject(options)
     expect(response.statusCode).toBe(404)
     expect((response.headers['content-type'])).toEqual(expect.stringContaining('application/json'))
-    jest.unmock('../server/config')
+    jest.unmock('../../server/config')
   })
 
   test('POST /submit route works with valid content', async () => {
@@ -87,10 +87,10 @@ describe('Web test', () => {
   })
 
   afterAll(async () => {
-    jest.unmock('../server/repository/claim-repository')
-    jest.unmock('../server/repository/minetype-repository')
-    jest.unmock('../server/services/message-service')
-    jest.unmock('../server/services/publish-message-action')
+    jest.unmock('../../server/repository/claim-repository')
+    jest.unmock('../../server/repository/minetype-repository')
+    jest.unmock('../../server/services/message-service')
+    jest.unmock('../../server/services/publish-message-action')
   })
 
   afterEach(async () => {

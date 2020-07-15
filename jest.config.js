@@ -20,9 +20,13 @@ module.exports = {
   ],
   coverageThreshold: {
     global: {
-      statements: 80
+      statements: 70
     }
   },
+  testPathIgnorePatterns: [
+    'test/integration/local',
+    'test/contract/claim.test.js'
+  ],
   modulePathIgnorePatterns: [
     'node_modules'
   ],

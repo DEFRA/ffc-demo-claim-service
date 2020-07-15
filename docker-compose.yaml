@@ -8,27 +8,24 @@ services:
     image: ffc-demo-claim-service
     depends_on:
       - ffc-demo-claim-postgres
-      - ffc-demo-claim-message-queue
     env_file:
-      - variables/message-queues.env
       - variables/postgres.env
     environment:
       APPINSIGHTS_CLOUDROLE: ffc-demo-claim-service-local
       APPINSIGHTS_INSTRUMENTATIONKEY:
       POSTGRES_HOST: ffc-demo-claim-postgres
       POSTGRES_PORT: 5432
-      MESSAGE_QUEUE_HOST: ffc-demo-claim-message-queue
-      MESSAGE_QUEUE_PORT: 5672
-      CALCULATION_QUEUE_ADDRESS: calculation
-      CALCULATION_QUEUE_USER: artemis
-      CALCULATION_QUEUE_PASSWORD: artemis
-      SCHEDULE_QUEUE_ADDRESS: schedule
-      SCHEDULE_QUEUE_USER: artemis
-      SCHEDULE_QUEUE_PASSWORD: artemis
+      MESSAGE_QUEUE_HOST: ${MESSAGE_QUEUE_HOST:-notset}
+      CALCULATION_QUEUE_ADDRESS: ffc-demo-calculation-${MESSAGE_QUEUE_SUFFIX}
+      CALCULATION_QUEUE_USER: ${MESSAGE_QUEUE_USER:-notset}
+      CALCULATION_QUEUE_PASSWORD: ${MESSAGE_QUEUE_PASSWORD:-notset}
+      SCHEDULE_QUEUE_ADDRESS: ffc-demo-schedule-${MESSAGE_QUEUE_SUFFIX}
+      SCHEDULE_QUEUE_USER: ${MESSAGE_QUEUE_USER:-notset}
+      SCHEDULE_QUEUE_PASSWORD: ${MESSAGE_QUEUE_PASSWORD:-notset}
       SEND_TIMEOUT_IN_SECONDS: 10
-      CLAIM_QUEUE_ADDRESS: claim
-      CLAIM_QUEUE_USER: artemis
-      CLAIM_QUEUE_PASSWORD: artemis
+      CLAIM_QUEUE_ADDRESS: ffc-demo-claim-${MESSAGE_QUEUE_SUFFIX}
+      CLAIM_QUEUE_USER: ${MESSAGE_QUEUE_USER:-notset}
+      CLAIM_QUEUE_PASSWORD: ${MESSAGE_QUEUE_PASSWORD:-notset}
     volumes:
       - ./server/:/home/node/server/
       - ./test/:/home/node/test/
@@ -42,11 +39,6 @@ services:
       - variables/postgres.env
     volumes:
       - postgres_data:/var/lib/postgresql/data
-  ffc-demo-claim-message-queue:
-     image: vromero/activemq-artemis:2.9.0-alpine
-     environment:
-       ARTEMIS_USERNAME: artemis
-       ARTEMIS_PASSWORD: artemis
 volumes:
   postgres_data: {}
   node_modules: {}
