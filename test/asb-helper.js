@@ -13,7 +13,7 @@ async function clearQueue (queueName) {
 
     const queueAddress = config[queueName].address
     const queueClient = sbClient.createQueueClient(queueAddress)
-    const receiver = queueClient.createReceiver(ReceiveMode.peekLock)
+    const receiver = queueClient.createReceiver(ReceiveMode.receiveAndDelete)
 
     console.log(`Setup to receive messages from '${queueAddress}'.`)
     // there shouldn't be more than a handful of messages in any queue and they
@@ -24,12 +24,7 @@ async function clearQueue (queueName) {
       const batchSize = 20
       const messages = await receiver.receiveMessages(batchSize, 5)
       const receivedBatchSize = messages.length
-      console.log(`Received ${receivedBatchSize} messages.`)
-
-      for (let k = 0; k < receivedBatchSize; k++) {
-        console.log(`Deleting message with index: '${k}' and id: '${messages[k].messageId}' from '${queueAddress}'.`)
-        await messages[k].complete()
-      }
+      console.log(`Received (and deleted) ${receivedBatchSize} messages.`)
 
       if (receivedBatchSize <= batchSize) {
         console.log(`No more messages in: '${queueAddress}'.`)
