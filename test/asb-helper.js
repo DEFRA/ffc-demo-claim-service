@@ -1,11 +1,11 @@
 const { ReceiveMode, ServiceBusClient } = require('@azure/service-bus')
 const config = require('../server/config/mq-config')
 
-// When calling this witin a test script, ensure there is a generous timeout
-// for the connections to complete within. `30000` should be good
+// When calling this within a test script, ensure there is a generous timeout
+// for the connections to complete within, `30000` should be enough.
 async function clearQueue (queueName) {
   // There are three queues with potentially three different hosts and
-  // credentials, however, atm there is only the single instance
+  // credentials, however, atm there is only the single instance. KIS.
   let sbClient
   try {
     const connectionString = `Endpoint=sb://${config.claimQueue.host}/;SharedAccessKeyName=${config.claimQueue.username};SharedAccessKey=${config.claimQueue.password}`
@@ -16,8 +16,8 @@ async function clearQueue (queueName) {
     const receiver = queueClient.createReceiver(ReceiveMode.receiveAndDelete)
 
     console.log(`Setup to receive messages from '${queueAddress}'.`)
-    // there shouldn't be more than a handful of messages in any queue and they
-    // are recieved in blocks of `batchSize`, in as many `batches` as specified
+    // There shouldn't be more than a handful of messages but account for many.
+    // Configurable via `batchSize` and `batches`.
     const batches = 10
     for (let j = 0; j < batches; j++) {
       console.log(`Receiving messages, batch ${j + 1}.`)
