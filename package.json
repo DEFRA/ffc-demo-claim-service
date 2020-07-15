@@ -7,7 +7,7 @@
   "scripts": {
     "migrate": "sequelize db:migrate",
     "pretest": "npm run test:lint",
-    "test": "jest --testPathIgnorePatterns=test/integration/local --runInBand",
+    "test": "jest --runInBand",
     "test:lint": "standard",
     "test:pact": "jest --testPathPattern=test/contract --coverage=false",
     "test:integration": "jest --testPathPattern=test/integration --coverage=false",
@@ -22,7 +22,9 @@
     "Matthew Collins <matthew.collins@defra.gov.uk>",
     "Paul Andrews <paul.andrews@defra.gov.uk>",
     "David Bingham <david.bingham@defra.gov.uk>",
-    "Phil Benson <phil.benson@defra.gov.uk>"
+    "Phil Benson <phil.benson@defra.gov.uk>",
+    "Fay Toward <fay.toward@rpa.gov.uk>",
+    "Steve Hunt <steven.hunt@defra.gov.uk>"
   ],
   "license": "OGL-UK-3.0",
   "dependencies": {
