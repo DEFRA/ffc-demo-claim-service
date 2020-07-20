@@ -44,8 +44,8 @@
     "@hapi/good-console": "^9.0.0",
     "@hapi/good-squeeze": "^6.0.0",
     "blipp": "^4.0.1",
-    "jest": "^25.5.4",
-    "jest-junit": "^10.0.0",
+    "jest": "^26.1.0",
+    "jest-junit": "^11.0.1",
     "nodemon": "^2.0.4",
     "sequelize-mock": "^0.10.2",
     "standard": "^14.3.4"
