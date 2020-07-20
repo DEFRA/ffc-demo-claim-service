@@ -33,7 +33,6 @@
     "@hapi/hapi": "^19.2.0",
     "@hapi/joi": "^17.1.1",
     "applicationinsights": "^1.8.2",
-    "aws-sdk": "^2.715.0",
     "pg": "^7.12.1",
     "sequelize": "^5.22.3",
     "sequelize-cli": "^5.5.1"
