@@ -1,7 +1,7 @@
 {
   "name": "ffc-demo-claim-service",
   "description": "Digital service mock to claim public money in the event property subsides into mine shaft.",
-  "version": "3.7.1",
+  "version": "3.8.0",
   "homepage": "https://github.com/DEFRA/mine-support-claim-service",
   "main": "index.js",
   "scripts": {
@@ -28,24 +28,23 @@
   ],
   "license": "OGL-UK-3.0",
   "dependencies": {
-    "@azure/service-bus": "^1.1.7",
+    "@azure/service-bus": "^1.1.8",
     "@hapi/catbox-memory": "^5.0.0",
-    "@hapi/hapi": "^19.1.1",
+    "@hapi/hapi": "^19.2.0",
     "@hapi/joi": "^17.1.1",
-    "@pact-foundation/pact": "^9.11.0",
-    "applicationinsights": "^1.8.0",
-    "aws-sdk": "^2.699.0",
+    "applicationinsights": "^1.8.2",
     "pg": "^7.12.1",
-    "sequelize": "^5.21.13",
+    "sequelize": "^5.22.3",
     "sequelize-cli": "^5.5.1"
   },
   "devDependencies": {
     "@hapi/good": "^9.0.0",
     "@hapi/good-console": "^9.0.0",
     "@hapi/good-squeeze": "^6.0.0",
+    "@pact-foundation/pact": "^9.11.0",
     "blipp": "^4.0.1",
-    "jest": "^25.5.4",
-    "jest-junit": "^10.0.0",
+    "jest": "^26.1.0",
+    "jest-junit": "^11.0.1",
     "nodemon": "^2.0.4",
     "sequelize-mock": "^0.10.2",
     "standard": "^14.3.4"
