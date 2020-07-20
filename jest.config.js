@@ -23,10 +23,6 @@ module.exports = {
       statements: 70
     }
   },
-  testPathIgnorePatterns: [
-    'test/integration/local',
-    'test/contract/claim.test.js'
-  ],
   modulePathIgnorePatterns: [
     'node_modules'
   ],
@@ -42,5 +38,9 @@ module.exports = {
     ]
   ],
   testEnvironment: 'node',
+  testPathIgnorePatterns: [
+    'test/integration/local',
+    'test/contract/claim.test.js'
+  ],
   verbose: true
 }
