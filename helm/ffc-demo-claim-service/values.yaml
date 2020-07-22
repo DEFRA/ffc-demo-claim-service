@@ -9,6 +9,15 @@ labels: {}
 appInsights:
   key:
 
+azureIdentity:
+  name: ffc-demo-claim-service-identity
+  resourceID: resourceID
+  clientID: clientID
+
+azureIdentityBinding:
+  name: ffc-demo-claim-service-identity-binding
+  selector: ffc-demo-claim-service-identity-selector
+
 containerConfigMap:
   name: ffc-demo-claim-service-config-map
 
