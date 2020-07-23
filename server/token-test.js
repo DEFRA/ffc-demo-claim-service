@@ -54,9 +54,9 @@ const { ManagedIdentityCredential } = require('@azure/identity')
 //
 
 async function start () {
-  await auth.loginWithVmMSI({ resource: 'https://servicebus.azure.net/' })
+  // await auth.loginWithVmMSI({ resource: 'https://servicebus.azure.net/' })
   const testAzureIdenitityCredential = new ManagedIdentityCredential()
-  const token = await testAzureIdenitityCredential.getToken('https://servicebus.azure.net/')
+  const token = await testAzureIdenitityCredential.getToken('https://servicebus.azure.net/', { resource: 'https://servicebus.azure.net/' })
   console.log('TOKEN:')
   console.log(token)
 
