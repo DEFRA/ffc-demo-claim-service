@@ -41,8 +41,8 @@ async function testDB (postgresCreds) {
 
 async function sequelizeSetup (postgresCreds) {
   try {
-    const token = await postgresCreds.getToken()
-    dbConfig.password = token.accessToken
+    const token = await postgresCreds.getToken('https://ossrdbms-aad.database.windows.net')
+    dbConfig.password = token.token
     sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig)
     console.log('Attempting authenticate ...')
     await sequelize.authenticate()
@@ -58,14 +58,14 @@ async function start () {
   const myBus = ServiceBusClient.createFromAadTokenCredentials(process.env.MESSAGE_QUEUE_HOST, testAzureIdenitityCredential)
   const sender = myBus.createQueueClient(process.env.CALCULATION_QUEUE_ADDRESS).createSender()
 
-  const postgresCreds = await auth.loginWithVmMSI({ resource: 'https://ossrdbms-aad.database.windows.net' })
-  await sequelizeSetup(postgresCreds)
+  // const postgresCreds = await auth.loginWithVmMSI({ resource: 'https://ossrdbms-aad.database.windows.net' })
+  await sequelizeSetup(testAzureIdenitityCredential)
 
   testMessaging(sender)
-  testDB(postgresCreds)
+  testDB(testAzureIdenitityCredential)
 
   setInterval(() => testMessaging(sender), 1000 * 60 * 60)
-  setInterval(() => testDB(postgresCreds), 1000 * 60 * 60)
+  setInterval(() => testDB(testAzureIdenitityCredential), 1000 * 60 * 60)
 }
 
 module.exports = { start }
