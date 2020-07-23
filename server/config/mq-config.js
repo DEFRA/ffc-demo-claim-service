@@ -6,8 +6,8 @@ const queueSchema = joi.object({
 
 const mqSchema = joi.object({
   host: joi.string().default('localhost'),
-  username: joi.string().required(),
-  password: joi.string().required(),
+  username: joi.string().optional(),
+  password: joi.string().optional(),
   calculationQueue: queueSchema,
   claimQueue: queueSchema,
   scheduleQueue: queueSchema
