@@ -11,8 +11,8 @@ appInsights:
 
 azureIdentity:
   name: ffc-demo-claim-service-identity
-  resourceID: resourceID
-  clientID: clientID
+  resourceID: not-a-real-resourceID
+  clientID: not-a-real-clientID
 
 azureIdentityBinding:
   name: ffc-demo-claim-service-identity-binding
