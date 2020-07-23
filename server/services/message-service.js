@@ -10,6 +10,7 @@ let claimReceiver
 
 async function createConnections () {
   const credentials = config.isProd ? await auth.loginWithVmMSI({ resource: 'https://servicebus.azure.net' }) : undefined
+  console.log('**********************credentials', credentials)
   calculationSender = new MessageSender('claim-service-calculation-sender', config.messageQueues.calculationQueue, credentials)
   scheduleSender = new MessageSender('claim-service-schedule-sender', config.messageQueues.scheduleQueue, credentials)
   claimReceiver = new MessageReceiver('claim-service-claim-receiver', config.messageQueues.claimQueue, credentials)
