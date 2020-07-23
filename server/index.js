@@ -24,7 +24,7 @@ async function createServer () {
     await server.register(require('./plugins/logging'))
   }
 
-  await messageService.registerQueues()
+  // await messageService.registerQueues()
 
   process.on('SIGTERM', async function () {
     await messageService.closeConnections()
