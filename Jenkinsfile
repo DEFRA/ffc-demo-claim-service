@@ -1,7 +1,7 @@
 @Library('defra-library@v-8') _
 
 def config = [ environment: 'dev' ]
-def containerSrcFolder = '\/home\/node'
+/* def containerSrcFolder = '\/home\/node' */
 def nodeDevelopmentImage = 'defradigital/node-development'
 def localSrcFolder = '.'
 def lcovFile = './test-output/lcov.info'
@@ -30,9 +30,9 @@ node {
       test.lintHelm(repoName)
     }
 
-    stage('npm audit') {
-      build.npmAudit(config.npmAuditLevel, config.npmAuditLogType, config.npmAuditFailOnIssues, nodeDevelopmentImage, containerSrcFolder)
-    }
+    /* stage('npm audit') { */
+    /*   build.npmAudit(config.npmAuditLevel, config.npmAuditLogType, config.npmAuditFailOnIssues, nodeDevelopmentImage, containerSrcFolder) */
+    /* } */
 
     stage('Snyk test') {
       build.snykTest(config.snykFailOnIssues, config.snykOrganisation, config.snykSeverity)
@@ -97,8 +97,8 @@ node {
     }
       throw e
     } finally {
-      stage('Clean up test output') {
-        test.deleteOutput(nodeDevelopmentImage, containerSrcFolder)
-      }
+      /* stage('Clean up test output') { */
+      /*   test.deleteOutput(nodeDevelopmentImage, containerSrcFolder) */
+      /* } */
     }
   }
