@@ -55,7 +55,7 @@ const { ManagedIdentityCredential } = require('@azure/identity')
 
 async function start () {
   const testAzureIdenitityCredential = new ManagedIdentityCredential()
-  const token = await testAzureIdenitityCredential.getToken('https://servicebus.windows.net/')
+  const token = await testAzureIdenitityCredential.getToken('https://servicebus.azure.net/')
   console.log('TOKEN:')
   console.log(token)
 
