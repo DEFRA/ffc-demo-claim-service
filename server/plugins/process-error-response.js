@@ -1,4 +1,3 @@
-
 function processErrorResponse (request) {
   const response = request.response
   const statusCode = response.output.statusCode

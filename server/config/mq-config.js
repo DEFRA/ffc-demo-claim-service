@@ -1,40 +1,30 @@
 const joi = require('@hapi/joi')
 
 const queueSchema = joi.object({
-  address: joi.string().required(),
-  username: joi.string().optional(),
-  password: joi.string().optional(),
-  sendTimeoutInSeconds: joi.number().optional()
+  address: joi.string().required()
 })
 
 const mqSchema = joi.object({
-  messageQueue: {
-    host: joi.string().default('localhost')
-  },
+  host: joi.string().default('localhost'),
+  username: joi.string().required(),
+  password: joi.string().required(),
   calculationQueue: queueSchema,
   claimQueue: queueSchema,
   scheduleQueue: queueSchema
 })
 
 const mqConfig = {
-  messageQueue: {
-    host: process.env.MESSAGE_QUEUE_HOST
-  },
+  host: process.env.MESSAGE_QUEUE_HOST,
+  username: process.env.MESSAGE_QUEUE_USER,
+  password: process.env.MESSAGE_QUEUE_PASSWORD,
   calculationQueue: {
-    address: process.env.CALCULATION_QUEUE_ADDRESS,
-    username: process.env.MESSAGE_QUEUE_USER,
-    password: process.env.MESSAGE_QUEUE_PASSWORD
+    address: process.env.CALCULATION_QUEUE_ADDRESS
   },
   scheduleQueue: {
-    address: process.env.SCHEDULE_QUEUE_ADDRESS,
-    username: process.env.MESSAGE_QUEUE_USER,
-    password: process.env.MESSAGE_QUEUE_PASSWORD,
-    sendTimeoutInSeconds: process.env.SEND_TIMEOUT_IN_SECONDS
+    address: process.env.SCHEDULE_QUEUE_ADDRESS
   },
   claimQueue: {
-    address: process.env.CLAIM_QUEUE_ADDRESS,
-    username: process.env.MESSAGE_QUEUE_USER,
-    password: process.env.MESSAGE_QUEUE_PASSWORD
+    address: process.env.CLAIM_QUEUE_ADDRESS
   }
 }
 
@@ -47,21 +37,4 @@ if (mqResult.error) {
   throw new Error(`The message queue config is invalid. ${mqResult.error.message}`)
 }
 
-const calculationQueue = {
-  ...mqResult.value.messageQueue,
-  ...mqResult.value.calculationQueue
-}
-const claimQueue = {
-  ...mqResult.value.messageQueue,
-  ...mqResult.value.claimQueue
-}
-const scheduleQueue = {
-  ...mqResult.value.messageQueue,
-  ...mqResult.value.scheduleQueue
-}
-
-module.exports = {
-  calculationQueue,
-  claimQueue,
-  scheduleQueue
-}
+module.exports = mqResult.value

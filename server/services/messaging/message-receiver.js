@@ -1,11 +1,10 @@
 const { ReceiveMode } = require('@azure/service-bus')
-const { getReceiverConfig } = require('./config-helper')
-const MessageBase = require('./message-base')
 
-class MessageReceiver extends MessageBase {
-  constructor (name, config, credentials) {
-    super(name, config, credentials)
-    this.receiverConfig = getReceiverConfig(this.name, config)
+class MessageReceiver {
+  constructor (name, queueName, sbClient) {
+    this.name = name
+    this.queueName = queueName
+    this.sbClient = sbClient
   }
 
   registerEvents (receiver, action) {
@@ -26,7 +25,7 @@ class MessageReceiver extends MessageBase {
   }
 
   async setupReceiver (action) {
-    const queueClient = this.sbClient.createQueueClient(this.receiverConfig.source.address)
+    const queueClient = this.sbClient.createQueueClient(this.queueName)
     const receiver = queueClient.createReceiver(ReceiveMode.peekLock)
     this.registerEvents(receiver, action)
   }

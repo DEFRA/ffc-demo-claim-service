@@ -17,6 +17,7 @@ Or:
 - Helm
 
 ### Azure Service Bus
+
 This service depends on a valid Azure Service Bus connection string for
 asynchronous communication.  The following environment variables need to be set
 in any non-production (`!config.isProd`) environment before the Docker
@@ -41,8 +42,8 @@ The following environment variables are required by the application container. V
 
 | Name                               | Description                     | Required   | Default     | Valid                         | Notes                                                                               |
 | ---------------------------------- | -----------------------------   | :--------: | ----------- | :---------------------------: | ----------------------------------------------------------------------------------- |
-| APPINSIGHTS_INSTRUMENTATIONKEY     | Key for application insight     | no         |             |                               | App insights only enabled if key is present. Note: Silently fails for invalid key   |
 | APPINSIGHTS_CLOUDROLE              | Role used for filtering metrics | no         |             |                               | Set to `ffc-demo-claim-service-local` in docker compose files                       |
+| APPINSIGHTS_INSTRUMENTATIONKEY     | Key for application insight     | no         |             |                               | App insights only enabled if key is present. Note: Silently fails for invalid key   |
 | CALCULATION_QUEUE_ADDRESS          | Message queue address           | yes        |             |                               |                                                                                     |
 | CLAIM_QUEUE_ADDRESS                | Message queue address           | yes        |             |                               |                                                                                     |
 | NODE_ENV                           | Node environment                | no         |             | development,test,production   |                                                                                     |
