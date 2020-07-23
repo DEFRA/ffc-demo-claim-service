@@ -1,11 +1,19 @@
+const auth = require('@azure/ms-rest-nodeauth')
 const MessageSender = require('./messaging/message-sender')
 const MessageReceiver = require('./messaging/message-receiver')
 const { claimMessageAction } = require('./message-action')
 const config = require('../config')
 
-const calculationSender = new MessageSender('claim-service-calculation-sender', config.messageQueues.calculationQueue)
-const scheduleSender = new MessageSender('claim-service-schedule-sender', config.messageQueues.scheduleQueue)
-const claimReceiver = new MessageReceiver('claim-service-claim-receiver', config.messageQueues.claimQueue)
+let calculationSender
+let scheduleSender
+let claimReceiver
+
+async function createConnections () {
+  const credentials = config.isProd ? await auth.loginWithVmMSI({ resource: 'https://servicebus.azure.net' }) : undefined
+  calculationSender = new MessageSender('claim-service-calculation-sender', config.messageQueues.calculationQueue, credentials)
+  scheduleSender = new MessageSender('claim-service-schedule-sender', config.messageQueues.scheduleQueue, credentials)
+  claimReceiver = new MessageReceiver('claim-service-claim-receiver', config.messageQueues.claimQueue, credentials)
+}
 
 async function registerQueues () {
   await claimReceiver.setupReceiver(claim => {
@@ -51,6 +59,7 @@ function getScheduleMessage (claim) {
 
 module.exports = {
   closeConnections,
+  createConnections,
   getCalculationSender,
   getScheduleSender,
   publishClaim,
