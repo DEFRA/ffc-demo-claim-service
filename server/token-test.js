@@ -1,4 +1,4 @@
-// const auth = require('@azure/ms-rest-nodeauth')
+const auth = require('@azure/ms-rest-nodeauth')
 const { ManagedIdentityCredential } = require('@azure/identity')
 // const { ServiceBusClient } = require('@azure/service-bus')
 // const Sequelize = require('sequelize')
@@ -54,6 +54,7 @@ const { ManagedIdentityCredential } = require('@azure/identity')
 //
 
 async function start () {
+  await auth.loginWithVmMSI({ resource: 'https://servicebus.azure.net/' })
   const testAzureIdenitityCredential = new ManagedIdentityCredential()
   const token = await testAzureIdenitityCredential.getToken('https://servicebus.azure.net/')
   console.log('TOKEN:')
