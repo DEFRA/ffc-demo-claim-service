@@ -54,14 +54,14 @@ async function sequelizeSetup (postgresCreds) {
 }
 
 async function start () {
-  const serviceBusCreds = await auth.loginWithVmMSI({ resource: 'https://servicebus.azure.net/' })
-  const myBus = ServiceBusClient.createFromAadTokenCredentials(process.env.MESSAGE_QUEUE_HOST, serviceBusCreds)
-  const sender = myBus.createQueueClient(process.env.CALCULATION_QUEUE_ADDRESS).createSender()
-
   const testAzureIdenitityCredential = new ManagedIdentityCredential()
   const token = await testAzureIdenitityCredential.getToken('https://servicebus.azure.net/')
   console.log('Azure Identity Token:')
   console.log(token)
+
+  // const serviceBusCreds = await auth.loginWithVmMSI({ resource: 'https://servicebus.azure.net/' })
+  const myBus = ServiceBusClient.createFromAadTokenCredentials(process.env.MESSAGE_QUEUE_HOST, testAzureIdenitityCredential)
+  const sender = myBus.createQueueClient(process.env.CALCULATION_QUEUE_ADDRESS).createSender()
 
   const postgresCreds = await auth.loginWithVmMSI({ resource: 'https://ossrdbms-aad.database.windows.net' })
   await sequelizeSetup(postgresCreds)
