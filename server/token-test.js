@@ -1,4 +1,5 @@
 const auth = require('@azure/ms-rest-nodeauth')
+const { ManagedIdentityCredential } = require('@azure/identity')
 const { ServiceBusClient } = require('@azure/service-bus')
 const Sequelize = require('sequelize')
 
@@ -25,7 +26,7 @@ async function testMessaging (sender) {
   }
 }
 
-async function testDB (sequelize, postgresCreds) {
+async function testDB (postgresCreds) {
   const date = new Date()
 
   try {
@@ -57,14 +58,19 @@ async function start () {
   const myBus = ServiceBusClient.createFromAadTokenCredentials(process.env.MESSAGE_QUEUE_HOST, serviceBusCreds)
   const sender = myBus.createQueueClient(process.env.CALCULATION_QUEUE_ADDRESS).createSender()
 
+  const testAzureIdenitityCredential = new ManagedIdentityCredential()
+  const token = await testAzureIdenitityCredential.getToken('https://servicebus.azure.net/')
+  console.log('Azure Identity Token:')
+  console.log(token)
+
   const postgresCreds = await auth.loginWithVmMSI({ resource: 'https://ossrdbms-aad.database.windows.net' })
   await sequelizeSetup(postgresCreds)
 
   testMessaging(sender)
-  testDB(sequelize, postgresCreds)
+  testDB(postgresCreds)
 
   setInterval(() => testMessaging(sender), 1000 * 60 * 60)
-  setInterval(() => testDB(sequelize, postgresCreds), 1000 * 60 * 60)
+  setInterval(() => testDB(postgresCreds), 1000 * 60 * 60)
 }
 
 module.exports = { start }
