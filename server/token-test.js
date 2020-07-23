@@ -18,10 +18,10 @@ async function testMessaging (sender) {
   const date = new Date()
 
   try {
-    sender.send({ body: `Test message at ${date.toISOString()}` })
-    console.log(`Sent message at ${date.toISOString()}`)
+    sender.send({ body: `Test message using Azure Identity Token at ${date.toISOString()}` })
+    console.log(`Sent message to ${process.env.CALCULATION_QUEUE_ADDRESS} at ${date.toISOString()}`)
   } catch (err) {
-    console.log(`FAIL sending message at ${date.toISOString()}`)
+    console.log(`FAIL sending message to ${process.env.CALCULATION_QUEUE_ADDRESS} at ${date.toISOString()}`)
     console.log(err)
   }
 }
@@ -55,11 +55,6 @@ async function sequelizeSetup (postgresCreds) {
 
 async function start () {
   const testAzureIdenitityCredential = new ManagedIdentityCredential()
-  const token = await testAzureIdenitityCredential.getToken('https://servicebus.azure.net/')
-  console.log('Azure Identity Token:')
-  console.log(token)
-
-  // const serviceBusCreds = await auth.loginWithVmMSI({ resource: 'https://servicebus.azure.net/' })
   const myBus = ServiceBusClient.createFromAadTokenCredentials(process.env.MESSAGE_QUEUE_HOST, testAzureIdenitityCredential)
   const sender = myBus.createQueueClient(process.env.CALCULATION_QUEUE_ADDRESS).createSender()
 
