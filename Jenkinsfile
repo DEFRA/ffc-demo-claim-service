@@ -1,3 +1,3 @@
-@Library('defra-library@v-8') _
+@Library('defra-library@psd-902-add-manifest') _
 
 buildNodeJs environment: 'dev'
