@@ -1,5 +1,5 @@
 resources:
-  queues:
+  queues1:
     - name: claim
     - name: payment
     - name: schedule
