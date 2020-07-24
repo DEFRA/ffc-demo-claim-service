@@ -1,5 +1,5 @@
 resources:
   queues:
-    - name: cl$%X aim
+    - name: claim
     - name: payment
     - name: schedule
