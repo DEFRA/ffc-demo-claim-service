@@ -10,7 +10,6 @@ appInsights:
   key:
 
 azureIdentity:
-  name: ffc-demo-claim-service-identity
   resourceID: not-a-real-resourceID
   clientID: not-a-real-clientID
 
@@ -42,16 +41,10 @@ container:
   port: 3003
   command: ["/bin/sh","-c"]
   args: ["npm --no-update-notifier run migrate && node index"]
-  messageQueueHost: amq
   calculationQueueAddress: calculation
-  calculationQueueUser: artemis
-  calculationQueuePassword: artemis
-  scheduleQueueAddress: schedule
-  scheduleQueueUser: artemis
-  scheduleQueuePassword: artemis
   claimQueueAddress: claim
-  claimQueueUser: artemis
-  claimQueuePassword: artemis
+  messageQueueHost: myservicebus.servicebus.windows.net
+  scheduleQueueAddress: schedule
 postgresService:
   postgresUsername: postgres
   postgresPassword: changeme

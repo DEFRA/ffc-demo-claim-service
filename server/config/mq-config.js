@@ -22,19 +22,19 @@ const mqConfig = {
   },
   calculationQueue: {
     address: process.env.CALCULATION_QUEUE_ADDRESS,
-    username: process.env.CALCULATION_QUEUE_USER,
-    password: process.env.CALCULATION_QUEUE_PASSWORD
+    username: process.env.MESSAGE_QUEUE_USER,
+    password: process.env.MESSAGE_QUEUE_PASSWORD
   },
   scheduleQueue: {
     address: process.env.SCHEDULE_QUEUE_ADDRESS,
-    username: process.env.SCHEDULE_QUEUE_USER,
-    password: process.env.SCHEDULE_QUEUE_PASSWORD,
+    username: process.env.MESSAGE_QUEUE_USER,
+    password: process.env.MESSAGE_QUEUE_PASSWORD,
     sendTimeoutInSeconds: process.env.SEND_TIMEOUT_IN_SECONDS
   },
   claimQueue: {
     address: process.env.CLAIM_QUEUE_ADDRESS,
-    username: process.env.CLAIM_QUEUE_USER,
-    password: process.env.CLAIM_QUEUE_PASSWORD
+    username: process.env.MESSAGE_QUEUE_USER,
+    password: process.env.MESSAGE_QUEUE_PASSWORD
   }
 }
 
