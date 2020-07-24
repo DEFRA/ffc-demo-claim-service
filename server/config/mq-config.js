@@ -2,8 +2,8 @@ const joi = require('@hapi/joi')
 
 const queueSchema = joi.object({
   address: joi.string().required(),
-  username: joi.string().required(),
-  password: joi.string().required(),
+  username: joi.string().optional(),
+  password: joi.string().optional(),
   sendTimeoutInSeconds: joi.number().optional()
 })
 
