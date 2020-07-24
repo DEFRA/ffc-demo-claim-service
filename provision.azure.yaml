@@ -1,6 +1,5 @@
 resources:
   queues:
-    - name1: claim
-      value: x
+    - name: cl$%X aim
     - name: payment
     - name: schedule
