@@ -13,6 +13,7 @@ const generateSampleClaim = () => ({
 
 describe.only('Test message service', () => {
   beforeAll(async () => {
+    await messageService.createConnections()
     await asbHelper.clearAllQueues()
   }, 30000)
 

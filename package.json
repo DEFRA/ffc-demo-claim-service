@@ -1,7 +1,7 @@
 {
   "name": "ffc-demo-claim-service",
   "description": "Digital service mock to claim public money in the event property subsides into mine shaft.",
-  "version": "3.9.0",
+  "version": "3.10.0",
   "homepage": "https://github.com/DEFRA/mine-support-claim-service",
   "main": "index.js",
   "scripts": {
@@ -28,6 +28,7 @@
   ],
   "license": "OGL-UK-3.0",
   "dependencies": {
+    "@azure/ms-rest-nodeauth": "^3.0.5",
     "@azure/service-bus": "^1.1.8",
     "@hapi/catbox-memory": "^5.0.0",
     "@hapi/hapi": "^19.2.0",

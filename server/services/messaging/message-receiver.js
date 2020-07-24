@@ -3,8 +3,8 @@ const { getReceiverConfig } = require('./config-helper')
 const MessageBase = require('./message-base')
 
 class MessageReceiver extends MessageBase {
-  constructor (name, config) {
-    super(name, config)
+  constructor (name, config, credentials) {
+    super(name, config, credentials)
     this.receiverConfig = getReceiverConfig(this.name, config)
   }
 

@@ -1,0 +1,9 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.14.1
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  SNYK-JS-AJV-584908:
+    - '@azure/ms-rest-nodeauth > adal-node > request > har-validator > ajv':
+        reason: No known exploit
+        expires: '2020-08-22T16:12:11.146Z'
+patch: {}
