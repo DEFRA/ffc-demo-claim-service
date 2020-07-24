@@ -41,21 +41,24 @@ container:
   port: 3003
   command: ["/bin/sh","-c"]
   args: ["npm --no-update-notifier run migrate && node index"]
+  messageQueueHost: amq
+  messageQueuePassword: artemis
+  messageQueueUser: artemis
   calculationQueueAddress: calculation
   claimQueueAddress: claim
   messageQueueHost: myservicebus.servicebus.windows.net
   scheduleQueueAddress: schedule
 postgresService:
-  postgresUsername: postgres
-  postgresPassword: changeme
   postgresDatabase: mine_claims
-  # postgresHost is the host name of the PostgreSQL service
-  postgresHost: ffc-demo-claims-postgres
   # postgresExternalName is the external host name to which PostgreSQL
   # requests should be forwarded. If empty, PostgreSQL is assumed to be
   # within the cluster and accessible via postgresHost
   postgresExternalName:
+  postgresHost: ffc-demo-claims-postgres
+  postgresPassword: changeme
   postgresPort: 5432
+  postgresUsername: postgres
+  # postgresHost is the host name of the PostgreSQL service
 
 livenessProbe:
   path: /healthz
