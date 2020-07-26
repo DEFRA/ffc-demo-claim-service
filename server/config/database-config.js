@@ -5,6 +5,21 @@ const dbConfig = {
   host: process.env.POSTGRES_HOST || 'localhost',
   port: process.env.POSTGRES_PORT || 5432,
   dialect: 'postgres',
+  hooks: {
+    beforeConnect: (cfg) => {
+      console.log('*******************beforeConnect config', cfg)
+    },
+    afterConnect: (conn, cfg) => {
+      console.log('*******************afterConnect config', cfg)
+      console.log('*******************afterConnect connection', conn)
+    },
+    beforeDisconnect: (conn) => {
+      console.log('*******************beforeDisconnect connection', conn)
+    },
+    afterDisconnect: (conn) => {
+      console.log('*******************afterDisconnect connection', conn)
+    }
+  },
   retry: {
     match: [/SequelizeConnectionError/],
     max: 20
