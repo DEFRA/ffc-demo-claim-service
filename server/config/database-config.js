@@ -4,7 +4,11 @@ const dbConfig = {
   database: process.env.POSTGRES_DB || 'mine_claims',
   host: process.env.POSTGRES_HOST || 'localhost',
   port: process.env.POSTGRES_PORT || 5432,
-  dialect: 'postgres'
+  dialect: 'postgres',
+  retry: {
+    match: [/SequelizeConnectionError/],
+    max: 20
+  }
 }
 
 const config = {
