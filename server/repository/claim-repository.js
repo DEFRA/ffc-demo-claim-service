@@ -2,10 +2,7 @@ const db = require('../models')
 
 module.exports = {
   getById: async function (claimId) {
-    console.log('getById', claimId)
-    const model = await db
-    console.log('model', model)
-    return model.claims.findOne({
+    return (await db).claims.findOne({
       where: {
         claimId: claimId
       }
