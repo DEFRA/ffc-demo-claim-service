@@ -47,7 +47,6 @@ container:
   scheduleQueueAddress: schedule
 postgresService:
   postgresUsername: postgres
-  postgresPassword: changeme
   postgresDatabase: mine_claims
   # postgresHost is the host name of the PostgreSQL service
   postgresHost: ffc-demo-claims-postgres
