@@ -12,5 +12,7 @@ module.exports = (async function () {
   } else {
     password = databaseConfig.password
   }
-  return new Sequelize(databaseConfig.database, databaseConfig.username, password, databaseConfig)
+  const sequelize = new Sequelize(databaseConfig.database, databaseConfig.username, password, databaseConfig)
+  console.log(sequelize)
+  return sequelize
 }())
