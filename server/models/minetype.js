@@ -1,4 +1,3 @@
-'use strict'
 module.exports = (sequelize, DataTypes) => {
   const MineType = sequelize.define('mineTypes', {
     mineTypeId: { type: DataTypes.INTEGER, primaryKey: true },
