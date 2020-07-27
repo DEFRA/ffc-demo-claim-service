@@ -13,13 +13,11 @@ module.exports = (async function () {
     })
     .forEach(async file => {
       const model = seq.import(path.join(__dirname, file))
+      if (model.associate) {
+        model.associate(db)
+      }
       db[model.name] = model
     })
 
-  Object.keys(db).forEach(modelName => {
-    if (db[modelName].associate) {
-      db[modelName].associate(db)
-    }
-  })
   return db
 }())
