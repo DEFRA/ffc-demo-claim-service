@@ -1,5 +1,9 @@
 const auth = require('@azure/ms-rest-nodeauth')
 
+function logRetry (message) {
+  console.log(message)
+}
+
 const dbConfig = {
   username: process.env.POSTGRES_USERNAME,
   password: process.env.POSTGRES_PASSWORD,
@@ -9,7 +13,7 @@ const dbConfig = {
   dialect: 'postgres',
   hooks: {
     beforeConnect: async (cfg) => {
-      console.log('*******************beforeConnect config', cfg)
+      console.log('running beforeConnect hook', cfg)
       if (cfg.username !== 'postgres') {
         console.log('attempting to acquire MSI credentials')
         const credentials = await auth.loginWithVmMSI({ resource: 'https://ossrdbms-aad.database.windows.net' })
@@ -18,22 +22,16 @@ const dbConfig = {
         console.log('token', token)
         cfg.password = token.accessToken
       }
-      console.log('*******************beforeConnect config', cfg)
     }
-  //   afterConnect: (conn, cfg) => {
-  //     console.log('*******************afterConnect config', cfg)
-  //     console.log('*******************afterConnect connection', conn)
-  //   },
-  //   beforeDisconnect: (conn) => {
-  //     console.log('*******************beforeDisconnect connection', conn)
-  //   },
-  //   afterDisconnect: (conn) => {
-  //     console.log('*******************afterDisconnect connection', conn)
-  //   }
-  // },
-  // retry: {
-  //   match: [/SequelizeConnectionError/],
-  //   max: 20
+  },
+  retry: {
+    backoffBase: 500,
+    backoffExponent: 1.1,
+    match: [/SequelizeConnectionError/],
+    max: 10,
+    name: 'SequelizeConnectionError',
+    report: logRetry,
+    timeout: 60000
   }
 }
 
