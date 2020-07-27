@@ -29,7 +29,7 @@ const dbConfig = {
     backoffExponent: 1.1,
     match: [/SequelizeConnectionError/],
     max: 10,
-    name: 'SequelizeConnectionError',
+    name: 'connection',
     report: logRetry,
     timeout: 60000
   }
