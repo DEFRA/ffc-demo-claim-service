@@ -9,7 +9,7 @@ module.exports = {
   options: {
     handler: async (request, h) => {
       try {
-        if ((await sequelize).authenticate()) {
+        if (await (await sequelize).authenticate()) {
           return h.response('ok').code(OK)
         }
         return h.response('database unavailable').code(SERVICE_UNAVAILABLE)
