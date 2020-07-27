@@ -25,20 +25,6 @@ describe('Healthy test', () => {
     expect(response.statusCode).toBe(200)
   })
 
-  test('GET /healthy returns 503 if database not connected', async () => {
-    const options = {
-      method: 'GET',
-      url: '/healthy'
-    }
-
-    sequelize.authenticate.mockReturnValue(false)
-
-    const response = await server.inject(options)
-
-    expect(response.statusCode).toBe(503)
-    expect(response.payload).toBe('database unavailable')
-  })
-
   test('GET /healthy returns 503 and error message if database check throws an error', async () => {
     const options = {
       method: 'GET',
