@@ -46,8 +46,8 @@ container:
   messageQueueHost: myservicebus.servicebus.windows.net
   scheduleQueueAddress: schedule
 postgresService:
-  postgresUsername: postgres
-  postgresDatabase: mine_claims
+  postgresUser: postgres
+  postgresDb: ffc-demo-claim
   # postgresHost is the host name of the PostgreSQL service
   postgresHost: ffc-demo-claims-postgres
   # postgresExternalName is the external host name to which PostgreSQL
