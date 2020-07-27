@@ -9,10 +9,8 @@ module.exports = {
   options: {
     handler: async (request, h) => {
       try {
-        if (await (await sequelize).authenticate()) {
-          return h.response('ok').code(OK)
-        }
-        return h.response('database unavailable').code(SERVICE_UNAVAILABLE)
+        await (await sequelize).authenticate()
+        return h.response('ok').code(OK)
       } catch (ex) {
         console.error('error running healthy check', ex)
         return h.response(`error running healthy check: ${ex.message}`).code(SERVICE_UNAVAILABLE)
