@@ -1,69 +1,46 @@
 const auth = require('@azure/ms-rest-nodeauth')
-const MessageSender = require('./messaging/message-sender')
-const MessageReceiver = require('./messaging/message-receiver')
-const { claimMessageAction } = require('./message-action')
 const config = require('../config')
+const { claimMessageAction } = require('./message-action')
+const MessageReceiver = require('./messaging/message-receiver')
+const MessageSender = require('./messaging/message-sender')
 
-let calculationSender
-let scheduleSender
-let claimReceiver
+class MessageService {
+  constructor (credentials) {
+    this.publishClaim = this.publishClaim.bind(this)
+    this.closeConnections = this.closeConnections.bind(this)
+    this.calculationSender = new MessageSender('claim-service-calculation-sender', config.messageQueues.calculationQueue, credentials)
+    this.scheduleSender = new MessageSender('claim-service-schedule-sender', config.messageQueues.scheduleQueue, credentials)
+    this.claimReceiver = new MessageReceiver('claim-service-claim-receiver', config.messageQueues.claimQueue, credentials)
+  }
 
-async function createConnections () {
-  const credentials = config.isProd ? await auth.loginWithVmMSI({ resource: 'https://servicebus.azure.net' }) : undefined
-  calculationSender = new MessageSender('claim-service-calculation-sender', config.messageQueues.calculationQueue, credentials)
-  scheduleSender = new MessageSender('claim-service-schedule-sender', config.messageQueues.scheduleQueue, credentials)
-  claimReceiver = new MessageReceiver('claim-service-claim-receiver', config.messageQueues.claimQueue, credentials)
-}
+  async closeConnections () {
+    await this.calculationSender.closeConnection()
+    await this.scheduleSender.closeConnection()
+    await this.claimReceiver.closeConnection()
+  }
 
-async function registerQueues () {
-  await claimReceiver.setupReceiver(claim => {
-    claimMessageAction(claim, publishClaim)
-  })
-}
-
-async function closeConnections () {
-  await calculationSender.closeConnection()
-  await scheduleSender.closeConnection()
-  await claimReceiver.closeConnection()
-}
-
-async function publishClaim (claim) {
-  try {
-    await Promise.all([
-      calculationSender.sendMessage(claim),
-      scheduleSender.sendMessage(claim)
-    ])
-  } catch (err) {
-    console.log(err)
-    throw err
+  async publishClaim (claim) {
+    try {
+      await Promise.all([
+        this.calculationSender.sendMessage(claim),
+        this.scheduleSender.sendMessage(claim)
+      ])
+    } catch (err) {
+      console.log(err)
+      throw err
+    }
   }
 }
 
-function getCalculationSender () {
-  return calculationSender
-}
+let messageService
 
-function getScheduleSender () {
-  return scheduleSender
-}
-
-function getCalculationMessage (claim) {
-  return claim
-}
-
-function getScheduleMessage (claim) {
-  return {
-    claimId: claim.claimId
+module.exports = (async function createConnections () {
+  if (!messageService) {
+    const credentials = config.isProd ? await auth.loginWithVmMSI({ resource: 'https://servicebus.azure.net' }) : undefined
+    messageService = new MessageService(credentials)
+    await messageService.claimReceiver.setupReceiver(claim => {
+      claimMessageAction(claim, messageService.publishClaim)
+    })
   }
-}
-
-module.exports = {
-  closeConnections,
-  createConnections,
-  getCalculationSender,
-  getScheduleSender,
-  publishClaim,
-  registerQueues,
-  getCalculationMessage,
-  getScheduleMessage
-}
+  return messageService
+}())

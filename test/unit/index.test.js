@@ -3,10 +3,12 @@ describe('Web test', () => {
   let server
   let mockClaimRepository
 
+  jest.mock('@azure/ms-rest-nodeauth')
+
   beforeAll(async () => {
     jest.mock('../../server/repository/claim-repository')
     jest.mock('../../server/repository/minetype-repository')
-    jest.mock('../../server/services/message-service')
+    await require('../../server/services/message-service')
     createServer = require('../../server')
     mockClaimRepository = require('../../server/repository/claim-repository')
   })
