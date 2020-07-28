@@ -20,7 +20,7 @@ module.exports = {
   ],
   coverageThreshold: {
     global: {
-      statements: 65
+      statements: 75
     }
   },
   modulePathIgnorePatterns: [
@@ -40,7 +40,7 @@ module.exports = {
   testEnvironment: 'node',
   testPathIgnorePatterns: [
     'test/integration/local',
-    'test/contract/claim.test.js'
+    'test/contract/'
   ],
   verbose: true
 }
