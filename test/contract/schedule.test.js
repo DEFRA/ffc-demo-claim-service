@@ -13,9 +13,10 @@ describe('Pact Verification', () => {
       mineType: ['gold']
     }
 
+    const publishMessages = async () => (await messageService.publishClaim(claim))[0]
     const provider = new MessageProviderPact({
       messageProviders: {
-        'a request for new payment schedule': () => messageService.getScheduleMessage(claim)
+        'a request for new payment schedule': publishMessages
       },
       provider: 'ffc-demo-claim-service',
       pactUrls: [

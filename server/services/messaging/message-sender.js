@@ -18,6 +18,7 @@ class MessageSender extends MessageBase {
     } finally {
       await sender.close()
     }
+    return message
   }
 }
 

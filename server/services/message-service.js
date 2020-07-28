@@ -21,19 +21,13 @@ class MessageService {
 
   async publishClaim (claim) {
     try {
-      await Promise.all([
+      return await Promise.all([
         this.calculationSender.sendMessage(claim),
         this.scheduleSender.sendMessage(claim)
       ])
     } catch (err) {
       console.log(err)
       throw err
-    }
-  }
-
-  getScheduleMessage (claim) {
-    return {
-      claimId: claim.claimId
     }
   }
 }
