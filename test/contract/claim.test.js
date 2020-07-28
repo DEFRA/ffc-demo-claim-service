@@ -22,7 +22,7 @@ describe('receiving a new claim', () => {
 
   afterAll(async () => {
     await asbHelper.clearAllQueues()
-    dbHelper.close()
+    await dbHelper.close()
   }, 30000)
 
   test('new claim is received, saved and published to other services', async () => {
@@ -40,6 +40,6 @@ describe('receiving a new claim', () => {
       .withMetadata({
         'content-type': 'application/json'
       })
-      .verify(message => claimMessageAction(message.contents, messageService.publishClaim))
+      .verify(async message => claimMessageAction(message.contents, await messageService.publishClaim))
   })
 })
