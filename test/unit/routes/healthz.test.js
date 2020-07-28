@@ -2,8 +2,6 @@ describe('Healthz test', () => {
   let createServer
   let server
 
-  jest.mock('@azure/ms-rest-nodeauth')
-
   beforeAll(async () => {
     createServer = require('../../../server')
     console.log(createServer)
