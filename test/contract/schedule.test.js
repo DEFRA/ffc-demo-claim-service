@@ -1,9 +1,10 @@
 const { MessageProviderPact } = require('@pact-foundation/pact')
-const { getScheduleMessage } = require('../../server/services/message-service')
 const path = require('path')
 
 describe('Pact Verification', () => {
-  test('validates the expectations of ffc-demo-payment-service', () => {
+  test('validates the expectations of ffc-demo-payment-service', async () => {
+    const messageService = await require('../../server/services/message-service')
+
     const claim = {
       claimId: 'MINE123',
       propertyType: 'business',
@@ -14,7 +15,7 @@ describe('Pact Verification', () => {
 
     const provider = new MessageProviderPact({
       messageProviders: {
-        'a request for new payment schedule': () => getScheduleMessage(claim)
+        'a request for new payment schedule': () => messageService.getScheduleMessage(claim)
       },
       provider: 'ffc-demo-claim-service',
       pactUrls: [

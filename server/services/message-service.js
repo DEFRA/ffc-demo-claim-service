@@ -30,6 +30,12 @@ class MessageService {
       throw err
     }
   }
+
+  getScheduleMessage (claim) {
+    return {
+      claimId: claim.claimId
+    }
+  }
 }
 
 let messageService
