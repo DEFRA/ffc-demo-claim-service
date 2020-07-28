@@ -13,9 +13,7 @@ module.exports = {
       }
     },
     handler: async (request, h) => {
-      console.log('POST to /submit has succeeded...')
       const messageService = await require('../services/message-service')
-      console.log('messageService...', messageService)
       console.log('new claim received')
       const claim = await claimService.create(request.payload, await messageService.publishClaim)
       return h.response(claim).code(200)
