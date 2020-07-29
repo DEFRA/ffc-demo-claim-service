@@ -1,7 +1,12 @@
 const auth = require('@azure/ms-rest-nodeauth')
+const { production } = require('./constants').environments
 
 function logRetry (message) {
   console.log(message)
+}
+
+function isProd () {
+  return process.env.NODE_ENV === production
 }
 
 const dbConfig = {
@@ -14,7 +19,7 @@ const dbConfig = {
   hooks: {
     beforeConnect: async (cfg) => {
       console.log('running beforeConnect hook')
-      if (cfg.username !== 'postgres') {
+      if (isProd()) {
         console.log('attempting to acquire MSI credentials')
         const credentials = await auth.loginWithVmMSI({ resource: 'https://ossrdbms-aad.database.windows.net' })
         console.log('credentials acquired')
