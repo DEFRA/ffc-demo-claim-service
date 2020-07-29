@@ -19,7 +19,6 @@ const dbConfig = {
         const credentials = await auth.loginWithVmMSI({ resource: 'https://ossrdbms-aad.database.windows.net' })
         console.log('credentials', credentials)
         const token = await credentials.getToken()
-        console.log('token', token)
         cfg.password = token.accessToken
       }
     }

@@ -1,8 +1,6 @@
 describe('Healthy test', () => {
   let server
 
-  jest.mock('../../../server/services/database-service')
-  jest.mock('../../../server/services/message-service')
   jest.mock('sequelize')
   const createServer = require('../../../server')
   let sequelize
