@@ -1,15 +1,8 @@
-const { getSenderConfig } = require('./config-helper')
 const MessageBase = require('./message-base')
 
 class MessageSender extends MessageBase {
-  constructor (name, config, credentials) {
-    super(name, config, credentials)
-    this.senderConfig = getSenderConfig(this.name, config)
-  }
-
   async sendMessage (message) {
-    const queueClient = this.sbClient.createQueueClient(this.senderConfig.target.address)
-    const sender = queueClient.createSender()
+    const sender = this.queueClient.createSender()
     try {
       console.log(`${this.name} sending message`, message)
 
