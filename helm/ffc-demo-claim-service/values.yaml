@@ -46,7 +46,7 @@ container:
   messageQueueHost: myservicebus.servicebus.windows.net
   scheduleQueueAddress: schedule
 postgresService:
-  postgresDb: ffc-demo-claim
+  postgresDb: ffc_demo_claim
   # postgresHost is the host name of the PostgreSQL service
   postgresHost: ffc-demo-claims-postgres
   # the value 'postgres' is used to determine if MSI creds should be acquired or not
