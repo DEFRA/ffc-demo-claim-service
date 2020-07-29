@@ -1,13 +1,9 @@
-const db = require('../models')
+const Sequelize = require('sequelize')
+const config = require('../config')
 
-module.exports = {
-  isConnected: async function () {
-    try {
-      await db.sequelize.authenticate()
-      return true
-    } catch (err) {
-      console.log(err)
-      return false
-    }
-  }
-}
+const sequelize = (async function () {
+  const databaseConfig = config.database[config.env]
+  return new Sequelize(databaseConfig.database, databaseConfig.username, databaseConfig.password, databaseConfig)
+}())
+
+module.exports = sequelize

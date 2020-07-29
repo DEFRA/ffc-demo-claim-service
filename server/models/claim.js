@@ -1,4 +1,3 @@
-'use strict'
 module.exports = (sequelize, DataTypes) => {
   const Claim = sequelize.define('claims', {
     claimId: { type: DataTypes.STRING, primaryKey: true },
