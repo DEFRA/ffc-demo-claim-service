@@ -13,12 +13,13 @@ const dbConfig = {
   dialect: 'postgres',
   hooks: {
     beforeConnect: async (cfg) => {
-      console.log('running beforeConnect hook', cfg)
+      console.log('running beforeConnect hook')
       if (cfg.username !== 'postgres') {
         console.log('attempting to acquire MSI credentials')
         const credentials = await auth.loginWithVmMSI({ resource: 'https://ossrdbms-aad.database.windows.net' })
-        console.log('credentials', credentials)
+        console.log('credentials acquired')
         const token = await credentials.getToken()
+        console.log('token acquired')
         cfg.password = token.accessToken
       }
     }
