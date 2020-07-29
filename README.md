@@ -19,9 +19,10 @@ Or:
 ### Azure Service Bus
 This service depends on a valid Azure Service Bus connection string for
 asynchronous communication.  The following environment variables need to be set
-in any non-production (`!config.isProd`) environment before the Docker
-container is started. When deployed into an appropriately configured AKS
-cluster (where [AAD Pod Identity](https://github.com/Azure/aad-pod-identity) is
+in any non-production (`process.env.NODE_ENV !== production`)
+environment before the Docker container is started. When deployed
+into an appropriately configured AKS cluster (where
+[AAD Pod Identity](https://github.com/Azure/aad-pod-identity) is
 configured) the micro-service will use AAD Pod Identity through the manifests
 for
 [azure-identity](./helm/ffc-demo-claim-service/templates/azure-identity.yaml)
@@ -200,4 +201,3 @@ The following attribution statement MUST be cited in your products and applicati
 The Open Government Licence (OGL) was developed by the Controller of Her Majesty's Stationery Office (HMSO) to enable information providers in the public sector to license the use and re-use of their information under a common open licence.
 
 It is designed to encourage use and re-use of information freely and flexibly, with only a few conditions.
-

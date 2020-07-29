@@ -1,9 +1,10 @@
 const joi = require('@hapi/joi')
 const mqConfig = require('./mq-config')
 const databaseConfig = require('./database-config')
+const { environments } = require('./constants')
 
 const schema = joi.object({
-  env: joi.string().valid('development', 'test', 'production').default('development'),
+  env: joi.string().valid(environments.development, environments.test, environments.production).default(environments.development),
   port: joi.number().default(3003)
 })
 
@@ -24,8 +25,8 @@ const value = {
   ...result.value,
   database: databaseConfig,
   messageQueues: mqConfig,
-  isDev: result.value.env === 'development',
-  isProd: result.value.env === 'production'
+  isDev: result.value.env === environments.development,
+  isProd: result.value.env === environments.production
 }
 
 module.exports = value
