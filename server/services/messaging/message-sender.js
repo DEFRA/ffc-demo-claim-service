@@ -8,6 +8,9 @@ class MessageSender extends MessageBase {
 
       await sender.send({ body: message })
       console.log(`message sent ${this.name}`)
+    } catch (error) {
+      console.error('failed to send message', error)
+      throw error
     } finally {
       await sender.close()
     }
