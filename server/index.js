@@ -26,16 +26,6 @@ async function createServer () {
 
   await messageService
 
-  process.on('SIGTERM', async function () {
-    await messageService.closeConnections()
-    process.exit(0)
-  })
-
-  process.on('SIGINT', async function () {
-    await messageService.closeConnections()
-    process.exit(0)
-  })
-
   return server
 }
 
