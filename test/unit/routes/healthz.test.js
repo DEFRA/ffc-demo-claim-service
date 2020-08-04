@@ -1,6 +1,9 @@
 describe('Healthz test', () => {
   let createServer
   let server
+  jest.mock('../../../server/services/message-service', () => {
+    return () => { }
+  })
 
   beforeAll(async () => {
     createServer = require('../../../server')

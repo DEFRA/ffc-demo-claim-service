@@ -4,6 +4,9 @@ describe('Healthy test', () => {
   jest.mock('sequelize')
   const createServer = require('../../../server')
   const sequelize = require('../../../server/services/database-service')
+  jest.mock('../../../server/services/message-service', () => {
+    return () => { }
+  })
 
   beforeEach(async () => {
     server = await createServer()

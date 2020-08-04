@@ -40,7 +40,7 @@ module.exports = {
   testEnvironment: 'node',
   testPathIgnorePatterns: [
     'test/integration/local',
-    'test/contract/'
+    'test/contract'
   ],
   verbose: true
 }
