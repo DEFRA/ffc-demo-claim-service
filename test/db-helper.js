@@ -1,20 +1,21 @@
-const db = require('../server/models')
+let models = require('../server/models')
 
 async function truncate () {
-  const models = await db
+  models = await models
   models.claims.destroy({ truncate: { casecade: true } })
   models.mineTypes.destroy({ truncate: true })
 }
 
 async function createClaimRecords (claims) {
-  (await db).claims.bulkCreate(claims)
+  models.claims.bulkCreate(claims)
 }
+
 async function createMineTypeRecords (mineTypes) {
-  (await db).mineTypes.bulkCreate(mineTypes)
+  models.mineTypes.bulkCreate(mineTypes)
 }
 
 async function close () {
-  (await db).sequelize.close()
+  models.sequelize.close()
 }
 
 module.exports = {

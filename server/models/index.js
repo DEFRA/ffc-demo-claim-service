@@ -3,7 +3,7 @@ const path = require('path')
 const sequelize = require('../services/database-service')
 const basename = path.basename(__filename)
 
-module.exports = (async function () {
+module.exports = (function () {
   const models = {}
   fs
     .readdirSync(__dirname)
