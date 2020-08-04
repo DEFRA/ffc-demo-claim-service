@@ -4,20 +4,23 @@ const sequelize = require('../services/database-service')
 const basename = path.basename(__filename)
 
 module.exports = (async function () {
-  const seq = await sequelize
-  const db = {}
+  const models = {}
   fs
     .readdirSync(__dirname)
     .filter(file => {
       return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js')
     })
-    .forEach(async file => {
-      const model = seq.import(path.join(__dirname, file))
-      if (model.associate) {
-        model.associate(db)
+    .forEach(file => {
+      const model = sequelize.import(path.join(__dirname, file))
+      if (model && model.name) {
+        models[model.name] = model
       }
-      db[model.name] = model
     })
-
-  return db
+  Object.keys(models).forEach((modelName) => {
+    if (models[modelName].associate) {
+      models[modelName].associate(models)
+    }
+  })
+  models.sequelize = sequelize
+  return models
 }())

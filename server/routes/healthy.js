@@ -9,7 +9,7 @@ module.exports = {
   options: {
     handler: async (request, h) => {
       try {
-        await (await sequelize).authenticate()
+        await sequelize.authenticate()
         return h.response('ok').code(OK)
       } catch (ex) {
         console.error('error running healthy check', ex)

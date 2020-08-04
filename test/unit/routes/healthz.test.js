@@ -4,7 +4,6 @@ describe('Healthz test', () => {
 
   beforeAll(async () => {
     createServer = require('../../../server')
-    console.log(createServer)
   })
 
   beforeEach(async () => {
