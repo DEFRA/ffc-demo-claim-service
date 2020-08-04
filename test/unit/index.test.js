@@ -8,7 +8,7 @@ describe('Web test', () => {
   beforeAll(async () => {
     jest.mock('../../server/repository/claim-repository')
     jest.mock('../../server/repository/minetype-repository')
-    const messageService = await require('../../server/services/message-service')
+    const messageService = await require('../../server/services/message-service')()
     messageService.publishClaim = jest.fn()
     messageService.publishClaim.mockResolvedValue(true)
     createServer = require('../../server')

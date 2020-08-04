@@ -26,7 +26,7 @@ describe('receiving a new claim', () => {
   }, 30000)
 
   test('new claim is received, saved and published to other services', async () => {
-    const messageService = await require('../../server/services/message-service')
+    const messageService = await require('../../server/services/message-service')()
     await messagePact
       .given('valid message')
       .expectsToReceive('a request for new claim')
@@ -40,6 +40,6 @@ describe('receiving a new claim', () => {
       .withMetadata({
         'content-type': 'application/json'
       })
-      .verify(async message => claimMessageAction(message.contents, await messageService.publishClaim))
+      .verify(async message => claimMessageAction(message.contents, messageService.publishClaim))
   })
 })

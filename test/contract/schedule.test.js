@@ -3,7 +3,7 @@ const path = require('path')
 
 describe('Pact Verification', () => {
   test('validates the expectations of ffc-demo-payment-service', async () => {
-    const messageService = await require('../../server/services/message-service')
+    const messageService = await require('../../server/services/message-service')()
 
     const claim = {
       claimId: 'MINE123',
