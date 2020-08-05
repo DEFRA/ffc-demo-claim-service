@@ -24,7 +24,17 @@ async function createServer () {
     await server.register(require('./plugins/logging'))
   }
 
-  await createMessageService()
+  const messageService = await createMessageService()
+
+  process.on('SIGTERM', async function () {
+    await messageService.closeConnections()
+    process.exit(0)
+  })
+
+  process.on('SIGINT', async function () {
+    await messageService.closeConnections()
+    process.exit(0)
+  })
 
   return server
 }
