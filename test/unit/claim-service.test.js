@@ -1,4 +1,3 @@
-
 describe('Test claim service', () => {
   let claimService
   let mockClaimRepository
@@ -55,7 +54,6 @@ describe('Test claim service', () => {
   afterAll(async () => {
     jest.unmock('../../server/repository/claim-repository')
     jest.unmock('../../server/repository/minetype-repository')
-    jest.unmock('../../server/services/message-service')
   })
 
   const getSampleClaim = () => ({
