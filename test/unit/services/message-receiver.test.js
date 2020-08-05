@@ -1,5 +1,5 @@
 const auth = require('@azure/ms-rest-nodeauth')
-const MessageReceiver = require('../../server/services/messaging/message-receiver')
+const MessageReceiver = require('../../../server/services/messaging/message-receiver')
 
 describe('MessageReceiver test', () => {
   const name = 'test-message-receiver'

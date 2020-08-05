@@ -1,8 +1,8 @@
-const createMessageService = require('../../server/services/message-service')
-const { messageQueues } = require('../../server/config')
+const createMessageService = require('../../../server/services/message-service')
+const { messageQueues } = require('../../../server/config')
 
-jest.mock('../../server/services/messaging/message-receiver')
-jest.mock('../../server/services/messaging/message-sender')
+jest.mock('../../../server/services/messaging/message-receiver')
+jest.mock('../../../server/services/messaging/message-sender')
 
 describe('Test message service', () => {
   let MessageSender
@@ -12,8 +12,8 @@ describe('Test message service', () => {
   beforeAll(async () => {
     messageService = await createMessageService()
     await messageService.closeConnections()
-    MessageReceiver = require('../../server/services/messaging/message-receiver')
-    MessageSender = require('../../server/services/messaging/message-sender')
+    MessageReceiver = require('../../../server/services/messaging/message-receiver')
+    MessageSender = require('../../../server/services/messaging/message-sender')
   })
 
   test('Message service should create two senders and one receiver', async () => {

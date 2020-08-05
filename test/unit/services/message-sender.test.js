@@ -1,5 +1,5 @@
 const auth = require('@azure/ms-rest-nodeauth')
-const MessageSender = require('../../server/services/messaging/message-sender')
+const MessageSender = require('../../../server/services/messaging/message-sender')
 
 describe('MessageSender test', () => {
   const name = 'test-message-sender'
