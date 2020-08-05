@@ -30,15 +30,13 @@ describe('MessageReceiver test', () => {
 
   test('receiverHandler calls action', async () => {
     const mockAction = jest.fn()
+    const messageReceiver = new MessageReceiver(name, config, undefined, mockAction)
+
     const body = { hello: 'world' }
     const msg = { body }
-    const messageReceiver = new MessageReceiver(name, config, undefined, mockAction)
     await messageReceiver.receiverHandler(msg)
+
     expect(mockAction).toHaveBeenCalledTimes(1)
     expect(mockAction).toHaveBeenCalledWith(body)
-  })
-
-  afterEach(() => {
-
   })
 })

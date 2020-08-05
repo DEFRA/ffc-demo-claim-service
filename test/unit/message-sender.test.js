@@ -33,10 +33,9 @@ describe('MessageSender test', () => {
     const closeMock = jest.fn()
     const sendMock = jest.fn()
     const senderMock = jest.fn(() => { return { close: closeMock, send: sendMock } })
-
     messageSender.queueClient.createSender = senderMock
-    const msg = { hello: 'world' }
 
+    const msg = { hello: 'world' }
     const message = await messageSender.sendMessage(msg)
 
     expect(message).toEqual(msg)
