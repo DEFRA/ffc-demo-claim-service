@@ -4,7 +4,7 @@ let mockDb
 
 describe('Test minetype repository', () => {
   beforeEach(async () => {
-    jest.mock('../../../server/models')
+    jest.mock('../../../server/services/database-service')
     jest.mock('../../../server/models/minetype', () => {
       MockSequelize = require('sequelize-mock')
       mockDb = new MockSequelize()

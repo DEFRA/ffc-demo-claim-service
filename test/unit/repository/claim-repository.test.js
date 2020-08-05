@@ -4,7 +4,7 @@ let mockDb
 
 describe('Test claim repository', () => {
   beforeAll(async () => {
-    jest.mock('../../../server/models')
+    jest.mock('../../../server/services/database-service')
     jest.mock('../../../server/models/claim', () => {
       MockSequelize = require('sequelize-mock')
       mockDb = new MockSequelize()

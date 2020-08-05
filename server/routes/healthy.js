@@ -1,4 +1,4 @@
-const sequelize = require('../services/database-service')
+const { sequelize } = require('../services/database-service')
 
 const SERVICE_UNAVAILABLE = 503
 const OK = 200
