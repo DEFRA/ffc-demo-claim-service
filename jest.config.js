@@ -39,8 +39,9 @@ module.exports = {
   ],
   testEnvironment: 'node',
   testPathIgnorePatterns: [
+    'test/unit/repository',
     'test/integration/local',
-    'test/contract/'
+    'test/contract'
   ],
   verbose: true
 }

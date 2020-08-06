@@ -13,9 +13,9 @@ module.exports = {
       }
     },
     handler: async (request, h) => {
-      const messageService = await require('../services/message-service')
+      const messageService = await require('../services/message-service')()
       console.log('new claim received')
-      const claim = await claimService.create(request.payload, await messageService.publishClaim)
+      const claim = await claimService.create(request.payload, messageService.publishClaim)
       return h.response(claim).code(200)
     }
   }

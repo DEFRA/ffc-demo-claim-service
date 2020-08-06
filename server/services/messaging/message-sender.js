@@ -1,6 +1,11 @@
 const MessageBase = require('./message-base')
 
 class MessageSender extends MessageBase {
+  constructor (name, config, credentials, action) {
+    super(name, config, credentials)
+    this.sendMessage = this.sendMessage.bind(this)
+  }
+
   async sendMessage (message) {
     const sender = this.queueClient.createSender()
     try {

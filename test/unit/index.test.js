@@ -4,13 +4,17 @@ describe('Web test', () => {
   let mockClaimRepository
 
   jest.mock('@azure/ms-rest-nodeauth')
+  jest.mock('../../server/repository/claim-repository')
+  jest.mock('../../server/repository/minetype-repository')
+  jest.mock('../../server/services/message-service', () => {
+    return () => {
+      return {
+        publishClaim: jest.fn().mockResolvedValue(true)
+      }
+    }
+  })
 
   beforeAll(async () => {
-    jest.mock('../../server/repository/claim-repository')
-    jest.mock('../../server/repository/minetype-repository')
-    const messageService = await require('../../server/services/message-service')
-    messageService.publishClaim = jest.fn()
-    messageService.publishClaim.mockResolvedValue(true)
     createServer = require('../../server')
     mockClaimRepository = require('../../server/repository/claim-repository')
   })

@@ -14,7 +14,7 @@ describe.only('Test message service', () => {
   let messageService
 
   beforeAll(async () => {
-    messageService = await require('../../../server/services/message-service')
+    messageService = await require('../../../server/services/message-service')()
     await asbHelper.clearAllQueues()
   }, 30000)
 
