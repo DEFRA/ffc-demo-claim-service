@@ -8,6 +8,9 @@ ignore:
         expires: '2020-08-22T16:12:11.146Z'
   SNYK-JS-LODASH-590103:
     - sequelize > lodash:
-        reason: no known exploit
-        expires: '2020-09-16T11:38:38.944Z'
+        reason: No known vulnerability
+        expires: '2020-09-16T10:53:20.892Z'
+    - sequelize-cli > lodash:
+        reason: No known vulnerabilitiy
+        expires: '2020-09-16T10:53:20.892Z'
 patch: {}
