@@ -6,4 +6,8 @@ ignore:
     - '@azure/ms-rest-nodeauth > adal-node > request > har-validator > ajv':
         reason: No known exploit
         expires: '2020-08-22T16:12:11.146Z'
+  SNYK-JS-LODASH-590103:
+    - sequelize > lodash:
+        reason: no known exploit
+        expires: '2020-09-16T11:38:38.944Z'
 patch: {}
