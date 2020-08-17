@@ -1,14 +1,14 @@
 {{- include "ffc-helm-library.container-config-map" (list . "ffc-demo-claim-service.config-map") -}}
 {{- define "ffc-demo-claim-service.config-map" -}}
 data:
+  APPINSIGHTS_CLOUDROLE: {{ quote .Values.name }}
+  CALCULATION_QUEUE_ADDRESS: {{ quote .Values.container.calculationQueueAddress }}
+  CLAIM_QUEUE_ADDRESS: {{ quote .Values.container.claimQueueAddress }}
+  MESSAGE_QUEUE_HOST: {{ quote .Values.container.messageQueueHost }}
   NODE_ENV: {{ quote .Values.environment }}
-  POSTGRES_DB: {{ quote .Values.postgresService.postgresDatabase }}
+  PORT: {{ quote .Values.container.port }}
+  POSTGRES_DB: {{ quote .Values.postgresService.postgresDb }}
   POSTGRES_HOST: {{ quote .Values.postgresService.postgresHost }}
   POSTGRES_PORT: {{ quote .Values.postgresService.postgresPort }}
-  MESSAGE_QUEUE_HOST: {{ quote .Values.container.messageQueueHost }}
-  CALCULATION_QUEUE_ADDRESS: {{ quote .Values.container.calculationQueueAddress }}
   SCHEDULE_QUEUE_ADDRESS: {{ quote .Values.container.scheduleQueueAddress }}
-  CLAIM_QUEUE_ADDRESS: {{ quote .Values.container.claimQueueAddress }}
-  APPINSIGHTS_CLOUDROLE: {{ quote .Values.name }}
-  PORT: {{ quote .Values.container.port }}
 {{- end -}}

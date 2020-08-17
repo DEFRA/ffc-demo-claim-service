@@ -1,4 +1,4 @@
-const databaseService = require('../services/database-service')
+const { sequelize } = require('../services/database-service')
 
 const SERVICE_UNAVAILABLE = 503
 const OK = 200
@@ -9,10 +9,8 @@ module.exports = {
   options: {
     handler: async (request, h) => {
       try {
-        if (await databaseService.isConnected()) {
-          return h.response('ok').code(OK)
-        }
-        return h.response('database unavailable').code(SERVICE_UNAVAILABLE)
+        await sequelize.authenticate()
+        return h.response('ok').code(OK)
       } catch (ex) {
         console.error('error running healthy check', ex)
         return h.response(`error running healthy check: ${ex.message}`).code(SERVICE_UNAVAILABLE)

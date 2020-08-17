@@ -9,6 +9,10 @@ labels: {}
 appInsights:
   key:
 
+azureIdentity:
+  resourceID: not-a-real-resourceID
+  clientID: not-a-real-clientID
+
 containerConfigMap:
   name: ffc-demo-claim-service-config-map
 
@@ -37,22 +41,15 @@ container:
   port: 3003
   command: ["/bin/sh","-c"]
   args: ["npm --no-update-notifier run migrate && node index"]
-  messageQueueHost: amq
   calculationQueueAddress: calculation
-  calculationQueueUser: artemis
-  calculationQueuePassword: artemis
-  scheduleQueueAddress: schedule
-  scheduleQueueUser: artemis
-  scheduleQueuePassword: artemis
   claimQueueAddress: claim
-  claimQueueUser: artemis
-  claimQueuePassword: artemis
+  messageQueueHost: myservicebus.servicebus.windows.net
+  scheduleQueueAddress: schedule
 postgresService:
-  postgresUsername: postgres
-  postgresPassword: changeme
-  postgresDatabase: mine_claims
+  postgresDb: ffc_demo_claim
   # postgresHost is the host name of the PostgreSQL service
   postgresHost: ffc-demo-claims-postgres
+  postgresUser: postgres
   # postgresExternalName is the external host name to which PostgreSQL
   # requests should be forwarded. If empty, PostgreSQL is assumed to be
   # within the cluster and accessible via postgresHost

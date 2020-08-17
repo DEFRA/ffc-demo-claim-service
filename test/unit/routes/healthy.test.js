@@ -1,10 +1,13 @@
 describe('Healthy test', () => {
   let server
 
-  jest.mock('../../../server/services/message-service')
   jest.mock('../../../server/services/database-service')
-  const databaseService = require('../../../server/services/database-service')
   const createServer = require('../../../server')
+  const { sequelize } = require('../../../server/services/database-service')
+  sequelize.authenticate = jest.fn()
+  jest.mock('../../../server/services/message-service', () => {
+    return () => { }
+  })
 
   beforeEach(async () => {
     server = await createServer()
@@ -16,25 +19,11 @@ describe('Healthy test', () => {
       method: 'GET',
       url: '/healthy'
     }
-    databaseService.isConnected.mockReturnValue(true)
+    sequelize.authenticate.mockReturnValue(true)
 
     const response = await server.inject(options)
 
     expect(response.statusCode).toBe(200)
-  })
-
-  test('GET /healthy returns 503 if database not connected', async () => {
-    const options = {
-      method: 'GET',
-      url: '/healthy'
-    }
-
-    databaseService.isConnected.mockReturnValue(false)
-
-    const response = await server.inject(options)
-
-    expect(response.statusCode).toBe(503)
-    expect(response.payload).toBe('database unavailable')
   })
 
   test('GET /healthy returns 503 and error message if database check throws an error', async () => {
@@ -44,7 +33,7 @@ describe('Healthy test', () => {
     }
 
     const errorMessage = 'database connection timeout'
-    databaseService.isConnected.mockImplementation(() => { throw new Error(errorMessage) })
+    sequelize.authenticate.mockImplementation(() => { throw new Error(errorMessage) })
 
     const response = await server.inject(options)
 

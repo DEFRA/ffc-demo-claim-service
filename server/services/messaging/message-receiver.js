@@ -1,34 +1,26 @@
 const { ReceiveMode } = require('@azure/service-bus')
-const { getReceiverConfig } = require('./config-helper')
 const MessageBase = require('./message-base')
 
 class MessageReceiver extends MessageBase {
-  constructor (name, config) {
-    super(name, config)
-    this.receiverConfig = getReceiverConfig(this.name, config)
+  constructor (name, config, credentials, action) {
+    super(name, config, credentials)
+    this.receiverHandler = this.receiverHandler.bind(this)
+    this.action = action
+    const receiver = this.queueClient.createReceiver(ReceiveMode.peekLock)
+    receiver.registerMessageHandler(this.receiverHandler, this.receiverError)
   }
 
-  registerEvents (receiver, action) {
-    const receiverError = (error) => {
-      console.log(error)
-    }
-
-    const receiverHandler = async (message) => {
-      console.log(`${this.name} received message`, message.body)
-      try {
-        await action(message.body)
-      } catch (ex) {
-        console.error(`${this.name} error with message`, ex)
-      }
-    }
-
-    receiver.registerMessageHandler(receiverHandler, receiverError)
+  receiverError (error) {
+    console.log(error)
   }
 
-  async setupReceiver (action) {
-    const queueClient = this.sbClient.createQueueClient(this.receiverConfig.source.address)
-    const receiver = queueClient.createReceiver(ReceiveMode.peekLock)
-    this.registerEvents(receiver, action)
+  async receiverHandler (message) {
+    console.log(`${this.name} received message`, message.body)
+    try {
+      await this.action(message.body)
+    } catch (ex) {
+      console.error(`${this.name} error with message`, ex)
+    }
   }
 }
 

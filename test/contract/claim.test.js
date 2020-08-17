@@ -4,7 +4,6 @@ const Matchers = require('@pact-foundation/pact/dsl/matchers')
 const asbHelper = require('../asb-helper')
 const { claimMessageAction } = require('../../server/services/message-action')
 const dbHelper = require('../db-helper')
-const { publishClaim } = require('../../server/services/message-service')
 
 describe('receiving a new claim', () => {
   let messagePact
@@ -23,10 +22,11 @@ describe('receiving a new claim', () => {
 
   afterAll(async () => {
     await asbHelper.clearAllQueues()
-    dbHelper.close()
+    await dbHelper.close()
   }, 30000)
 
   test('new claim is received, saved and published to other services', async () => {
+    const messageService = await require('../../server/services/message-service')()
     await messagePact
       .given('valid message')
       .expectsToReceive('a request for new claim')
@@ -40,6 +40,6 @@ describe('receiving a new claim', () => {
       .withMetadata({
         'content-type': 'application/json'
       })
-      .verify(message => claimMessageAction(message.contents, publishClaim))
+      .verify(async message => claimMessageAction(message.contents, messageService.publishClaim))
   })
 })

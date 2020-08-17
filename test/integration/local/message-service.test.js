@@ -1,6 +1,5 @@
 const dbHelper = require('../../db-helper')
 const asbHelper = require('../../asb-helper')
-const messageService = require('../../../server/services/message-service')
 
 const generateSampleClaim = () => ({
   email: 'test@test.com',
@@ -12,7 +11,10 @@ const generateSampleClaim = () => ({
 })
 
 describe.only('Test message service', () => {
+  let messageService
+
   beforeAll(async () => {
+    messageService = await require('../../../server/services/message-service')()
     await asbHelper.clearAllQueues()
   }, 30000)
 
@@ -23,12 +25,13 @@ describe.only('Test message service', () => {
 
   afterAll(async () => {
     await asbHelper.clearAllQueues()
-    dbHelper.close()
+    await dbHelper.close()
+    await messageService.closeConnections()
   }, 30000)
 
   test('Message service sends the claim to schedule queue', async () => {
     const message = generateSampleClaim()
-    const scheduleSender = messageService.getScheduleSender()
+    const scheduleSender = messageService.scheduleSender
     const spy = jest.spyOn(scheduleSender, 'sendMessage')
 
     await messageService.publishClaim(message)
@@ -38,7 +41,7 @@ describe.only('Test message service', () => {
 
   test('Message service sends the claim to calculation queue', async () => {
     const message = generateSampleClaim()
-    const calculationSender = messageService.getCalculationSender()
+    const calculationSender = messageService.calculationSender
     const spy = jest.spyOn(calculationSender, 'sendMessage')
 
     await messageService.publishClaim(message)

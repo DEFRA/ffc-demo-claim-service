@@ -2,7 +2,7 @@
 
 # FFC Demo Claim Service
 
-Digital service mock to claim public money in the event property subsides into mine shaft.  The claim service receives claim data and if doesn’t already exist saves it in a Postgresql database table.  It also publishes events to message queues that a new claim has been received.
+Digital service mock to claim public money in the event property subsides into mine shaft.  The claim service receives claim data and if doesn't already exist saves it in a PostgreSQL database table.  It also publishes events to message queues that a new claim has been received.
 
 ## Prerequisites
 
@@ -17,38 +17,41 @@ Or:
 - Helm
 
 ### Azure Service Bus
-This service depends on a valid Azure Service Bus connection string for asynchronous communication.  The following environment variables need to be set in any environment before the Docker container is started.
+This service depends on a valid Azure Service Bus connection string for
+asynchronous communication.  The following environment variables need to be set
+in any non-production (`process.env.NODE_ENV !== production`)
+environment before the Docker container is started. When deployed
+into an appropriately configured AKS cluster (where
+[AAD Pod Identity](https://github.com/Azure/aad-pod-identity) is
+configured) the micro-service will use AAD Pod Identity through the manifests
+for
+[azure-identity](./helm/ffc-demo-claim-service/templates/azure-identity.yaml)
+and
+[azure-identity-binding](./helm/ffc-demo-claim-service/templates/azure-identity-binding.yaml).
 
-| Name                             | Description                                                                                |
-|----------------------------------|--------------------------------------------------------------------------------------------|
-| MESSAGE_QUEUE_HOST               | Azure Service Bus hostname, eg `myservicebus.servicebus.windows.net`                       |
-| MESSAGE_QUEUE_USER               | Azure Service Bus SAS policy name, eg `RootManageSharedAccessKey`                          |
-| MESSAGE_QUEUE_PASSWORD           | Azure Service Bus SAS policy key                                                           |
-| MESSAGE_QUEUE_SUFFIX             | Developer specific queue suffix to prevent collisions, only required for local development |
+| Name                               | Description                                                                                  |
+| ---------------------------------- | -------------------------------------------------------------------------------------------- |
+| MESSAGE_QUEUE_HOST                 | Azure Service Bus hostname, e.g. `myservicebus.servicebus.windows.net`                       |
+| MESSAGE_QUEUE_USER                 | Azure Service Bus SAS policy name, e.g. `RootManageSharedAccessKey`                          |
+| MESSAGE_QUEUE_PASSWORD             | Azure Service Bus SAS policy key                                                             |
+| MESSAGE_QUEUE_SUFFIX               | Developer specific queue suffix to prevent collisions, only required for local development   |
 
 ## Environment variables
 
 The following environment variables are required by the application container. Values for development are set in the Docker Compose configuration. Default values for production-like deployments are set in the Helm chart and may be overridden by build and release pipelines.
 
-| Name                             | Description                 | Required | Default   | Valid                       | Notes                                                                             |
-|----------------------------------|-----------------------------|:--------:|-----------|:---------------------------:|-----------------------------------------------------------------------------------|
-| NODE_ENV                         | Node environment            | no       |           | development,test,production |                                                                                   |
-| PORT                             | Port number                 | no       | 3003      |                             |                                                                                   |
-| POSTGRES_DB                      | Postgres database           | yes      |           |                             |                                                                                   |
-| POSTGRES_USERNAME                | Postgres username           | yes      |           |                             |                                                                                   |
-| POSTGRES_PASSWORD                | Postgres password           | yes      |           |                             
-|                                                                                   |
-| CALCULATION_QUEUE_ADDRESS        | Message queue address       | yes      |           |                             |                                                                                   |
-| CALCULATION_QUEUE_USER           | calculation queue user name | no       |           |                             |                                                                                   |
-| CALCULATION_QUEUE_PASSWORD       | calculation queue password  | no       |           |                             |                                                                                   |
-| SCHEDULE_QUEUE_ADDRESS           | Message queue address       | yes      |           |                             |                                                                                   |
-| SCHEDULE_QUEUE_USER              | schedule queue user name    | no       |           |                             |                                                                                   |
-| SCHEDULE_QUEUE_PASSWORD          | schedule queue password     | no       |           |                             |                                                                                   |
-| CLAIM_QUEUE_ADDRESS              | Message queue address       | yes      |           |                             |                                                                                   |
-| CLAIM_QUEUE_USER                 | claim queue user name       | no       |           |                             |                                                                                   |
-| CLAIM_QUEUE_PASSWORD             | claim queue password        | no       |           |                             |                                                                                   |
-| APPINSIGHTS_INSTRUMENTATIONKEY   | Key for application insight | no       |           |                             | App insights only enabled if key is present. Note: Silently fails for invalid key |
-| APPINSIGHTS_CLOUDROLE            | Role used for filtering metrics| no    |           |                             | Set to `ffc-demo-claim-service-local` in docker compose files                     |
+| Name                               | Description                     | Required   | Default     | Valid                         | Notes                                                                               |
+| ---------------------------------- | -----------------------------   | :--------: | ----------- | :---------------------------: | ----------------------------------------------------------------------------------- |
+| APPINSIGHTS_INSTRUMENTATIONKEY     | Key for application insight     | no         |             |                               | App insights only enabled if key is present. Note: Silently fails for invalid key   |
+| APPINSIGHTS_CLOUDROLE              | Role used for filtering metrics | no         |             |                               | Set to `ffc-demo-claim-service-local` in docker compose files                       |
+| CALCULATION_QUEUE_ADDRESS          | Message queue address           | yes        |             |                               |                                                                                     |
+| CLAIM_QUEUE_ADDRESS                | Message queue address           | yes        |             |                               |                                                                                     |
+| NODE_ENV                           | Node environment                | no         |             | development,test,production   |                                                                                     |
+| PORT                               | Port number                     | no         | 3003        |                               |                                                                                     |
+| POSTGRES_DB                        | PostgreSQL database             | yes        |             |                               |                                                                                     |
+| POSTGRES_USERNAME                  | PostgreSQL username             | yes        |             |                               |                                                                                     |
+| POSTGRES_PASSWORD                  | PostgreSQL password             | yes        |             |                               |                                                                                     |
+| SCHEDULE_QUEUE_ADDRESS             | Message queue address           | yes        |             |                               |                                                                                     |
 
 ## How to run tests
 
@@ -198,4 +201,3 @@ The following attribution statement MUST be cited in your products and applicati
 The Open Government Licence (OGL) was developed by the Controller of Her Majesty's Stationery Office (HMSO) to enable information providers in the public sector to license the use and re-use of their information under a common open licence.
 
 It is designed to encourage use and re-use of information freely and flexibly, with only a few conditions.
-
