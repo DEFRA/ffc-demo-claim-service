@@ -1,3 +1,3 @@
-@Library('defra-library@fix-pr-cleanup') _
+@Library('defra-library@v-8') _
 
 buildNodeJs environment: 'dev'
