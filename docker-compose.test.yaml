@@ -9,10 +9,7 @@ services:
       context: .
       target: development
     command: >
-      sh -c "
-        scripts/wait-for/wait-for ffc-demo-claim-postgres:5432 --
-        npm run migrate &&
-        npm run test"
+      sh -c "npm run test"
     volumes:
       - ./test/:/home/node/test/
       - ./test-output/:/home/node/test-output/
