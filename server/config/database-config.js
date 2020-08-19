@@ -12,7 +12,7 @@ function isProd () {
 const dbConfig = {
   username: process.env.POSTGRES_USERNAME,
   password: process.env.POSTGRES_PASSWORD,
-  database: process.env.POSTGRES_DB || 'ffc_demo_claim',
+  database: process.env.POSTGRES_DB,
   schema: process.env.POSTGRES_SCHEMA_NAME || 'public',
   host: process.env.POSTGRES_HOST || 'localhost',
   port: process.env.POSTGRES_PORT || 5432,
