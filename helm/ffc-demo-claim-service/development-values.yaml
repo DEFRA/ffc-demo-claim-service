@@ -1,5 +1,4 @@
 container:
   command: ["/bin/sh","-c"]
-  args: ["scripts/wait-for/wait-for $(POSTGRES_HOST):5432 -- npm --no-update-notifier run migrate && node index"]
-  messageQueueHost: ffc-demo-claim-artemis-activemq-artemis
+  args: ["node index"]
 postgresHost: ffc-demo-claim-postgres-postgresql
