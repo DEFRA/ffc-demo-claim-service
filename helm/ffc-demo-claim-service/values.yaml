@@ -39,8 +39,6 @@ container:
   readOnlyRootFilesystem: true
   allowPrivilegeEscalation: false
   port: 3003
-  command: ["/bin/sh","-c"]
-  args: ["npm --no-update-notifier run migrate && node index"]
   calculationQueueAddress: calculation
   claimQueueAddress: claim
   messageQueueHost: myservicebus.servicebus.windows.net
