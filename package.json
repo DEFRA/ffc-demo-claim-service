@@ -1,11 +1,10 @@
 {
   "name": "ffc-demo-claim-service",
   "description": "Digital service mock to claim public money in the event property subsides into mine shaft.",
-  "version": "3.16.1",
+  "version": "3.17.0",
   "homepage": "https://github.com/DEFRA/mine-support-claim-service",
   "main": "index.js",
   "scripts": {
-    "migrate": "sequelize db:migrate",
     "pretest": "npm run test:lint",
     "test": "jest --runInBand",
     "test:lint": "standard",
@@ -35,8 +34,7 @@
     "@hapi/joi": "^17.1.1",
     "applicationinsights": "^1.8.2",
     "pg": "^7.12.1",
-    "sequelize": "^5.22.3",
-    "sequelize-cli": "^5.5.1"
+    "sequelize": "^5.22.3"
   },
   "devDependencies": {
     "@hapi/good": "^9.0.0",

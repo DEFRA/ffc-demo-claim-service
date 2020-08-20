@@ -8,8 +8,6 @@ services:
     image: ffc-demo-claim-service
     depends_on:
       - ffc-demo-claim-postgres
-    env_file:
-      - variables/postgres.env
     environment:
       APPINSIGHTS_CLOUDROLE: ffc-demo-claim-service-local
       APPINSIGHTS_INSTRUMENTATIONKEY: ${APPINSIGHTS_INSTRUMENTATIONKEY}
@@ -18,8 +16,12 @@ services:
       MESSAGE_QUEUE_HOST: ${MESSAGE_QUEUE_HOST:-notset}
       MESSAGE_QUEUE_USER: ${MESSAGE_QUEUE_USER:-notset}
       MESSAGE_QUEUE_PASSWORD: ${MESSAGE_QUEUE_PASSWORD:-notset}
-      POSTGRES_HOST: ffc-demo-claim-postgres
+      POSTGRES_DB: ${POSTGRES_DB:-ffc_demo_claim}
+      POSTGRES_HOST: ${POSTGRES_HOST:-ffc-demo-claim-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_SCHEMA_PASSWORD:-ppp}
       POSTGRES_PORT: 5432
+      POSTGRES_SCHEMA_NAME: ${POSTGRES_SCHEMA_NAME:-public}
+      POSTGRES_USERNAME: ${POSTGRES_SCHEMA_USERNAME:-postgres}
       SCHEDULE_QUEUE_ADDRESS: ffc-demo-schedule-${MESSAGE_QUEUE_SUFFIX}
       SEND_TIMEOUT_IN_SECONDS: 10
     volumes:
@@ -31,8 +33,10 @@ services:
 
   ffc-demo-claim-postgres:
     image: postgres:11.4-alpine
-    env_file:
-      - variables/postgres.env
+    environment:
+      POSTGRES_DB: ffc_demo_claim
+      POSTGRES_PASSWORD: ppp
+      POSTGRES_USERNAME: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
 volumes:
