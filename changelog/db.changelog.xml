@@ -33,13 +33,6 @@
         </createTable>
     </changeSet>
     <changeSet author="liquibase (generated)" id="1596009647200-3">
-        <createTable tableName="SequelizeMeta">
-            <column name="name" type="VARCHAR(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="SequelizeMeta_pkey"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="liquibase (generated)" id="1596009647200-4">
         <addForeignKeyConstraint baseColumnNames="claimId" baseTableName="mineTypes" constraintName="mineTypes_claimId_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="claimId" referencedTableName="claims" validate="true"/>
     </changeSet>
 </databaseChangeLog>
