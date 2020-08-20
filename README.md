@@ -41,17 +41,21 @@ and
 The following environment variables are required by the application container. Values for development are set in the Docker Compose configuration. Default values for production-like deployments are set in the Helm chart and may be overridden by build and release pipelines.
 
 | Name                               | Description                     | Required   | Default     | Valid                         | Notes                                                                               |
-| ---------------------------------- | -----------------------------   | :--------: | ----------- | :---------------------------: | ----------------------------------------------------------------------------------- |
-| APPINSIGHTS_INSTRUMENTATIONKEY     | Key for application insight     | no         |             |                               | App insights only enabled if key is present. Note: Silently fails for invalid key   |
-| APPINSIGHTS_CLOUDROLE              | Role used for filtering metrics | no         |             |                               | Set to `ffc-demo-claim-service-local` in docker compose files                       |
-| CALCULATION_QUEUE_ADDRESS          | Message queue address           | yes        |             |                               |                                                                                     |
-| CLAIM_QUEUE_ADDRESS                | Message queue address           | yes        |             |                               |                                                                                     |
-| NODE_ENV                           | Node environment                | no         |             | development,test,production   |                                                                                     |
-| PORT                               | Port number                     | no         | 3003        |                               |                                                                                     |
-| POSTGRES_DB                        | PostgreSQL database             | yes        |             |                               |                                                                                     |
-| POSTGRES_USERNAME                  | PostgreSQL username             | yes        |             |                               |                                                                                     |
-| POSTGRES_PASSWORD                  | PostgreSQL password             | yes        |             |                               |                                                                                     |
-| SCHEDULE_QUEUE_ADDRESS             | Message queue address           | yes        |             |                               |                                                                                     |
+| ---------------------------------- | -----------------------------   | :--------: | ----------- | :---------------------------: | ----------------------------------------------------------------------------------------- |
+| APPINSIGHTS_INSTRUMENTATIONKEY     | Key for application insight     | no         |             |                               | App insights only enabled if key is present. Note: Silently fails for invalid key         |
+| APPINSIGHTS_CLOUDROLE              | Role used for filtering metrics | no         |             |                               | Set to `ffc-demo-claim-service-local` in docker compose files                             |
+| CALCULATION_QUEUE_ADDRESS          | Message queue address           | yes        |             |                               |                                                                                           |
+| CLAIM_QUEUE_ADDRESS                | Message queue address           | yes        |             |                               |                                                                                           |
+| NODE_ENV                           | Node environment                | no         |             | development,test,production   |                                                                                           |
+| PORT                               | Port number                     | no         | 3003        |                               |                                                                                           |
+| POSTGRES_DB                        | PostgreSQL database             | yes        |             |                               |                                                                                           |
+| POSTGRES_HOST                      | PostgreSQL host                 | yes        |             |                               |                                                                                           |
+| POSTGRES_USERNAME                  | PostgreSQL username             | yes        |             |                               |                                                                                           |
+| POSTGRES_PASSWORD                  | PostgreSQL password             | yes        |             |                               |                                                                                           |
+| POSTGRES_SCHEMA_NAME               | PostgreSQL schema               | no         | public      |                               |                                                                                           |
+| POSTGRES_SCHEMA_PASSWORD           | Password of schema user         | no         | ppp         |                               | this is only used in the docker container when running against a schema other than public |
+| POSTGRES_SCHEMA_USER               | schema user account             | no         | postgres    |                               | see above                                                                                 |
+| SCHEDULE_QUEUE_ADDRESS             | Message queue address           | yes        |             |                               |                                                                                           |
 
 ## How to run tests
 
@@ -95,7 +99,15 @@ docker-compose build
 
 Use Docker Compose to run service locally.
 
-`docker-compose up`
+The service uses [Liquibase](https://www.liquibase.org/) to manage database migrations. To ensure the appropriate migrations have been run the utility script `scripts/start` may be run to execute the migrations, then the application.
+
+Alternatively the steps can be run manually:
+* run migrations
+  * `docker-compose -f docker-compose.migrate.yaml run --rm database-up`
+* start
+  * `docker-compose up`
+* stop
+  * `docker-compose down` or CTRL-C
 
 Additional Docker Compose files are provided for scenarios such as linking to other running services.
 

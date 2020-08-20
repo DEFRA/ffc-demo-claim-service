@@ -16,7 +16,7 @@ services:
       MESSAGE_QUEUE_HOST: ${MESSAGE_QUEUE_HOST:-notset}
       MESSAGE_QUEUE_USER: ${MESSAGE_QUEUE_USER:-notset}
       MESSAGE_QUEUE_PASSWORD: ${MESSAGE_QUEUE_PASSWORD:-notset}
-      POSTGRES_DB: ffc_demo_claim
+      POSTGRES_DB: ${POSTGRES_DB:-ffc_demo_claim}
       POSTGRES_HOST: ${POSTGRES_HOST:-ffc-demo-claim-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_SCHEMA_PASSWORD:-ppp}
       POSTGRES_PORT: 5432
