@@ -7,9 +7,9 @@ while :
 do
   ((count++))
   if [ "$count" -ge "$max_tries" ]; then
-		echo "postgres did not respond in time"
-		exit 1
-	fi
+    echo "postgres did not respond in time"
+    exit 1
+  fi
   response=$(wget -SO- -T 1 -t 1 http://$POSTGRES_HOST:$POSTGRES_PORT 2>&1 | grep 'No data received')
   if [ "$response" ]; then
     echo "postgres server available"
