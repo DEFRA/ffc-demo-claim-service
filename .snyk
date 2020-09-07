@@ -4,8 +4,8 @@ version: v1.14.1
 ignore:
   SNYK-JS-AJV-584908:
     - '@azure/ms-rest-nodeauth > adal-node > request > har-validator > ajv':
-        reason: No known exploit
-        expires: '2020-08-22T16:12:11.146Z'
+        reason: No known fix for Azure package
+        expires: '2020-10-07T15:12:52.110Z'
   SNYK-JS-LODASH-590103:
     - sequelize > lodash:
         reason: No known vulnerability
