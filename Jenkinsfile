@@ -1,4 +1,4 @@
-@Library('defra-library@v-8') _
+@Library('defra-library@psd-973-use-pr-queues') _
 
 /* buildNodeJs environment: 'dev' */
 node {
