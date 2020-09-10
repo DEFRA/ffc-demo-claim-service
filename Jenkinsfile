@@ -32,7 +32,7 @@ node {
 
     if (pr != '') {
       stage('Helm install') {
-        helm.deployChart('dev', DOCKER_REGISTRY, repoName, tag)
+        helm.deployChart('dev', DOCKER_REGISTRY, repoName, tag, pr)
       }
     } else {
       stage('Publish chart') {
