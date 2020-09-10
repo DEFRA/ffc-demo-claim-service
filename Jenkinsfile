@@ -1,3 +1,3 @@
-@Library('defra-library@psd-953-db-helm-deploy') _
+@Library('defra-library@v-8') _
 
 buildNodeJs environment: 'dev'
