@@ -4,7 +4,7 @@
       <tagDatabase tag="v0.0.0" />
     </changeSet>
     <changeSet author="liquibase (generated)" id="1596009647200-1">
-      <tagDatabase tag="v0.0.0" />
+      
         <createTable tableName="claims">
             <column name="claimId" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="claims_pkey"/>
@@ -22,7 +22,7 @@
         </createTable>
     </changeSet>
     <changeSet author="liquibase (generated)" id="1596009647200-2">
-     <tagDatabase tag="v2.0.0" />
+     
         <createTable tableName="mineTypes">
             <column autoIncrement="true" name="mineTypeId" type="INTEGER">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="mineTypes_pkey"/>
@@ -38,7 +38,8 @@
         </createTable>
     </changeSet>
     <changeSet author="liquibase (generated)" id="1596009647200-3">
-     <tagDatabase tag="v3.0.0" />
+     
         <addForeignKeyConstraint baseColumnNames="claimId" baseTableName="mineTypes" constraintName="mineTypes_claimId_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="claimId" referencedTableName="claims" validate="true"/>
+      <tagDatabase tag="v1.0.0" />
     </changeSet>
 </databaseChangeLog>
