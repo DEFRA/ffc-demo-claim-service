@@ -5,4 +5,4 @@ echo "db update on $POSTGRES_HOST $SCHEMA_NAME as $SCHEMA_USERNAME"
 --changeLogFile=/changelog/db.changelog.xml \
 --url=jdbc:postgresql://$POSTGRES_HOST:$POSTGRES_PORT/$POSTGRES_DB \
 --username="$SCHEMA_USERNAME" --password="$SCHEMA_PASSWORD" --defaultSchemaName="$SCHEMA_NAME" \
-rollbackCount 3
+rollback v0.0.0
