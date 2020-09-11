@@ -20,7 +20,7 @@
             <column name="email" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>
-    <changeSet author="liquibase (generated)" id="1596009647200-2">     
+    <changeSet author="liquibase (generated)" id="1596009647200-2">
         <createTable tableName="mineTypes">
             <column autoIncrement="true" name="mineTypeId" type="INTEGER">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="mineTypes_pkey"/>
