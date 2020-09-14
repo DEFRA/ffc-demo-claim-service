@@ -1,4 +1,4 @@
-const { models } = require('../services/database-service')
+const { models } = require('../services/database-service')()
 
 module.exports = {
   getById: async function (claimId) {
