@@ -6,9 +6,10 @@ Digital service mock to claim public money in the event property subsides into m
 
 ## Prerequisites
 
-- Azure Service Bus instance
+Access to an instance of an
+[Azure Service Bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/)(ASB).
 
-Either:
+And either:
 - Docker
 - Docker Compose
 
@@ -34,7 +35,6 @@ and
 | MESSAGE_QUEUE_HOST                 | Azure Service Bus hostname, e.g. `myservicebus.servicebus.windows.net`                       |
 | MESSAGE_QUEUE_USER                 | Azure Service Bus SAS policy name, e.g. `RootManageSharedAccessKey`                          |
 | MESSAGE_QUEUE_PASSWORD             | Azure Service Bus SAS policy key                                                             |
-| MESSAGE_QUEUE_SUFFIX               | Developer specific queue suffix to prevent collisions, only required for local development   |
 
 ## Environment variables
 
@@ -77,6 +77,14 @@ Alternatively, unit tests may be run locally via npm:
 # Run unit tests without Docker
 npm run test:unit
 ```
+
+Running the integration tests locally requires access to ASB, this can be
+achieved by setting the following environment variables:
+`MESSAGE_QUEUE_HOST`, `MESSAGE_QUEUE_PASSWORD`, `MESSAGE_QUEUE_USER`.
+`CALCULATION_QUEUE_ADDRESS`, `CLAIM_QUEUE_ADDRESS` & `SCHEDUlE_QUEUEU_ADDRESS`
+must be set to valid, developer specific queues that are available on ASB e.g.
+for the claim queue that would be `ffc-demo-claim-<initials>` where
+`<initials>` are the initials of the developer.
 
 ## Running the application
 
