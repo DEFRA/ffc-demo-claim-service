@@ -1,18 +1,22 @@
+const SequelizeMock = require('sequelize-mock')
+const mockDb = new SequelizeMock()
+
 let minetypeRepository
-let MockSequelize
-let mockDb
 
 describe('Test minetype repository', () => {
   beforeEach(async () => {
-    jest.mock('../../../server/services/database-service')
-    jest.mock('../../../server/models/minetype', () => {
-      MockSequelize = require('sequelize-mock')
-      mockDb = new MockSequelize()
-      return mockDb.define('mineTypes', {
-        mineTypeId: 1,
-        claimId: 'MINE123',
-        mineType: 'gold'
-      })
+    jest.mock('../../../server/services/database-service', () => {
+      return () => {
+        return {
+          models: {
+            mineTypes: mockDb.define('mineTypes', {
+              mineTypeId: 1,
+              claimId: 'MINE123',
+              mineType: 'gold'
+            })
+          }
+        }
+      }
     })
     minetypeRepository = require('../../../server/repository/minetype-repository')
   })
@@ -38,7 +42,7 @@ describe('Test minetype repository', () => {
   test('minetype repository handles database failure', async () => {
     minetypeRepository = require('../../../server/repository/minetype-repository')
 
-    mockDb.$queueFailure(new MockSequelize.ValidationError('Test error'))
+    mockDb.$queueFailure(new SequelizeMock.ValidationError('Test error'))
 
     return expect(minetypeRepository.create({
       mineTypeId: 1,
