@@ -27,6 +27,7 @@ async function clearQueue (queueName) {
     } while (messages.length > 0 && messages.length === batchSize)
 
     console.log(`No more messages in: '${queueAddress}'.`)
+    await receiver.close()
     await queueClient.close()
   } catch (err) {
     console.log(err)

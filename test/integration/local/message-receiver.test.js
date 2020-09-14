@@ -22,8 +22,11 @@ describe('message receiver', () => {
       done = resolve
     })
     const testConfig = { ...config.messageQueues.claimQueue }
-    messageReceiver = new MessageReceiver('test-receiver', testConfig)
-    await messageReceiver.setupReceiver((result) => done(result.hello === message.hello))
+    const action = (result) => {
+      done(result.hello === message.hello)
+    }
+
+    messageReceiver = new MessageReceiver('message-receiver-test', testConfig, undefined, action)
 
     messageSender = new MessageSender('test-sender', testConfig)
     await messageSender.sendMessage(message)

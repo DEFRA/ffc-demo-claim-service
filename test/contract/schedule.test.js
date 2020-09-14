@@ -2,8 +2,9 @@ const { MessageProviderPact } = require('@pact-foundation/pact')
 const path = require('path')
 
 describe('Pact Verification', () => {
+  let messageService
   test('validates the expectations of ffc-demo-payment-service', async () => {
-    const messageService = await require('../../server/services/message-service')()
+    messageService = await require('../../server/services/message-service')()
 
     const claim = {
       claimId: 'MINE123',
@@ -25,5 +26,9 @@ describe('Pact Verification', () => {
     })
 
     return provider.verify()
+  })
+
+  afterAll(async () => {
+    await messageService.closeConnections()
   })
 })

@@ -8,6 +8,8 @@ class MessageBase {
   }
 
   async closeConnection () {
+    await this.queueClient.close()
+    console.log(`${this.name} queue client closed`)
     await this.sbClient.close()
     console.log(`${this.name} connection closed`)
   }
