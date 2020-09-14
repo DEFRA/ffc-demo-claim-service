@@ -26,9 +26,9 @@ describe('message receiver', () => {
       done(result.hello === message.hello)
     }
 
-    messageReceiver = new MessageReceiver('message-receiver-test', testConfig, undefined, action)
+    messageReceiver = new MessageReceiver('message-receiver-test-receiver', testConfig, undefined, action)
 
-    messageSender = new MessageSender('test-sender', testConfig)
+    messageSender = new MessageSender('message-receiver-test-sender', testConfig)
     await messageSender.sendMessage(message)
 
     return expect(promise).resolves.toEqual(true)
