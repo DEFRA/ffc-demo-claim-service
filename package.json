@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "pretest": "npm run test:lint",
-    "test": "jest --runInBand",
+    "test": "jest --runInBand --forceExit",
     "test:lint": "standard",
     "test:pact": "jest --testPathPattern=test/contract --coverage=false",
     "test:integration": "jest --testPathPattern=test/integration --coverage=false",
