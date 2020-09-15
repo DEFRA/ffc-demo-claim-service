@@ -5,7 +5,7 @@ describe('MessageSender test', () => {
   const name = 'test-message-sender'
   const config = { host: 'test-host' }
 
-  test('construct a new MessageSender from connection string', () => {
+  test('construct a new MertestssageSender from connection string', () => {
     const messageSender = new MessageSender(name, config)
 
     expect(messageSender).not.toBeNull()

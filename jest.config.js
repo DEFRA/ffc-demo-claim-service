@@ -39,7 +39,7 @@ module.exports = {
   testEnvironment: 'node',
   testPathIgnorePatterns: [
     'test/contract/',
-    'test/integration/local/message-receiver.test.js',
+    'test/integration/local/',
     'test/unit/services/message-sender.test.js'
   ],
   verbose: true
