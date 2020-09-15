@@ -3,13 +3,10 @@ const { ServiceBusClient } = require('@azure/service-bus')
 class MessageBase {
   constructor (name, config, credentials) {
     this.name = name
-    this.sbClient = credentials ? ServiceBusClient.createFromAadTokenCredentials(config.host, credentials) : ServiceBusClient.createFromConnectionString(`Endpoint=sb://${config.host}/;SharedAccessKeyName=${config.username};SharedAccessKey=${config.password}`)
-    this.queueClient = this.sbClient.createQueueClient(config.address)
+    this.sbClient = credentials ? new ServiceBusClient(config.host, credentials) : new ServiceBusClient(`Endpoint=sb://${config.host}/;SharedAccessKeyName=${config.username};SharedAccessKey=${config.password}`)
   }
 
   async closeConnection () {
-    await this.queueClient.close()
-    console.log(`${this.name} queue client closed`)
     await this.sbClient.close()
     console.log(`${this.name} connection closed`)
   }

@@ -1,4 +1,4 @@
-const auth = require('@azure/ms-rest-nodeauth')
+const { DefaultAzureCredential } = require('@azure/identity')
 const config = require('../config')
 const mqConfig = config.messageQueues
 const { claimMessageAction } = require('./message-action')
@@ -34,6 +34,8 @@ class MessageService {
 }
 
 module.exports = async function () {
-  const credentials = config.isProd ? await auth.loginWithVmMSI({ resource: 'https://servicebus.azure.net' }) : undefined
+  // TODO: might need additional information here
+  // This should also work if env vars are set for development purposes so there would be no need to have branches depending on env
+  const credentials = config.isProd ? new DefaultAzureCredential() : undefined
   return new MessageService(credentials)
 }

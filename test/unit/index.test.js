@@ -3,7 +3,6 @@ describe('Web test', () => {
   let server
   let mockClaimRepository
 
-  jest.mock('@azure/ms-rest-nodeauth')
   jest.mock('../../server/repository/claim-repository')
   jest.mock('../../server/repository/minetype-repository')
   jest.mock('../../server/services/message-service', () => {

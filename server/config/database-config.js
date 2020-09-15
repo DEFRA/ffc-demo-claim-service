@@ -1,4 +1,4 @@
-const auth = require('@azure/ms-rest-nodeauth')
+const { DefaultAzureCredential } = require('@azure/identity')
 const { production } = require('./constants').environments
 
 function logRetry (message) {
@@ -22,11 +22,12 @@ const dbConfig = {
       console.log('running beforeConnect hook')
       if (isProd()) {
         console.log('attempting to acquire MSI credentials')
-        const credentials = await auth.loginWithVmMSI({ resource: 'https://ossrdbms-aad.database.windows.net' })
+        const credentials = new DefaultAzureCredential()
+        // const credentials = await auth.loginWithVmMSI({ resource: 'https://ossrdbms-aad.database.windows.net' })
         console.log('credentials acquired')
         const token = await credentials.getToken()
         console.log('token acquired')
-        cfg.password = token.accessToken
+        cfg.password = token.token
       }
     }
   },
