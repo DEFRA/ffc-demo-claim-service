@@ -1,12 +1,12 @@
 {
   "name": "ffc-demo-claim-service",
   "description": "Digital service mock to claim public money in the event property subsides into mine shaft.",
-  "version": "3.18.1",
+  "version": "3.19.0",
   "homepage": "https://github.com/DEFRA/mine-support-claim-service",
   "main": "index.js",
   "scripts": {
     "pretest": "npm run test:lint",
-    "test": "jest --runInBand",
+    "test": "jest --runInBand --forceExit",
     "test:lint": "standard",
     "test:pact": "jest --testPathPattern=test/contract --coverage=false",
     "test:integration": "jest --testPathPattern=test/integration --coverage=false",
@@ -28,11 +28,11 @@
   "license": "OGL-UK-3.0",
   "dependencies": {
     "@azure/ms-rest-nodeauth": "^3.0.5",
-    "@azure/service-bus": "^1.1.8",
+    "@azure/service-bus": "^1.1.9",
     "@hapi/catbox-memory": "^5.0.0",
     "@hapi/hapi": "^19.2.0",
     "@hapi/joi": "^17.1.1",
-    "applicationinsights": "^1.8.2",
+    "applicationinsights": "^1.8.7",
     "pg": "^7.12.1",
     "sequelize": "^5.22.3"
   },
@@ -40,10 +40,10 @@
     "@hapi/good": "^9.0.0",
     "@hapi/good-console": "^9.0.0",
     "@hapi/good-squeeze": "^6.0.0",
-    "@pact-foundation/pact": "^9.11.0",
+    "@pact-foundation/pact": "^9.11.1",
     "blipp": "^4.0.1",
-    "jest": "^26.1.0",
-    "jest-junit": "^11.0.1",
+    "jest": "^26.4.2",
+    "jest-junit": "^11.1.0",
     "nodemon": "^2.0.4",
     "sequelize-mock": "^0.10.2",
     "standard": "^14.3.4"

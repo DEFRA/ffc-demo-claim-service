@@ -6,8 +6,8 @@ class MessageReceiver extends MessageBase {
     super(name, config, credentials)
     this.receiverHandler = this.receiverHandler.bind(this)
     this.action = action
-    const receiver = this.queueClient.createReceiver(ReceiveMode.peekLock)
-    receiver.registerMessageHandler(this.receiverHandler, this.receiverError)
+    this.receiver = this.queueClient.createReceiver(ReceiveMode.peekLock)
+    this.receiver.registerMessageHandler(this.receiverHandler, this.receiverError)
   }
 
   receiverError (error) {
@@ -21,6 +21,12 @@ class MessageReceiver extends MessageBase {
     } catch (ex) {
       console.error(`${this.name} error with message`, ex)
     }
+  }
+
+  async closeConnection () {
+    await this.receiver.close()
+    console.log(`${this.name} receiver closed`)
+    await super.closeConnection()
   }
 }
 

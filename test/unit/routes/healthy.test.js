@@ -1,10 +1,17 @@
 describe('Healthy test', () => {
   let server
+  const mockSequelize = {
+    authenticate: jest.fn()
+  }
 
-  jest.mock('../../../server/services/database-service')
+  jest.mock('../../../server/services/database-service', () => {
+    return () => {
+      return {
+        sequelize: mockSequelize
+      }
+    }
+  })
   const createServer = require('../../../server')
-  const { sequelize } = require('../../../server/services/database-service')
-  sequelize.authenticate = jest.fn()
   jest.mock('../../../server/services/message-service', () => {
     return () => { }
   })
@@ -19,7 +26,7 @@ describe('Healthy test', () => {
       method: 'GET',
       url: '/healthy'
     }
-    sequelize.authenticate.mockReturnValue(true)
+    mockSequelize.authenticate.mockReturnValue(true)
 
     const response = await server.inject(options)
 
@@ -33,7 +40,7 @@ describe('Healthy test', () => {
     }
 
     const errorMessage = 'database connection timeout'
-    sequelize.authenticate.mockImplementation(() => { throw new Error(errorMessage) })
+    mockSequelize.authenticate.mockImplementation(() => { throw new Error(errorMessage) })
 
     const response = await server.inject(options)
 

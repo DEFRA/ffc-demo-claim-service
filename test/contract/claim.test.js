@@ -7,6 +7,7 @@ const dbHelper = require('../db-helper')
 
 describe('receiving a new claim', () => {
   let messagePact
+  let messageService
 
   beforeAll(async () => {
     await asbHelper.clearAllQueues()
@@ -23,10 +24,11 @@ describe('receiving a new claim', () => {
   afterAll(async () => {
     await asbHelper.clearAllQueues()
     await dbHelper.close()
+    await messageService.closeConnections()
   }, 30000)
 
   test('new claim is received, saved and published to other services', async () => {
-    const messageService = await require('../../server/services/message-service')()
+    messageService = await require('../../server/services/message-service')()
     await messagePact
       .given('valid message')
       .expectsToReceive('a request for new claim')

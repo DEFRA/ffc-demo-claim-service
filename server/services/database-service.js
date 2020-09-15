@@ -5,7 +5,7 @@ const config = require('../config')
 const dbConfig = config.database[config.env]
 const modelPath = path.join(__dirname, '..', 'models')
 
-module.exports = (function () {
+module.exports = () => {
   const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig)
   const models = {}
 
@@ -30,4 +30,4 @@ module.exports = (function () {
     models,
     sequelize
   }
-}())
+}
