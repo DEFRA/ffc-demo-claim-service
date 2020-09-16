@@ -42,7 +42,7 @@ describe.only('Test message service', () => {
       done = resolve
     })
     const action = (result) => {
-      done(result.hello === message.hello)
+      done(result.claimId === message.claimId)
     }
 
     messageReceiver = new MessageReceiver('test-receiver', { ...config.messageQueues.scheduleQueue }, undefined, action)
@@ -55,7 +55,7 @@ describe.only('Test message service', () => {
       done = resolve
     })
     const action = (result) => {
-      done(result.hello === message.hello)
+      done(result.claimId === message.claimId)
     }
 
     messageReceiver = new MessageReceiver('test-receiver', { ...config.messageQueues.calculationQueue }, undefined, action)
