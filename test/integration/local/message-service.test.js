@@ -1,3 +1,7 @@
+const MessageReceiver = require('../../../server/services/messaging/message-receiver')
+const MessageService = require('../../../server/services/message-service')
+const MessageSender = require('../../../server/services/messaging/message-sender')
+const config = require('../../../server/config')
 const dbHelper = require('../../db-helper')
 const asbHelper = require('../../asb-helper')
 
@@ -11,41 +15,50 @@ const generateSampleClaim = () => ({
 })
 
 describe.only('Test message service', () => {
+  let messageReceiver
   let messageService
+  let message
+  const testConfig = { ...config.messageQueues.claimQueue }
 
   beforeAll(async () => {
-    messageService = await require('../../../server/services/message-service')()
     await asbHelper.clearAllQueues()
-  }, 30000)
+    message = generateSampleClaim()
+    messageService = await MessageService()
 
-  beforeEach(async () => {
-    await dbHelper.truncate()
-    jest.restoreAllMocks()
-  })
+    const messageSender = new MessageSender('message-service-sender-test', testConfig)
+    await messageSender.sendMessage(message)
+  }, 30000)
 
   afterAll(async () => {
+    await messageService.closeConnections()
+    await messageReceiver.closeConnections()
     await asbHelper.clearAllQueues()
     await dbHelper.close()
-    await messageService.closeConnections()
   }, 30000)
 
-  test('Message service sends the claim to schedule queue', async () => {
-    const message = generateSampleClaim()
-    const scheduleSender = messageService.scheduleSender
-    const spy = jest.spyOn(scheduleSender, 'sendMessage')
+  test('Processed message ends up on scheduleQueue', async () => {
+    let done
+    const promise = new Promise((resolve) => {
+      done = resolve
+    })
+    const action = (result) => {
+      done(result.claimId === message.claimId)
+    }
 
-    await messageService.publishClaim(message)
-    await expect(spy).toHaveBeenCalledTimes(1)
-    await expect(spy).toHaveBeenCalledWith(message)
+    messageReceiver = new MessageReceiver('test-receiver', { ...config.messageQueues.scheduleQueue }, undefined, action)
+    return expect(promise).resolves.toEqual(true)
   })
 
-  test('Message service sends the claim to calculation queue', async () => {
-    const message = generateSampleClaim()
-    const calculationSender = messageService.calculationSender
-    const spy = jest.spyOn(calculationSender, 'sendMessage')
+  test('Processed message ends up on calculationQueue', async () => {
+    let done
+    const promise = new Promise((resolve) => {
+      done = resolve
+    })
+    const action = (result) => {
+      done(result.claimId === message.claimId)
+    }
 
-    await messageService.publishClaim(message)
-    await expect(spy).toHaveBeenCalledTimes(1)
-    await expect(spy).toHaveBeenCalledWith(message)
+    messageReceiver = new MessageReceiver('test-receiver', { ...config.messageQueues.calculationQueue }, undefined, action)
+    return expect(promise).resolves.toEqual(true)
   })
 })
