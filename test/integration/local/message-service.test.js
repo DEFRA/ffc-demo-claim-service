@@ -30,10 +30,10 @@ describe.only('Test message service', () => {
   }, 30000)
 
   afterAll(async () => {
+    await messageService.closeConnections()
     await messageReceiver.closeConnections()
     await asbHelper.clearAllQueues()
     await dbHelper.close()
-    await messageService.closeConnections()
   }, 30000)
 
   test('Processed message ends up on scheduleQueue', async () => {

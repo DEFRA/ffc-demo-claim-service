@@ -21,9 +21,9 @@ describe('receiving a new claim', () => {
   }, 30000)
 
   afterAll(async () => {
+    await messageService.closeConnections()
     await asbHelper.clearAllQueues()
     await dbHelper.close()
-    await messageService.closeConnections()
   }, 30000)
 
   test('new claim is received, saved and published to other services', async () => {
