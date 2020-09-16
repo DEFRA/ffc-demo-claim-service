@@ -37,8 +37,5 @@ module.exports = {
     ]
   ],
   testEnvironment: 'node',
-  testPathIgnorePatterns: [
-    'test/integration/local/message-receiver.test.js'
-  ],
   verbose: true
 }

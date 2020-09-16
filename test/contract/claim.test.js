@@ -11,7 +11,6 @@ describe('receiving a new claim', () => {
 
   beforeAll(async () => {
     await asbHelper.clearAllQueues()
-    await dbHelper.truncate()
 
     messagePact = new MessageConsumerPact({
       consumer: 'ffc-demo-claim-service',
