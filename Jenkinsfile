@@ -1,3 +1,3 @@
-@Library('defra-library@v-8') _
+@Library('defra-library@psd-985-lint-groovy') _
 
 buildNodeJs environment: 'dev'
