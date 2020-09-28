@@ -1,3 +1,3 @@
-@Library('defra-library@v-8') _
+@Library('defra-library@psd-989-bind-certs-npm-audit') _
 
 buildNodeJs environment: 'dev'
