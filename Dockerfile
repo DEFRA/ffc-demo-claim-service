@@ -2,8 +2,7 @@ ARG PORT=3003
 ARG PARENT_VERSION=1.2.1-node12.18.3
 
 # Development
-# FROM defradigital/node-development:${PARENT_VERSION} AS development
-FROM st3v3nhunt/node-dev AS development
+FROM defradigital/node-development:${PARENT_VERSION} AS development
 ARG PORT
 ARG PARENT_VERSION
 LABEL uk.gov.defra.ffc.parent-image=defradigital/node-development:${PARENT_VERSION}
@@ -18,8 +17,7 @@ COPY --chown=node:node . .
 CMD [ "npm", "run", "start:watch" ]
 
 # Production
-# FROM defradigital/node:${PARENT_VERSION} AS production
-FROM st3v3nhunt/node-dev AS production
+FROM defradigital/node:${PARENT_VERSION} AS production
 ARG PARENT_VERSION
 ARG PORT
 LABEL uk.gov.defra.ffc.parent-image=defradigital/node:${PARENT_VERSION}
