@@ -1,3 +1,3 @@
-@Library('defra-library@v-8') _
+@Library('defra-library@psd-996-fix-rollback') _
 
 buildNodeJs environment: 'dev'
