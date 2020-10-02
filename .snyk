@@ -9,4 +9,7 @@ ignore:
     - sequelize-cli > lodash:
         reason: No known vulnerabilitiy
         expires: '2020-10-16T10:53:20.892Z'
+    - ajv:
+        reason: No known vulnerabilitiy
+        expires: '2020-11-02T10:53:20.892Z'
 patch: {}
