@@ -10,7 +10,4 @@ ignore:
     - sequelize > lodash:
         reason: No fix currently available
         expires: '2020-10-16T11:12:44.342Z'
-    - sequelize-cli > lodash:
-        reason: No fix currently available
-        expires: '2020-10-16T11:12:44.342Z'
 patch: {}
