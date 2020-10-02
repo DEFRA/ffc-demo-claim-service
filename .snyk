@@ -2,10 +2,6 @@
 version: v1.14.1
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
-  SNYK-JS-AJV-584908:
-    - '@azure/ms-rest-nodeauth > adal-node > request > har-validator > ajv':
-        reason: No known fix for Azure package
-        expires: '2020-10-07T15:12:52.110Z'
   SNYK-JS-LODASH-590103:
     - sequelize > lodash:
         reason: No fix currently available
