@@ -41,7 +41,4 @@
     <changeSet author="liquibase (generated)" id="1596009647200-4">
         <addForeignKeyConstraint baseColumnNames="claimId" baseTableName="mineTypes" constraintName="mineTypes_claimId_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="claimId" referencedTableName="claims" validate="true"/>
     </changeSet>
-    <changeSet author="Fay Toward" id="1596009647200-4">
-      <tagDatabase tag="v1.0.0" />
-    </changeSet>
 </databaseChangeLog>
