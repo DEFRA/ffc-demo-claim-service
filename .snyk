@@ -4,6 +4,9 @@ version: v1.14.1
 ignore:
   SNYK-JS-LODASH-590103:
     - sequelize > lodash:
-        reason: No fix currently available
-        expires: '2020-10-16T11:12:44.342Z'
+        reason: No known vulnerability
+        expires: '2020-10-16T10:53:20.892Z'
+    - sequelize-cli > lodash:
+        reason: No known vulnerabilitiy
+        expires: '2020-10-16T10:53:20.892Z'
 patch: {}
