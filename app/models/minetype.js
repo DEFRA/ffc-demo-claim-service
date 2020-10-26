@@ -8,7 +8,6 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'mineTypes'
   })
   MineType.associate = function (models) {
-    // associations can be defined here
     MineType.belongsTo(models.claims, {
       foreignKey: 'claimId'
     })

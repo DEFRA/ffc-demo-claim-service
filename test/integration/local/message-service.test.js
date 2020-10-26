@@ -1,7 +1,7 @@
-const MessageReceiver = require('../../../server/services/messaging/message-receiver')
-const MessageService = require('../../../server/services/message-service')
-const MessageSender = require('../../../server/services/messaging/message-sender')
-const config = require('../../../server/config')
+const MessageReceiver = require('../../../app/services/messaging/message-receiver')
+const MessageService = require('../../../app/services/message-service')
+const MessageSender = require('../../../app/services/messaging/message-sender')
+const config = require('../../../app/config')
 const dbHelper = require('../../db-helper')
 const asbHelper = require('../../asb-helper')
 

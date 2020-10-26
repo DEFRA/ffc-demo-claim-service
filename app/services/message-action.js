@@ -1,4 +1,4 @@
-const claimSchema = require('../schema/claimFromMessage')
+const claimSchema = require('../schema/claim')
 const claimService = require('./claim-service')
 
 async function claimMessageAction (claim, publisher) {

@@ -4,7 +4,7 @@ describe('Test minetype model', () => {
       const MockSequelize = require('sequelize-mock')
       return MockSequelize
     })
-    const minetypeModel = require('../../../server/models/minetype')
+    const minetypeModel = require('../../../app/models/minetype')
     expect(minetypeModel.name).toEqual('')
   })
 })

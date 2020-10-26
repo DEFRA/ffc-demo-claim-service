@@ -1,5 +1,5 @@
 describe('Core config', () => {
-  jest.mock('../../../server/config/mq-config', () => ({}))
+  jest.mock('../../../app/config/mq-config', () => ({}))
 
   test('throws error for invalid port', async () => {
     let caughtError
@@ -7,7 +7,7 @@ describe('Core config', () => {
     process.env.PORT = 'invalid'
 
     try {
-      require('../../../server/config')
+      require('../../../app/config')
     } catch (error) {
       caughtError = error
     }

@@ -1,3 +1,0 @@
-{{- include "ffc-helm-library.cluster-ip-service" (list . "ffc-demo-claim-service.cluster-ip-service") -}}
-{{- define "ffc-demo-claim-service.cluster-ip-service" -}}
-{{- end -}}

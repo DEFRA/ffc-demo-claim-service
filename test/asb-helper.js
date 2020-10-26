@@ -1,5 +1,5 @@
 const { ReceiveMode, ServiceBusClient } = require('@azure/service-bus')
-const config = require('../server/config/mq-config')
+const config = require('../app/config/mq-config')
 
 // When calling this within a test script, ensure there is a generous timeout
 // for the connections to complete within, `30000` should be enough.

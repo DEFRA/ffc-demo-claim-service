@@ -11,8 +11,6 @@ services:
     networks:
       - ffc-demo
       - default
-    ports:
-      - "3003:3003"
 
 networks:
   ffc-demo:

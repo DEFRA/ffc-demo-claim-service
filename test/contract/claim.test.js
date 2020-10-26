@@ -27,7 +27,7 @@ describe('receiving a new claim', () => {
   }, 30000)
 
   test('new claim is received, saved and published to other services', async () => {
-    messageService = await require('../../server/services/message-service')()
+    messageService = await require('../../app/services/message-service')()
     await messagePact
       .given('valid message')
       .expectsToReceive('a request for new claim')

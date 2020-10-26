@@ -4,7 +4,7 @@ describe('Test Claim model', () => {
       const mockSequelize = require('sequelize-mock')
       return mockSequelize
     })
-    const claimModel = require('../../../server/models/claim')
+    const claimModel = require('../../../app/models/claim')
     expect(claimModel.name).toEqual('')
   })
 })
