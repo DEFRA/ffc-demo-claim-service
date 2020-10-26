@@ -4,13 +4,11 @@ const databaseConfig = require('./database-config')
 const { environments } = require('./constants')
 
 const schema = joi.object({
-  env: joi.string().valid(environments.development, environments.test, environments.production).default(environments.development),
-  port: joi.number().default(3003)
+  env: joi.string().valid(environments.development, environments.test, environments.production).default(environments.development)
 })
 
 const config = {
-  env: process.env.NODE_ENV,
-  port: process.env.PORT
+  env: process.env.NODE_ENV
 }
 
 const result = schema.validate(config, {

@@ -7,7 +7,7 @@ describe('Test claim message action', () => {
     jest.mock('../../../app/services/claim-service', () => ({
       create: jest.fn()
     }))
-    jest.mock('../../../app/schema/claimFromMessage', () => ({
+    jest.mock('../../../app/schema/claim', () => ({
       validateAsync: jest.fn()
     }))
   })

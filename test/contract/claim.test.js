@@ -2,7 +2,7 @@ const path = require('path')
 const { MessageConsumerPact } = require('@pact-foundation/pact')
 const Matchers = require('@pact-foundation/pact/dsl/matchers')
 const asbHelper = require('../asb-helper')
-const { claimMessageAction } = require('../../server/services/message-action')
+const { claimMessageAction } = require('../../app/services/message-action')
 const dbHelper = require('../db-helper')
 
 describe('receiving a new claim', () => {
