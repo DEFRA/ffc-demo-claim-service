@@ -25,10 +25,9 @@ services:
       SCHEDULE_QUEUE_ADDRESS: ${SCHEDULE_QUEUE_ADDRESS:-notset}
       SEND_TIMEOUT_IN_SECONDS: 10
     volumes:
-      - ./server/:/home/node/server/
+      - ./app/:/home/node/app/
       - ./test/:/home/node/test/
       - ./scripts/:/home/node/scripts/
-      - ./index.js:/home/node/index.js
       - ./package.json:/home/node/package.json
 
   ffc-demo-claim-postgres:

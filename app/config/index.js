@@ -1,16 +1,14 @@
-const joi = require('@hapi/joi')
+const joi = require('joi')
 const mqConfig = require('./mq-config')
 const databaseConfig = require('./database-config')
 const { environments } = require('./constants')
 
 const schema = joi.object({
-  env: joi.string().valid(environments.development, environments.test, environments.production).default(environments.development),
-  port: joi.number().default(3003)
+  env: joi.string().valid(environments.development, environments.test, environments.production).default(environments.development)
 })
 
 const config = {
-  env: process.env.NODE_ENV,
-  port: process.env.PORT
+  env: process.env.NODE_ENV
 }
 
 const result = schema.validate(config, {
@@ -18,7 +16,7 @@ const result = schema.validate(config, {
 })
 
 if (result.error) {
-  throw new Error(`The server config is invalid. ${result.error.message}`)
+  throw new Error(`The config is invalid. ${result.error.message}`)
 }
 
 const value = {

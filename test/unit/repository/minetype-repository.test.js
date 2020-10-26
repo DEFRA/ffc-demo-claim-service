@@ -5,7 +5,7 @@ let minetypeRepository
 
 describe('Test minetype repository', () => {
   beforeEach(async () => {
-    jest.mock('../../../server/services/database-service', () => {
+    jest.mock('../../../app/services/database-service', () => {
       return () => {
         return {
           models: {
@@ -18,7 +18,7 @@ describe('Test minetype repository', () => {
         }
       }
     })
-    minetypeRepository = require('../../../server/repository/minetype-repository')
+    minetypeRepository = require('../../../app/repository/minetype-repository')
   })
 
   test('minetype repository loads object from database', async () => {
@@ -40,7 +40,7 @@ describe('Test minetype repository', () => {
   })
 
   test('minetype repository handles database failure', async () => {
-    minetypeRepository = require('../../../server/repository/minetype-repository')
+    minetypeRepository = require('../../../app/repository/minetype-repository')
 
     mockDb.$queueFailure(new SequelizeMock.ValidationError('Test error'))
 

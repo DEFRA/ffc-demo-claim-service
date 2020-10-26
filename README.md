@@ -47,7 +47,6 @@ The following environment variables are required by the application container. V
 | CALCULATION_QUEUE_ADDRESS          | Message queue address           | yes        |             |                               |                                                                                           |
 | CLAIM_QUEUE_ADDRESS                | Message queue address           | yes        |             |                               |                                                                                           |
 | NODE_ENV                           | Node environment                | no         |             | development,test,production   |                                                                                           |
-| PORT                               | Port number                     | no         | 3003        |                               |                                                                                           |
 | POSTGRES_DB                        | PostgreSQL database             | yes        |             |                               |                                                                                           |
 | POSTGRES_HOST                      | PostgreSQL host                 | yes        |             |                               |                                                                                           |
 | POSTGRES_USERNAME                  | PostgreSQL username             | yes        |             |                               |                                                                                           |
@@ -124,24 +123,6 @@ Link to other services:
 docker-compose -f docker-compose.yaml -f docker-compose.link.yaml up
 ```
 
-### Test the service
-
-The service binds to a port on the host machine so it can be tested manually by sending HTTP requests to the bound port using a tool such as [Postman](https://www.getpostman.com) or `curl`.
-
-```
-# Send a sample request to the /submit endpoint
-curl  -i --header "Content-Type: application/json" \
-  --request POST \
-  --data '{ "claimId": "MINE123", "propertyType": "business",  "accessible": false,   "dateOfSubsidence": "2019-07-26T09:54:19.622Z",  "mineType": ["gold"] }' \
-  http://localhost:3003/submit
-```
-
-Sample valid JSON for the `/submit` endpoint is:
-
-```
-{  "claimId": "MINE123",  "propertyType": "business",  "accessible": false,  "dateOfSubsidence": "2019-07-26T09:54:19.622Z",  "mineType": ["gold"] }
-```
-
 ### Test the message queue
 
 This service reacts to messages retrieved from Azure Service Bus (the "ffc-demo-claim" queue). It can be tested locally with:
@@ -193,18 +174,6 @@ kubectl port-forward --namespace=ffc-demo deployment/ffc-demo-claim-service 3003
 ```
 Once the port is forwarded, the service can be accessed and tested in the same way as described in the "Test the service" section above.
 
-#### Probes
-
-The service has both an Http readiness probe and an Http liveness probe configured to receive at the below end points.
-
-Readiness: `/healthy`
-Liveness: `/healthz`
-
-# Run the NPM update
-scripts/exec npm update
-
-# Rebuild and restart the service
-scripts/start --clean
 
 # Dynamic provisioning of Azure Service Bus queues
 The `provision.azure.yaml` manifest file is used to declare Azure Service Bus queues that will be provisioned for both a deployed Pull Request and for integration tests running in CI.

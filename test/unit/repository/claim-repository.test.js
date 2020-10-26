@@ -5,7 +5,7 @@ let claimRepository
 
 describe('Test claim repository', () => {
   beforeAll(async () => {
-    jest.mock('../../../server/services/database-service', () => {
+    jest.mock('../../../app/services/database-service', () => {
       return () => {
         return {
           models: {
@@ -20,7 +20,7 @@ describe('Test claim repository', () => {
         }
       }
     })
-    claimRepository = require('../../../server/repository/claim-repository')
+    claimRepository = require('../../../app/repository/claim-repository')
   })
 
   test('Claim repository loads object from database', async () => {

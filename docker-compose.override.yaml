@@ -9,7 +9,7 @@ services:
       context: .
       target: development
     ports:
-      - "3003:3003"
+      - "9229:9229"
 
   ffc-demo-claim-postgres:
     ports:

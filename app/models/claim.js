@@ -9,8 +9,5 @@ module.exports = (sequelize, DataTypes) => {
     freezeTableName: true,
     tableName: 'claims'
   })
-  Claim.associate = function (models) {
-    // associations can be defined here
-  }
   return Claim
 }

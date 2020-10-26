@@ -5,8 +5,8 @@ module.exports = {
   create: async function (claim, publisher) {
     const existingClaim = await claimRepository.getById(claim.claimId)
     if (existingClaim != null) {
-      console.log('Found existing claim ', existingClaim)
-      return existingClaim
+      console.log('Found existing claim')
+      return
     }
 
     console.log('Creating new claim ', claim)

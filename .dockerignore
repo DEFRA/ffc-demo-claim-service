@@ -2,3 +2,14 @@ node_modules
 npm-debug.log
 Dockerfile
 .dockerignore
+docs
+helm
+docker-compose*
+.secrets.baseline
+.snyk
+.pre-commit-config.yaml
+LICENCE
+README.md 
+jsconfig.json
+.vscode
+.gitignore

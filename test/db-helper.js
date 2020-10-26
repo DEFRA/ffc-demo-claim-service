@@ -1,4 +1,4 @@
-const { models } = require('../server/services/database-service')()
+const { models } = require('../app/services/database-service')()
 
 async function truncate () {
   await models.claims.destroy({ truncate: { casecade: true } })

@@ -4,19 +4,19 @@ describe('Test claim message action', () => {
   let claimSchema
 
   beforeAll(async () => {
-    jest.mock('../../../server/services/claim-service', () => ({
+    jest.mock('../../../app/services/claim-service', () => ({
       create: jest.fn()
     }))
-    jest.mock('../../../server/schema/claimFromMessage', () => ({
+    jest.mock('../../../app/schema/claim', () => ({
       validateAsync: jest.fn()
     }))
   })
 
   beforeEach(async () => {
     jest.resetModules()
-    mockClaimService = require('../../../server/services/claim-service')
-    action = require('../../../server/services/message-action')
-    claimSchema = require('../../../server/schema/claimFromMessage')
+    mockClaimService = require('../../../app/services/claim-service')
+    action = require('../../../app/services/message-action')
+    claimSchema = require('../../../app/schema/claim')
   })
 
   afterEach(async () => {
