@@ -8,8 +8,10 @@ services:
     build:
       context: .
       target: development
+    environment:      
+      APPINSIGHTS_CONSOLE_DEBUG_ENABLED: ${APPINSIGHTS_CONSOLE_DEBUG_ENABLED:-true}
     ports:
-      - "9229:9229"
+      - "9230:9229"
 
   ffc-demo-claim-postgres:
     ports:
