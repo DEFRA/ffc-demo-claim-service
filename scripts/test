@@ -9,7 +9,6 @@ service="ffc-demo-claim-service"
 compose() {
   docker-compose \
     -f docker-compose.yaml \
-    -f docker-compose.test.yaml \
     -p "${service}-test" \
     $@
 }
