@@ -1,17 +1,21 @@
-const auth = require('@azure/ms-rest-nodeauth')
 const config = require('../config')
 const mqConfig = config.messageQueues
 const { claimMessageAction } = require('./message-action')
-const MessageReceiver = require('./messaging/message-receiver')
-const MessageSender = require('./messaging/message-sender')
+const { MessageReceiver, MessageSender } = require('ffc-messaging')
 
 class MessageService {
-  constructor (credentials) {
+  constructor () {
     this.publishClaim = this.publishClaim.bind(this)
-    this.calculationSender = new MessageSender('claim-service-calculation-sender', mqConfig.calculationQueue, credentials)
-    this.scheduleSender = new MessageSender('claim-service-schedule-sender', mqConfig.scheduleQueue, credentials)
+    this.calculationSender = new MessageSender(mqConfig.calculationQueue)
+    this.scheduleSender = new MessageSender(mqConfig.scheduleQueue)
     const claimAction = claim => claimMessageAction(claim, this.publishClaim)
-    this.claimReceiver = new MessageReceiver('claim-service-claim-receiver', mqConfig.claimQueue, credentials, claimAction)
+    this.claimReceiver = new MessageReceiver(mqConfig.claimQueue, claimAction)
+  }
+
+  async start () {
+    await this.calculationSender.connect()
+    await this.scheduleSender.connect()
+    await this.claimReceiver.connect()
   }
 
   async closeConnections () {
@@ -34,6 +38,5 @@ class MessageService {
 }
 
 module.exports = async function () {
-  const credentials = config.isProd ? await auth.loginWithVmMSI({ resource: 'https://servicebus.azure.net' }) : undefined
-  return new MessageService(credentials)
+  return new MessageService()
 }
