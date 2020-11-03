@@ -4,11 +4,11 @@ module.exports = (sequelize, DataTypes) => {
     published: DataTypes.BOOLEAN
   }, {
     freezeTableName: true,
-    tableName: 'outbox'
+    tableName: 'outbox',
+    timestamps: false
   })
   Outbox.associate = function (models) {
     Outbox.belongsTo(models.claims, {
-      foreignKey: 'claimId',
       as: 'claim'
     })
   }

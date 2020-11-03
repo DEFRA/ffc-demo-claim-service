@@ -9,5 +9,10 @@ module.exports = (sequelize, DataTypes) => {
     freezeTableName: true,
     tableName: 'claims'
   })
+  Claim.associate = function (models) {
+    Claim.hasOne(models.outbox, {
+      as: 'claim'
+    })
+  }
   return Claim
 }
