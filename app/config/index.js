@@ -4,11 +4,13 @@ const databaseConfig = require('./database-config')
 const { environments } = require('./constants')
 
 const schema = joi.object({
-  env: joi.string().valid(environments.development, environments.test, environments.production).default(environments.development)
+  env: joi.string().valid(environments.development, environments.test, environments.production).default(environments.development),
+  publishPollingInterval: joi.number().default(5000)
 })
 
 const config = {
-  env: process.env.NODE_ENV
+  env: process.env.NODE_ENV,
+  publishPollingInterval: process.env.PUBLISH_POLLING_INTERVAL
 }
 
 const result = schema.validate(config, {
