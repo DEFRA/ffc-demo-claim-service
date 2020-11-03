@@ -1,4 +1,4 @@
-const { models } = require('./database-service')()
+const { models, sequelize } = require('./database-service')()
 const config = require('../config')
 const mqConfig = config.messageQueues
 const { MessageSender } = require('ffc-messaging')
@@ -6,11 +6,12 @@ let calculationSender
 let scheduleSender
 
 async function start () {
-  calculationSender = new MessageSender(mqConfig.calculationSender)
+  calculationSender = new MessageSender(mqConfig.calculationQueue)
   await calculationSender.connect()
-  scheduleSender = new MessageSender(mqConfig.scheduleSender)
+  scheduleSender = new MessageSender(mqConfig.scheduleQueue)
   await scheduleSender.connect()
   setInterval(publishPendingClaims, config.publishPollingInterval)
+  console.info('Outbox service running')
 }
 
 async function stop () {
@@ -21,9 +22,7 @@ async function stop () {
 async function publishPendingClaims () {
   const claims = await getPendingClaims()
   for (const claim of claims) {
-    await calculationSender.sendMessage(claim)
-    await scheduleSender.sendMessage(claim)
-    await models.claims.update({ published: true }, { where: { claimId: claim.claimId }, fields: ['published'] })
+    await publishClaim(claim)
   }
 }
 
@@ -33,11 +32,18 @@ async function getPendingClaims () {
     include: { model: models.claims, as: 'claim', attributes: [] },
     attributes: [
       'claimId',
-      [models.Sequelize.col('claim.propertyType'), 'propertyType'],
-      [models.Sequelize.col('claim.dateOfSubsidence'), 'dateOfSubsidence'],
-      [models.Sequelize.col('claim.accessible'), 'accessible']
+      [sequelize.col('claim.propertyType'), 'propertyType'],
+      [sequelize.col('claim.dateOfSubsidence'), 'dateOfSubsidence'],
+      [sequelize.col('claim.accessible'), 'accessible']
     ]
   })
+}
+
+async function publishClaim (claim) {
+  await calculationSender.sendMessage(claim)
+  await scheduleSender.sendMessage(claim)
+  await models.claims.update({ published: true }, { where: { claimId: claim.claimId }, fields: ['published'] })
+  console.info(`Published claim: ${claim.claimId}`)
 }
 
 module.exports = { start, stop }

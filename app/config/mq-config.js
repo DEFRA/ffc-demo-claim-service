@@ -9,7 +9,8 @@ const queueSchema = joi.object({
 const mqSchema = joi.object({
   messageQueue: {
     host: joi.string().default('localhost'),
-    usePodIdentity: joi.bool().default(false)
+    usePodIdentity: joi.bool().default(false),
+    type: joi.string()
   },
   calculationQueue: queueSchema,
   claimQueue: queueSchema,

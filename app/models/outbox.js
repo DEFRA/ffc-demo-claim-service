@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Outbox = sequelize.define('claims', {
+  const Outbox = sequelize.define('outbox', {
     claimId: { type: DataTypes.STRING, primaryKey: true },
     published: DataTypes.BOOLEAN
   }, {

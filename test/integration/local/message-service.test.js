@@ -1,5 +1,5 @@
 const MessageReceiver = require('../../../app/services/messaging/message-receiver')
-const MessageService = require('../../../app/services/message-service')
+const MessageService = require('../../../app/services/inbox-service')
 const MessageSender = require('../../../app/services/messaging/message-sender')
 const config = require('../../../app/config')
 const dbHelper = require('../../db-helper')

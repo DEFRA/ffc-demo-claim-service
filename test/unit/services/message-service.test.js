@@ -1,4 +1,4 @@
-const createMessageService = require('../../../app/services/message-service')
+const createMessageService = require('../../../app/services/inbox-service')
 const { messageQueues } = require('../../../app/config')
 
 jest.mock('../../../app/services/messaging/message-receiver')
