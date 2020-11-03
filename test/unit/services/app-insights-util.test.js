@@ -1,79 +1,46 @@
-const appInsightstUtil = require('../../../util/app-insights-util')
-
-let appInsightsClient
+let mockAppInsights
+let appInsightUtil
 
 describe('App Insights Util', () => {
   beforeEach(() => {
-    appInsightsClient = {
-      trackTrace: jest.fn(),
-      context: {
-        keys: {
-          operationId: jest.fn()
-        },
-        tags: {
+    jest.mock('applicationinsights', () => ({
+      defaultClient: {
+        trackTrace: jest.fn(),
+        context: {
+          keys: {
+            sessionId: 'ai.session.id'
+          },
+          tags: {}
         }
       }
-    }
+    }))
+
+    mockAppInsights = require('applicationinsights')
+    appInsightUtil = require('../../../app/util/app-insights-util')
   })
 
-  afterEach(async () => {
+  afterEach(() => {
     jest.clearAllMocks()
   })
 
-  test('App Insights client is null', async () => {
-    const appInsightsService = appInsightstUtil(null)
-
-    appInsightsService.setOperationId('f61b9a2e-ec79-4e92-8c98-db4689b92f9d')
-
-    expect(appInsightsClient.context.keys.operationId).toHaveBeenCalledTimes(0)
-    expect(appInsightsClient.trackTrace).toHaveBeenCalledTimes(0)
+  test('ai.session.id not set, matches undefined', async () => {
+    expect(mockAppInsights.defaultClient.context.tags['ai.session.id']).toBe(undefined)
   })
 
-  test('App Insights client is null', async () => {
-    const appInsightsService = appInsightstUtil(null)
-
-    appInsightsService.getOperationId()
-
-    expect(appInsightsClient.context.keys.operationId).toHaveBeenCalledTimes(0)
-    expect(appInsightsClient.trackTrace).toHaveBeenCalledTimes(0)
+  test('setSessionId updates session Id to match correlation Id', async () => {
+    const testCorrelationId = 'd79dd6fe-72fc-43a8-b4c4-ec9c6bc7db9d'
+    appInsightUtil.setSessionId(testCorrelationId)
+    expect(mockAppInsights.defaultClient.context.tags['ai.session.id']).toBe(testCorrelationId)
   })
 
-  test('App Insights client is null', async () => {
-    const appInsightsService = appInsightstUtil(null)
-
-    appInsightsService.logTraceMessage('test')
-
-    expect(appInsightsClient.context.keys.operationId).toHaveBeenCalledTimes(0)
-    expect(appInsightsClient.trackTrace).toHaveBeenCalledTimes(0)
+  test('getSessionId retrieves the session Id to match correlation Id', async () => {
+    const testCorrelationId = 'd79dd6fe-72fc-43a8-b4c4-ec9c6bc7db9d'
+    appInsightUtil.setSessionId(testCorrelationId)
+    expect(mockAppInsights.defaultClient.context.tags['ai.session.id']).toBe(appInsightUtil.getSessionId())
   })
 
-  /* test('App Insights client is not null', async () => {
-
-    const appInsightsService = appInsightstUtil(appInsightsClient)
-
-    appInsightsService.setOperationId('13213213eweqwe32121')
-
-    console.log(appInsightsClient.context.keys.operationId)
-
-    expect(appInsightsClient.context).toHaveBeenCalledTimes(1)
-    expect(appInsightsClient.trackTrace).toHaveBeenCalledTimes(0)
-  })
-
-  test('App Insights client is not null', async () => {
-    const appInsightsService = appInsightstUtil(appInsightsClient)
-
-    appInsightsService.getOperationId()
-
-    expect(appInsightsClient.context.keys.operationId).toHaveBeenCalledTimes(0)
-    expect(appInsightsClient.trackTrace).toHaveBeenCalledTimes(1)
-  }) */
-
-  test('App Insights client is not null', async () => {
-    const appInsightsService = appInsightstUtil(appInsightsClient)
-
-    appInsightsService.logTraceMessage('test')
-
-    expect(appInsightsClient.context.keys.operationId).toHaveBeenCalledTimes(0)
-    expect(appInsightsClient.trackTrace).toHaveBeenCalledTimes(1)
+  test('logTraceMessage calls trace function', async () => {
+    appInsightUtil.logTraceMessage('Trace Sender - ffc-demo-claim-service: demo-claim-service-sender')
+    expect(mockAppInsights.defaultClient.trackTrace).toHaveBeenCalledTimes(1)
   })
 })
