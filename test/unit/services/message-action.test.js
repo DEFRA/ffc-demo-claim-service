@@ -14,7 +14,7 @@ describe('Test claim message action', () => {
 
   beforeEach(async () => {
     jest.resetModules()
-    mockClaimService = require('../../../app/services/claim-service')
+    mockClaimService = require('../../../app/services/create-claim')
     action = require('../../../app/services/message-action')
     claimSchema = require('../../../app/schema/claim')
   })

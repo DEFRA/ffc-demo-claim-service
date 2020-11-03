@@ -1,42 +1,16 @@
 const config = require('../config')
-const mqConfig = config.messageQueues
-const { claimMessageAction } = require('./message-action')
-const { MessageReceiver, MessageSender } = require('ffc-messaging')
+const mqConfig = config.messageQueues.claimQueue
+const createClaim = require('./create-claim')
+const { MessageReceiver } = require('ffc-messaging')
+let claimReceiver
 
-class MessageService {
-  constructor () {
-    this.publishClaim = this.publishClaim.bind(this)
-    this.calculationSender = new MessageSender(mqConfig.calculationQueue)
-    this.scheduleSender = new MessageSender(mqConfig.scheduleQueue)
-    const claimAction = claim => claimMessageAction(claim, this.publishClaim)
-    this.claimReceiver = new MessageReceiver(mqConfig.claimQueue, claimAction)
-  }
-
-  async start () {
-    await this.calculationSender.connect()
-    await this.scheduleSender.connect()
-    await this.claimReceiver.connect()
-  }
-
-  async closeConnections () {
-    await this.calculationSender.closeConnection()
-    await this.scheduleSender.closeConnection()
-    await this.claimReceiver.closeConnection()
-  }
-
-  async publishClaim (claim) {
-    try {
-      return await Promise.all([
-        this.calculationSender.sendMessage(claim),
-        this.scheduleSender.sendMessage(claim)
-      ])
-    } catch (err) {
-      console.log(err)
-      throw err
-    }
-  }
+async function start () {
+  claimReceiver = new MessageReceiver(mqConfig, createClaim)
+  await claimReceiver.connect()
 }
 
-module.exports = async function () {
-  return new MessageService()
+async function stop () {
+  await claimReceiver.closeConnection()
 }
+
+module.exports = { start, stop }

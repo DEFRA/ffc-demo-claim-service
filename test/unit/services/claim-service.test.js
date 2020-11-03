@@ -17,7 +17,7 @@ describe('Test claim service', () => {
     jest.resetModules()
     mockClaimRepository = require('../../../app/repository/claim-repository')
     mockMinetypeRepository = require('../../../app/repository/minetype-repository')
-    claimService = require('../../../app/services/claim-service')
+    claimService = require('../../../app/services/create-claim')
   })
 
   afterEach(async () => {
