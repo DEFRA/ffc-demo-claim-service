@@ -2,6 +2,7 @@
 {{- define "ffc-demo-claim-service.config-map" -}}
 data:
   APPINSIGHTS_CLOUDROLE: {{ quote .Values.name }}
+  APPINSIGHTS_CONSOLE_DEBUG_ENABLED: {{ quote .Values.container.appInsightsConsoleDebugEnabled}}
   CALCULATION_QUEUE_ADDRESS: {{ quote .Values.container.calculationQueueAddress }}
   CLAIM_QUEUE_ADDRESS: {{ quote .Values.container.claimQueueAddress }}
   MESSAGE_QUEUE_HOST: {{ quote .Values.container.messageQueueHost }}

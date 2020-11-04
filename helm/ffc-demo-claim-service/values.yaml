@@ -43,6 +43,7 @@ container:
   claimQueueAddress: claim
   messageQueueHost: myservicebus.servicebus.windows.net
   scheduleQueueAddress: schedule
+  appInsightsConsoleDebugEnabled: true
 postgresService:
   postgresDb: ffc_demo_claim
   # postgresHost is the host name of the PostgreSQL service
