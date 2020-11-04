@@ -12,4 +12,5 @@ data:
   POSTGRES_PORT: {{ quote .Values.postgresService.postgresPort }}
   POSTGRES_SCHEMA_NAME: {{ quote .Values.postgresService.postgresSchema }}
   SCHEDULE_QUEUE_ADDRESS: {{ quote .Values.container.scheduleQueueAddress }}
+  APPINSIGHTS_CONSOLE_DEBUG_ENABLED: {{ quote .Values.container.appInsightsConsoleDebugEnabled}}
 {{- end -}}

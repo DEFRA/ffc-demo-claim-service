@@ -7,6 +7,7 @@ function setup () {
       .setDistributedTracingMode(appInsights.DistributedTracingModes.AI_AND_W3C)
       .start()
     console.log('App Insights Running')
+    console.log(`App Insights Console Debugging Enabled : ${process.env.APPINSIGHTS_CONSOLE_DEBUG_ENABLED}`)
     const cloudRoleTag = appInsights.defaultClient.context.keys.cloudRole
     const appName = process.env.APPINSIGHTS_CLOUDROLE
     appInsights.defaultClient.context.tags[cloudRoleTag] = appName
