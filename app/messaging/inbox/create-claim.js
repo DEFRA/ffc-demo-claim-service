@@ -1,4 +1,4 @@
-const { models, sequelize } = require('./database-service')()
+const { models, sequelize } = require('../../services/database-service')()
 
 async function createClaim (claim) {
   await sequelize.transaction(async (transaction) => {

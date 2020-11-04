@@ -1,20 +1,20 @@
 require('./services/app-insights').setup()
-const inboxService = require('./services/inbox-service')
-const outboxService = require('./services/outbox-service')
+const inbox = require('./messaging/inbox')
+const outbox = require('./messaging/outbox')
 
 process.on('SIGTERM', async function () {
-  await inboxService.stop()
-  await outboxService.stop()
+  await inbox.stop()
+  await outbox.stop()
   process.exit(0)
 })
 
 process.on('SIGINT', async function () {
-  await inboxService.stop()
-  await outboxService.stop()
+  await inbox.stop()
+  await outbox.stop()
   process.exit(0)
 })
 
 module.exports = (async function startService () {
-  await inboxService.start()
-  await outboxService.start()
+  await inbox.start()
+  await outbox.start()
 }())

@@ -1,4 +1,4 @@
-const config = require('../config')
+const config = require('../../config')
 const mqConfig = config.messageQueues.claimQueue
 const processClaimMessage = require('./process-claim-message')
 const { MessageReceiver } = require('ffc-messaging')

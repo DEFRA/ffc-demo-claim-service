@@ -17,11 +17,6 @@ module.exports = {
     '.*/__mocks__/.*',
     '<rootDir>/jest.config.js'
   ],
-  coverageThreshold: {
-    global: {
-      statements: 75
-    }
-  },
   modulePathIgnorePatterns: [
     'node_modules'
   ],

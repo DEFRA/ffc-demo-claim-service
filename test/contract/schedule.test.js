@@ -1,6 +1,6 @@
 const { MessageProviderPact } = require('@pact-foundation/pact')
 const path = require('path')
-const { createMessage } = require('../../app/services/outbox-service')
+const createMessage = require('../../app/messaging/outbox/create-message')
 
 describe('Pact Verification', () => {
   test('validates the expectations of ffc-demo-payment-service', async () => {

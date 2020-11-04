@@ -10,6 +10,10 @@ async function createClaimRecords (claims) {
   await models.claims.bulkCreate(claims)
 }
 
+async function createOutboxRecords (outbox) {
+  await models.outbox.bulkCreate(outbox)
+}
+
 async function createMineTypeRecords (mineTypes) {
   await models.mineTypes.bulkCreate(mineTypes)
 }
@@ -22,5 +26,6 @@ module.exports = {
   close,
   createClaimRecords,
   createMineTypeRecords,
+  createOutboxRecords,
   truncate
 }
