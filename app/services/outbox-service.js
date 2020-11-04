@@ -41,10 +41,23 @@ async function getPendingClaims () {
 }
 
 async function publishClaim (claim) {
-  await calculationSender.sendMessage(claim)
-  await scheduleSender.sendMessage(claim)
-  await models.outbox.update({ published: true }, { where: { claimId: claim.claimId } })
-  console.info(`Published claim: ${claim.claimId}`)
+  try {
+    const message = createMessage(claim)
+    await calculationSender.sendMessage(message)
+    await scheduleSender.sendMessage(message)
+    await models.outbox.update({ published: true }, { where: { claimId: claim.claimId } })
+    console.info(`Published claim: ${claim.claimId}`)
+  } catch (err) {
+    console.error('Unable to send claim: ', err)
+  }
+}
+
+function createMessage (claim) {
+  return {
+    body: claim,
+    type: 'uk.gov.demo.claim.validated',
+    source: 'ffc-demo-claim-service'
+  }
 }
 
 module.exports = { start, stop }
