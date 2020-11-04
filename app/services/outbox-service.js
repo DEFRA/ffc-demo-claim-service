@@ -27,7 +27,8 @@ async function publishPendingClaims () {
 }
 
 async function getPendingClaims () {
-  return await models.outbox.findAll({
+  return models.outbox.findAll({
+    raw: true,
     where: { published: false },
     include: { model: models.claims, as: 'claim', attributes: [] },
     attributes: [
@@ -42,7 +43,7 @@ async function getPendingClaims () {
 async function publishClaim (claim) {
   await calculationSender.sendMessage(claim)
   await scheduleSender.sendMessage(claim)
-  await models.claims.update({ published: true }, { where: { claimId: claim.claimId }, fields: ['published'] })
+  await models.outbox.update({ published: true }, { where: { claimId: claim.claimId } })
   console.info(`Published claim: ${claim.claimId}`)
 }
 

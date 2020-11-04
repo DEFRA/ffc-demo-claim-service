@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
   })
   Outbox.associate = function (models) {
     Outbox.belongsTo(models.claims, {
-      as: 'claim'
+      as: 'claim',
+      foreignKey: 'claimId'
     })
   }
   return Outbox
