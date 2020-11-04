@@ -60,4 +60,4 @@ function createMessage (claim) {
   }
 }
 
-module.exports = { start, stop }
+module.exports = { start, stop, createMessage }

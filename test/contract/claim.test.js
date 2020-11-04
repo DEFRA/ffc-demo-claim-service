@@ -1,17 +1,14 @@
 const path = require('path')
 const { MessageConsumerPact } = require('@pact-foundation/pact')
 const Matchers = require('@pact-foundation/pact/dsl/matchers')
-const asbHelper = require('../asb-helper')
-const { claimMessageAction } = require('../../app/services/message-action')
+const createClaim = require('../../app/services/create-claim')
 const dbHelper = require('../db-helper')
 
 describe('receiving a new claim', () => {
   let messagePact
-  let messageService
 
   beforeAll(async () => {
-    await asbHelper.clearAllQueues()
-
+    await dbHelper.truncate()
     messagePact = new MessageConsumerPact({
       consumer: 'ffc-demo-claim-service',
       provider: 'ffc-demo-web',
@@ -21,13 +18,11 @@ describe('receiving a new claim', () => {
   }, 30000)
 
   afterAll(async () => {
-    await messageService.closeConnections()
-    await asbHelper.clearAllQueues()
+    await dbHelper.truncate()
     await dbHelper.close()
   }, 30000)
 
-  test('new claim is received, saved and published to other services', async () => {
-    messageService = await require('../../app/services/inbox-service')()
+  test('new claim is received and saved', async () => {
     await messagePact
       .given('valid message')
       .expectsToReceive('a request for new claim')
@@ -41,6 +36,6 @@ describe('receiving a new claim', () => {
       .withMetadata({
         'content-type': 'application/json'
       })
-      .verify(async message => claimMessageAction(message.contents, messageService.publishClaim))
+      .verify(async message => createClaim(message.contents))
   })
 })

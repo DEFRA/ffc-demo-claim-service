@@ -11,6 +11,9 @@ services:
     command: >
       sh -c "npm run test"
     volumes:
+      - ./app/:/home/node/app/
       - ./test/:/home/node/test/
+      - ./scripts/:/home/node/scripts/
+      - ./package.json:/home/node/package.json
       - ./test-output/:/home/node/test-output/
       - ./jest.config.js:/home/node/jest.config.js

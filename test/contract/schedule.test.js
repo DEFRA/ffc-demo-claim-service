@@ -1,11 +1,9 @@
 const { MessageProviderPact } = require('@pact-foundation/pact')
 const path = require('path')
+const { createMessage } = require('../../app/services/outbox-service')
 
 describe('Pact Verification', () => {
-  let messageService
   test('validates the expectations of ffc-demo-payment-service', async () => {
-    messageService = await require('../../app/services/inbox-service')()
-
     const claim = {
       claimId: 'MINE123',
       propertyType: 'business',
@@ -14,10 +12,9 @@ describe('Pact Verification', () => {
       mineType: ['gold']
     }
 
-    const publishMessages = async () => (await messageService.publishClaim(claim))[0]
     const provider = new MessageProviderPact({
       messageProviders: {
-        'a request for new payment schedule': publishMessages
+        'a request for new payment schedule': () => createMessage(claim).body
       },
       provider: 'ffc-demo-claim-service',
       pactUrls: [
@@ -26,9 +23,5 @@ describe('Pact Verification', () => {
     })
 
     return provider.verify()
-  })
-
-  afterAll(async () => {
-    await messageService.closeConnections()
   })
 })

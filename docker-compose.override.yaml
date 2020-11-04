@@ -9,8 +9,18 @@ services:
       context: .
       target: development
     ports:
-      - "9229:9229"
+      - "9230:9229"
+    volumes:
+      - ./app/:/home/node/app/
+      - ./test/:/home/node/test/
+      - ./scripts/:/home/node/scripts/
+      - ./package.json:/home/node/package.json
 
   ffc-demo-claim-postgres:
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data: {}
