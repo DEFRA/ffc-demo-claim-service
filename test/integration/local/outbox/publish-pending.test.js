@@ -1,5 +1,10 @@
 const dbHelper = require('../../../db-helper')
-const getPendingClaims = require('../../../../app/messaging/outbox/get-pending-claims')
+const publishPendingClaims = require('../../../../app/messaging/outbox/publish-pending')
+const { MessageSender } = require('ffc-messaging')
+const { models } = require('../../../../app/services/database-service')()
+const mqConfig = require('../../../../app/config').messageQueues
+let calculationSender
+let scheduleSender
 
 describe('get pending claims', () => {
   const claims = [{
@@ -30,16 +35,22 @@ describe('get pending claims', () => {
     await dbHelper.truncate()
     await dbHelper.createClaimRecords(claims)
     await dbHelper.createOutboxRecords(outbox)
+    calculationSender = new MessageSender(mqConfig.calculationQueue)
+    await calculationSender.connect()
+    scheduleSender = new MessageSender(mqConfig.scheduleQueue)
+    await scheduleSender.connect()
   })
 
   afterAll(async () => {
     await dbHelper.truncate()
     await dbHelper.close()
+    await calculationSender.closeConnection()
+    await scheduleSender.closeConnection()
   })
 
-  test('should return pending', async () => {
-    const claims = await getPendingClaims()
-    expect(claims.length).toBe(1)
-    expect(claims[0].claimId).toBe('MINE2')
+  test('should update published', async () => {
+    await publishPendingClaims(calculationSender, scheduleSender)
+    const pending = await models.outbox.findAll({ where: { published: false }, raw: true })
+    expect(pending.length).toBe(0)
   })
 })
