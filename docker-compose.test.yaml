@@ -17,3 +17,4 @@ services:
       - ./package.json:/home/node/package.json
       - ./test-output/:/home/node/test-output/
       - ./jest.config.js:/home/node/jest.config.js
+      - ./jest.setup.js:/home/node/jest.setup.js

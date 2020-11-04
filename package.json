@@ -43,7 +43,8 @@
     "jest-junit": "^11.1.0",
     "nodemon": "^2.0.4",
     "sequelize-mock": "^0.10.2",
-    "standard": "^14.3.4"
+    "standard": "^14.3.4",
+    "wait-for-expect": "^3.0.2"
   },
   "standard": {
     "globals": [
