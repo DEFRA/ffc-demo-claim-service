@@ -43,4 +43,17 @@ describe('create claim', () => {
     const outbox = await models.outbox.findAll({ where: { claimId: claim.claimId, published: false }, raw: true })
     expect(outbox.length).toBe(1)
   })
+
+  test('should not save duplicate claim', async () => {
+    await createClaim(claim)
+    await createClaim(claim)
+    const claims = await models.claims.findAll({ where: { claimId: claim.claimId }, raw: true })
+    expect(claims.length).toBe(1)
+  })
+
+  test('should rollback invalid', async () => {
+    await expect(createClaim('not a claim')).rejects.toThrow()
+    const claims = await models.claims.findAll({ raw: true })
+    expect(claims.length).toBe(0)
+  })
 })
