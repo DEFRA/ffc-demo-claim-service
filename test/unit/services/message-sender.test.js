@@ -41,7 +41,7 @@ describe('MessageSender test', () => {
     expect(message).toEqual(msg)
     expect(senderMock).toHaveBeenCalledTimes(1)
     expect(sendMock).toHaveBeenCalledTimes(1)
-    expect(sendMock).toHaveBeenCalledWith({ body: msg })
+    expect(sendMock).toHaveBeenCalledWith({ body: msg, correlationId: null })
     expect(closeMock).toHaveBeenCalledTimes(1)
   })
 })

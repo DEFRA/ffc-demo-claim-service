@@ -1,5 +1,6 @@
 const { ReceiveMode } = require('@azure/service-bus')
 const MessageBase = require('./message-base')
+const { setSessionId, logTraceMessage } = require('../../util/app-insights-util')
 
 class MessageReceiver extends MessageBase {
   constructor (name, config, credentials, action) {
@@ -17,6 +18,9 @@ class MessageReceiver extends MessageBase {
   async receiverHandler (message) {
     console.log(`${this.name} received message`, message.body)
     try {
+      setSessionId(message.correlationId)
+      logTraceMessage(`Trace Receiver - ${this.name}`)
+
       await this.action(message.body)
     } catch (ex) {
       console.error(`${this.name} error with message`, ex)
