@@ -15,7 +15,8 @@ module.exports = {
     '<rootDir>/test-output/',
     '<rootDir>/test/',
     '.*/__mocks__/.*',
-    '<rootDir>/jest.config.js'
+    '<rootDir>/jest.config.js',
+    '<rootDir>/jest.setup.js'
   ],
   coverageThreshold: {
     global: {
@@ -37,5 +38,6 @@ module.exports = {
     ]
   ],
   testEnvironment: 'node',
+  setupFilesAfterEnv: ['./jest.setup.js'],
   verbose: true
 }

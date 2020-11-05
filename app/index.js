@@ -1,17 +1,20 @@
 require('./services/app-insights').setup()
-const createMessageService = require('./services/message-service')
-let messageService
+const inbox = require('./messaging/inbox')
+const outbox = require('./messaging/outbox')
 
 process.on('SIGTERM', async function () {
-  await messageService.closeConnections()
+  await inbox.stop()
+  await outbox.stop()
   process.exit(0)
 })
 
 process.on('SIGINT', async function () {
-  await messageService.closeConnections()
+  await inbox.stop()
+  await outbox.stop()
   process.exit(0)
 })
 
 module.exports = (async function startService () {
-  messageService = await createMessageService()
+  await inbox.start()
+  await outbox.start()
 }())

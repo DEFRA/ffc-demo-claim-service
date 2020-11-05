@@ -11,7 +11,7 @@ services:
     environment:
       APPINSIGHTS_CLOUDROLE: ffc-demo-claim-service-local
       APPINSIGHTS_INSTRUMENTATIONKEY: ${APPINSIGHTS_INSTRUMENTATIONKEY}
-      APPINSIGHTS_CONSOLE_DEBUG_ENABLED: ${APPINSIGHTS_CONSOLE_DEBUG_ENABLED:-false}      
+      APPINSIGHTS_CONSOLE_DEBUG_ENABLED: ${APPINSIGHTS_CONSOLE_DEBUG_ENABLED:-false} 
       CALCULATION_QUEUE_ADDRESS: ${CALCULATION_QUEUE_ADDRESS:-notset}
       CLAIM_QUEUE_ADDRESS: ${CLAIM_QUEUE_ADDRESS:-notset}
       MESSAGE_QUEUE_HOST: ${MESSAGE_QUEUE_HOST:-notset}
@@ -24,12 +24,6 @@ services:
       POSTGRES_SCHEMA_NAME: ${POSTGRES_SCHEMA_NAME:-public}
       POSTGRES_USERNAME: ${POSTGRES_SCHEMA_USERNAME:-postgres}
       SCHEDULE_QUEUE_ADDRESS: ${SCHEDULE_QUEUE_ADDRESS:-notset}
-      SEND_TIMEOUT_IN_SECONDS: 10
-    volumes:
-      - ./app/:/home/node/app/
-      - ./test/:/home/node/test/
-      - ./scripts/:/home/node/scripts/
-      - ./package.json:/home/node/package.json
 
   ffc-demo-claim-postgres:
     image: postgres:11.4-alpine
@@ -37,8 +31,3 @@ services:
       POSTGRES_DB: ffc_demo_claim
       POSTGRES_PASSWORD: ppp
       POSTGRES_USERNAME: postgres
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-volumes:
-  postgres_data: {}
-  node_modules: {}

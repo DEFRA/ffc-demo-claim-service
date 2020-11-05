@@ -8,11 +8,21 @@ services:
     build:
       context: .
       target: development
-    environment:      
-      APPINSIGHTS_CONSOLE_DEBUG_ENABLED: ${APPINSIGHTS_CONSOLE_DEBUG_ENABLED:-true}
     ports:
       - "9230:9229"
+    environment:
+      APPINSIGHTS_CONSOLE_DEBUG_ENABLED: ${APPINSIGHTS_CONSOLE_DEBUG_ENABLED:-true}
+    volumes:
+      - ./app/:/home/node/app/
+      - ./test/:/home/node/test/
+      - ./scripts/:/home/node/scripts/
+      - ./package.json:/home/node/package.json
 
   ffc-demo-claim-postgres:
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data: {}

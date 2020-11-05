@@ -1,10 +1,6 @@
 const auth = require('@azure/ms-rest-nodeauth')
 const { production } = require('./constants').environments
 
-function logRetry (message) {
-  console.log(message)
-}
-
 function isProd () {
   return process.env.NODE_ENV === production
 }
@@ -16,16 +12,16 @@ const dbConfig = {
   schema: process.env.POSTGRES_SCHEMA_NAME || 'public',
   host: process.env.POSTGRES_HOST || 'localhost',
   port: process.env.POSTGRES_PORT || 5432,
+  logging: process.env.POSTGRES_LOGGING || false,
   dialect: 'postgres',
   hooks: {
     beforeConnect: async (cfg) => {
-      console.log('running beforeConnect hook')
       if (isProd()) {
-        console.log('attempting to acquire MSI credentials')
+        console.info('Attempting to acquire MSI credentials')
         const credentials = await auth.loginWithVmMSI({ resource: 'https://ossrdbms-aad.database.windows.net' })
-        console.log('credentials acquired')
+        console.info('Credentials acquired')
         const token = await credentials.getToken()
-        console.log('token acquired')
+        console.info('Token acquired')
         cfg.password = token.accessToken
       }
     }
@@ -36,7 +32,6 @@ const dbConfig = {
     match: [/SequelizeConnectionError/],
     max: 10,
     name: 'connection',
-    report: logRetry,
     timeout: 60000
   }
 }

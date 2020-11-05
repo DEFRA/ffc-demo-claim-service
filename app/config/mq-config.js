@@ -3,13 +3,14 @@ const joi = require('joi')
 const queueSchema = joi.object({
   address: joi.string().required(),
   username: joi.string().optional(),
-  password: joi.string().optional(),
-  sendTimeoutInSeconds: joi.number().optional()
+  password: joi.string().optional()
 })
 
 const mqSchema = joi.object({
   messageQueue: {
-    host: joi.string().default('localhost')
+    host: joi.string().default('localhost'),
+    usePodIdentity: joi.bool().default(false),
+    type: joi.string()
   },
   calculationQueue: queueSchema,
   claimQueue: queueSchema,
@@ -18,7 +19,9 @@ const mqSchema = joi.object({
 
 const mqConfig = {
   messageQueue: {
-    host: process.env.MESSAGE_QUEUE_HOST
+    host: process.env.MESSAGE_QUEUE_HOST,
+    usePodIdentity: process.env.NODE_ENV === 'production',
+    type: 'queue'
   },
   calculationQueue: {
     address: process.env.CALCULATION_QUEUE_ADDRESS,
@@ -28,8 +31,7 @@ const mqConfig = {
   scheduleQueue: {
     address: process.env.SCHEDULE_QUEUE_ADDRESS,
     username: process.env.MESSAGE_QUEUE_USER,
-    password: process.env.MESSAGE_QUEUE_PASSWORD,
-    sendTimeoutInSeconds: process.env.SEND_TIMEOUT_IN_SECONDS
+    password: process.env.MESSAGE_QUEUE_PASSWORD
   },
   claimQueue: {
     address: process.env.CLAIM_QUEUE_ADDRESS,
