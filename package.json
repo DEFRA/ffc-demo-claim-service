@@ -31,7 +31,7 @@
     "@azure/ms-rest-nodeauth": "^3.0.5",
     "@azure/service-bus": "^1.1.9",
     "applicationinsights": "^1.8.7",
-    "ffc-messaging": "^1.0.0",
+    "ffc-messaging": "^1.0.1",
     "joi": "^17.3.0",
     "pg": "^8.3.3",
     "pg-hstore": "^2.3.3",
