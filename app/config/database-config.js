@@ -17,11 +17,8 @@ const dbConfig = {
   hooks: {
     beforeConnect: async (cfg) => {
       if (isProd()) {
-        console.info('Attempting to acquire MSI credentials')
         const credentials = await auth.loginWithVmMSI({ resource: 'https://ossrdbms-aad.database.windows.net' })
-        console.info('Credentials acquired')
         const token = await credentials.getToken()
-        console.info('Token acquired')
         cfg.password = token.accessToken
       }
     }
