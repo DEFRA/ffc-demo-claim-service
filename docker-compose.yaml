@@ -6,6 +6,7 @@ services:
       context: .
       target: production
     image: ffc-demo-claim-service
+    container_name: ffc-demo-claim-service
     depends_on:
       - ffc-demo-claim-postgres
     environment:
