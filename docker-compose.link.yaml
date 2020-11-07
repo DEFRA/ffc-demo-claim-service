@@ -1,17 +1,5 @@
 version: '3.7'
-
-# This override file should be used in development environments to
-# connect this service to sibling services from other repositories
-
-services:
-  ffc-demo-claim-service:
-    build:
-      context: .
-      target: development
-    networks:
-      - ffc-demo
-      - default
-
 networks:
-  ffc-demo:
-    external: true
+  default:
+    external:
+      name: ffc-demo
