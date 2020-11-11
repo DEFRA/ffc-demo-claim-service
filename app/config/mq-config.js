@@ -10,7 +10,8 @@ const mqSchema = joi.object({
   messageQueue: {
     host: joi.string().default('localhost'),
     usePodIdentity: joi.bool().default(false),
-    type: joi.string()
+    type: joi.string(),
+    appInsights: joi.object()
   },
   calculationQueue: queueSchema,
   claimQueue: queueSchema,
@@ -21,7 +22,8 @@ const mqConfig = {
   messageQueue: {
     host: process.env.MESSAGE_QUEUE_HOST,
     usePodIdentity: process.env.NODE_ENV === 'production',
-    type: 'queue'
+    type: 'queue',
+    appInsights: require('applicationinsights')
   },
   calculationQueue: {
     address: process.env.CALCULATION_QUEUE_ADDRESS,
