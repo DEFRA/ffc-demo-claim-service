@@ -3,6 +3,8 @@ const publishPendingClaims = require('../../../../app/messaging/outbox/publish-p
 const { MessageSender } = require('ffc-messaging')
 const { models } = require('../../../../app/services/database-service')()
 const mqConfig = require('../../../../app/config').messageQueues
+jest.mock('notifications-node-client')
+const mockNotifyClient = require('notifications-node-client')
 let calculationSender
 let scheduleSender
 
@@ -48,9 +50,22 @@ describe('get pending claims', () => {
     await scheduleSender.closeConnection()
   })
 
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   test('should update published', async () => {
     await publishPendingClaims(calculationSender, scheduleSender)
     const pending = await models.outbox.findAll({ where: { published: false }, raw: true })
     expect(pending.length).toBe(0)
+  })
+
+  test('should send email via Notify', async () => {
+    const mockNotifyClientInstance = mockNotifyClient.mock.instances[0]
+    const mockSendEmail = mockNotifyClientInstance.mockSendEmail
+
+    await publishPendingClaims(calculationSender, scheduleSender)
+
+    expect(mockSendEmail).toHaveBeenCalled()
   })
 })
