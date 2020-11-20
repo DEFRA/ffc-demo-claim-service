@@ -1,10 +1,16 @@
 const dbHelper = require('../../../db-helper')
-const publishPendingClaims = require('../../../../app/messaging/outbox/publish-pending')
 const { MessageSender } = require('ffc-messaging')
 const { models } = require('../../../../app/services/database-service')()
 const mqConfig = require('../../../../app/config').messageQueues
-jest.mock('notifications-node-client')
-const mockNotifyClient = require('notifications-node-client')
+const mockSendEmail = jest.fn()
+jest.mock('notifications-node-client', () => {
+  return {
+    NotifyClient: jest.fn().mockImplementation(() => {
+      return { sendEmail: mockSendEmail }
+    })
+  }
+})
+const publishPendingClaims = require('../../../../app/messaging/outbox/publish-pending')
 let calculationSender
 let scheduleSender
 
@@ -50,10 +56,6 @@ describe('get pending claims', () => {
     await scheduleSender.closeConnection()
   })
 
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   test('should update published', async () => {
     await publishPendingClaims(calculationSender, scheduleSender)
     const pending = await models.outbox.findAll({ where: { published: false }, raw: true })
@@ -61,11 +63,9 @@ describe('get pending claims', () => {
   })
 
   test('should send email via Notify', async () => {
-    const mockNotifyClientInstance = mockNotifyClient.mock.instances[0]
-    const mockSendEmail = mockNotifyClientInstance.mockSendEmail
-
     await publishPendingClaims(calculationSender, scheduleSender)
 
-    expect(mockSendEmail).toHaveBeenCalled()
+    expect(mockSendEmail).toHaveBeenCalledTimes(1)
+    expect(mockSendEmail.mock.calls[0][2].personalisation.claimId).toBe('MINE2')
   })
 })
