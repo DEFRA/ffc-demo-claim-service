@@ -4,6 +4,10 @@ version: v1.14.1
 ignore:
   SNYK-JS-LODASH-590103:
     - sequelize > lodash:
-        reason: No known vulnerability
-        expires: '2020-11-16T10:53:20.892Z'
+        reason: No update to Sequelize available
+        expires: '2020-12-20T16:52:28.113Z'
+  SNYK-JS-AXIOS-1038255:
+    - notifications-node-client > axios:
+        reason: No exploit
+        expires: '2020-12-20T16:48:49.585Z'
 patch: {}
