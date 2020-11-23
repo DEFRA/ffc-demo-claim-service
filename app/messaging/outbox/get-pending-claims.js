@@ -9,7 +9,8 @@ async function getPendingClaims () {
       'claimId',
       [sequelize.col('claim.propertyType'), 'propertyType'],
       [sequelize.col('claim.dateOfSubsidence'), 'dateOfSubsidence'],
-      [sequelize.col('claim.accessible'), 'accessible']
+      [sequelize.col('claim.accessible'), 'accessible'],
+      [sequelize.col('claim.email'), 'email']
     ]
   })
 }

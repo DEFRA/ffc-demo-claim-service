@@ -6,14 +6,12 @@ Digital service mock to claim public money in the event property subsides into m
 
 ## Prerequisites
 
-Access to an instance of an
+- Access to an instance of an
 [Azure Service Bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/)(ASB).
-
-And either:
 - Docker
 - Docker Compose
 
-Or:
+Optional:
 - Kubernetes
 - Helm
 
@@ -58,23 +56,14 @@ The following environment variables are required by the application container. V
 
 ## How to run tests
 
-A convenience script is provided to run automated tests in a containerised environment. The first time this is run, container images required for testing will be automatically built. An optional `--build` (or `-b`) flag may be used to rebuild these images in future (for example, to apply dependency updates).
+A convenience script is provided to run automated tests in a containerised environment. This also supports file watching by passing the optional `-w` argument.
 
 ```
 # Run tests
 scripts/test
 
-# Rebuild images and run tests
-scripts/test --build
-```
-
-This runs tests via a `docker-compose run` command. If tests complete successfully, all containers, networks and volumes are cleaned up before the script exits. If there is an error or any tests fail, the associated Docker resources will be left available for inspection.
-
-Alternatively, unit tests may be run locally via npm:
-
-```
-# Run unit tests without Docker
-npm run test:unit
+# Run tests watching file
+scripts/test -w
 ```
 
 Running the integration tests locally requires access to ASB, this can be

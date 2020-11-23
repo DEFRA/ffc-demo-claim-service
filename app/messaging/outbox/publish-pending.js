@@ -1,6 +1,7 @@
 const createMessage = require('./create-message')
 const updatePublished = require('./update-published')
 const getPendingClaims = require('./get-pending-claims')
+const { sendEmailNotification } = require('../../notify')
 
 async function publishPendingClaims (calculationSender, scheduleSender) {
   const claims = await getPendingClaims()
@@ -14,6 +15,7 @@ async function publishClaim (claim, calculationSender, scheduleSender) {
     const message = createMessage(claim)
     await calculationSender.sendMessage(message)
     await scheduleSender.sendMessage(message)
+    await sendEmailNotification(claim)
     await updatePublished(claim.claimId)
   } catch (err) {
     console.error('Unable to send claim: ', err)

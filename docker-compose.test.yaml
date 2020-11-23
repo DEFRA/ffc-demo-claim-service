@@ -10,6 +10,8 @@ services:
       target: development
     command: >
       sh -c "npm run test"
+    environment:
+      NOTIFY_API_KEY: test-key
     volumes:
       - ./app/:/home/node/app/
       - ./test/:/home/node/test/

@@ -7,7 +7,7 @@ image: ffc-demo-claim-service
 labels: {}
 
 appInsights:
-  key:
+  key: 
 
 azureIdentity:
   resourceID: not-a-real-resourceID
@@ -55,6 +55,8 @@ postgresService:
   # within the cluster and accessible via postgresHost
   postgresExternalName:
   postgresPort: 5432
+  notifyApiKey:
+  notifyEmailTemplateKey:
 
 livenessProbe:
   path: /healthz
@@ -69,3 +71,5 @@ readinessProbe:
   initialDelaySeconds: 10
   periodSeconds: 10
   failureThreshold: 3
+
+aadPodIdentity: true

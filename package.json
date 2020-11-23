@@ -1,7 +1,7 @@
 {
   "name": "ffc-demo-claim-service",
   "description": "Digital service mock to claim public money in the event property subsides into mine shaft.",
-  "version": "4.3.6",
+  "version": "4.4.0",
   "homepage": "https://github.com/DEFRA/mine-support-claim-service",
   "main": "app/index.js",
   "scripts": {
@@ -34,7 +34,8 @@
     "joi": "^17.3.0",
     "pg": "^8.3.3",
     "pg-hstore": "^2.3.3",
-    "sequelize": "^6.3.5"
+    "sequelize": "^6.3.5",
+    "notifications-node-client": "^5.0.1"
   },
   "devDependencies": {
     "@pact-foundation/pact": "^9.11.1",
