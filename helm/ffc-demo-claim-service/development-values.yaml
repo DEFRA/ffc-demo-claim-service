@@ -1,4 +1,0 @@
-container:
-  command: ["/bin/sh","-c"]
-  args: ["node index"]
-postgresHost: ffc-demo-claim-postgres-postgresql

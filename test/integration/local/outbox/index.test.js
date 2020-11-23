@@ -1,3 +1,4 @@
+jest.mock('notifications-node-client')
 const outbox = require('../../../../app/messaging/outbox')
 
 describe('outbox service', () => {
