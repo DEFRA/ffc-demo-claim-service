@@ -1,0 +1,3 @@
+sh: 1: cannot create snyk-result.json: Permission denied
+Failed to run the process ...
+snyk-result.json
