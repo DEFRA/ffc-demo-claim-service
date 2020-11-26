@@ -1,3 +1,3 @@
-@Library('defra-library@v-9') _
+@Library('defra-library@add-cleanup') _
 
 buildNodeJs environment: 'dev', defaultBranch: 'master'
