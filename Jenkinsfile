@@ -1,3 +1,3 @@
-@Library('defra-library@psd-1079-support-aac-keys') _
+@Library('defra-library@v-9') _
 
 buildNodeJs defaultBranch: 'master'
