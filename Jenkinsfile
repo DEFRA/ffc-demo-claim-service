@@ -1,3 +1,3 @@
-@Library('defra-library@v-9') _
+@Library('defra-library@psd-1079-support-aac-keys') _
 
-buildNodeJs environment: 'dev', defaultBranch: 'master'
+buildNodeJs defaultBranch: 'master'
