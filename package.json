@@ -24,13 +24,14 @@
     "Phil Benson <phil.benson@defra.gov.uk>",
     "Fay Toward <fay.toward@rpa.gov.uk>",
     "Steve Hunt <steven.hunt@defra.gov.uk>",
-    "Fareed Mohammed <fareed.mohammed@defra.gov.uk"
+    "Fareed Mohammed <fareed.mohammed@defra.gov.uk>",
+    "Steve Dickinson <steve.dickinson@defra.gov.uk>"
   ],
   "license": "OGL-UK-3.0",
   "dependencies": {
     "@azure/ms-rest-nodeauth": "^3.0.5",
     "applicationinsights": "^1.8.7",
-    "ffc-messaging": "^1.0.5",
+    "ffc-messaging": "^1.0.7",
     "joi": "^17.3.0",
     "pg": "^8.3.3",
     "pg-hstore": "^2.3.3",

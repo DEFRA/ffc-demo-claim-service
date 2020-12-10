@@ -3,7 +3,8 @@ const joi = require('joi')
 const queueSchema = joi.object({
   address: joi.string().required(),
   username: joi.string().optional(),
-  password: joi.string().optional()
+  password: joi.string().optional(),
+  type: joi.string().optional()
 })
 
 const mqSchema = joi.object({
@@ -15,7 +16,7 @@ const mqSchema = joi.object({
   },
   calculationQueue: queueSchema,
   claimQueue: queueSchema,
-  scheduleQueue: queueSchema
+  scheduleTopic: queueSchema
 })
 
 const mqConfig = {
@@ -30,10 +31,11 @@ const mqConfig = {
     username: process.env.MESSAGE_QUEUE_USER,
     password: process.env.MESSAGE_QUEUE_PASSWORD
   },
-  scheduleQueue: {
-    address: process.env.SCHEDULE_QUEUE_ADDRESS,
+  scheduleTopic: {
+    address: process.env.SCHEDULE_TOPIC_ADDRESS,
     username: process.env.MESSAGE_QUEUE_USER,
-    password: process.env.MESSAGE_QUEUE_PASSWORD
+    password: process.env.MESSAGE_QUEUE_PASSWORD,
+    type: 'topic'
   },
   claimQueue: {
     address: process.env.CLAIM_QUEUE_ADDRESS,
@@ -59,13 +61,13 @@ const claimQueue = {
   ...mqResult.value.messageQueue,
   ...mqResult.value.claimQueue
 }
-const scheduleQueue = {
+const scheduleTopic = {
   ...mqResult.value.messageQueue,
-  ...mqResult.value.scheduleQueue
+  ...mqResult.value.scheduleTopic
 }
 
 module.exports = {
   calculationQueue,
   claimQueue,
-  scheduleQueue
+  scheduleTopic
 }
