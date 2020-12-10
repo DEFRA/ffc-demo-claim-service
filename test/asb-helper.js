@@ -40,7 +40,6 @@ async function clearQueue (queueName) {
 async function clearAllQueues () {
   await clearQueue('calculationQueue')
   await clearQueue('claimQueue')
-  await clearQueue('scheduleQueue')
 }
 
 module.exports = {

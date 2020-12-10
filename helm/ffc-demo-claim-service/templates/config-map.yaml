@@ -11,6 +11,6 @@ data:
   POSTGRES_HOST: {{ quote .Values.postgresService.postgresHost }}
   POSTGRES_PORT: {{ quote .Values.postgresService.postgresPort }}
   POSTGRES_SCHEMA_NAME: {{ quote .Values.postgresService.postgresSchema }}
-  SCHEDULE_QUEUE_ADDRESS: {{ quote .Values.container.scheduleQueueAddress }}
+  SCHEDULE_TOPIC_ADDRESS: {{ quote .Values.container.scheduleTopicAddress }}
   APPINSIGHTS_CONSOLE_DEBUG_ENABLED: {{ quote .Values.container.appInsightsConsoleDebugEnabled}}
 {{- end -}}
