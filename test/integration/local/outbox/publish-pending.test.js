@@ -45,7 +45,7 @@ describe('get pending claims', () => {
     await dbHelper.createOutboxRecords(outbox)
     calculationSender = new MessageSender(mqConfig.calculationQueue)
     await calculationSender.connect()
-    scheduleSender = new MessageSender(mqConfig.scheduleQueue)
+    scheduleSender = new MessageSender(mqConfig.scheduleTopic)
     await scheduleSender.connect()
   })
 

@@ -42,7 +42,7 @@ container:
   calculationQueueAddress: calculation
   claimQueueAddress: claim
   messageQueueHost: myservicebus.servicebus.windows.net
-  scheduleQueueAddress: schedule
+  scheduleTopicAddress: schedule
   appInsightsConsoleDebugEnabled: true
 postgresService:
   postgresDb: ffc_demo_claim
