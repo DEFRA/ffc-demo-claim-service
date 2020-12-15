@@ -1,5 +1,4 @@
 const { MessageProviderPact } = require('@pact-foundation/pact')
-const path = require('path')
 const createMessage = require('../../app/messaging/outbox/create-message')
 
 describe('Pact Verification', () => {
