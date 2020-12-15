@@ -53,6 +53,7 @@ The following environment variables are required by the application container. V
 | POSTGRES_SCHEMA_PASSWORD           | Password of schema user         | no         | ppp         |                               | this is only used in the docker container when running against a schema other than public |
 | POSTGRES_SCHEMA_USER               | schema user account             | no         | postgres    |                               | see above                                                                                 |
 | SCHEDULE_QUEUE_ADDRESS             | Message queue address           | yes        |             |                               |                                                                                           |
+|PACT_BROKER_BASE_URL|URL for the PACT Broker|yes|||
 
 ## How to run tests
 

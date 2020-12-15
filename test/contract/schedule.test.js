@@ -17,9 +17,8 @@ describe('Pact Verification', () => {
         'a request for new payment schedule': () => createMessage(claim).body
       },
       provider: 'ffc-demo-claim-service',
-      pactUrls: [
-        path.resolve(__dirname, './pacts/ffc-demo-payment-service-ffc-demo-claim-service.json')
-      ]
+      consumerVersionTags: ['main', 'dev', 'test', 'preprod', 'prod'],
+      pactBrokerUrl: process.env.PACT_BROKER_BASE_URL
     })
 
     return provider.verify()

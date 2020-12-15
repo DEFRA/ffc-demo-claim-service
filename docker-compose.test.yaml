@@ -12,6 +12,7 @@ services:
       sh -c "npm run test"
     environment:
       NOTIFY_API_KEY: test-key
+      PACT_BROKER_BASE_URL: ${PACT_BROKER_BASE_URL:-notset}
     volumes:
       - ./app/:/home/node/app/
       - ./test/:/home/node/test/
