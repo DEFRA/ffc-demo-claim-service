@@ -11,6 +11,7 @@ services:
     command: >
       sh -c "npm run test"
     environment:
+      SSL_CERT_DIR: ${SSL_CERT_DIR}
       NOTIFY_API_KEY: test-key
       PACT_BROKER_BASE_URL: ${PACT_BROKER_BASE_URL:-notset}
     volumes:
