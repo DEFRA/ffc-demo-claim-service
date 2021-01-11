@@ -17,7 +17,12 @@ describe('Pact Verification', () => {
       },
       provider: 'ffc-demo-claim-service',
       consumerVersionTags: ['main', 'dev', 'test', 'preprod', 'prod'],
-      pactBrokerUrl: 'https://ffc-pact-broker.ffc.snd.azure.defra.cloud'
+      pactBrokerUrl: 'https://ffc-pact-broker.azure.defra.cloud', // Pact broker url needs to be put in variable
+      pactBrokerUsername: 'pactuser01',
+      pactBrokerPassword: 'pactuser01pactuser01pactuser01',
+      verbose: true,
+      logLevel: 'DEBUG',
+      port: 80
     })
 
     return provider.verify()
