@@ -123,7 +123,7 @@ Test messages can be sent via a client that supports sending to Azure Service Bu
 ```
 {
   "claimId":"MINE123",
-  "name": "joe bloggs",
+  "name": "Joe Bloggs",
   "propertyType":"business",
   "accessible":false,
   "dateOfSubsidence":"2019-07-26T09:54:19.622Z",
