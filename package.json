@@ -33,10 +33,10 @@
     "applicationinsights": "^1.8.7",
     "ffc-messaging": "^1.0.7",
     "joi": "^17.3.0",
+    "notifications-node-client": "^5.1.0",
     "pg": "^8.3.3",
     "pg-hstore": "^2.3.3",
-    "sequelize": "^6.3.5",
-    "notifications-node-client": "^5.0.1"
+    "sequelize": "^6.3.5"
   },
   "devDependencies": {
     "@pact-foundation/pact": "^9.11.1",
