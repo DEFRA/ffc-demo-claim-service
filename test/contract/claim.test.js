@@ -30,7 +30,7 @@ describe('receiving a new claim', () => {
         claimId: Matchers.like('MINE123'),
         name: Matchers.like('Joe Bloggs'),
         propertyType: Matchers.like('business'),
-        dateOfSubsidence: Matchers.iso8601DateTime(),
+        dateOfSubsidence: Matchers.iso8601DateTimeWithMillis(),
         mineType: Matchers.eachLike('gold'),
         email: Matchers.email()
       })
