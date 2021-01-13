@@ -7,14 +7,20 @@ const schema = joi.object({
   env: joi.string().valid(environments.development, environments.test, environments.production).default(environments.development),
   publishPollingInterval: joi.number().default(5000),
   notifyApiKey: joi.string().allow(''),
-  notifyEmailTemplateKey: joi.string().allow('')
+  notifyEmailTemplateKey: joi.string().allow(''),
+  pactBrokerUrl: joi.string().allow(''),
+  pactBrokerUsername: joi.string().allow(''),
+  pactBrokerPassword: joi.string().allow('')
 })
 
 const config = {
   env: process.env.NODE_ENV,
   publishPollingInterval: process.env.PUBLISH_POLLING_INTERVAL,
   notifyApiKey: process.env.NOTIFY_API_KEY,
-  notifyEmailTemplateKey: process.env.NOTIFY_EMAIL_TEMPLATE_KEY
+  notifyEmailTemplateKey: process.env.NOTIFY_EMAIL_TEMPLATE_KEY,
+  pactBrokerUrl: process.env.PACT_BROKER_URL,
+  pactBrokerUsername: process.env.PACT_BROKER_USERNAME,
+  pactBrokerPassword: process.env.PACT_BROKER_PASSWORD
 }
 
 const result = schema.validate(config, {

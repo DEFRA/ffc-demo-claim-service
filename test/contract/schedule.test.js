@@ -1,5 +1,6 @@
 const { MessageProviderPact } = require('@pact-foundation/pact')
 const createMessage = require('../../app/messaging/outbox/create-message')
+const config = require('../../app/config')
 
 describe('Pact Verification', () => {
   test('validates the expectations of ffc-demo-payment-service', async () => {
@@ -17,9 +18,9 @@ describe('Pact Verification', () => {
       },
       provider: 'ffc-demo-claim-service',
       consumerVersionTags: ['main', 'dev', 'test', 'preprod', 'prod'],
-      pactBrokerUrl: 'https://ffc-pact-broker.azure.defra.cloud', // Pact broker url needs to be put in variable
-      pactBrokerUsername: 'pactuser01',
-      pactBrokerPassword: 'pactuser01pactuser01pactuser01'
+      pactBrokerUrl: config.pactBrokerUrl,
+      pactBrokerUsername: config.pactBrokerUsername,
+      pactBrokerPassword: config.pactBrokerPassword
     })
 
     return provider.verify()
