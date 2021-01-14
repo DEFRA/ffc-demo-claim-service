@@ -28,9 +28,10 @@ describe('receiving a new claim', () => {
       .expectsToReceive('a request for new claim')
       .withContent({
         claimId: Matchers.like('MINE123'),
+        name: Matchers.like('Joe Bloggs'),
         propertyType: Matchers.like('business'),
-        dateOfSubsidence: Matchers.iso8601DateTime(),
-        mineType: Matchers.like('["gold"]'),
+        dateOfSubsidence: Matchers.iso8601DateTimeWithMillis(),
+        mineType: Matchers.eachLike('gold'),
         email: Matchers.email()
       })
       .withMetadata({
