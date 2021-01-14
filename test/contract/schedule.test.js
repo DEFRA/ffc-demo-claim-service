@@ -1,6 +1,5 @@
 const { MessageProviderPact } = require('@pact-foundation/pact')
 const createMessage = require('../../app/messaging/outbox/create-message')
-const config = require('../../app/config')
 
 describe('Pact Verification', () => {
   test('validates the expectations of ffc-demo-payment-service', async () => {
@@ -18,9 +17,9 @@ describe('Pact Verification', () => {
       },
       provider: 'ffc-demo-claim-service',
       consumerVersionTags: ['main', 'dev', 'test', 'preprod', 'prod'],
-      pactBrokerUrl: config.pactBrokerUrl,
-      pactBrokerUsername: config.pactBrokerUsername,
-      pactBrokerPassword: config.pactBrokerPassword
+      pactBrokerUrl: process.env.PACT_BROKER_URL,
+      pactBrokerUsername: process.env.PACT_BROKER_USERNAME,
+      pactBrokerPassword: process.env.PACT_BROKER_PASSWORD
     })
 
     return provider.verify()
