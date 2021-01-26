@@ -4,11 +4,13 @@ const outbox = require('./messaging/outbox')
 
 process.on('SIGTERM', async function () {
   await inbox.stop()
+  await outbox.stop()
   process.exit(0)
 })
 
 process.on('SIGINT', async function () {
   await inbox.stop()
+  await outbox.stop()
   process.exit(0)
 })
 

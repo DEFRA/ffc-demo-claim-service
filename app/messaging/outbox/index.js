@@ -12,4 +12,9 @@ async function start () {
   console.info('Outbox service running, ready to publish claims')
 }
 
-module.exports = { start }
+async function stop () {
+  await calculationSender.closeConnection()
+  await scheduleSender.closeConnection()
+}
+
+module.exports = { start, stop }

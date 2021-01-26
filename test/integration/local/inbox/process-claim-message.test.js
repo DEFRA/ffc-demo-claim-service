@@ -11,9 +11,12 @@ describe('processing claim message', () => {
       dateOfSubsidence: '2019-07-26T09:54:19.622Z',
       mineType: ['gold', 'silver'],
       email: 'joe.bloggs@defra.gov.uk'
-    },
-    complete: jest.fn(),
-    abandon: jest.fn()
+    }
+  }
+
+  const claimReceiver = {
+    completeMessage: jest.fn(),
+    abandonMessage: jest.fn()
   }
 
   beforeEach(async () => {
@@ -29,13 +32,13 @@ describe('processing claim message', () => {
   })
 
   test('should save valid claim', async () => {
-    await processClaimMessage(message)
+    await processClaimMessage(message, claimReceiver)
     const claims = await models.claims.findAll({ where: { claimId: message.body.claimId }, raw: true })
     expect(claims.length).toBe(1)
   })
 
   test('should save valid claim mineTypes', async () => {
-    await processClaimMessage(message)
+    await processClaimMessage(message, claimReceiver)
     const mineTypes = await models.mineTypes.findAll({ where: { claimId: message.body.claimId }, raw: true })
     expect(mineTypes.length).toBe(2)
     expect(mineTypes.filter(x => x.mineType === 'gold').length).toBe(1)
@@ -43,26 +46,26 @@ describe('processing claim message', () => {
   })
 
   test('should save valid claim outbox', async () => {
-    await processClaimMessage(message)
+    await processClaimMessage(message, claimReceiver)
     const outbox = await models.outbox.findAll({ where: { claimId: message.body.claimId, published: false }, raw: true })
     expect(outbox.length).toBe(1)
   })
 
   test('should not save duplicate claim', async () => {
-    await processClaimMessage(message)
-    await processClaimMessage(message)
+    await processClaimMessage(message, claimReceiver)
+    await processClaimMessage(message, claimReceiver)
     const claims = await models.claims.findAll({ where: { claimId: message.body.claimId }, raw: true })
     expect(claims.length).toBe(1)
   })
 
   test('should complete valid claim', async () => {
-    await processClaimMessage(message)
-    expect(message.complete).toHaveBeenCalled()
+    await processClaimMessage(message, claimReceiver)
+    expect(claimReceiver.completeMessage).toHaveBeenCalled()
   })
 
   test('should abandon invalid claim', async () => {
     message.body = 'not a claim'
-    await processClaimMessage(message)
-    expect(message.abandon).toHaveBeenCalled()
+    await processClaimMessage(message, claimReceiver)
+    expect(claimReceiver.abandonMessage).toHaveBeenCalled()
   })
 })
