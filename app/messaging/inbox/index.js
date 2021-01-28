@@ -7,7 +7,6 @@ let claimReceiver
 async function start () {
   const claimAction = message => processClaimMessage(message, claimReceiver)
   claimReceiver = new MessageReceiver(mqConfig, claimAction)
-  await claimReceiver.connect()
   await claimReceiver.subscribe()
   console.info('Inbox service running, ready to receive claims')
 }
