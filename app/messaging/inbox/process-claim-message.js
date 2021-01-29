@@ -1,12 +1,12 @@
 const createClaim = require('./create-claim')
 
-async function processClaimMessage (message) {
+async function processClaimMessage (message, claimReceiver) {
   try {
     await createClaim(message.body)
-    await message.complete()
+    await claimReceiver.completeMessage(message)
   } catch (err) {
     console.error('Unable to process message:', err)
-    await message.abandon()
+    await claimReceiver.abandonMessage(message)
   }
 }
 
