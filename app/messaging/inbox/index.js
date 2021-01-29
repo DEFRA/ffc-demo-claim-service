@@ -5,9 +5,10 @@ const { MessageReceiver } = require('ffc-messaging')
 let claimReceiver
 
 async function start () {
-  claimReceiver = new MessageReceiver(mqConfig, processClaimMessage)
-  await claimReceiver.connect()
-  console.info('Inbox service running')
+  const claimAction = message => processClaimMessage(message, claimReceiver)
+  claimReceiver = new MessageReceiver(mqConfig, claimAction)
+  await claimReceiver.subscribe()
+  console.info('Inbox service running, ready to receive claims')
 }
 
 async function stop () {
