@@ -1,5 +1,5 @@
 ARG PARENT_VERSION=1.2.1-node14.15.0
-ARG NPM_REGISTRY=https://registry.npmjs.org/
+ARG NPM_REGISTRY=https://artifactoryv2.azure.defra.cloud/artifactory/npm-virtual/
 # Development
 FROM defradigital/node-development:${PARENT_VERSION} AS development
 ARG PARENT_VERSION
