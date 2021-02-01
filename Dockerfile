@@ -11,7 +11,7 @@ LABEL uk.gov.defra.ffc.parent-image=defradigital/node-development:${PARENT_VERSI
 ARG PORT_DEBUG=9229
 EXPOSE ${PORT_DEBUG}
 
-COPY --chown=node:node package*.json .npmrc* ./
+COPY --chown=node:node package*.json ./
 RUN npm install
 COPY --chown=node:node . .
 CMD [ "npm", "run", "start:watch" ]
@@ -20,12 +20,16 @@ CMD [ "npm", "run", "start:watch" ]
 FROM defradigital/node:${PARENT_VERSION} AS production
 ARG PARENT_VERSION
 ARG PORT
+ARG NPM_REGISTRY
+ARG NPM_TOKEN
+ARG NPM_EMAIL
+
 LABEL uk.gov.defra.ffc.parent-image=defradigital/node:${PARENT_VERSION}
 
 ENV PORT ${PORT}
 EXPOSE ${PORT}
 
-COPY --from=development /home/node/package*.json .npmrc* /home/node/
+COPY --chown=node:node package*.json .npmrc* /home/node/
 COPY --from=development /home/node/app  /home/node/app
 ARG NPM_REGISTRY
 RUN npm ci
