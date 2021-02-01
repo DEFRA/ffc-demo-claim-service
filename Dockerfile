@@ -31,7 +31,6 @@ EXPOSE ${PORT}
 
 COPY --chown=node:node package*.json .npmrc* /home/node/
 COPY --from=development /home/node/app  /home/node/app
-ARG NPM_REGISTRY
 RUN npm ci
 RUN rm -f .npmrc
 CMD [ "node", "app" ]
