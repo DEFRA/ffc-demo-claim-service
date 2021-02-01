@@ -1,3 +1,3 @@
-@Library('defra-library@psd-1034-use-artifactory-as-registry-source') _
+@Library('defra-library@psd-1034-use-artifactory') _
 
 buildNodeJs defaultBranch: 'master'
