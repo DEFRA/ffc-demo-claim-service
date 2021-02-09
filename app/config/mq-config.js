@@ -1,6 +1,7 @@
 const joi = require('joi')
 
 const queueSchema = joi.object({
+  name: joi.string(),
   address: joi.string().required(),
   username: joi.string().optional(),
   password: joi.string().optional(),
@@ -27,17 +28,20 @@ const mqConfig = {
     appInsights: process.env.NODE_ENV === 'production' ? require('applicationinsights') : undefined
   },
   calculationQueue: {
+    name: process.env.CALCULATION_QUEUE_NAME || 'ffc-demo-claim-service-calculation',
     address: process.env.CALCULATION_QUEUE_ADDRESS,
     username: process.env.MESSAGE_QUEUE_USER,
     password: process.env.MESSAGE_QUEUE_PASSWORD
   },
   scheduleTopic: {
+    name: process.env.SCHEDULE_TOPIC_NAME || 'ffc-demo-claim-service-schedule',
     address: process.env.SCHEDULE_TOPIC_ADDRESS,
     username: process.env.MESSAGE_QUEUE_USER,
     password: process.env.MESSAGE_QUEUE_PASSWORD,
     type: 'topic'
   },
   claimQueue: {
+    name: process.env.CALCULATION_QUEUE_NAME || 'ffc-demo-claim-service-claim',
     address: process.env.CLAIM_QUEUE_ADDRESS,
     username: process.env.MESSAGE_QUEUE_USER,
     password: process.env.MESSAGE_QUEUE_PASSWORD
