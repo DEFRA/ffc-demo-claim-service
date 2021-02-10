@@ -1,3 +1,3 @@
-@Library('defra-library@v-9') _
+@Library('defra-library@psd-1123-remove-redundant-jenkins-plugins') _
 
 buildNodeJs defaultBranch: 'master'
