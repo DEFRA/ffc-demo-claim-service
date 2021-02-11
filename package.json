@@ -34,12 +34,10 @@
     "ffc-messaging": "^2.1.1",
     "joi": "^17.3.0",
     "launchpad": "^0.7.5",
-    "ngx-markdown-editor": "^3.3.1",
     "notifications-node-client": "^5.1.0",
     "pg": "^8.3.3",
     "pg-hstore": "^2.3.3",
-    "sequelize": "^6.5.0",
-    "systeminformation": "^4.34.9"
+    "sequelize": "^6.5.0"
   },
   "devDependencies": {
     "@pact-foundation/pact": "^9.11.1",
