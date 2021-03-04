@@ -2,7 +2,7 @@
 version: v1.14.1
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
- SNYK-JS-LODASH-1040724:
+  SNYK-JS-LODASH-1040724:
     - sequelize > lodash:
         reason: No update to Sequelize available
         expires: '2021-03-31T16:52:28.113Z'
