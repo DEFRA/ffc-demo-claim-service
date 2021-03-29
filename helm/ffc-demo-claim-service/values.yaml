@@ -25,7 +25,6 @@ deployment:
   priorityClassName: low
   replicas: 1
   minReadySeconds: 5
-  redeployOnChange: update this field to force a change
   imagePullSecret:
   runAsNonRoot: true
   runAsUser: 1000
