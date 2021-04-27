@@ -26,8 +26,6 @@ deployment:
   replicas: 1
   minReadySeconds: 5
   imagePullSecret:
-  runAsNonRoot: true
-  runAsUser: 1000
 
 container:
   imagePullPolicy: IfNotPresent
@@ -35,8 +33,6 @@ container:
   requestCpu: 60m
   limitMemory: 120Mi
   limitCpu: 120m
-  readOnlyRootFilesystem: true
-  allowPrivilegeEscalation: false
   port: 3003
   calculationQueueAddress: calculation
   claimQueueAddress: claim
