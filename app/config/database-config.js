@@ -1,42 +1,43 @@
-const auth = require('@azure/ms-rest-nodeauth')
-const { production } = require('./constants').environments
+const { DefaultAzureCredential } = require('@azure/identity')
 
 function isProd () {
-  return process.env.NODE_ENV === production
+  return process.env.NODE_ENV === 'production'
 }
 
-const dbConfig = {
-  username: process.env.POSTGRES_USERNAME,
-  password: process.env.POSTGRES_PASSWORD,
-  database: process.env.POSTGRES_DB,
-  schema: process.env.POSTGRES_SCHEMA_NAME || 'public',
-  host: process.env.POSTGRES_HOST || 'localhost',
-  port: process.env.POSTGRES_PORT || 5432,
-  logging: process.env.POSTGRES_LOGGING || false,
-  dialect: 'postgres',
-  hooks: {
-    beforeConnect: async (cfg) => {
-      if (isProd()) {
-        const credentials = await auth.loginWithVmMSI({ resource: 'https://ossrdbms-aad.database.windows.net' })
-        const token = await credentials.getToken()
-        cfg.password = token.accessToken
-      }
+const hooks = {
+  beforeConnect: async (cfg) => {
+    if (isProd()) {
+      const credential = new DefaultAzureCredential()
+      const accessToken = await credential.getToken('https://ossrdbms-aad.database.windows.net')
+      cfg.password = accessToken.token
     }
-  },
-  retry: {
-    backoffBase: 500,
-    backoffExponent: 1.1,
-    match: [/SequelizeConnectionError/],
-    max: 10,
-    name: 'connection',
-    timeout: 60000
   }
 }
 
-const config = {
-  production: dbConfig,
-  development: dbConfig,
-  test: dbConfig
+const retry = {
+  backoffBase: 500,
+  backoffExponent: 1.1,
+  match: [/SequelizeConnectionError/],
+  max: 10,
+  name: 'connection',
+  timeout: 60000
 }
 
-module.exports = config
+const dbConfig = {
+  database: process.env.POSTGRES_DB || 'ffc_demo_claim',
+  dialect: 'postgres',
+  hooks,
+  host: process.env.POSTGRES_HOST || 'ffc-demo-claim-postgres',
+  password: process.env.POSTGRES_PASSWORD,
+  port: process.env.POSTGRES_PORT || 5432,
+  logging: process.env.POSTGRES_LOGGING || false,
+  retry,
+  schema: process.env.POSTGRES_SCHEMA_NAME || 'public',
+  username: process.env.POSTGRES_USERNAME
+}
+
+module.exports = {
+  development: dbConfig,
+  production: dbConfig,
+  test: dbConfig
+}

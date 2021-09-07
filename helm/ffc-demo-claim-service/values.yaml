@@ -34,10 +34,10 @@ container:
   limitMemory: 120Mi
   limitCpu: 120m
   port: 3003
-  calculationQueueAddress: calculation
-  claimQueueAddress: claim
+  calculationQueueAddress: ffc-demo-calculation
+  claimQueueAddress: ffc-demo-claim
   messageQueueHost: myservicebus.servicebus.windows.net
-  scheduleTopicAddress: schedule
+  scheduleTopicAddress: ffc-demo-schedule
   appInsightsConsoleDebugEnabled: true
 postgresService:
   postgresDb: ffc_demo_claim

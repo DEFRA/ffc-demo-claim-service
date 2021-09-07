@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.8'
 
 # This override file should be used when running automated tests so
 # that test output is saved to the host
@@ -14,12 +14,12 @@ services:
       NOTIFY_API_KEY: test-key
       PACT_BROKER_URL: ${PACT_BROKER_URL:-notset}
       PACT_BROKER_USERNAME: ${PACT_BROKER_USERNAME:-notset}
-      PACT_BROKER_PASSWORD: ${PACT_BROKER_PASSWORD:-notset}      
+      PACT_BROKER_PASSWORD: ${PACT_BROKER_PASSWORD:-notset}
     volumes:
-      - ./app/:/home/node/app/
-      - ./test/:/home/node/test/
-      - ./scripts/:/home/node/scripts/
+      - ./app:/home/node/app
+      - ./test:/home/node/test
+      - ./scripts:/home/node/scripts
       - ./package.json:/home/node/package.json
-      - ./test-output/:/home/node/test-output/
+      - ./test-output:/home/node/test-output
       - ./jest.config.js:/home/node/jest.config.js
       - ./jest.setup.js:/home/node/jest.setup.js
