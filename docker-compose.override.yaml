@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.8'
 
 # This override file should be used when running this service in isolation
 # to provide required sibling services for local testing
@@ -13,9 +13,9 @@ services:
     environment:
       APPINSIGHTS_CONSOLE_DEBUG_ENABLED: ${APPINSIGHTS_CONSOLE_DEBUG_ENABLED:-true}
     volumes:
-      - ./app/:/home/node/app/
-      - ./test/:/home/node/test/
-      - ./scripts/:/home/node/scripts/
+      - ./app:/home/node/app
+      - ./test:/home/node/test
+      - ./scripts:/home/node/scripts
       - ./package.json:/home/node/package.json
 
   ffc-demo-claim-postgres:

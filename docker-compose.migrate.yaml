@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.8'
 
 x-common-migration: &common-migration
   POSTGRES_HOST: ${POSTGRES_HOST:-ffc-demo-claim-postgres}
@@ -24,8 +24,8 @@ services:
     depends_on:
       - ffc-demo-claim-postgres
     volumes:
-      - ./changelog/:/liquibase/changelog/
-      - ./scripts/:/scripts/
+      - ./changelog:/liquibase/changelog
+      - ./scripts:/scripts
 
   database-down:
     image: liquibase/liquibase:3.10.x
@@ -37,8 +37,8 @@ services:
     depends_on:
       - ffc-demo-claim-postgres
     volumes:
-      - ./changelog/:/liquibase/changelog/
-      - ./scripts/:/scripts/
+      - ./changelog:/liquibase/changelog
+      - ./scripts:/scripts
 
   ffc-demo-claim-postgres:
     image: postgres:11.4-alpine
