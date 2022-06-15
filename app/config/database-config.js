@@ -14,6 +14,9 @@ const dbConfig = {
   port: process.env.POSTGRES_PORT || 5432,
   logging: process.env.POSTGRES_LOGGING || false,
   dialect: 'postgres',
+  dialectOptions: {
+    ssl: isProd()
+  },
   hooks: {
     beforeConnect: async (cfg) => {
       if (isProd()) {

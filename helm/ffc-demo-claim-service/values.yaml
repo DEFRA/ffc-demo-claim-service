@@ -41,14 +41,9 @@ container:
   appInsightsConsoleDebugEnabled: true
 postgresService:
   postgresDb: ffc_demo_claim
-  # postgresHost is the host name of the PostgreSQL service
   postgresHost: ffc-demo-claims-postgres
   postgresSchema: public
   postgresUser: postgres
-  # postgresExternalName is the external host name to which PostgreSQL
-  # requests should be forwarded. If empty, PostgreSQL is assumed to be
-  # within the cluster and accessible via postgresHost
-  postgresExternalName:
   postgresPort: 5432
   notifyApiKey:
   notifyEmailTemplateKey:
