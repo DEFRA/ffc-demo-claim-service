@@ -41,7 +41,7 @@ container:
   appInsightsConsoleDebugEnabled: true
 postgresService:
   postgresDb: ffc_demo_claim
-  postgresHost: ffc-demo-claims-postgres
+  postgresqlHost: ffc-demo-claims-postgres
   postgresSchema: public
   postgresUser: postgres
   postgresPort: 5432
