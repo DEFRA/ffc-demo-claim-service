@@ -39,14 +39,15 @@ container:
   messageQueueHost: myservicebus.servicebus.windows.net
   scheduleTopicAddress: schedule
   appInsightsConsoleDebugEnabled: true
+  notifyApiKey:
+  notifyEmailTemplateKey:
+
 postgresService:
   postgresDb: ffc_demo_claim
   postgresqlHost: ffc-demo-claims-postgres
   postgresSchema: public
   postgresUser: postgres
   postgresPort: 5432
-  notifyApiKey:
-  notifyEmailTemplateKey:
 
 livenessProbe:
   path: /healthz
