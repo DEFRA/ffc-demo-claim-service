@@ -1,4 +1,4 @@
-ARG PARENT_VERSION=1.2.19-node16.15.1
+ARG PARENT_VERSION=2.1.1-node16.17.0
 # Development
 FROM defradigital/node-development:${PARENT_VERSION} AS development
 ARG PARENT_VERSION
