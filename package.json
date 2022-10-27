@@ -30,7 +30,7 @@
   ],
   "license": "OGL-UK-3.0",
   "dependencies": {
-    "@azure/ms-rest-nodeauth": "3.0.5",
+    "@azure/ms-rest-nodeauth": "3.1.1",
     "applicationinsights": "1.8.7",
     "ffc-messaging": "2.3.1",
     "joi": "17.3.0",
@@ -43,7 +43,7 @@
     "@pact-foundation/pact": "9.11.1",
     "jest": "26.6.3",
     "jest-junit": "11.1.0",
-    "nodemon": "2.0.4",
+    "nodemon": "2.0.20",
     "sequelize-mock": "0.10.2",
     "standard": "14.3.4"
   },
