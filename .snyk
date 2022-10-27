@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.22.1
+version: v1.22.0
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
   SNYK-JS-LODASH-590103:
@@ -55,4 +55,23 @@ ignore:
     - ffc-messaging > @azure/identity > keytar > prebuild-install > npmlog > gauge > wide-align > string-width > strip-ansi > ansi-regex:
         reason: None given
         expires: '2021-10-24T20:12:33.103Z'
+      '@pact-foundation/pact > cli-color > ansi-regex':
+        reason: None given
+        expires: '2022-11-26T11:48:54.423Z'
+  SNYK-JS-UNSETVALUE-2400660:
+    - '@pact-foundation/pact > http-proxy-middleware > micromatch > snapdragon > base > cache-base > unset-value':
+        reason: None given
+        expires: '2022-11-26T11:48:54.423Z'
+    - '@pact-foundation/pact > http-proxy-middleware > micromatch > braces > snapdragon > base > cache-base > unset-value':
+        reason: None given
+        expires: '2022-11-26T11:48:54.423Z'
+    - '@pact-foundation/pact > http-proxy-middleware > micromatch > extglob > snapdragon > base > cache-base > unset-value':
+        reason: None given
+        expires: '2022-11-26T11:48:54.423Z'
+    - '@pact-foundation/pact > http-proxy-middleware > micromatch > nanomatch > snapdragon > base > cache-base > unset-value':
+        reason: None given
+        expires: '2022-11-26T11:48:54.423Z'
+    - '@pact-foundation/pact > http-proxy-middleware > micromatch > extglob > expand-brackets > snapdragon > base > cache-base > unset-value':
+        reason: None given
+        expires: '2022-11-26T11:48:54.423Z'
 patch: {}
