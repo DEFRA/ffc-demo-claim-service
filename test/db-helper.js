@@ -1,4 +1,4 @@
-const { models } = require('../app/services/database-service')()
+const { models, sequelize } = require('../app/services/database-service')()
 
 async function truncate () {
   await models.mineTypes.destroy({ truncate: { cascade: true } })
@@ -19,7 +19,7 @@ async function createMineTypeRecords (mineTypes) {
 }
 
 async function close () {
-  await models.sequelize.close()
+  await sequelize.close()
 }
 
 module.exports = {
