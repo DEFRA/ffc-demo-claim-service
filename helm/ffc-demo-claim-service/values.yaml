@@ -63,4 +63,9 @@ readinessProbe:
   periodSeconds: 10
   failureThreshold: 3
 
-aadPodIdentity: true
+aadPodIdentity: false 
+
+aadWorkloadIdentity: true
+
+serviceAccount:
+  name: ffc-demo
