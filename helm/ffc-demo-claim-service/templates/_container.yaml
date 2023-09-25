@@ -1,2 +1,2 @@
-{{- define "adp-demo-claim-service.container" -}}
+{{- define "ffc-demo-claim-service.container" -}}
 {{- end -}}

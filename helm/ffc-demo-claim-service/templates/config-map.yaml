@@ -1,5 +1,5 @@
-{{- include "adp-helm-library.container-config-map" (list . "adp-demo-claim-service.config-map") -}}
-{{- define "adp-demo-claim-service.config-map" -}}
+{{- include "adp-helm-library.container-config-map" (list . "ffc-demo-claim-service.config-map") -}}
+{{- define "ffc-demo-claim-service.config-map" -}}
 data:
   APPINSIGHTS_CLOUDROLE: {{ quote .Values.name }}
   APPINSIGHTS_CONSOLE_DEBUG_ENABLED: {{ quote .Values.container.appInsightsConsoleDebugEnabled}}

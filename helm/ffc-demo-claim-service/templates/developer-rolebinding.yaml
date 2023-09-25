@@ -1,5 +1,5 @@
 {{- if .Values.pr }}
-{{- include "adp-helm-library.role-binding" (list . "adp-demo-user-service.role-binding") -}}
+{{- include "adp-helm-library.role-binding" (list . "ffc-demo-user-service.role-binding") -}}
 {{- end }}
-{{- define "adp-demo-user-service.role-binding" -}}
+{{- define "ffc-demo-user-service.role-binding" -}}
 {{- end -}}
