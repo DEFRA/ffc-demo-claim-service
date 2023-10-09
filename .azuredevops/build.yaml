@@ -1,3 +1,10 @@
+parameters:
+- name: deployFromFeature
+  displayName: "Deploy from Feature Branch"
+  type: boolean
+  default: false
+
+
 pr:
   branches:
     include:
@@ -32,6 +39,7 @@ extends:
   template: /pipelines/common-app-build.yaml@DEFRA-ADPPipelineCommon
   parameters:
     projectName: "FFCDemoClaimService"
+    deployFromFeature: ${{ parameters.deployFromFeature }}
     appBuildConfig:
       appFrameworkType: "nodejs"    
       projectPath: "./package.json"
