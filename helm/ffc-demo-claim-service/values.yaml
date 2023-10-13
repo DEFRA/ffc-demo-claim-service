@@ -46,7 +46,7 @@ postgresService:
   postgresDb: ffc_demo_claim
   postgresqlHost: ffc-demo-claims-postgres
   postgresSchema: public
-  postgresUser: postgres
+  postgresUser: Demo-Calculation-Service-MI
   postgresPort: 5432
 
 livenessProbe:
@@ -63,4 +63,7 @@ readinessProbe:
   periodSeconds: 10
   failureThreshold: 3
 
-aadPodIdentity: true
+aadWorkloadIdentity: true
+
+serviceAccount:
+  name: ffc-demo
