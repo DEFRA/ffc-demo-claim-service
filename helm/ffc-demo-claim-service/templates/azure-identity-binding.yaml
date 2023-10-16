@@ -3,3 +3,4 @@
 {{- end }}
 {{- define "ffc-demo-claim-service.azure-identity-binding" -}}
 {{- end -}}
+  
