@@ -65,7 +65,7 @@
         },
         {
             "key": "POSTGRES_PORT",
-            "value": 5432,
+            "value": "5432",
             "label": "{{serviceName}}",
             "content_type": "",
             "tags": {}
