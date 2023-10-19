@@ -22,3 +22,15 @@ postgres:
     name: claim 
     charset: UTF8
     collation: en_US.utf8
+
+# teamRGName: sndadpinfrg1401
+# managedIdPrefix: sndadpinfmid1401
+# Cluster_OIDC: https://uksouth.oic.prod-aks.azure.com/6f504113-6b64-43f2-ade9-242e05780007/e1f44edd-ac8e-4e4d-928a-2d2a7a52d4b7/
+# userAssignedIdentity:
+#   managedIdName: ffc-demo-claim-service
+#   federatedCred:
+#     serviceAccountName: ffc-demo
+#   roleAssignments:
+#     - name: app-config-reader
+#       scope: /subscriptions/55f3b8c6-6800-41c7-a40d-2adb5e4e1bd1/resourceGroups/SNDADPINFRG1401/providers/Microsoft.AppConfiguration/configurationStores/SNDADPINFAC1401
+#       roleDefinitionId: 516239f1-63e1-4d78-a4de-a74fb236a071
