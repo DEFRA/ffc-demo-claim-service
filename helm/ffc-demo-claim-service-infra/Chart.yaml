@@ -1,0 +1,9 @@
+apiVersion: v2
+name: ffc-demo-claim-service-infra
+description: A ASO Helm chart to deploy the FFC Demo Claim Service Infrastructure
+version: 0.0.1
+dependencies:
+- name: adp-aso-helm-library
+  version: 0.0.1
+  repository: oci://sndcdoinfcr2401p.azurecr.io/helm
+
