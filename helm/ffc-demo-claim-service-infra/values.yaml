@@ -19,6 +19,6 @@ postgresResourceGroupName: sndadpdbsrg1401
 postgresServerName: sndadpdbsps1401
 postgres:
   db:
-    name: ffc-demo-claim 
+    name: claim 
     charset: UTF8
     collation: en_US.utf8

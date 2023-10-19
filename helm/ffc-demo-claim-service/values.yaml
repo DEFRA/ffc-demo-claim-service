@@ -29,10 +29,10 @@ deployment:
 
 container:
   imagePullPolicy: IfNotPresent
-  requestMemory: 5Mi
-  requestCpu: 5m
-  limitMemory: 120Mi
-  limitCpu: 120m
+  requestMemory: 10Mi
+  requestCpu: 10m
+  limitMemory: 200Mi
+  limitCpu: 200m
   port: 3003
   calculationQueueAddress: calculation
   claimQueueAddress: claim
