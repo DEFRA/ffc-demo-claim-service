@@ -10,7 +10,6 @@ asoAnnotations:
 namespaceQueues:
   - name: payment
   - name: calculation
-  - name: claim
 
 namespaceTopics:
   - name: schedule   
