@@ -9,7 +9,7 @@
         },
         {
             "key": "APPINSIGHTS_CONSOLE_DEBUG_ENABLED",
-            "value": true,
+            "value": "true",
             "label": "{{serviceName}}",
             "content_type": "",
             "tags": {}
@@ -86,7 +86,7 @@
         },
         {
             "key": "POSTGRES_USERNAME",
-            "value": "",
+            "value": "sndadpinfmid1401-ffc-demo-services",
             "label": "{{serviceName}}",
             "content_type": "",
             "tags": {}
