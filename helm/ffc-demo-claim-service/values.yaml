@@ -69,11 +69,11 @@ containerConfigMap:
     workloadIdentity:
       clientId: e9badf28-ce66-4dd3-97e1-e28bfb1da26b
   keyValues:
-    labelFilter: 'ffc-demo-claim'
+    labelFilter: 'ffc-demo-claim-service'
     refresh:
       interval: 2m
       monitorKey: 'Sentinel'
-      monitorLabel: 'ffc-demo-claim'
+      monitorLabel: 'ffc-demo-claim-service'
     keyVaults:
       secretName: ffc-demo-claim-service-container-secret
       refresh:
