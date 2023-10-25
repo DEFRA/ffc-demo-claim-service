@@ -9,10 +9,6 @@ labels: {}
 appInsights:
   key: 
 
-azureIdentity:
-  resourceID: not-a-real-resourceID
-  clientID: not-a-real-clientID
-
 deployment:
   restartPolicy: Always
   priorityClassName: low
