@@ -9,17 +9,6 @@ labels: {}
 appInsights:
   key: 
 
-azureIdentity:
-  resourceID: not-a-real-resourceID
-  clientID: not-a-real-clientID
-
-containerConfigMap:
-  name: ffc-demo-claim-service-config-map
-
-containerSecret:
-  name: ffc-demo-claim-service-container-secret
-  type: Opaque
-
 deployment:
   restartPolicy: Always
   priorityClassName: low
@@ -29,10 +18,10 @@ deployment:
 
 container:
   imagePullPolicy: IfNotPresent
-  requestMemory: 5Mi
-  requestCpu: 5m
-  limitMemory: 120Mi
-  limitCpu: 120m
+  requestMemory: 10Mi
+  requestCpu: 10m
+  limitMemory: 200Mi
+  limitCpu: 200m
   port: 3003
   calculationQueueAddress: calculation
   claimQueueAddress: claim
@@ -67,3 +56,25 @@ aadWorkloadIdentity: true
 
 serviceAccount:
   name: ffc-demo
+  roleArn: true
+
+containerConfigMap:
+  name: 'ffc-demo-claim-service-config-map'
+  configServiceUrl: 'https://sndadpinfac1401.azconfig.io'
+  auth:
+    workloadIdentity:
+      clientId: e9badf28-ce66-4dd3-97e1-e28bfb1da26b
+  keyValues:
+    labelFilter: 'ffc-demo-claim-service'
+    refresh:
+      interval: 2m
+      monitorKey: 'Sentinel'
+      monitorLabel: 'ffc-demo-claim-service'
+    keyVaults:
+      secretName: ffc-demo-claim-service-container-secret
+      refresh:
+        interval: 2m
+
+managedIdPrefix: sndadpinfmid1401
+userAssignedIdentity:
+  managedIdName: ffc-demo-services
