@@ -60,10 +60,10 @@ serviceAccount:
 
 containerConfigMap:
   name: 'ffc-demo-claim-service-config-map'
-  configServiceUrl: 'https://sndadpinfac1401.azconfig.io'
+  configServiceUrl: 
   auth:
     workloadIdentity:
-      clientId: e9badf28-ce66-4dd3-97e1-e28bfb1da26b
+      clientId: 
   keyValues:
     labelFilter: 'ffc-demo-claim-service'
     refresh:
