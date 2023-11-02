@@ -100,7 +100,7 @@
         },
         {
             "key": "NOTIFY_API_KEY",
-            "value": "{{resourceid}}/{{servicename}}-notify-api-key",
+            "value": "{\"{{resourceid}}/{{servicename}}-notify-api-key\"}",
             "label": "{{serviceName}}",
             "content_type": "{{keyVaultContentType}}",
             "tags": {}
