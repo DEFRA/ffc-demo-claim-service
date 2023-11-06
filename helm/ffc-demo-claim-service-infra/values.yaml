@@ -1,6 +1,5 @@
 namespace: ffc-demo
 
-subscriptionId: 
 serviceBusResourceGroupName: sndadpinfrg1401
 serviceBusNamespaceName: sndadpinfsb1401
 
@@ -8,11 +7,18 @@ asoAnnotations:
   serviceoperator.azure.com/reconcile-policy: manage
 
 namespaceQueues:
-  - name: payment
+  - name: claim
+    owner: 'no'
+    roleAssignments:
+      - roleName: 'QueueReceiver'
   - name: calculation
+    roleAssignments:
+      - roleName: 'QueueSender'
 
 namespaceTopics:
   - name: schedule   
+    roleAssignments:
+      - roleName: 'TopicSender'
 
 postgresResourceGroupName: sndadpdbsrg1401
 postgresServerName: sndadpdbsps1401
@@ -21,3 +27,19 @@ postgres:
     name: claim 
     charset: UTF8
     collation: en_US.utf8
+
+tags:
+  Environment: SND1
+  ServiceCode: ADP
+  ServiceName: ffc-demo-claim-service
+  ServiceType: Shared
+  Purpose: Define purpose
+  ManagedBy: ASO
+  kubernetes_cluster: SNDADPINFAK1401
+
+#Dummy placeholder values only for linting. NOT TO BE POPULATED
+subscriptionId: "dummySubscriptionId"
+userAssignedIdentity: {}
+teamMIPrefix: "dummy-mi-prefix"
+serviceName: "dummy-svc"
+teamResourceGroupName: "dummy-rsg"
