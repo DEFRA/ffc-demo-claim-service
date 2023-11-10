@@ -72,3 +72,5 @@ containerConfigMap:
       secretName: ffc-demo-claim-service-container-secret
       refresh:
         interval: 2m
+userAssignedIdentity:
+  managedIdName:
