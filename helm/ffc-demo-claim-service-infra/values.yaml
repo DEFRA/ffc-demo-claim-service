@@ -1,3 +1,4 @@
+namespace: ffc-demo
 namespaceQueues:
   - name: claim
     owner: 'no'
