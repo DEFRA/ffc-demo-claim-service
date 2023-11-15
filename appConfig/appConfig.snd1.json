@@ -77,13 +77,6 @@
         "tags": {}
     },
     {
-        "key": "APPINSIGHTS_INSTRUMENTATIONKEY",
-        "value": "36932cc4-12b7-4f0f-bbee-36ba20174390",
-        "label": "{{serviceName}}",
-        "content_type": "",
-        "tags": {}
-    },
-    {
         "key": "POSTGRES_USERNAME",
         "value": "sndadpinfmid1401-ffc-demo-services",
         "label": "{{serviceName}}",
