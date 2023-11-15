@@ -1,5 +1,5 @@
 const dbHelper = require('../../../db-helper')
-const { MessageSender } = require('ffc-messaging')
+const { MessageSender } = require('adp-messaging')
 const { models } = require('../../../../app/services/database-service')()
 const mqConfig = require('../../../../app/config').messageQueues
 const mockSendEmail = jest.fn()

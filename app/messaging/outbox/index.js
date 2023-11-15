@@ -1,6 +1,6 @@
 const config = require('../../config')
 const mqConfig = config.messageQueues
-const { MessageSender } = require('ffc-messaging')
+const { MessageSender } = require('adp-messaging')
 const publishPendingClaims = require('./publish-pending')
 let calculationSender
 let scheduleSender
