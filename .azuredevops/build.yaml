@@ -53,4 +53,8 @@ extends:
       testFilePath: "./docker-compose.test.yaml"
       snykTestFilePath: "./docker-compose.snyk.yaml"
     appDeployConfig:
-      filepath: "./appConfig"  
+      filepath: "./appConfig"
+      variableGroups: 
+        - ffc-demo-claim-service-snd1
+      variables:
+        - ffc-demo-claim-service-notify-api-key
