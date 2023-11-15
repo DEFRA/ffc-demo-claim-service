@@ -1,0 +1,74 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: "ffc-demo-claim-service"
+  description: |
+    Digital service mock to claim public money in the event property subsides into mine shaft. 
+    The claim service receives claim data and if doesn't already exist saves it in a PostgreSQL database table. 
+    It also publishes events to message queues that a new claim has been received.
+  annotations:
+    github.com/project-slug: DEFRA/ffc-demo-claim-service
+    dev.azure.com/project: DEFRA-FFC
+    dev.azure.com/build-definition: DEFRA.ffc-demo-claim-service
+    sonarqube.org/project-key: adp-ffc-demo-claim-service
+  tags:
+    - node
+    - service-bus
+    - redis
+    - private
+    - back-end
+    - database
+spec:
+  type: backend
+  lifecycle: beta
+  owner: "group:default/fcp-payments"
+  system: ffc-demo-service
+  dependsOn:
+    - "resource:default/ffc-demo-claim-queue"
+    - "resource:default/ffc-demo-calculation-queue"
+    - "resource:default/ffc-demo-schedule-topic"
+    - "resource:default/ffc-demo-claim-database"
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: ffc-demo-claim-database
+  description: Database for persisting claims from users.
+  tags:
+    - postgresql
+spec:
+  type: database
+  owner: "group:default/fcp-payments"
+  system: ffc-demo-service
+  dependsOn:
+    - "resource:default/ffc-demo-database-server"
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: ffc-demo-calculation-queue
+  description: Calculation message queue
+  tags:
+    - azure-service-bus
+    - queue
+spec:
+  type: message-queue
+  owner: "group:default/fcp-payments"
+  system: ffc-demo-service
+  dependsOn:
+    - "resource:default/ffc-demo-service-bus"
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: ffc-demo-schedule-topic
+  description: Schedules message topic
+  tags:
+    - azure-service-bus
+    - topic
+spec:
+  type: message-topic
+  owner: "group:default/fcp-payments"
+  system: ffc-demo-service
+  dependsOn:
+    - "resource:default/ffc-demo-service-bus"
