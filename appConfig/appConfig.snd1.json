@@ -96,12 +96,5 @@
         "label": "{{serviceName}}",
         "content_type": "{{keyVaultContentType}}",
         "tags": {}
-    },
-    {
-        "key": "Sentinel",
-        "value": "1",
-        "label": "{{serviceName}}",
-        "content_type": "",
-        "tags": {}
     }
 ]
