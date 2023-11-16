@@ -78,7 +78,7 @@
     },
     {
         "key": "POSTGRES_USERNAME",
-        "value": "sndadpinfmid1401-ffc-demo-services",
+        "value": "sndadpinfmi1401-ffc-demo-claim-service",
         "label": "{{serviceName}}",
         "content_type": "",
         "tags": {}
