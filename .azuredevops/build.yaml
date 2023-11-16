@@ -36,7 +36,7 @@ resources:
       name: DEFRA/adp-pipeline-common
       endpoint: DEFRA
       type: github
-      ref: kb/helm-build-dbmigrations-fix
+      ref: main
 
 extends:
   template: /pipelines/common-app-build.yaml@DEFRA-ADPPipelineCommon
