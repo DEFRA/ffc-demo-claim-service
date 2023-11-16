@@ -3,7 +3,6 @@ FROM liquibase/liquibase:4.25
 
 # Install curl and gnupg2
 USER root
-RUN apt-get update && apt-get install -y curl gnupg2
 
 # Install Azure CLI
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
