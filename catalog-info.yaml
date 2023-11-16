@@ -21,54 +21,54 @@ metadata:
 spec:
   type: backend
   lifecycle: beta
-  owner: "group:default/fcp-payments"
-  system: ffc-demo-service
+  owner: "group:default/fcp-demo"
+  system: fcp-demo-service
   dependsOn:
-    - "resource:default/ffc-demo-claim-queue"
-    - "resource:default/ffc-demo-calculation-queue"
-    - "resource:default/ffc-demo-schedule-topic"
-    - "resource:default/ffc-demo-claim-database"
+    - "resource:default/fcp-demo-claim-queue"
+    - "resource:default/fcp-demo-calculation-queue"
+    - "resource:default/fcp-demo-schedule-topic"
+    - "resource:default/fcp-demo-claim-database"
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
-  name: ffc-demo-claim-database
+  name: fcp-demo-claim-database
   description: Database for persisting claims from users.
   tags:
     - postgresql
 spec:
   type: database
-  owner: "group:default/fcp-payments"
-  system: ffc-demo-service
+  owner: "group:default/fcp-demo"
+  system: fcp-demo-service
   dependsOn:
-    - "resource:default/ffc-demo-database-server"
+    - "resource:default/adpdbsps01"
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
-  name: ffc-demo-calculation-queue
+  name: fcp-demo-calculation-queue
   description: Calculation message queue
   tags:
     - azure-service-bus
     - queue
 spec:
   type: message-queue
-  owner: "group:default/fcp-payments"
-  system: ffc-demo-service
+  owner: "group:default/fcp-demo"
+  system: fcp-demo-service
   dependsOn:
-    - "resource:default/ffc-demo-service-bus"
+    - "resource:default/ADPINFSB01"
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
-  name: ffc-demo-schedule-topic
+  name: fcp-demo-schedule-topic
   description: Schedules message topic
   tags:
     - azure-service-bus
     - topic
 spec:
   type: message-topic
-  owner: "group:default/fcp-payments"
-  system: ffc-demo-service
+  owner: "group:default/fcp-demo"
+  system: fcp-demo-service
   dependsOn:
-    - "resource:default/ffc-demo-service-bus"
+    - "resource:default/ADPINFSB01"
