@@ -11,6 +11,7 @@ metadata:
     dev.azure.com/project: DEFRA-FFC
     dev.azure.com/build-definition: DEFRA.ffc-demo-claim-service
     sonarqube.org/project-key: adp-ffc-demo-claim-service
+    grafana/dashboard-selector: "folderTitle == 'Azure Monitor'"
   tags:
     - node
     - service-bus
