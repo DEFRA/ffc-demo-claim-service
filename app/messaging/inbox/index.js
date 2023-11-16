@@ -1,7 +1,7 @@
 const config = require('../../config')
 const mqConfig = config.messageQueues.claimQueue
 const processClaimMessage = require('./process-claim-message')
-const { MessageReceiver } = require('ffc-messaging')
+const { MessageReceiver } = require('adp-messaging')
 let claimReceiver
 
 async function start () {

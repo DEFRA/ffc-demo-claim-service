@@ -42,17 +42,17 @@ ignore:
         reason: None given
         expires: '2021-10-24T20:08:56.806Z'
   SNYK-JS-AXIOS-1579269:
-    - ffc-messaging > @azure/identity > axios:
+    - adp-messaging > @azure/identity > axios:
         reason: None given
         expires: '2021-10-24T20:12:33.103Z'
     - notifications-node-client > axios:
         reason: None given
         expires: '2021-10-24T20:12:33.103Z'
-    - ffc-messaging > @azure/identity > @azure/msal-node > axios:
+    - adp-messaging > @azure/identity > @azure/msal-node > axios:
         reason: None given
         expires: '2021-10-24T20:12:33.103Z'
   SNYK-JS-ANSIREGEX-1583908:
-    - ffc-messaging > @azure/identity > keytar > prebuild-install > npmlog > gauge > wide-align > string-width > strip-ansi > ansi-regex:
+    - adp-messaging > @azure/identity > keytar > prebuild-install > npmlog > gauge > wide-align > string-width > strip-ansi > ansi-regex:
         reason: None given
         expires: '2021-10-24T20:12:33.103Z'
       '@pact-foundation/pact > cli-color > ansi-regex':

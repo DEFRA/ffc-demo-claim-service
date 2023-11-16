@@ -1,109 +1,100 @@
-{
-    "items": [
-        {
-            "key": "NODE_ENV",
-            "value": "production",
-            "label": "{{serviceName}}",
-            "content_type": "",
-            "tags": {}
-        },
-        {
-            "key": "APPINSIGHTS_CONSOLE_DEBUG_ENABLED",
-            "value": "true",
-            "label": "{{serviceName}}",
-            "content_type": "",
-            "tags": {}
-        },
-        {
-            "key": "APPINSIGHTS_CLOUDROLE",
-            "value": "{{serviceName}}",
-            "label": "{{serviceName}}",
-            "content_type": "",
-            "tags": {}
-        },
-        {
-            "key": "CLAIM_QUEUE_ADDRESS",
-            "value": "ffc-demo-claim",
-            "label": "{{serviceName}}",
-            "content_type": "",
-            "tags": {}
-        },
-        {
-            "key": "CALCULATION_QUEUE_ADDRESS",
-            "value": "ffc-demo-calculation",
-            "label": "{{serviceName}}",
-            "content_type": "",
-            "tags": {}
-        },
-        {
-            "key": "SCHEDULE_TOPIC_ADDRESS",
-            "value": "ffc-demo-schedule",
-            "label": "{{serviceName}}",
-            "content_type": "",
-            "tags": {}
-        },
-        {
-            "key": "MESSAGE_QUEUE_HOST",
-            "value": "SNDADPINFSB1401.servicebus.windows.net",
-            "label": "{{serviceName}}",
-            "content_type": "",
-            "tags": {}
-        },
-        {
-            "key": "POSTGRES_DB",
-            "value": "ffc-demo-claim",
-            "label": "{{serviceName}}",
-            "content_type": "",
-            "tags": {}
-        },
-        {
-            "key": "POSTGRES_HOST",
-            "value": "sndadpdbsps1401.postgres.database.azure.com",
-            "label": "{{serviceName}}",
-            "content_type": "",
-            "tags": {}
-        },
-        {
-            "key": "POSTGRES_PORT",
-            "value": "5432",
-            "label": "{{serviceName}}",
-            "content_type": "",
-            "tags": {}
-        },
-        {
-            "key": "POSTGRES_SCHEMA_NAME",
-            "value": "public",
-            "label": "{{serviceName}}",
-            "content_type": "",
-            "tags": {}
-        },
-        {
-            "key": "APPINSIGHTS_INSTRUMENTATIONKEY",
-            "value": "36932cc4-12b7-4f0f-bbee-36ba20174390",
-            "label": "{{serviceName}}",
-            "content_type": "",
-            "tags": {}
-        },
-        {
-            "key": "POSTGRES_USERNAME",
-            "value": "sndadpinfmid1401-ffc-demo-services",
-            "label": "{{serviceName}}",
-            "content_type": "",
-            "tags": {}
-        },
-        {
-            "key": "NOTIFY_EMAIL_TEMPLATE_KEY",
-            "value": "c048c3e6-d189-45c2-bdf4-ee4a7a732167",
-            "label": "{{serviceName}}",
-            "content_type": "",
-            "tags": {}
-        },
-        {
-            "key": "NOTIFY_API_KEY",
-            "value": "{\"{{resourceid}}/{{servicename}}-notify-api-key\"}",
-            "label": "{{serviceName}}",
-            "content_type": "{{keyVaultContentType}}",
-            "tags": {}
-        }
-    ]
-}
+[
+    {
+        "key": "NODE_ENV",
+        "value": "production",
+        "label": "{{serviceName}}",
+        "content_type": "",
+        "tags": {}
+    },
+    {
+        "key": "APPINSIGHTS_CONSOLE_DEBUG_ENABLED",
+        "value": "true",
+        "label": "{{serviceName}}",
+        "content_type": "",
+        "tags": {}
+    },
+    {
+        "key": "APPINSIGHTS_CLOUDROLE",
+        "value": "{{serviceName}}",
+        "label": "{{serviceName}}",
+        "content_type": "",
+        "tags": {}
+    },
+    {
+        "key": "CLAIM_QUEUE_ADDRESS",
+        "value": "ffc-demo-claim",
+        "label": "{{serviceName}}",
+        "content_type": "",
+        "tags": {}
+    },
+    {
+        "key": "CALCULATION_QUEUE_ADDRESS",
+        "value": "ffc-demo-calculation",
+        "label": "{{serviceName}}",
+        "content_type": "",
+        "tags": {}
+    },
+    {
+        "key": "SCHEDULE_TOPIC_ADDRESS",
+        "value": "ffc-demo-schedule",
+        "label": "{{serviceName}}",
+        "content_type": "",
+        "tags": {}
+    },
+    {
+        "key": "MESSAGE_QUEUE_HOST",
+        "value": "SNDADPINFSB1401.servicebus.windows.net",
+        "label": "{{serviceName}}",
+        "content_type": "",
+        "tags": {}
+    },
+    {
+        "key": "POSTGRES_DB",
+        "value": "ffc-demo-claim",
+        "label": "{{serviceName}}",
+        "content_type": "",
+        "tags": {}
+    },
+    {
+        "key": "POSTGRES_HOST",
+        "value": "sndadpdbsps1401.postgres.database.azure.com",
+        "label": "{{serviceName}}",
+        "content_type": "",
+        "tags": {}
+    },
+    {
+        "key": "POSTGRES_PORT",
+        "value": "5432",
+        "label": "{{serviceName}}",
+        "content_type": "",
+        "tags": {}
+    },
+    {
+        "key": "POSTGRES_SCHEMA_NAME",
+        "value": "public",
+        "label": "{{serviceName}}",
+        "content_type": "",
+        "tags": {}
+    },
+    {
+        "key": "POSTGRES_USERNAME",
+        "value": "sndadpinfmi1401-ffc-demo-claim-service",
+        "label": "{{serviceName}}",
+        "content_type": "",
+        "tags": {}
+    },
+    {
+        "key": "NOTIFY_EMAIL_TEMPLATE_KEY",
+        "value": "c048c3e6-d189-45c2-bdf4-ee4a7a732167",
+        "label": "{{serviceName}}",
+        "content_type": "",
+        "tags": {}
+    },
+    {
+        "key": "NOTIFY_API_KEY",
+        "value": "{\"{{resourceid}}/{{servicename}}-notify-api-key\"}",
+        "label": "{{serviceName}}",
+        "content_type": "{{keyVaultContentType}}",
+        "tags": {}
+    }
+]

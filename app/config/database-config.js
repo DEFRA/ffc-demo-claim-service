@@ -8,7 +8,7 @@ function isProd () {
 const hooks = {
   beforeConnect: async (cfg) => {
     if (isProd()) {
-      const credential = new DefaultAzureCredential()
+      const credential = new DefaultAzureCredential({ managedIdentityClientId: process.env.AZURE_CLIENT_ID })
       const accessToken = await credential.getToken('https://ossrdbms-aad.database.windows.net/.default', { requestOptions: { timeout: 1000 } })
       cfg.password = accessToken.token
     }

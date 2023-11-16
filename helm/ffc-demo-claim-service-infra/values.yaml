@@ -1,21 +1,18 @@
 namespace: ffc-demo
-
-subscriptionId: 
-serviceBusResourceGroupName: sndadpinfrg1401
-serviceBusNamespaceName: sndadpinfsb1401
-
-asoAnnotations:
-  serviceoperator.azure.com/reconcile-policy: manage
-
 namespaceQueues:
-  - name: payment
+  - name: claim
+    owner: 'no'
+    roleAssignments:
+      - roleName: 'QueueReceiver'
   - name: calculation
+    roleAssignments:
+      - roleName: 'QueueSender'
 
 namespaceTopics:
   - name: schedule   
+    roleAssignments:
+      - roleName: 'TopicSender'
 
-postgresResourceGroupName: sndadpdbsrg1401
-postgresServerName: sndadpdbsps1401
 postgres:
   db:
     name: claim 
