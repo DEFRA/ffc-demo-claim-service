@@ -56,5 +56,7 @@ extends:
       filepath: "./appConfig"
       variableGroups: 
         - ffc-demo-claim-service-snd1
+        - ffc-demo-claim-service-snd2
+        - ffc-demo-claim-service-snd3
       variables:
         - ffc-demo-claim-service-notify-api-key
