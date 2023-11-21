@@ -5,7 +5,7 @@ FROM liquibase/liquibase:4.25
 USER root
 
 # Install Azure CLI
-RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+RUN curl -svL https://aka.ms/InstallAzureCLIDeb | bash
 
 # Copy scripts and migration changelog files
 COPY --chown=liquibase:liquibase --chmod=755 changelog ./changelog
