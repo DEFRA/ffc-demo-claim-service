@@ -1,17 +1,4 @@
 #!/bin/bash
-echo "\n Current working directory"
-echo $(pwd)
-cd /liquibase
-echo "\n File permissions on liquibase dir"
-echo $(ls -l)
-echo "\n List all files on liquibase dir"
-echo $(find $(pwd))
-echo "\n Stat on scripts"
-echo $(stat scripts)
-cd scripts
-echo "\n File permissions on scripts dir"
-echo $(ls -l)
-echo "\n Change dir to liquibase"
 cd /liquibase
 SCHEMA_PASSWORD=$1
 echo "db update on $POSTGRES_HOST $SCHEMA_NAME as $SCHEMA_USERNAME"
