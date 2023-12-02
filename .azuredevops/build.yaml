@@ -58,5 +58,7 @@ extends:
         - ffc-demo-claim-service-snd1
         - ffc-demo-claim-service-snd2
         - ffc-demo-claim-service-snd3
+        - ffc-demo-claim-service-dev1
+        - ffc-demo-claim-service-tst1
       variables:
         - ffc-demo-claim-service-notify-api-key
