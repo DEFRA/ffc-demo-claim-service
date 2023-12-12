@@ -1,6 +1,20 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
+  name: adp-portal
+  description: An example of a Backstage application.
+  # Example for optional annotations
+  annotations:
+    github.com/project-slug: defra-adp-sandpit/adp-portal
+    backstage.io/techdocs-ref: dir:.
+spec:
+  type: website
+  owner: john@example.com
+  lifecycle: experimental
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
   name: "ffc-demo-claim-service"
   description: |
     Digital service mock to claim public money in the event property subsides into mine shaft. 
