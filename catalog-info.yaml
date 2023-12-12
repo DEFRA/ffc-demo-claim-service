@@ -2,7 +2,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: adp-portal
-  description: An example of a Backstage application.
+  description: Default Application used for techdocs
   # Example for optional annotations
   annotations:
     github.com/project-slug: defra-adp-sandpit/adp-portal
