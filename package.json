@@ -8,6 +8,7 @@
     "pretest": "npm run test:lint",
     "test": "jest --runInBand --forceExit",
     "test:lint": "standard",
+    "test:unit": "jest --runInBand --testPathPattern=test/unit",
     "test:pact": "jest --testPathPattern=test/contract --coverage=false",
     "test:integration": "jest --runInBand --testPathPattern=test/integration --coverage=false",
     "test:watch": "jest --coverage=false --onlyChanged --watch --runInBand",
@@ -40,6 +41,7 @@
   },
   "devDependencies": {
     "@pact-foundation/pact": "9.11.1",
+    "@types/jest": "^29.5.11",
     "jest": "29.6.4",
     "jest-junit": "16.0.0",
     "nodemon": "3.0.1",
