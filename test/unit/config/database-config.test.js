@@ -1,5 +1,5 @@
 const dbConfig = require('../../../app/config/database-config')
-const { production, development } = require('../../../app/config/constants').environments
+const { production } = require('../../../app/config/constants').environments
 const { DefaultAzureCredential } = require('@azure/identity')
 
 jest.mock('@azure/identity')

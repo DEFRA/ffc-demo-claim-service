@@ -1,33 +1,33 @@
 const sequelize = {
-  define: jest.fn(),
-};
+  define: jest.fn()
+}
 const DataTypes = {
-  STRING: "string",
-  DATE: "date",
-  BOOLEAN: "boolean",
-};
+  STRING: 'string',
+  DATE: 'date',
+  BOOLEAN: 'boolean'
+}
 
-describe("Claim Model", () => {
+describe('Claim Model', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
-  });
+    jest.clearAllMocks()
+  })
 
-  it("should define the model with correct fields", () => {
-    require("../../../app/models/claim")(sequelize, DataTypes);
+  test('should define the model with correct fields', () => {
+    require('../../../app/models/claim')(sequelize, DataTypes)
     expect(sequelize.define).toHaveBeenCalledWith(
-      "claims",
+      'claims',
       {
-        claimId: { type: "string", primaryKey: true },
-        name: "string",
-        propertyType: "string",
-        dateOfSubsidence: "date",
-        accessible: "boolean",
-        email: "string",
+        claimId: { type: 'string', primaryKey: true },
+        name: 'string',
+        propertyType: 'string',
+        dateOfSubsidence: 'date',
+        accessible: 'boolean',
+        email: 'string'
       },
       {
         freezeTableName: true,
-        tableName: "claims",
+        tableName: 'claims'
       }
-    );
-  });
-});
+    )
+  })
+})

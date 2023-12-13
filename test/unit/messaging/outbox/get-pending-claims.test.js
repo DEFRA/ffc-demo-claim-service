@@ -1,31 +1,31 @@
-const getPendingClaims = require("../../../../app/messaging/outbox/get-pending-claims");
+const getPendingClaims = require('../../../../app/messaging/outbox/get-pending-claims')
 
-jest.mock("../../../../app/services/database-service", () => {
+jest.mock('../../../../app/services/database-service', () => {
   const mockDatabaseService = {
     models: {
       outbox: {
-        findAll: jest.fn(),
-      },
+        findAll: jest.fn()
+      }
     },
     sequelize: {
-      col: jest.fn(),
-    },
-  };
-  return () => mockDatabaseService;
-});
+      col: jest.fn()
+    }
+  }
+  return () => mockDatabaseService
+})
 
-describe("get pending claims", () => {
-  let mockDatabaseService;
+describe('get pending claims', () => {
+  let mockDatabaseService
 
   beforeEach(() => {
-    const databaseService = require("../../../../app/services/database-service");
-    mockDatabaseService = databaseService();
-    jest.clearAllMocks();
-  });
+    const databaseService = require('../../../../app/services/database-service')
+    mockDatabaseService = databaseService()
+    jest.clearAllMocks()
+  })
 
-  it("should return all pending claims", async () => {
-    mockDatabaseService.models.outbox.findAll.mockResolvedValue([]);
-    await getPendingClaims();
-    expect(mockDatabaseService.models.outbox.findAll).toHaveBeenCalled();
-  });
-});
+  test('should return all pending claims', async () => {
+    mockDatabaseService.models.outbox.findAll.mockResolvedValue([])
+    await getPendingClaims()
+    expect(mockDatabaseService.models.outbox.findAll).toHaveBeenCalled()
+  })
+})

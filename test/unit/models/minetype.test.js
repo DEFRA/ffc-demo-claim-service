@@ -1,35 +1,35 @@
 const sequelize = {
   define: jest.fn(() => ({
-    associate: jest.fn(),
-  })),
-};
+    associate: jest.fn()
+  }))
+}
 const DataTypes = {
-  STRING: "string",
-  DATE: "date",
-  BOOLEAN: "boolean",
-  INTEGER: "integer",
-};
+  STRING: 'string',
+  DATE: 'date',
+  BOOLEAN: 'boolean',
+  INTEGER: 'integer'
+}
 
-describe("Minetype Model", () => {
-  let MineType;
+describe('Minetype Model', () => {
+  let MineType
   beforeEach(() => {
-    jest.clearAllMocks();
-    MineType = require("../../../app/models/minetype")(sequelize, DataTypes);
-  });
+    jest.clearAllMocks()
+    MineType = require('../../../app/models/minetype')(sequelize, DataTypes)
+  })
 
-  it("should define the model with correct fields", () => {
+  test('should define the model with correct fields', () => {
     expect(sequelize.define).toHaveBeenCalledWith(
-      "mineTypes",
+      'mineTypes',
       {
-        mineTypeId: { type: "integer", primaryKey: true, autoIncrement: true },
-        claimId: "string",
-        mineType: "string",
+        mineTypeId: { type: 'integer', primaryKey: true, autoIncrement: true },
+        claimId: 'string',
+        mineType: 'string'
       },
       {
         freezeTableName: true,
-        tableName: "mineTypes",
+        tableName: 'mineTypes'
       }
-    );
-    expect(MineType.associate).toBeDefined();
-  });
-});
+    )
+    expect(MineType.associate).toBeDefined()
+  })
+})
