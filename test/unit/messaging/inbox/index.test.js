@@ -22,7 +22,6 @@ require('../../../../app/config')
 jest.mock('../../../../app/messaging/inbox/process-claim-message', () => {
   return jest.fn()
 })
-const processClaimMessage = require('../../../../app/messaging/inbox/process-claim-message')
 
 jest.mock('adp-messaging')
 const { MessageReceiver } = require('adp-messaging')
