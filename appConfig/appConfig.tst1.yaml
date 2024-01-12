@@ -1,0 +1,8 @@
+- key: MESSAGE_QUEUE_HOST
+  value: "TSTADPINFSB1401.servicebus.windows.net" 
+- key: POSTGRES_HOST
+  value: "tstadpdbsps1401.postgres.database.azure.com"
+- key: POSTGRES_USERNAME
+  value: "tstadpinfmi1401-ffc-demo-claim-service" 
+- key: NOTIFY_EMAIL_TEMPLATE_KEY
+  value: "c048c3e6-d189-45c2-bdf4-ee4a7a732167" 
