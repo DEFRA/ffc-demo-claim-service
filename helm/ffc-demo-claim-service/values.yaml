@@ -1,43 +1,20 @@
-environment: development
 name: ffc-demo-claim-service
 namespace: ffc-demo
-workstream: ffc-demo
 image: ffc-demo-claim-service
 
 labels: {}
 
-appInsights:
-  key: 
-
 deployment:
-  restartPolicy: Always
   priorityClassName: low
-  replicas: 1
   minReadySeconds: 5
-  imagePullSecret:
 
 container:
-  imagePullPolicy: IfNotPresent
   memCpuTier: CUSTOM
   requestMemory: 10Mi
   requestCpu: 10m
   limitMemory: 200Mi
   limitCpu: 200m
   port: 3003
-  calculationQueueAddress: calculation
-  claimQueueAddress: claim
-  messageQueueHost: myservicebus.servicebus.windows.net
-  scheduleTopicAddress: schedule
-  appInsightsConsoleDebugEnabled: true
-  notifyApiKey:
-  notifyEmailTemplateKey:
-
-postgresService:
-  postgresDb: ffc_demo_claim
-  postgresqlHost: ffc-demo-claims-postgres
-  postgresSchema: public
-  postgresUser: Demo-Calculation-Service-MI
-  postgresPort: 5432
 
 livenessProbe:
   path: /healthz
