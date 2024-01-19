@@ -14,21 +14,6 @@ container:
   requestCpu: 10m
   limitMemory: 200Mi
   limitCpu: 200m
-  port: 3003
-
-livenessProbe:
-  path: /healthz
-  port: 3003
-  initialDelaySeconds: 10
-  periodSeconds: 10
-  failureThreshold: 3
-
-readinessProbe:
-  path: /healthy
-  port: 3003
-  initialDelaySeconds: 10
-  periodSeconds: 10
-  failureThreshold: 3
 
 aadWorkloadIdentity: true
 
