@@ -9,7 +9,7 @@ metadata:
   annotations:
     github.com/project-slug: DEFRA/ffc-demo-claim-service
     dev.azure.com/project: DEFRA-FFC
-    dev.azure.com/build-definition: DEFRA.ffc-demo-claim-service
+    dev.azure.com/build-definition: ffc-demo-claim-service
     sonarqube.org/project-key: adp-ffc-demo-claim-service
     grafana/dashboard-selector: "folderTitle == 'Managed Prometheus'"
     backstage.io/techdocs-entity: component:default/adp-documentation
