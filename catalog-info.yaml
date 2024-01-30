@@ -19,6 +19,14 @@ metadata:
     - private
     - back-end
     - database
+  links:
+    - url: https://github.com/defra/ffc-demo-claim-service
+      title: View repository
+      icon: github
+    - url: https://dev.azure.com/defragovuk/DEFRA-FFC/_build?definitionId=4837
+      title: CI/CD Pipeline
+    - url: https://sonarcloud.io/project/overview?id=adp-ffc-demo-claim-service
+      title: SonarCloud Analysis
 spec:
   type: backend
   lifecycle: beta
