@@ -1,8 +1,8 @@
 #!/bin/bash
-cd /liquibase
+# Get the Password as parameter. This allows the script to be used when running db migration job in cluster.
 SCHEMA_PASSWORD=$1
 echo "db update on $POSTGRES_HOST $SCHEMA_NAME as $SCHEMA_USERNAME"
-scripts/postgres-wait && /liquibase/liquibase \
+/scripts/postgres-wait && /liquibase/liquibase \
 --driver=org.postgresql.Driver \
 --changeLogFile=/changelog/db.changelog.xml \
 --url=jdbc:postgresql://$POSTGRES_HOST:$POSTGRES_PORT/$POSTGRES_DB \
