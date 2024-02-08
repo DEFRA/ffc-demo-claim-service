@@ -18,3 +18,11 @@ postgres:
     name: claim 
     charset: UTF8
     collation: en_US.utf8
+
+storageAccounts:
+  - name: asodemost01
+    blobContainers:  
+      - name: container-01
+    tables:  
+      - name: table01
+  - name: asodemost02
