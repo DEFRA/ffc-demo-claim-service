@@ -19,6 +19,7 @@ postgres:
     charset: UTF8
     collation: en_US.utf8
 
+serviceName: ffc-demo-claim-service
 storageAccounts:
   - name: asodemo01
     blobContainers:  
