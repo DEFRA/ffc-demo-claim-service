@@ -19,7 +19,7 @@ services:
     environment:
       << : [*common-postgres, *common-migration]
     entrypoint: >
-      sh -c "/scripts/migration/database-up"
+      sh -c "/scripts/migration/database-up $${SCHEMA_PASSWORD}"
     depends_on:
       - ffc-demo-claim-postgres
     volumes:
