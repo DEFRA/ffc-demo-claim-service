@@ -21,9 +21,8 @@ postgres:
 
 serviceName: ffc-demo-claim-service
 storageAccounts:
-  - name: asodemo01
+  - name: asodemo02
     blobContainers:  
       - name: container-01
     tables:  
       - name: table01
-  - name: asodemost02
