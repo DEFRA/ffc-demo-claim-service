@@ -13,6 +13,7 @@ metadata:
     sonarqube.org/project-key: adp-ffc-demo-claim-service
     grafana/dashboard-selector: "folderTitle == 'Managed Prometheus'"
     backstage.io/techdocs-entity: component:default/adp-documentation
+    backstage.io/kubernetes-id: ffc-demo-claim-service
   tags:
     - node
     - service-bus
