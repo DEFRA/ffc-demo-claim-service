@@ -21,12 +21,8 @@ asynchronous communication.  The following environment variables need to be set
 in any non-production (`process.env.NODE_ENV !== production`)
 environment before the Docker container is started. When deployed
 into an appropriately configured AKS cluster (where
-[AAD Pod Identity](https://github.com/Azure/aad-pod-identity) is
-configured) the micro-service will use AAD Pod Identity through the manifests
-for
-[azure-identity](./helm/ffc-demo-claim-service/templates/azure-identity.yaml)
-and
-[azure-identity-binding](./helm/ffc-demo-claim-service/templates/azure-identity-binding.yaml).
+[Azure Workload Identity](https://learn.microsoft.com/en-us/azure/aks/workload-identity-overview) is
+configured) the micro-service will use Azure Workload Identity configured on the deployment helm template which is included in the application helm chart.
 
 | Name                               | Description                                                                                  |
 | ---------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -115,6 +111,13 @@ Link to other services:
 docker-compose -f docker-compose.yaml -f docker-compose.link.yaml up
 ```
 
+### Database migrations
+Database migrations can be run locally using the below command which applies the liquibase changelog defined in `changelog` directory by running the migration scripts in `scripts/migration`. 
+```
+docker-compose -f docker-compose.migrate.yaml run --rm database-up
+```
+While commiting the code changes to git repository, as part of CI pipeline, a new database migration image is created from `db-migration.Dockerfile` dockerfile. This contains the necessary scripts, liquibase changelog files. This image has Azure CLI installed in it and applies database migrations using Azure Workload Identity associated with the database migration job. 
+
 ### Test the message queue
 
 This service reacts to messages retrieved from Azure Service Bus (the "ffc-demo-claim" queue). It can be tested locally with:
@@ -143,17 +146,11 @@ It is also possible to run a limited subset of the application stack. See the [`
 
 ### Deploy to Kubernetes
 
-For production deployments, a helm chart is included in the `.\helm` folder. This service connects to an AMQP message broker, using credentials defined in [values.yaml](./helm/ffc-demo-claim-service/values.yaml), which must be made available prior to deployment.
+For production deployments, 2 helm charts are included in the `.\helm` folder.
+- `ffc-demo-claim-service-infra` for Application infrastructure deployment (servicebus queues, topics, storage accounts) using [`adp-aso-helm-library`](https://github.com/DEFRA/adp-aso-helm-library)
+- `ffc-demo-claim-service` for Application deployment using [`adp-helm-library`](https://github.com/DEFRA/adp-helm-library)
 
-Scripts are provided to test the Helm chart by deploying the service, along with an appropriate message broker, into the current Helm/Kubernetes context.
-
-```
-# Deploy to current Kubernetes context
-scripts/helm/install
-
-# Remove from current Kubernetes context
-scripts/helm/delete
-```
+These helm charts take developer inputs from [values.yaml](/helm/ffc-demo-claim-service/values.yaml) and [values.yaml](/helm/ffc-demo-claim-service-infra/values.yaml). On running the [`CI pipeline`](.azuredevops/build.yaml) the images and helm charts are built and published to environment level Azure Container Registries.
 
 #### Accessing the pod
 
@@ -168,7 +165,7 @@ kubectl port-forward --namespace=ffc-demo deployment/ffc-demo-claim-service 3003
 Once the port is forwarded, the service can be accessed and tested in the same way as described in the "Test the service" section above.
 
 
-# Dynamic provisioning of Azure Service Bus queues
+# Dynamic provisioning of Azure Service Bus queues (TO BE UPDATED)
 The `provision.azure.yaml` manifest file is used to declare Azure Service Bus queues that will be provisioned for both a deployed Pull Request and for integration tests running in CI.
 
 As this service requires three queues, the structure of the file should be:
