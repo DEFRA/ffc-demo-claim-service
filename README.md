@@ -174,19 +174,6 @@ The [CI Pipeline](.azuredevops/build.yaml) does the following
 
 A detailed description on the build pipeline [wiki page](https://github.com/DEFRA/ado-pipeline-common/blob/main/docs/AppBuildAndDeploy.md) 
 
-# Dynamic provisioning of Azure Service Bus queues (TO BE UPDATED)
-The `provision.azure.yaml` manifest file is used to declare Azure Service Bus queues that will be provisioned for both a deployed Pull Request and for integration tests running in CI.
-
-As this service requires three queues, the structure of the file should be:
-```
-resources:
-  queues:
-    - name: claim
-    - name: payment
-    - name: schedule
-```
-These queues will be automatically removed when the Pull Request is closed.
-
 ## Licence
 
 THIS INFORMATION IS LICENSED UNDER THE CONDITIONS OF THE OPEN GOVERNMENT LICENCE found at:
