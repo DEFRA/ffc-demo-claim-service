@@ -14,9 +14,3 @@ container:
   requestCpu: 10m
   limitMemory: 200Mi
   limitCpu: 200m
-
-aadWorkloadIdentity: true
-
-serviceAccount:
-  name: ffc-demo
-  roleArn: true
