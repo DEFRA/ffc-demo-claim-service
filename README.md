@@ -164,6 +164,15 @@ kubectl port-forward --namespace=ffc-demo deployment/ffc-demo-claim-service 3003
 ```
 Once the port is forwarded, the service can be accessed and tested in the same way as described in the "Test the service" section above.
 
+## Build Pipeline
+
+The [CI Pipeline](.azuredevops/build.yaml) does the following
+- The application is validated
+- The application is tested
+- The application is built into deployable artifacts (images and helm charts)
+- Pushing the artifacts to Azure Container Registry
+
+A detailed description on the build pipeline [wiki page](https://github.com/DEFRA/ado-pipeline-common/blob/main/docs/AppBuildAndDeploy.md) 
 
 # Dynamic provisioning of Azure Service Bus queues (TO BE UPDATED)
 The `provision.azure.yaml` manifest file is used to declare Azure Service Bus queues that will be provisioned for both a deployed Pull Request and for integration tests running in CI.
