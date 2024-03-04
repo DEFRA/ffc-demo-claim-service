@@ -5,5 +5,5 @@ name: ffc-demo-claim-service
 version: 1.0.0
 dependencies:
 - name: adp-helm-library
-  version: 1.0.13-prerelease1
+  version: ^1.0.0
   repository: https://raw.githubusercontent.com/defra/adp-helm-repository/main/adp-helm-library
