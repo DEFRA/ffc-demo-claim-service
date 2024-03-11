@@ -56,7 +56,4 @@ extends:
       filepath: "./appConfig"
       filetype: "yaml"
       variableGroups: 
-        - ffc-demo-claim-service-<environment>
-        
-      variables:
-        - ffc-demo-claim-service-notify-api-key
+        - ffc-demo-claim-service-<environment>        
