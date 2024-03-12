@@ -41,6 +41,7 @@ resources:
 extends:
   template: /pipelines/common-app-build.yaml@DEFRA-ADPPipelineCommon
   parameters:
+    programmeName: "ffc"
     serviceName: "ffc-demo-claim-service"
     deployFromFeature: ${{ parameters.deployFromFeature }}
     deployConfigOnly: ${{ parameters.deployConfigOnly }}
@@ -56,7 +57,4 @@ extends:
       filepath: "./appConfig"
       filetype: "yaml"
       variableGroups: 
-        - ffc-demo-claim-service-<environment>
-        
-      variables:
-        - ffc-demo-claim-service-notify-api-key
+        - ffc-demo-claim-service-<environment>        
