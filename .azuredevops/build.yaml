@@ -43,7 +43,7 @@ extends:
   parameters:
     programmeName: "ffc"
     serviceName: "ffc-demo-claim-service"
-    includePlatformEnvs: true
+    # includePlatformEnvs: true
     deployFromFeature: ${{ parameters.deployFromFeature }}
     deployConfigOnly: ${{ parameters.deployConfigOnly }}
     appBuildConfig:
