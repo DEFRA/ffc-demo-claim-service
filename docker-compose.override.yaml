@@ -1,5 +1,3 @@
-version: '3.8'
-
 # This override file should be used when running this service in isolation
 # to provide required sibling services for local testing
 
