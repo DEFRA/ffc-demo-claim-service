@@ -6,3 +6,5 @@
   value: "prdadpinfmi1401-ffc-demo-claim-service" 
 - key: NOTIFY_EMAIL_TEMPLATE_KEY
   value: "c048c3e6-d189-45c2-bdf4-ee4a7a732167"
+- key: POSTGRES_DB
+  value: "ffc-demo-claim"
