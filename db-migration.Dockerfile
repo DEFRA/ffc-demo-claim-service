@@ -1,4 +1,4 @@
-ARG IMAGE_TAG=0.0.1
+ARG IMAGE_TAG=0.0.2
 
 FROM ssvadpinfcr3401.azurecr.io/image/adp-postgres-migration:$IMAGE_TAG
 
