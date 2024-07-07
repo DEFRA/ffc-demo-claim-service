@@ -1,6 +1,6 @@
-ARG IMAGE_TAG=0.0.2
+ARG IMAGE_TAG=1.0.0
 
-FROM ssvadpinfcr3401.azurecr.io/image/adp-postgres-migration:$IMAGE_TAG
+FROM ssvadpinfcr5401.azurecr.io/image/adp-postgres-migration:$IMAGE_TAG
 
 COPY --chown=liquibase:liquibase --chmod=755 changelog ./changelog
 
