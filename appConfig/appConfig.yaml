@@ -5,11 +5,11 @@
 - key: APPINSIGHTS_CLOUDROLE
   value: "{{serviceName}}"  
 - key: CLAIM_QUEUE_ADDRESS
-  value: "ffc-demo-claim" 
+  value: "fcp-demo-claim" 
 - key: CALCULATION_QUEUE_ADDRESS
-  value: "ffc-demo-calculation"
+  value: "fcp-demo-calculation"
 - key: SCHEDULE_TOPIC_ADDRESS
-  value: "ffc-demo-schedule"    
+  value: "fcp-demo-schedule"    
 - key: POSTGRES_PORT
   value: "5432"        
 - key: POSTGRES_SCHEMA_NAME
