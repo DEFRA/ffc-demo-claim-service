@@ -6,6 +6,7 @@ services:
     build:
       context: .
       target: development
+    pull_policy: build
     command: >
       sh -c "npm run test"
     environment:
